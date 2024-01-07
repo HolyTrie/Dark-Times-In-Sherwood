@@ -23,19 +23,19 @@ The game will be developed for PC players.
 
 המחישו את התשובות שלכם בעזרת ציורי-מסך.
 
-### 1. שחקנים
+### 1. Players
 
-* לאילו שחקנים מיועד המשחק שלכם (איזה גילים / רמת כישרון / רמת ניסיון / תחומי עניין)?
-* לכמה שחקנים מיועד המשחק?
-* מה יהיו דפוסי האינטראקציה בין השחקנים (שיתופי / תחרותי)?
+* Our game is inteded for a some what mature audience that has played video games and are familiar with the rougelike genre. </br> 
+* This game is mostly single player but can support up to 4 players in coop. </br>
+* Players will delve into danger together as a team and will have to beat each level by cooparting with each other </br>
 
-### 2. יעדים
+### 2. Goals
 
-* מה הם היעדים שהשחקן צריך להשיג כדי לנצח במשחק?
-* איך המשחק יודיע לשחקן את היעדים שלו? 
+* The game will be quest oriented: there will be a main storyline that the player will have to follow in order to beat the game and there will be small quests given by npcs in the game hub that will assist the player in upgrading his gear in addition, every level may present bonus challenges. </br>
+* Several npcs may give hints to the player as to what are his goals and also the kind of things to expect such as hints about completing side quests and challenges as they may offer generous rewards.
 
 
-### 3. תהליכים
+### 3. Proccesses 
 
 תארו בפירוט את:
 
