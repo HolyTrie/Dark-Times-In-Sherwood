@@ -11,14 +11,16 @@ Endless Misery Awaits! </br>
 
 The game will be developed for PC players.
 
-שימו כאן ציור-מסך המתאר את המשחק כפי שאתם רואים אותו בדמיון שלכם. - TBD
+Prompt: hooded archer running away from eldritch mosntrosity in a dark forest.
+![WhatsApp Image 2024-01-08 at 13 15 28_14a61032](https://github.com/HolyTrie/Dark-Times-In-Sherwood/assets/73063105/33e7fc98-65b5-4604-8d07-1577b2f0ac11)
 
 ---
 
 
 ## Formal Elements
+![Untitled](https://github.com/HolyTrie/Dark-Times-In-Sherwood/assets/73063105/8bac977b-4586-41d2-9635-99f457121f17)
 
-המחישו את התשובות שלכם בעזרת ציורי-מסך. - TBD
+
 ### 1. Players
 
 * Our game is inteded for a somewhat mature audience that has played video games before and is familiar with the rougelike/lite genres. </br> 
