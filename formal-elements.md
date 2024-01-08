@@ -77,22 +77,16 @@ The game will be developed for PC players.
 * בין השחקן לעצמו (דילמות)? 
 
 
-### 7. גבולות
-
-מה יהיו הגבולות של עולם המשחק? האם העולם יהיה - 
-* סגור או פתוח?
-*  עגול או שטוח? 
-
- איך המשחק יראה לשחקן את הגבולות? 
- 
- הסבירו איך המפה שלכם מקיימת את עקרונות התיכנון: משמעות, ניידות, התמצאות, עניין, והכוונה.
-
-
-### 8. תוצאות
-
-* כמה תוצאות אפשריות יהיו למשחק, ומה הן יהיו? 
-* עד כמה התוצאה תלויה במזל לעומת כישרון? 
-* האם המשחק יהיה "סכום אפס", שיתופי, או מורכב?
+### 7. Boundaries
+* the game will consist of closed levels, and will NOT be open world - the player/s will learn this via trial and error, and some aspects of leaving/entering areas will be explained via tutorial.
+* every level will have at least one purpose, the Hub will have many purposes such as upgrading your gear or buying potions etc.., and every level will have a main goal of retrieving an artifact/treasure and may contain a side goal which may lead to loot or provide a dilemma.
+* every level will have different level of navigatabillity, th Hub will be easy to naviagte while the levels may prsent different level of challenge.
+* players will have to familiarize themselves with the Hub, but every level will offer some navigational challenge, important things maybe be highlighted in implicit or explicit ways, such as highlighting interactable NPC's or Doors.
+* levels will have easy to complicated layouts which may present different levels of challenge to navigatem and thus be more interesting then just a combat encounter on a flat map.
+### 8. Results
+* the game will have Major and Minor results, the Minor results are the obvious things like, clearing a level and getting a reward, dying and getting a penalty, and completing quests.
+* the games major results will be tied to the storyline and the heroes reputation, but there will be at most 2 - a Good and Bad ending.
+* the games end result depends on the story and is thus linear but complex.
 
 ---
 
