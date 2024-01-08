@@ -90,19 +90,18 @@ The game will be developed for PC players.
 
 ---
 
-## סקר שוק
+## Market Survey
+We searched by three categories, the first being robin hood inspired game with a dark aesthetic, the second being roguelikes and roguelites which contain puzzles in them, and the third was popular roguelikes and roguelites.
+the most similar games were:
+(Hood: Outlaws & Legends)[https://store.steampowered.com/app/927350/Hood_Outlaws__Legends/] - similar in aesthetic </br>
+(Spellslayer)[https://www.youtube.com/watch?v=q1nLZeVX6gI&ab_channel=WhiteFalconPlays] - a top down tactical rogulike with puzzles </br>
+(Vertical Kingdom)[https://www.youtube.com/watch?v=f8LIL6Vhwm4&ab_channel=FGsquared] - a Roguelite Puzzle City Builder </br>
+(Celeste)[https://store.steampowered.com/app/504230/Celeste/] </br>
+(Dead Cells)[https://store.steampowered.com/app/588650/Dead_Cells/] </br>
+(Hollow Knight)[https://store.steampowered.com/app/367520/Hollow_Knight/] </br>
 
-לפני שמתחילים לעבוד על משחק (או כל מוצר אחר), חשוב לוודא שלא עשו את זה קודם. לא נעים לעבוד סמסטר שלם (או שנה שלמה) על משחק ואז לגלות שכבר יש משחק כזה. 
-
-חפשו בגוגל, בחנות play, בפייסבוק, ובכל מקום אחר שיש לכם גישה אליו, משחקים דומים לרעיון שלכם. ציינו באיזה ביטויי-חיפוש השתמשתם.
-
-זהו את שלושת המשחקים הדומים ביותר. לגבי כל אחד מהם:
-
-* שימו קישור וצילום-מסך להמחשה.
-* הסבירו מה תעשו כדי שהמשחק שלכם יהיה שונה/מקורי/מיוחד/טוב יותר מהמתחרים?  מדוע שחקנים יעדיפו דווקא את המשחק שלכם?
-
-מבין הרכיבים הרשמיים, 
-איזה רכיב (או רכיבים) ידגיש ביותר את הייחוד והמקוריות של המשחק שלכם, לעומת משחקים דומים הקיימים בשוק?
-
-
+and the 3 most similar out these are Hood: Outlaws & Legends, Dead Cells, Celeste, for their Aesthetic, Combat, and Platforming respectively.
+our game will attempt to take the best elements of these games and mix in puzzles as well, if done well this would create and extremely niche game - of course this hinges on the puzzles being challenging but not too much as to not push people away.
+</br>
+We also found '(puzzles_in_roguelikes)[https://www.reddit.com/r/roguelikes/comments/4xzc5j/puzzles_in_roguelikes/]' which was interesting.
 </div>
