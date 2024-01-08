@@ -6,5 +6,7 @@ Endless Misery Awaits! </br>
 
 The game will be developed for PC players. </br>
 
+For further details see [Formal Elements](https://github.com/HolyTrie/Dark-Times-In-Sherwood/blob/main/formal-elements.md)
+
 Prompt: hooded archer running away from eldritch mosntrosity in a dark forest. </br>
 ![WhatsApp Image 2024-01-08 at 13 15 28_14a61032](https://github.com/HolyTrie/Dark-Times-In-Sherwood/assets/73063105/33e7fc98-65b5-4604-8d07-1577b2f0ac11)
