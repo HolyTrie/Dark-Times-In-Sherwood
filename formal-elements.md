@@ -15,6 +15,7 @@ The game will be developed for PC players.
 
 
 ## Formal Elements
+prompt: This is just a pre alpha that simplifies how the game should not look, but will explain the basics of where everything should be located </br>
 ![Untitled](https://github.com/HolyTrie/Dark-Times-In-Sherwood/assets/73063105/8bac977b-4586-41d2-9635-99f457121f17)
 
 
