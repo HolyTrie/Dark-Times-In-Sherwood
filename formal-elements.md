@@ -53,7 +53,7 @@ An mspaint drawing with hints of the UI elements and the kinds of things to expe
 * The player will earn gold for defeating monsters, solving puzzles (depends on the puzzles), and retrieving the treasure succesfully, levels may also feature random gold scattered about for players to pick up, if required this resoruce could be made relatively scarce to hinder the player.
 * The plyaer will receive explanation about these resources in the Tutorial (reading) and if he decides to ignore this he will just learn this via trial and error (running around, getting hit, dying etc...), and getting gold also works the same, all these elements will be visible on the UI.
 * Reputation will present the player/s with a dilemma between gold or gear, and their good name - as reputation will affect the story, how NPC's treat the player/s and is essentially their moral compass
-* 
+
 ### 6. Conflicts
 * the basic conflicts will be between the player and enemy monsters, parkour challenges and witty puzzles, while the main conflict is essentially betwene robin and Co' against the evil Sheriff.
 * The players will have to work together to solve some of the puzzles, and take down tough enemies, and they may also be presented with difficult dilemmas along the way, making them make hard choices, or 'soft' dilemmas like choosing the path they prefer - this choice can be based off the difficulty to reward ratio of levels or paths. 
@@ -73,13 +73,13 @@ An mspaint drawing with hints of the UI elements and the kinds of things to expe
 
 ## Market Survey
 We searched by three categories, the first being robin hood inspired game with a dark aesthetic, the second being roguelikes and roguelites which contain puzzles in them, and the third was popular roguelikes and roguelites.
-the most similar games were:
+the most similar games were: </br>
 [Hood: Outlaws & Legends](https://store.steampowered.com/app/927350/Hood_Outlaws__Legends/) - similar only in aesthetic </br>
 [Spellslayer](https://www.youtube.com/watch?v=q1nLZeVX6gI&ab_channel=WhiteFalconPlays) - a top down tactical rogulike with puzzles </br>
 [Vertical Kingdom](https://www.youtube.com/watch?v=f8LIL6Vhwm4&ab_channel=FGsquared) - a Roguelite Puzzle City Builder </br>
-[Celeste](https://store.steampowered.com/app/504230/Celeste/) </br>
-[Dead Cells](https://store.steampowered.com/app/588650/Dead_Cells/) </br>
-[Hollow Knight](https://store.steampowered.com/app/367520/Hollow_Knight/) </br>
+[Celeste](https://store.steampowered.com/app/504230/Celeste/) - a heartwarming yet chllenging platformer</br>
+[Dead Cells](https://store.steampowered.com/app/588650/Dead_Cells/) - A platformer Roguelite with some Metroidvania influence</br>
+[Hollow Knight](https://store.steampowered.com/app/367520/Hollow_Knight/) - A Platformer Metroidvania</br>
 
 and the 3 most similar out these are Hood: Outlaws & Legends, Dead Cells, Celeste, for their Aesthetic, Combat, and Platforming respectively.
 our game will attempt to take the best elements of these games and mix in puzzles as well, if done well this would create and extremely niche game - of course this hinges on the puzzles being challenging but not too much as to not push people away.
