@@ -1,10 +1,10 @@
-public interface IEntityMovement
+namespace DTIS
 {
-    /*
-        Use this interface to inject special mechanics into an entities movement, such as limping while moving, or no jumping, etc...
-    */
-    private float speedF, jumpF; //to be injected later.
-    public void Move(float speedF);
-    public void Jump(float JumpF);
+    public interface IEntityMovement
+    {
+        public void Walk(EntityController con);
+        public void Jump(EntityController con);
+        public void Run(EntityController con);
 
+    }
 }
