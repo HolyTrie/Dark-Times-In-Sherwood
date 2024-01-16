@@ -6,38 +6,27 @@ using UnityEngine.InputSystem;
 
 public class CharacterController : MonoBehaviour
 {
-    [SerializeField] private float m_JumpForce = 100f;                          // Amount of force added when the player jumps.
+    [SerializeField] private float m_JumpForce = 50f;                          // Amount of force added when the player jumps.
     [Range(0, 1)][SerializeField] private float m_CrouchSpeed = .36f;           // Amount of maxSpeed applied to crouching movement. 1 = 100%
     [SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
     [SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
     [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
     [SerializeField] private Collider2D m_CrouchDisableCollider;				// A collider that will be disabled when crouching
+    [SerializeField] float Speed;
+    [SerializeField] Rigidbody2D m_Rigidbody2D;
 
-    [SerializeField]
-    InputAction MoveLeft = new(type: InputActionType.Button);
-
-    [SerializeField]
-    InputAction MoveRight = new(type: InputActionType.Button);
-
-    [SerializeField]
-    InputAction Jump = new(type: InputActionType.Button);
-
-    [SerializeField]
-    float Speed;
-
+    //privates//
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
     const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
-    private Rigidbody2D m_Rigidbody2D;
-
     Transform player;
-
     Animator player_anim;
+    float horizontal;
 
     private void Start()
     {
-        m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        // m_Rigidbody2D = GetComponent<Rigidbody2D>();
         player = GetComponent<Transform>();
         player_anim = GetComponent<Animator>();
     }
@@ -45,6 +34,7 @@ public class CharacterController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        horizontal = Input.GetAxisRaw("Horizontal");
         m_Grounded = false;
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
@@ -55,13 +45,11 @@ public class CharacterController : MonoBehaviour
             if (colliders[i].gameObject != gameObject)
             {
                 m_Grounded = true;
-                // Debug.Log(m_Grounded);
             }
-
         }
     }
 
-    public void Move(float speed, bool crouch, bool can_jump)
+    public void Move(float crouch_speed, bool crouch, bool jump, bool move_left, bool move_right)
     {
         // If crouching, check to see if the character can stand up
         if (!crouch)
@@ -80,8 +68,10 @@ public class CharacterController : MonoBehaviour
             // If crouching
             if (crouch)
             {
+                Debug.Log("Player crouches");
+                player_anim.SetBool("Crouch", true);
                 // Reduce the speed by the crouchSpeed multiplier
-                speed *= m_CrouchSpeed;
+                Speed *= m_CrouchSpeed;
 
                 // Disable one of the colliders when crouching
                 if (m_CrouchDisableCollider != null)
@@ -95,76 +85,59 @@ public class CharacterController : MonoBehaviour
             }
 
 
-            MovementDirecton();
+            //walking//
+            if (move_left)
+            {
+                Debug.Log("Player moving left");
+                Movement();
+                FlipPlayer(1);
+            }
+            else if (move_right)
+            {
+                Debug.Log("Player moving Right");
+                Movement();
+                FlipPlayer(-1);
+            }
+            else
+                player_anim.SetBool("Walking", false);
 
         }
 
-        PlayerJump();
+        //jumping//
+        if (jump && m_Grounded)
+            PlayerJump();
+        else
+            player_anim.SetBool("Jumping", false);
+
 
     }
 
-    void OnEnable()
-    {
-        MoveRight.Enable();
-        MoveLeft.Enable();
-        Jump.Enable();
-    }
-
-    void OnDisable()
-    {
-        MoveRight.Disable();
-        MoveLeft.Disable();
-        Jump.Disable();
-    }
 
     //tells the player to jump
     void PlayerJump()
     {
-        // Debug.Log("Pressed Jump!");
-        if (Jump.IsPressed())
-        {
-            Debug.Log(m_Grounded);
-            // If the player should jump...
-            if (m_Grounded)
-            {
-                Debug.Log("Jumping");
-                player_anim.SetBool("Jumping", true);
-                // Add a vertical force to the player.
-                m_Grounded = false;
-                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-                player.position += new Vector3(0, m_JumpForce * Time.deltaTime, 0);
-            }
-
-        }
-        else
-        {
-            player_anim.SetBool("Jumping", false);
-        }
-
+        Debug.Log("Jumping");
+        player_anim.SetBool("Jumping", true);
+        // Add a vertical force to the player.
+        m_Grounded = false;
+        m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
     }
 
-    //tells the player where to move
-    void MovementDirecton()
+    //tells the player to move
+    void Movement()
     {
-        if (MoveLeft.IsPressed())
-        {
-            Debug.Log("Player moving left");
-            player_anim.SetBool("Walking", true);
-            player.position -= new Vector3(Speed * Time.deltaTime, 0, 0);
-            player.localScale = new Vector3(1, 1, 1);
-
-        }
-        else if (MoveRight.IsPressed())
-        {
-            Debug.Log("Player moving Right");
-            player_anim.SetBool("Walking", true);
-            player.position += new Vector3(Speed * Time.deltaTime, 0, 0);
-            player.localScale = new Vector3(-1, 1, 1);
-        }
-        else if (!MoveRight.IsPressed() && !MoveLeft.IsPressed())
-        {
-            player_anim.SetBool("Walking", false);
-        }
+        player_anim.SetBool("Walking", true);
+        m_Rigidbody2D.velocity = new Vector2(horizontal * Speed, m_Rigidbody2D.velocity.y);
     }
+
+    //flips the player's side (1 to left, -1 to right)
+    void FlipPlayer(int side)
+    {
+        if(side == 1) // left side
+            player.localScale = new Vector3(1, 1, 1);
+        if(side == -1) // right side
+            player.localScale = new Vector3(-1, 1, 1);
+    }
+
 
 }
