@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 450631790}
   - component: {fileID: 450631789}
   m_Layer: 0
-  m_Name: DemonShroom
+  m_Name: ShroomDemon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1154,7 +1154,7 @@ Animator:
   m_GameObject: {fileID: 2133115836}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 739240ec3c850bd449c1aae3fd751554, type: 2}
+  m_Controller: {fileID: 9100000, guid: 29349d13791935b48b9647c0ef576df1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

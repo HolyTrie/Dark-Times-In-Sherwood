@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace DTIS{
-    public class ShroomBehaviour : IEntityBehaviour
+    public class ShroomBehaviour : EntityBehaviour
     {
         int dir = 1;
         int count = 0;
         int len = 5;
+
+        //public void onPlayerSighted();
+        //public void onLostSightOfPlayer();
+        //public void Attack();
+        //public void Idle();
         public void Idle()
         {
             count += dir;
@@ -15,17 +20,10 @@ namespace DTIS{
                 dir *= -1;
             }
         }
-        public void Update(IEntityMovement movement, EntityStateMachine fsm)
-        {   
-            return;
-
-        }
-        public void FixedUpdate(IEntityMovement movement, EntityStateMachine fsm, EntityController con)
+        public void FixedUpdate()
         {   
             //if state == something --> act accordingly
             Idle();
-            movement.Walk(con);
-
         }
     }
 }
