@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -17,6 +18,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] Rigidbody2D m_Rigidbody2D;
 
     //privates//
+    Vector2 smooth_stop;
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
     const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
@@ -69,7 +71,7 @@ public class CharacterController : MonoBehaviour
             if (crouch)
             {
                 Debug.Log("Player crouches");
-                player_anim.SetBool("Crouch", true);
+                // player_anim.SetBool("Crouch", true);
                 // Reduce the speed by the crouchSpeed multiplier
                 Speed *= m_CrouchSpeed;
 
@@ -99,7 +101,10 @@ public class CharacterController : MonoBehaviour
                 FlipPlayer(-1);
             }
             else
+            {
+                // player_anim.speed = 0.5f;
                 player_anim.SetBool("Walking", false);
+            }
 
         }
 
@@ -120,23 +125,30 @@ public class CharacterController : MonoBehaviour
         player_anim.SetBool("Jumping", true);
         // Add a vertical force to the player.
         m_Grounded = false;
-        m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+        m_Rigidbody2D.AddForce(new Vector2(0f, Mathf.Lerp(m_JumpForce,0f,0f))); //lerp is added to smooth transition movment
     }
 
     //tells the player to move
     void Movement()
     {
         player_anim.SetBool("Walking", true);
-        m_Rigidbody2D.velocity = new Vector2(horizontal * Speed, m_Rigidbody2D.velocity.y);
+        m_Rigidbody2D.velocity = new Vector2(Mathf.Lerp(horizontal * Speed,0.5f,0), m_Rigidbody2D.velocity.y); //lerp is added to smooth transition movment
     }
 
     //flips the player's side (1 to left, -1 to right)
     void FlipPlayer(int side)
     {
         if(side == 1) // left side
-            player.localScale = new Vector3(1, 1, 1);
+        {
+            // player.localScale = new Vector3(player.localScale.x, player.localScale.y, player.localScale.z);
+            transform.GetComponent<SpriteRenderer>().flipX = true;
+        }
+            
         if(side == -1) // right side
-            player.localScale = new Vector3(-1, 1, 1);
+        {
+            // player.localScale = new Vector3(-1*player.localScale.x, player.localScale.y, player.localScale.z);
+            transform.GetComponent<SpriteRenderer>().flipX = false;
+        }
     }
 
 
