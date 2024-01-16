@@ -7,23 +7,28 @@ namespace DTIS{
     {
         int dir = 1;
         int count = 0;
-        int len = 5;
+        int len = 10;
 
         //public void onPlayerSighted();
         //public void onLostSightOfPlayer();
         //public void Attack();
         //public void Idle();
-        public void Idle()
+        public void Patrol()
         {
             count += dir;
             if(Mathf.Abs(count) >= len){
                 dir *= -1;
             }
         }
-        public void FixedUpdate()
+        public override void Update()
+        {
+            return;
+        }
+        public override void FixedUpdate()
         {   
             //if state == something --> act accordingly
-            Idle();
+            Patrol();
+            m_controller.Move(dir);
         }
     }
 }
