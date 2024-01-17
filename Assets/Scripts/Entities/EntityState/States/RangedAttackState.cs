@@ -1,10 +1,11 @@
 namespace DTIS
 {
-    public class FallState:EntityState {
-        public FallState()
-        : base()
+    public class RangedAttackState : EntityState
+    {
+        public RangedAttackState(string name = "RangedAttack") 
+        : base(name) 
         {
-            
+
         }
         public override void Enter(EntityController controller)
         {

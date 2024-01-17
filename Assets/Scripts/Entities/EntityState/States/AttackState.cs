@@ -1,9 +1,9 @@
 namespace DTIS
 {
-    public class CrouchState : EntityState
+    public class AttackState : EntityState
     {
-        public CrouchState()
-        : base()
+        public AttackState(string name = "Attack") 
+        : base(name) 
         {
 
         }

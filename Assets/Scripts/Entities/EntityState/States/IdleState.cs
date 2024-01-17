@@ -1,9 +1,10 @@
+using UnityEngine;
+
 namespace DTIS
 {
-    public class DashState : EntityState
-    {
-        public DashState()
-        : base()
+    public class IdleState:EntityState {
+        public IdleState(string name = "Idle") 
+        : base(name) 
         {
 
         }
@@ -21,7 +22,8 @@ namespace DTIS
         }
         public override void FixedUpdate(EntityStateMachine fsm, EntityController controller)
         {
-            // pass
+            Debug.Log(Name);
+            controller.Animator.Play(Name);
         }
     }
 }

@@ -1,11 +1,10 @@
 namespace DTIS
 {
-    public class AttackState : EntityState
-    {
-        public AttackState() 
-        : base() 
+    public class RunState:EntityState {
+        public RunState(string name = "Run") 
+        : base(name) 
         {
-
+            
         }
         public override void Enter(EntityController controller)
         {

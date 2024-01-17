@@ -1,8 +1,8 @@
 namespace DTIS
 {
-    public class RunState:EntityState {
-        public RunState()
-        : base()
+    public class FallState:EntityState {
+        public FallState(string name = "Fall") 
+        : base(name) 
         {
             
         }

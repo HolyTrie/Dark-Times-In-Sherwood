@@ -1,9 +1,9 @@
 namespace DTIS
 {
-    public class Jump2State : EntityState
+    public class CrouchState : EntityState
     {
-        public Jump2State()
-        : base()
+        public CrouchState(string name = "Crouch") 
+        : base(name) 
         {
 
         }

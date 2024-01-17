@@ -1,10 +1,11 @@
+using UnityEngine;
+
 namespace DTIS
 {
-    public class IdleState:EntityState {
-        public IdleState() 
-        : base()
+    public class WalkState:EntityState {
+        public WalkState(string name = "Walk") 
+        : base(name) 
         {
-
         }
         public override void Enter(EntityController controller)
         {
@@ -16,11 +17,13 @@ namespace DTIS
         }
         public override void Update(EntityStateMachine fsm, EntityController controller)
         {
-            // pass
+            //controller.Animator.Play(Name);
+            // if 
         }
         public override void FixedUpdate(EntityStateMachine fsm, EntityController controller)
         {
-            // pass
+            Debug.Log(Name);
+            controller.Animator.Play(Name);
         }
     }
 }

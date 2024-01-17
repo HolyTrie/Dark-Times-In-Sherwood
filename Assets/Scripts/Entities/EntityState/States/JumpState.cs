@@ -1,9 +1,9 @@
 namespace DTIS
 {
-    public class GroundedState : EntityState
+    public class JumpState : EntityState
     {
-        public GroundedState()
-        : base()
+        public JumpState(string name = "Jump") 
+        : base(name) 
         {
 
         }

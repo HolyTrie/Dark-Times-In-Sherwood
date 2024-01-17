@@ -305,7 +305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &198491569
 Transform:
   m_ObjectHideFlags: 0
@@ -441,6 +441,7 @@ GameObject:
   - component: {fileID: 450631788}
   - component: {fileID: 450631790}
   - component: {fileID: 450631789}
+  - component: {fileID: 450631791}
   m_Layer: 0
   m_Name: ShroomDemon
   m_TagString: Untagged
@@ -573,6 +574,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.20016381, y: 0.25439304}
   m_EdgeRadius: 0
+--- !u!114 &450631791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450631786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cef06b3054344647a09506bea408a43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &647079111
 PrefabInstance:
   m_ObjectHideFlags: 0

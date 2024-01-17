@@ -1,14 +1,17 @@
+using UnityEngine;
+
 namespace DTIS
 {
-    public class WalkState:EntityState {
-        public WalkState()
-        : base()
+    public class GroundedState : EntityState
+    {
+        public GroundedState(string name = "Grounded") 
+        : base(name) 
         {
-            
+
         }
         public override void Enter(EntityController controller)
         {
-            // pass
+            Debug.Log("Enter Grounded State");
         }
         public override void Exit(EntityController controller)
         {

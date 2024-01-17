@@ -1,3 +1,5 @@
+using UnityEngine.InputSystem.Utilities;
+
 namespace DTIS
 {
     /// <summary>
@@ -8,13 +10,16 @@ namespace DTIS
     /// </summary>
     public abstract class EntityState
     {
-        public EntityState()
+        private string _name;
+        public EntityState(string name)
         {
-
+            _name = name;
         }
         public abstract void Enter(EntityController controller);
         public abstract void Exit(EntityController controller);
         public abstract void Update(EntityStateMachine fsm, EntityController controller);
         public abstract void FixedUpdate(EntityStateMachine fsm, EntityController controller);
+
+        public virtual string Name {get { return _name; }}
     }
 }

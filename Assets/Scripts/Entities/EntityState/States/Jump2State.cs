@@ -1,9 +1,9 @@
 namespace DTIS
 {
-    public class LightAttackState : EntityState
+    public class Jump2State : EntityState
     {
-        public LightAttackState()
-        : base()
+        public Jump2State(string name = "Jump2") 
+        : base(name) 
         {
 
         }

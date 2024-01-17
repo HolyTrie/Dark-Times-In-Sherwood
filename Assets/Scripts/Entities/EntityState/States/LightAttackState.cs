@@ -1,9 +1,9 @@
 namespace DTIS
 {
-    public class HeavyAttackState : EntityState
+    public class LightAttackState : EntityState
     {
-        public HeavyAttackState()
-        : base()
+        public LightAttackState(string name = "LightAttack") 
+        : base(name) 
         {
 
         }
