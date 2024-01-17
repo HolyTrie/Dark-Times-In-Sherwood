@@ -282,7 +282,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1088e88744e824499c4e999b36f32d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 5
+  MoveLeft:
+    m_Name: Move Left
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 87c8923a-db6e-4930-98b3-49974c4b5020
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  MoveRight:
+    m_Name: Move Right
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 5e91e40d-a425-4d8d-9346-d8b461a664a3
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  Jump:
+    m_Name: Jump
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: ffd1a9a6-9417-4dcf-807b-e3072e4d6b50
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  Crouch:
+    m_Name: Crouch
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 2438c066-0000-44f8-93d7-5c405a53c0a2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  Dash:
+    m_Name: 
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 927f652a-d704-481f-808e-cea401e3f341
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   controller: {fileID: 1434823003}
 --- !u!4 &1434823001 stripped
 Transform:
@@ -337,58 +381,8 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 643181813}
   m_CeilingCheck: {fileID: 1430035936}
   m_CrouchDisableCollider: {fileID: 0}
-  MoveLeft:
-    m_Name: Move Left
-    m_Type: 1
-    m_ExpectedControlType: 
-    m_Id: 77898002-374d-46f9-abf8-759780c69068
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: cf0bb50a-1479-4db9-8fb9-3cb41d73a8a8
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move Left
-      m_Flags: 0
-    m_Flags: 0
-  MoveRight:
-    m_Name: Move Right
-    m_Type: 1
-    m_ExpectedControlType: 
-    m_Id: 5328464d-9f27-4094-9f2a-ca225c7ba26d
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: ad66a34c-23fd-4d3c-8262-970b4f3a2d94
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move Right
-      m_Flags: 0
-    m_Flags: 0
-  Jump:
-    m_Name: Jump
-    m_Type: 1
-    m_ExpectedControlType: 
-    m_Id: 4b8f7841-d85a-4684-acea-c6819cf3596b
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 8c9c3adf-f188-4970-8ca6-05cd6efa612c
-      m_Path: <Keyboard>/space
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Jump
-      m_Flags: 0
-    m_Flags: 0
   Speed: 10
+  m_Rigidbody2D: {fileID: 0}
 --- !u!1001 &2044219883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -400,6 +394,10 @@ PrefabInstance:
     - target: {fileID: 1290715225530138, guid: 6877fb649746c674d8fbbcf60d41892b, type: 3}
       propertyPath: m_Name
       value: sword_man
+      objectReference: {fileID: 0}
+    - target: {fileID: 1290715225530138, guid: 6877fb649746c674d8fbbcf60d41892b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4210157123753652, guid: 6877fb649746c674d8fbbcf60d41892b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -809,6 +807,91 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a154d1a148a3cea4481668dddd90b52a, type: 3}
+--- !u!1001 &708158973796966394
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3381803611594187659, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: Dash.m_Name
+      value: Dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381803611594187659, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: Dash.m_SingletonActionBindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381803611594187659, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: Dash.m_SingletonActionBindings.Array.data[0].m_Id
+      value: aa4134d9-54dd-446b-ad17-91f0510b8e3a
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381803611594187659, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: Dash.m_SingletonActionBindings.Array.data[0].m_Path
+      value: <Keyboard>/shift
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381803611594187659, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: Dash.m_SingletonActionBindings.Array.data[0].m_Action
+      value: Dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 3662122704467685803, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: m_Name
+      value: Robin
+      objectReference: {fileID: 0}
+    - target: {fileID: 3671299269736591179, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: m_AirControl
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4557506199955167694, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 4557506199955167694, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 4557506199955167694, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4557506199955167694, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4557506199955167694, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4557506199955167694, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4557506199955167694, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4557506199955167694, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4557506199955167694, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4557506199955167694, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4787449262367763211, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
+      propertyPath: m_CullingMode
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 14bd1b5bcb0c0af4b87303a5b2624a13, type: 3}
 --- !u!1001 &6463706985186120210
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -932,3 +1015,4 @@ SceneRoots:
   - {fileID: 696810947483681383}
   - {fileID: 371308114595854413}
   - {fileID: 2044219883}
+  - {fileID: 708158973796966394}

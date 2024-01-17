@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -51,7 +52,7 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    public void Move(float crouch_speed, bool crouch, bool jump, bool move_left, bool move_right)
+    public void Move(float crouch_speed, bool crouch, bool jump, bool move_left, bool move_right, bool dash)
     {
         // If crouching, check to see if the character can stand up
         if (!crouch)
@@ -70,10 +71,10 @@ public class CharacterController : MonoBehaviour
             // If crouching
             if (crouch)
             {
-                Debug.Log("Player crouches");
-                // player_anim.SetBool("Crouch", true);
+                // Debug.Log("Player crouches");
+                player_anim.SetBool("Crouch", true);
                 // Reduce the speed by the crouchSpeed multiplier
-                Speed *= m_CrouchSpeed;
+                // Speed *= m_CrouchSpeed;
 
                 // Disable one of the colliders when crouching
                 if (m_CrouchDisableCollider != null)
@@ -84,19 +85,21 @@ public class CharacterController : MonoBehaviour
                 // Enable the collider when not crouching
                 if (m_CrouchDisableCollider != null)
                     m_CrouchDisableCollider.enabled = true;
+                // crouch = false;
+                player_anim.SetBool("Crouch", false);
             }
 
 
             //walking//
             if (move_left)
             {
-                Debug.Log("Player moving left");
+                // Debug.Log("Player moving left");
                 Movement();
                 FlipPlayer(1);
             }
             else if (move_right)
             {
-                Debug.Log("Player moving Right");
+                // Debug.Log("Player moving Right");
                 Movement();
                 FlipPlayer(-1);
             }
@@ -114,14 +117,25 @@ public class CharacterController : MonoBehaviour
         else
             player_anim.SetBool("Jumping", false);
 
+        if(dash)
+            PlayerDash();
+        else
+            player_anim.SetBool("Dash",false);
 
     }
 
 
+    void PlayerDash()
+    {
+        float DashSpeed = 100f; // tmp //
+        player_anim.SetBool("Dash",true);
+        m_Rigidbody2D.velocity = new Vector2(Mathf.Lerp(horizontal * DashSpeed,0.5f,0), m_Rigidbody2D.velocity.y); //lerp is added to smooth transition movment
+    }
+
     //tells the player to jump
     void PlayerJump()
     {
-        Debug.Log("Jumping");
+        // Debug.Log("Jumping");
         player_anim.SetBool("Jumping", true);
         // Add a vertical force to the player.
         m_Grounded = false;

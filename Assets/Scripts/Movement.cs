@@ -15,12 +15,17 @@ public class Movement : MonoBehaviour
     [SerializeField]
     InputAction Crouch = new(type: InputActionType.Button);
 
+    [SerializeField]
+    InputAction Dash = new(type: InputActionType.Button);
+
     public CharacterController controller;
 
     bool move_left = false;
     bool move_right = false;
     bool jump = false;
     bool crouch = false;
+    bool dash = false;
+
 
 
     void Start()
@@ -33,13 +38,14 @@ public class Movement : MonoBehaviour
         MoveCheck();
 
         // Move our character
-        controller.Move(5f, crouch, jump, move_left, move_right);
+        controller.Move(5f, crouch, jump, move_left, move_right, dash);
 
         //reset
         jump = false;
-        crouch = false;
+        // crouch = false;
         move_right = false;
         move_left = false;
+        dash = false;
 
 
     }
@@ -58,9 +64,23 @@ public class Movement : MonoBehaviour
         {
             jump = true;
         }
-        if(Crouch.WasPressedThisFrame())
+        if(Crouch.WasPerformedThisFrame())
         {
-            crouch = true;
+            if(crouch)
+            {
+                Debug.Log("Pressed crouch 2ND");
+                crouch = false;
+            }
+            else
+            {
+                Debug.Log("Pressed crouch 1ST");
+                crouch = true;
+            }
+        }
+        if(Dash.WasPerformedThisFrame())
+        {
+            dash = true;
+            
         }
     }
 
@@ -70,6 +90,7 @@ public class Movement : MonoBehaviour
         MoveLeft.Enable();
         Jump.Enable();
         Crouch.Enable();
+        Dash.Enable();
     }
 
     void OnDisable()
@@ -78,6 +99,7 @@ public class Movement : MonoBehaviour
         MoveLeft.Disable();
         Jump.Disable();
         Crouch.Disable();
+        Dash.Disable();
     }
 
 
