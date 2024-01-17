@@ -14,7 +14,6 @@ namespace DTIS
     public class EntityStateMachine : MonoBehaviour 
     {
         private EntityController _controller;
-        private Animator _animator;
         private EntityState _state;
         private EntityState _subState;
         //private EntityState _prevState; // TODO: this should be a stack of states instead. (with curr being the top) - better solution even though the stack is capped at height 2
@@ -23,9 +22,9 @@ namespace DTIS
             get { return _state; } 
             set 
             { 
-                _state.Exit();
+                _state.Exit(_controller);
                 _state = value;
-                _state.Enter();
+                _state.Enter(_controller);
             }
         } 
         protected EntityState SubState // Property with simple getter and a setter that handles sub-state switch by calling exit and enter appropriately.
@@ -33,22 +32,21 @@ namespace DTIS
             get { return _subState; } 
             set 
             { 
-                _subState.Exit();
+                _subState.Exit(_controller);
                 _subState = value;
-                _subState.Enter();
+                _subState.Enter(_controller);
             }
         } 
 
-        protected virtual void Awake(){
+        protected void Awake(){
             _controller = GetComponent<EntityController>();
-            _animator = GetComponent<Animator>();
         }
         protected virtual void Update(){
-
+            _state.Update(this,_controller); // delegates state and sub-state switch to state implementation!
         }
 
         protected virtual void FixedUpdate(){
-
+           _state.FixedUpdate(this,_controller); // delegates state and sub-state switch to state implementation!
         }
   
     }

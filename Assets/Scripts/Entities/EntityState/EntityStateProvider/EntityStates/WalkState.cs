@@ -2,24 +2,25 @@ namespace DTIS
 {
     public class WalkState:EntityState {
         public WalkState()
+        : base()
         {
             
         }
-        public override void Enter()
+        public override void Enter(EntityController controller)
         {
-            
+            // pass
         }
-        public override void Exit()
+        public override void Exit(EntityController controller)
         {
-            
+            // pass
         }
-        public override void Update()
+        public override void Update(EntityStateMachine fsm, EntityController controller)
         {
-            
+            // pass
         }
-        public override void CheckStateSwitch()
+        public override void FixedUpdate(EntityStateMachine fsm, EntityController controller)
         {
-            
+            // pass
         }
     }
 }
