@@ -441,8 +441,6 @@ GameObject:
   - component: {fileID: 450631788}
   - component: {fileID: 450631790}
   - component: {fileID: 450631789}
-  - component: {fileID: 450631792}
-  - component: {fileID: 450631791}
   m_Layer: 0
   m_Name: ShroomDemon
   m_TagString: Untagged
@@ -575,40 +573,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.20016381, y: 0.25439304}
   m_EdgeRadius: 0
---- !u!114 &450631791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 450631786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cef06b3054344647a09506bea408a43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_controller: {fileID: 450631792}
---- !u!114 &450631792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 450631786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fd01da2c7cd8c44ca1ce2c035c7c6f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_JumpSpeed: 400
-  m_WalkSpeed: 50
-  m_MovementSmoothing: 0.05
-  m_WhatIsGround:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_GroundCheck: {fileID: 264289324}
-  m_CeilingCheck: {fileID: 1618934349}
-  m_Rigidbody2D: {fileID: 0}
 --- !u!1001 &647079111
 PrefabInstance:
   m_ObjectHideFlags: 0

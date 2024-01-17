@@ -20,12 +20,12 @@ namespace DTIS
         //private EntityState _prevState; // TODO: this should be a stack of states instead. (with curr being the top) - better solution even though the stack is capped at height 2
         protected EntityState State // Property with simple getter and a setter that handles state switch by calling exit and enter appropriately.
         {
-            get { return _State; } 
+            get { return _state; } 
             set 
             { 
-                _State.Exit();
-                _State = value;
-                _State.Enter();
+                _state.Exit();
+                _state = value;
+                _state.Enter();
             }
         } 
         protected EntityState SubState // Property with simple getter and a setter that handles sub-state switch by calling exit and enter appropriately.
@@ -39,11 +39,15 @@ namespace DTIS
             }
         } 
 
-        virtual void Awake(){
+        protected virtual void Awake(){
             _controller = GetComponent<EntityController>();
             _animator = GetComponent<Animator>();
         }
-        virtual void Update(){
+        protected virtual void Update(){
+
+        }
+
+        protected virtual void FixedUpdate(){
 
         }
   

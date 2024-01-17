@@ -20,15 +20,19 @@ namespace DTIS{
                 dir *= -1;
             }
         }
-        public override void Update()
+        protected override void Awake(){
+            base.Awake();
+            FSM = GetComponent<EntityStateMachine>();
+        }
+        protected override void Update()
         {
             return;
         }
-        public override void FixedUpdate()
+        protected override void FixedUpdate()
         {   
             //if state == something --> act accordingly
             Patrol();
-            m_controller.Move(dir);
+            //FSM.setState(Move); or smthn like that
         }
     }
 }
