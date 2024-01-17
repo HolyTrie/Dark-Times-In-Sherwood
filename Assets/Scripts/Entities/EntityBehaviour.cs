@@ -3,9 +3,12 @@ using UnityEngine;
 namespace DTIS
 {
     public abstract class EntityBehaviour : MonoBehaviour {
-        public EntityStateMachine m_fsm;
-        public EntityController m_controller;
-        public abstract void Update();
-        public abstract void FixedUpdate();
+        private EntityStateMachine _fsm;
+        protected FSM { get { return _fsm; } set { _fsm = value; } } // not sure setter is neede but there it is
+        virtual void Awake(){
+            _fsm = GetComponent<EntityStateMachine>();
+        }
+        virtual void Update();
+        virtual void FixedUpdate();
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine;
 namespace DTIS{
     public class ShroomBehaviour : EntityBehaviour
     {
-        int dir = 1;
-        int count = 0;
-        int len = 10;
+        float dir = 1f;
+        float count = 0f;
+        float len = 10f;
 
         //public void onPlayerSighted();
         //public void onLostSightOfPlayer();
@@ -15,7 +15,7 @@ namespace DTIS{
         //public void Idle();
         public void Patrol()
         {
-            count += dir;
+            count += 0.1f * dir;
             if(Mathf.Abs(count) >= len){
                 dir *= -1;
             }
