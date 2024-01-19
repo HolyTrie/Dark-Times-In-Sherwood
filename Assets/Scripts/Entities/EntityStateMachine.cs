@@ -90,21 +90,23 @@ namespace DTIS
             //var textSize = GUI.skin.label.CalcSize(new GUIContent(text));
             //GUI.Label(new Rect(position.x, Screen.height - position.y, textSize.x, textSize.y), text);
             float x,y,width,height;
-            x = position.x;
-            y = position.y;
+            x = position.x - 50;
+            y = Screen.height - position.y - 125;
+            int textSize = 25;
+            int smallerTextSize = textSize - 5;
             width = 200f;
             height = 100f;
             Debug.Log(String.Format("x = {0}, y = {1}, width = {2}, height = {3}",x,y,width,height));
             Rect MainState = new Rect(x, y, width, height);
-            Rect SubState = new Rect(x, y+50f, width, height);
+            Rect SubState = new Rect(x+30f, y+25f, width, height);
             GUILayout.BeginArea(MainState);
             string content = _state != null ? _state.Name : "(no current state)";
-            GUILayout.Label($"<color='black'><size=30>{content}</size></color>");
+            GUILayout.Label($"<color='orange'><size={textSize}>{content}</size></color>");
             GUILayout.EndArea();
 
             GUILayout.BeginArea(SubState);
             content = _subState != null ? _subState.Name : "(no current state)";
-            GUILayout.Label($"<color='black'><size=20>{content}</size></color>");
+            GUILayout.Label($"<color='red'><size={smallerTextSize}>{content}</size></color>");
             GUILayout.EndArea();
         }
   
