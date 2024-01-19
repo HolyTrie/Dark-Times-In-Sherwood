@@ -1,5 +1,6 @@
 namespace DTIS
 {
+    /*
     public class AttackState : EntityState
     {
         public AttackState(string name = "Attack") 
@@ -24,4 +25,5 @@ namespace DTIS
             // pass
         }
     }
+    */
 }

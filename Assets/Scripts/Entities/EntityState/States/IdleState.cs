@@ -4,26 +4,24 @@ namespace DTIS
 {
     public class IdleState:EntityState {
         public IdleState(string name = "Idle") 
-        : base(name) 
-        {
+        : base(name){}
 
-        }
-        public override void Enter(EntityController controller)
+        public new void Enter(EntityController controller)
         {
-            // pass
+            base.Enter(controller);
+            controller.Move(new Vector2(0f,0f));
         }
         public override void Exit(EntityController controller)
         {
             // pass
         }
-        public override void Update(EntityStateMachine fsm, EntityController controller)
+        protected override void TryStateSwitch(EntityStateMachine fsm)
         {
-            // pass
+
         }
-        public override void FixedUpdate(EntityStateMachine fsm, EntityController controller)
+        protected override void PhysicsCalculation(EntityController controller, float Direction)
         {
-            Debug.Log(Name);
-            controller.Animator.Play(Name);
+
         }
     }
 }

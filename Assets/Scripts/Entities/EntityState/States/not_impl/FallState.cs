@@ -1,11 +1,11 @@
 namespace DTIS
 {
-    public class RangedAttackState : EntityState
-    {
-        public RangedAttackState(string name = "RangedAttack") 
+    /*
+    public class FallState:EntityState {
+        public FallState(string name = "Fall") 
         : base(name) 
         {
-
+            
         }
         public override void Enter(EntityController controller)
         {
@@ -24,4 +24,5 @@ namespace DTIS
             // pass
         }
     }
+    */
 }

@@ -15,10 +15,26 @@ namespace DTIS
         {
             _name = name;
         }
-        public abstract void Enter(EntityController controller);
+        public virtual void Enter(EntityController controller)
+        {
+            try
+            {
+                controller.Animator.Play(Name);
+            }
+            catch
+            {}
+        }
         public abstract void Exit(EntityController controller);
-        public abstract void Update(EntityStateMachine fsm, EntityController controller);
-        public abstract void FixedUpdate(EntityStateMachine fsm, EntityController controller);
+        public virtual void Update(EntityStateMachine fsm)
+        {
+            TryStateSwitch(fsm);
+        }
+        public virtual void FixedUpdate(EntityController controller, float Direction)
+        {
+            PhysicsCalculation(controller,Direction);
+        }
+        protected abstract void TryStateSwitch(EntityStateMachine fsm /*Todo: how to best pass input*/); // this should check input from EntityBrain and switch states appropriately
+        protected abstract void PhysicsCalculation(EntityController controller,float Direction); // This is a set method to update
 
         public virtual string Name {get { return _name; }}
     }

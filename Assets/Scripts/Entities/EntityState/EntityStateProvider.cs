@@ -35,19 +35,19 @@ namespace DTIS
             return state switch
             {
                 States.Grounded => new GroundedState(),
-                States.Crouch => new CrouchState(),
+                //States.Crouch => new CrouchState(),
                 States.Jump => new JumpState(),
-                States.Attack => new AttackState(),
+                //States.Attack => new AttackState(),
                 States.Idle => new IdleState(),
                 States.Walk => new WalkState(),
                 States.Fly => new FlyState(),
                 States.Run => new RunState(),
-                States.Dash => new DashState(),
-                States.Fall => new FallState(),
-                States.Jump2 => new Jump2State(),
-                States.LightAttack => new LightAttackState(),
-                States.HeavyAttack => new HeavyAttackState(),
-                States.RangedAttack => new RangedAttackState(),
+                //States.Dash => new DashState(),
+                //States.Fall => new FallState(),
+                //States.Jump2 => new Jump2State(),
+                //States.LightAttack => new LightAttackState(),
+                //States.HeavyAttack => new HeavyAttackState(),
+                //States.RangedAttack => new RangedAttackState(),
                 _ => throw new System.Exception("ESP Factory 'build' method does not support entity of type " + state + "\n\t * please check the States enum in the ESP"),
             };
         }

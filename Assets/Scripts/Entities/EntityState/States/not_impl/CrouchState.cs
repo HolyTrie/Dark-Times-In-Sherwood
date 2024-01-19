@@ -1,8 +1,9 @@
 namespace DTIS
 {
-    public class DashState : EntityState
+    /*
+    public class CrouchState : EntityState
     {
-        public DashState(string name = "Dash") 
+        public CrouchState(string name = "Crouch") 
         : base(name) 
         {
 
@@ -24,4 +25,5 @@ namespace DTIS
             // pass
         }
     }
+    */
 }

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace DTIS
 {
     public class RunState:EntityState {
@@ -6,21 +8,17 @@ namespace DTIS
         {
             
         }
-        public override void Enter(EntityController controller)
-        {
-            // pass
-        }
         public override void Exit(EntityController controller)
         {
             // pass
         }
-        public override void Update(EntityStateMachine fsm, EntityController controller)
+        protected override void TryStateSwitch(EntityStateMachine fsm)
         {
-            // pass
+
         }
-        public override void FixedUpdate(EntityStateMachine fsm, EntityController controller)
+        protected override void PhysicsCalculation(EntityController controller,float Direction)
         {
-            // pass
+            controller.Move(new Vector2(Direction * controller.RunSpeedMult, 0f));
         }
     }
 }

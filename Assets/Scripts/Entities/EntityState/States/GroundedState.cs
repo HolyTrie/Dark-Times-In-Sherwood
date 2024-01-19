@@ -5,25 +5,18 @@ namespace DTIS
     public class GroundedState : EntityState
     {
         public GroundedState(string name = "Grounded") 
-        : base(name) 
-        {
-
-        }
-        public override void Enter(EntityController controller)
-        {
-            Debug.Log("Enter Grounded State");
-        }
+        : base(name){}
         public override void Exit(EntityController controller)
         {
             // pass
         }
-        public override void Update(EntityStateMachine fsm, EntityController controller)
+        protected override void TryStateSwitch(EntityStateMachine fsm)
         {
-            // pass
+
         }
-        public override void FixedUpdate(EntityStateMachine fsm, EntityController controller)
+        protected override void PhysicsCalculation(EntityController controller,float Direction)
         {
-            // pass
+
         }
     }
 }

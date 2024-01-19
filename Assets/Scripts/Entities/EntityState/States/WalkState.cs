@@ -3,27 +3,20 @@ using UnityEngine;
 namespace DTIS
 {
     public class WalkState:EntityState {
+        float speedMult;
         public WalkState(string name = "Walk") 
-        : base(name) 
-        {
-        }
-        public override void Enter(EntityController controller)
-        {
-            // pass
-        }
+        : base(name) {}
         public override void Exit(EntityController controller)
         {
             // pass
         }
-        public override void Update(EntityStateMachine fsm, EntityController controller)
+        protected override void TryStateSwitch(EntityStateMachine fsm)
         {
-            //controller.Animator.Play(Name);
-            // if 
+
         }
-        public override void FixedUpdate(EntityStateMachine fsm, EntityController controller)
+        protected override void PhysicsCalculation(EntityController controller,float Direction)
         {
-            Debug.Log(Name);
-            controller.Animator.Play(Name);
+            controller.Move(new Vector2(Direction, 0f));
         }
     }
 }

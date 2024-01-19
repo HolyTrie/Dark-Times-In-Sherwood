@@ -1,5 +1,6 @@
 namespace DTIS
 {
+    /*
     public class Jump2State : EntityState
     {
         public Jump2State(string name = "Jump2") 
@@ -24,4 +25,5 @@ namespace DTIS
             // pass
         }
     }
+    */
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace DTIS
@@ -11,10 +12,18 @@ namespace DTIS
     */
     public class EntityController : MonoBehaviour
     {
-        [SerializeField] private float _jumpSpeed = 400f;							// Amount of force added when the entity jumps.
-        [SerializeField] private float _walkSpeed = 10f;                            // How fast is the entity, running will mutliply this value!
-        [SerializeField] private float _runSpeedMult = 1.75f;                       // entities in the Run state will move at a speed of _walkspeed * _runSpeedMult.
-        [Range(0, .3f)] [SerializeField] private float _movementSmoothing = .05f;	// How much to smooth out the movement
+        private float _jumpSpeed, _walkSpeed, _runSpeedMult , _movementSmoothing ;
+        // public float JumpSpeed{get { return _jumpSpeed;}}
+        // public float WalkSpeed{get { return _walkSpeed;}}
+        public float RunSpeedMult{get { return _runSpeedMult;}}
+        // public float MoveSmoothSpeed{get { return _movementSmoothing;}}
+        public virtual void setControllerSpeeds(float jumpSpeed, float walkSpeed, float runSpeedMult, float movementSmoothing)
+        {
+            _jumpSpeed = jumpSpeed;
+            _walkSpeed = walkSpeed;
+            _runSpeedMult = runSpeedMult;
+            _movementSmoothing = movementSmoothing;
+        }
         [SerializeField] private LayerMask _whatIsGround;							// A mask determining what is ground to the character
         [SerializeField] private Transform _groundCheck;							// A position marking where to check if the entity is grounded.
         [SerializeField] private Transform _ceilingCheck;							// A position marking where to check for ceilings
@@ -40,19 +49,15 @@ namespace DTIS
         void FixedUpdate() {
             Flip();
         }
-        public void MoveWithSmoothDamp(float speedMultiplier)
+        public void MoveWithSmoothDamp(Vector2 velocityMult)
         {
-            Vector3 targetVelocity = new Vector2(0.1f * _walkSpeed * speedMultiplier, _rigidbody2D.velocity.y); // Move the character by finding the target velocity
+            float speedMultiplier = velocityMult.x;
+            Vector3 targetVelocity = new Vector2(_walkSpeed * speedMultiplier, _rigidbody2D.velocity.y); // Move the character by finding the target velocity
             _rigidbody2D.velocity = Vector3.SmoothDamp(_rigidbody2D.velocity, targetVelocity, ref _Velocity, _movementSmoothing); // And then smoothing it out and applying it to the character
         }
-
-        public virtual void Move(float speedMultiplier, bool jump = false)
+        public virtual void Move(Vector2 velocityMult)
         {
-            MoveWithSmoothDamp(speedMultiplier);
-        }
-        public virtual void Move(Vector2 speed, bool jump = false)
-        {
-            //TODO?
+            MoveWithSmoothDamp(velocityMult);
         }
         protected virtual void Flip()
         {

@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DTIS
@@ -15,6 +14,26 @@ namespace DTIS
     */
     public class EntityStateMachine : MonoBehaviour 
     {
+        public virtual void setControllerSpeeds(float _jumpSpeed, float _walkSpeed, float _runSpeedMult, float _movementSmoothing)
+        {
+            _controller.setControllerSpeeds(_jumpSpeed,_walkSpeed,_runSpeedMult ,_movementSmoothing);
+        }
+        enum Directions // might move to utils later
+        {
+            Left = -1,
+            Right = 1
+        };
+        private Directions _direction;
+        public float Direction{ 
+            get 
+            { 
+                return (float)_direction; 
+            }
+            set
+            { 
+                _direction = value >=0 ? Directions.Right : Directions.Left;
+            }
+         }
         private EntityController _controller;
         private EntityState _state;
         private EntityState _subState;
@@ -41,23 +60,11 @@ namespace DTIS
         } 
 
         protected void Awake(){
-            /*
-            try
-            {
-                _controller = GetComponent<EntityController>(); // for applying derived controllers
-                //Debug.Log("FSM found attached controller");
-            }
-            catch
-            {
-                Debug.Log("FSM did not find attached controller");
-                _controller = gameObject.AddComponent<EntityController>(); // adds the base controller and sets _controller 
-                Debug.Log("FSM controller was set to " + _controller);
-            }
-            */
             _controller = gameObject.AddComponent<EntityController>();
             SetInitialState(ESP.States.Grounded,ESP.States.Idle);
+            Direction = (float)Directions.Right;
         }
-        public virtual void SetState(ESP.States state, ESP.States subState)
+        public virtual void SetState(ESP.States state, ESP.States subState, float dir = 0)
         {
             State = ESP.Build(state);
             SubState = ESP.Build(subState);
@@ -68,25 +75,36 @@ namespace DTIS
             _subState = ESP.Build(subState);
         }
         protected virtual void Update(){
-            _state?.Update(this,_controller); // delegates state and sub-state switch to state implementation!
-            _subState?.Update(this,_controller); // delegates state and sub-state switch to state implementation!
+            _state?.Update(this); // delegates state and sub-state switch to state implementation!
+            _subState?.Update(this); // delegates state and sub-state switch to state implementation!
         }
 
         protected virtual void FixedUpdate(){
-           _state?.FixedUpdate(this,_controller); // delegates state and sub-state switch to state implementation!
-           _subState?.FixedUpdate(this,_controller); // delegates state and sub-state switch to state implementation!
+           _state?.FixedUpdate(_controller,Direction); // delegates state and sub-state switch to state implementation!
+           _subState?.FixedUpdate(_controller,Direction); // delegates state and sub-state switch to state implementation!
         }
 
         private void OnGUI()
         {
-            GUILayout.BeginArea(new Rect(10f, 10f, 200f, 100f));
+            var position = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+            //var textSize = GUI.skin.label.CalcSize(new GUIContent(text));
+            //GUI.Label(new Rect(position.x, Screen.height - position.y, textSize.x, textSize.y), text);
+            float x,y,width,height;
+            x = position.x;
+            y = position.y;
+            width = 200f;
+            height = 100f;
+            Debug.Log(String.Format("x = {0}, y = {1}, width = {2}, height = {3}",x,y,width,height));
+            Rect MainState = new Rect(x, y, width, height);
+            Rect SubState = new Rect(x, y+50f, width, height);
+            GUILayout.BeginArea(MainState);
             string content = _state != null ? _state.Name : "(no current state)";
-            GUILayout.Label($"<color='black'><size=40>{content}</size></color>");
+            GUILayout.Label($"<color='black'><size=30>{content}</size></color>");
             GUILayout.EndArea();
 
-            GUILayout.BeginArea(new Rect(10f, 60f, 200f, 100f));
+            GUILayout.BeginArea(SubState);
             content = _subState != null ? _subState.Name : "(no current state)";
-            GUILayout.Label($"<color='black'><size=30>{content}</size></color>");
+            GUILayout.Label($"<color='black'><size=20>{content}</size></color>");
             GUILayout.EndArea();
         }
   
