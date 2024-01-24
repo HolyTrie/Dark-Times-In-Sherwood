@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace DTIS
 {
-    public class GroundedState : PlayerState
+    public class RangedAttackState : PlayerState
     {
-        public GroundedState(string name = "Grounded") 
-        : base(name,false){}
+        public RangedAttackState(string name = "RangedAttack") 
+        : base(name,true){}
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // we do new to preserve the common inherited function
@@ -13,14 +13,8 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            if(ActionMap.Jump.WasPressedThisFrame())
-            {
-                SetStates(ESP.States.Airborne,ESP.States.Jump);
-            }
-            if(ActionMap.Shoot.WasPressedThisFrame())
-            {
-                SetStates(ESP.States.Grounded,ESP.States.RangedAttack);
-            }
+            Debug.Log("RANGED! :D");
+            // SetSubState(ESP.States.Idle);
             // else if(ActionMap.Walk.IsPressed())
             // {
                 
@@ -39,4 +33,30 @@ namespace DTIS
             //pass
         }
     }
+    /*
+    public class RangedAttackState : EntityState
+    {
+        public RangedAttackState(string name = "RangedAttack") 
+        : base(name) 
+        {
+
+        }
+        public override void Enter(EntityController controller)
+        {
+            // pass
+        }
+        public override void Exit(EntityController controller)
+        {
+            // pass
+        }
+        public override void Update(EntityStateMachine fsm, EntityController controller)
+        {
+            // pass
+        }
+        public override void FixedUpdate(EntityStateMachine fsm, EntityController controller)
+        {
+            // pass
+        }
+    }
+    */
 }

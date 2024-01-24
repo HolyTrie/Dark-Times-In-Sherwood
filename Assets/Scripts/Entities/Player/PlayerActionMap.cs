@@ -55,6 +55,15 @@ namespace DTIS
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""e67cd19a-d0e4-4fcd-8b19-57c24bff5ca3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -167,6 +176,17 @@ namespace DTIS
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""71e93c51-2abf-406c-8820-2e3d7850b102"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -178,6 +198,7 @@ namespace DTIS
             m_All_Jump = m_All.FindAction("Jump", throwIfNotFound: true);
             m_All_Walk = m_All.FindAction("Walk", throwIfNotFound: true);
             m_All_Run = m_All.FindAction("Run", throwIfNotFound: true);
+            m_All_Shoot = m_All.FindAction("Shoot", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -242,6 +263,7 @@ namespace DTIS
         private readonly InputAction m_All_Jump;
         private readonly InputAction m_All_Walk;
         private readonly InputAction m_All_Run;
+        private readonly InputAction m_All_Shoot;
         public struct AllActions
         {
             private @PlayerActionMap m_Wrapper;
@@ -249,6 +271,7 @@ namespace DTIS
             public InputAction @Jump => m_Wrapper.m_All_Jump;
             public InputAction @Walk => m_Wrapper.m_All_Walk;
             public InputAction @Run => m_Wrapper.m_All_Run;
+            public InputAction @Shoot => m_Wrapper.m_All_Shoot;
             public InputActionMap Get() { return m_Wrapper.m_All; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -267,6 +290,9 @@ namespace DTIS
                 @Run.started += instance.OnRun;
                 @Run.performed += instance.OnRun;
                 @Run.canceled += instance.OnRun;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
             }
 
             private void UnregisterCallbacks(IAllActions instance)
@@ -280,6 +306,9 @@ namespace DTIS
                 @Run.started -= instance.OnRun;
                 @Run.performed -= instance.OnRun;
                 @Run.canceled -= instance.OnRun;
+                @Shoot.started -= instance.OnShoot;
+                @Shoot.performed -= instance.OnShoot;
+                @Shoot.canceled -= instance.OnShoot;
             }
 
             public void RemoveCallbacks(IAllActions instance)
@@ -302,6 +331,7 @@ namespace DTIS
             void OnJump(InputAction.CallbackContext context);
             void OnWalk(InputAction.CallbackContext context);
             void OnRun(InputAction.CallbackContext context);
+            void OnShoot(InputAction.CallbackContext context);
         }
     }
 }

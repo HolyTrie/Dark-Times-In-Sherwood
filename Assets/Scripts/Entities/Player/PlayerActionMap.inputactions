@@ -1,5 +1,5 @@
 {
-    "name": "BaseActions",
+    "name": "PlayerActionMap",
     "maps": [
         {
             "name": "All",
@@ -27,6 +27,15 @@
                     "name": "Run",
                     "type": "Button",
                     "id": "bbf5d53b-3720-4ddd-beb0-6feeeca65ddb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "e67cd19a-d0e4-4fcd-8b19-57c24bff5ca3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -143,6 +152,17 @@
                     "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "71e93c51-2abf-406c-8820-2e3d7850b102",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
