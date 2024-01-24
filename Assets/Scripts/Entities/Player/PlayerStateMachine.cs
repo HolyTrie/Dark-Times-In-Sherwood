@@ -33,8 +33,9 @@ namespace DTIS
         private PlayerController _controller;
         private PlayerControls _controls;
         public PlayerControls Controls{get{return _controls;}}
-        private bool _grounded = true;
-        public bool Grounded{get{return _grounded;} set{_grounded = value;}}
+        public GroundCheck groundCheck;
+        // private bool _grounded = true;
+        // public bool Grounded{get{return _grounded;} set{_grounded = value;}}
         private PlayerState _state;
         private PlayerState _subState;
         //private PlayerState _prevState; // TODO: this should be a stack of states instead. (with curr being the top) - better solution.

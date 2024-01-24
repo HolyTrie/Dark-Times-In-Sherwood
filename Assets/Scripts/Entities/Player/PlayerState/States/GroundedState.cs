@@ -9,7 +9,7 @@ namespace DTIS
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // we do new to preserve the common inherited function
-            FSM.Grounded = true;
+            // FSM.groundCheck.Grounded = true;
         }
         protected override void TryStateSwitch()
         {
@@ -17,6 +17,10 @@ namespace DTIS
             {
                 SetStates(ESP.States.Airborne,ESP.States.Jump);
             }
+            // if(ActionMap.Walk.IsPressed())
+            // {
+            //     SetSubState(ESP.States.Walk);
+            // }
             /* TODO IF TIME - add falling from platforms behaviour
             if(*Something that makes you fall from a platform [for example]*)
             {

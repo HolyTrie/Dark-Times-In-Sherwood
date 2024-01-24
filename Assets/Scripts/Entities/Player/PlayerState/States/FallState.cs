@@ -5,7 +5,10 @@ namespace DTIS
         : base(name,false){}
         protected override void TryStateSwitch()
         {
-
+            // if(Controller.Velocity.y == 0)
+            // {
+            //     SetStates(ESP.States.Grounded,ESP.States.Idle);
+            // }
         }
         protected override void PhysicsCalculation()
         {

@@ -75,9 +75,8 @@ namespace DTIS
         {
             _rb2D.AddForce(new Vector2(0,_jumpForce * forceMult),ForceMode2D.Impulse);
         }
-
-
     }
+
 }
 
 
