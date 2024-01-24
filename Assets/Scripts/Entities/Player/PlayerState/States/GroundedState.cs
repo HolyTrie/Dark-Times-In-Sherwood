@@ -13,9 +13,8 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            if(FSM.Controls.ActionMap.All.Jump.WasPressedThisFrame())
+            if(ActionMap.Jump.WasPressedThisFrame())
             {
-                
                 SetStates(ESP.States.Airborne,ESP.States.Jump);
             }
             /* TODO IF TIME - add falling from platforms behaviour

@@ -40,10 +40,10 @@ namespace DTIS
         // Update is called once per frame
         void Update()
         {
-
+            Flip();
         }
         void FixedUpdate() {
-            Flip();
+            
         }
         
         protected virtual void Flip()

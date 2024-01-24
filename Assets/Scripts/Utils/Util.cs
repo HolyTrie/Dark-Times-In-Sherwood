@@ -9,5 +9,10 @@ namespace DTIS
         {
             yield return new WaitForSeconds(seconds);
         }
+
+        public static class Constants
+        {
+            static public readonly int MaxActionsMidAir = 2;
+        }
     }
 }

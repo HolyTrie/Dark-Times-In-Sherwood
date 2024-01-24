@@ -7,9 +7,9 @@ namespace DTIS
         public JumpState(string name = "Jump") 
         : base(name){}
 
-        public new virtual void Enter(PlayerController controller,PlayerStateMachine fsm)
+        public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
-            base.Enter(controller,fsm);
+            base.Enter(controller,fsm); // critical!
             Controller.Jump();
         }
         protected override void TryStateSwitch()

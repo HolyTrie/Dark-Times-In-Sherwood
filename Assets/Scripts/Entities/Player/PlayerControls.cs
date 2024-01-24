@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 namespace DTIS
 {
-    [RequireComponent(typeof(InputActionMap))]
     public class PlayerControls : MonoBehaviour 
     {
         private PlayerActionMap _am;
