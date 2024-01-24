@@ -6,7 +6,7 @@ namespace DTIS
     {
         public GroundedState(string name = "Grounded") 
         : base(name,false){}
-        public new virtual void Enter(PlayerController controller,PlayerStateMachine fsm)
+        public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // we do new to preserve the common inherited function
             FSM.Grounded = true;

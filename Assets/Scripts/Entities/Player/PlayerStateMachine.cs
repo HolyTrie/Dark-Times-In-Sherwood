@@ -86,6 +86,7 @@ namespace DTIS
            _subState?.FixedUpdate();
         }
 
+        // prints the state of the player above his head//
         private void OnGUI()
         {
             var position = Camera.main.WorldToScreenPoint(gameObject.transform.position);

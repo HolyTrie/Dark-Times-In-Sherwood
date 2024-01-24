@@ -48,10 +48,16 @@ namespace DTIS
         
         protected virtual void Flip()
         {
-            if((_facingRight && _rb2D.velocity.x < 0) || (!_facingRight && _rb2D.velocity.x > 0))
+            if(_facingRight && _rb2D.velocity.x < 0) 
             {
                 _facingRight = !_facingRight;
-                _transform.localScale = Vector3.Scale(_transform.localScale, new Vector3(-1,1,1));
+                // _transform.localScale = Vector3.Scale(_transform.localScale, new Vector3(-1,1,1)); //legacy flip
+                transform.GetComponent<SpriteRenderer>().flipX = true;
+            }
+            if(!_facingRight && _rb2D.velocity.x > 0)
+            {
+                _facingRight = !_facingRight;
+                transform.GetComponent<SpriteRenderer>().flipX = false;
             }
         }
         public void MoveWithSmoothDamp(Vector2 velocityMult)

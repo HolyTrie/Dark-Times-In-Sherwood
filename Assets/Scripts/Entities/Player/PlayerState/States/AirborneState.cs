@@ -34,8 +34,11 @@ namespace DTIS
                     ++_actionsMidAir;
                     SetSubState(ESP.States.Dash);
                 }
-                */
-                
+                */ 
+            }
+            if(ActionMap.Walk.IsPressed())
+            {
+                SetSubState(ESP.States.Walk);
             }
         }
         protected override void PhysicsCalculation()
