@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem.XR.Haptics;
 
 namespace DTIS
 {
@@ -62,6 +63,7 @@ namespace DTIS
 
         protected void Awake()
         {
+            groundCheck = GameObject.Find("FloorCheck").GetComponent<GroundCheck>();
             _controller = gameObject.GetComponent<PlayerController>(); 
             _controls = GetComponent<PlayerControls>();
             SetState(ESP.States.Grounded,ESP.States.Idle);

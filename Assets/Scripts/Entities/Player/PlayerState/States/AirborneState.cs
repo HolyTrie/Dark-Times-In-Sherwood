@@ -38,10 +38,9 @@ namespace DTIS
             }
             if(ActionMap.Walk.IsPressed()) // moving mid air
             {
-                // Debug.Log(FSM.groundCheck.Grounded + " FASDFDASFASDFAS ");
-                // if(FSM.groundCheck.Grounded) // if player touched ground
-                //     SetStates(ESP.States.Grounded,ESP.States.Walk);
-                // else
+                if(!FSM.groundCheck.Grounded) // if player touched ground
+                    SetStates(ESP.States.Grounded,ESP.States.Walk);
+                else
                     SetSubState(ESP.States.Walk);
             }
             

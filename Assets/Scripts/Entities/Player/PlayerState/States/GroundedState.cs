@@ -17,8 +17,9 @@ namespace DTIS
             {
                 SetStates(ESP.States.Airborne,ESP.States.Jump);
             }
-            // if(ActionMap.Walk.IsPressed())
+            // else if(ActionMap.Walk.IsPressed())
             // {
+                
             //     SetSubState(ESP.States.Walk);
             // }
             /* TODO IF TIME - add falling from platforms behaviour
