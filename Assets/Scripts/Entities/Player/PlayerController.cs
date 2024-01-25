@@ -28,13 +28,14 @@ namespace DTIS
         private Vector3 _Velocity = Vector3.zero;                // Entitys current velocity as a 3D vector. 
         private Animator _animator;
         public Animator Animator{get{return _animator;}}
-
+        private ClickSpawn _clickSpawn; // class to spawn object by click.
         private Transform _transform;
         void Awake()
         {
             _rb2D = GetComponent<Rigidbody2D>();
             _transform = GetComponent<Transform>();
             _animator = GetComponent<Animator>();
+            _clickSpawn = GetComponent<ClickSpawn>();
         }
 
         // Update is called once per frame
@@ -74,6 +75,11 @@ namespace DTIS
         public virtual void Jump(float forceMult = 1)
         {
             _rb2D.AddForce(new Vector2(0,_jumpForce * forceMult),ForceMode2D.Impulse);
+        }
+
+        public virtual void Shoot()
+        {
+            _clickSpawn.spawnObject();
         }
     }
 
