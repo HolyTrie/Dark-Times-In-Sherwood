@@ -28,18 +28,22 @@ namespace DTIS
         private Vector3 _Velocity = Vector3.zero;                // Entitys current velocity as a 3D vector. 
         private Animator _animator;
         public Animator Animator{get{return _animator;}}
-
         private Transform _transform;
+        private Renderer _renderer;
+        private PlayerGhostBehaviour _gb;
         void Awake()
         {
             _rb2D = GetComponent<Rigidbody2D>();
             _transform = GetComponent<Transform>();
             _animator = GetComponent<Animator>();
+            _renderer = GetComponent<Renderer>();
+            _gb = new PlayerGhostBehaviour(_renderer);
         }
 
         // Update is called once per frame
         void Update()
         {
+            _gb.TrySetGhostStatus();
             Flip();
         }
         void FixedUpdate() {
@@ -73,10 +77,34 @@ namespace DTIS
 
         public virtual void Jump(float forceMult = 1)
         {
+            _rb2D.velocity = new Vector2(_rb2D.velocity.x,0);
             _rb2D.AddForce(new Vector2(0,_jumpForce * forceMult),ForceMode2D.Impulse);
         }
+        public virtual void Ghost()
+        {
+            GameManager.IsPlayerGhosted = !GameManager.IsPlayerGhosted;
+        }
+        private class PlayerGhostBehaviour : GhostBehaviour
+        {
+            private Renderer _renderer;
 
-
+            public PlayerGhostBehaviour(Renderer renderer)
+            {
+                _renderer = renderer;
+            }
+            protected override void OnGhostSet()
+            {
+                var col = _renderer.material.color;
+                col.a = 0.5f;
+                _renderer.material.color = col;
+            }
+            protected override void OnGhostUnset()
+            {
+                var col = _renderer.material.color;
+                col.a = 1f;
+                _renderer.material.color = col;
+            }
+        }
     }
 }
 

@@ -20,5 +20,16 @@ public sealed class GameManager : MonoBehaviour
 		}
 	}
     private static bool _isPlayerGhosted = false;
-    public static bool IsPlayerGhosted{get; set;}
+    public static bool IsPlayerGhosted
+	{
+		get
+		{
+			return _isPlayerGhosted;
+		} 
+		set
+		{
+			_isPlayerGhosted = value;
+			//Debug.Log(string.Format("player ghosted = {0}",_isPlayerGhosted));
+		}
+	}
 }

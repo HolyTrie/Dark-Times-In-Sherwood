@@ -69,7 +69,7 @@ namespace DTIS
 
         protected void Start()
         {
-            //Controls.ActionMap.All.Jump.performed += _ => _controller.Jump();
+            Controls.ActionMap.All.GoGhost.performed += _ => _controller.Ghost();
         }
         public virtual void SetState(ESP.States state, ESP.States subState)
         {

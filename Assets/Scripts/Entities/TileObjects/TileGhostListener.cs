@@ -21,7 +21,7 @@ public class TileGhostListener : MonoBehaviour{
             protected override void OnGhostSet()
             {
                 var col = _renderer.material.color;
-                col.a = 0.1f;
+                col.a = 0.2f;
                 _renderer.material.color = col;
                 _collider.isTrigger = true;
             }
