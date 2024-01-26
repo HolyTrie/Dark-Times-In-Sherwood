@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace DTIS
 {
+    /*This class checks if the player is standing on ground or not*/
     public class GroundCheck : MonoBehaviour
     {
         private bool _grounded = true;

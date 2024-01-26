@@ -10,11 +10,12 @@ namespace DTIS
         {
             base.Enter(controller,fsm); // we do new to preserve the common inherited function
             // FSM.groundCheck.Grounded = true;
+            Controller.Shoot(); // need to add delay according to frames.
         }
         protected override void TryStateSwitch()
         {
-            Debug.Log("RANGED! :D");
-            // SetSubState(ESP.States.Idle);
+            // Controller.WaitForAnimtaion();
+            SetSubState(ESP.States.Idle);
             // else if(ActionMap.Walk.IsPressed())
             // {
                 
@@ -28,10 +29,13 @@ namespace DTIS
             }
             */
         }
+        
         protected override void PhysicsCalculation()
         {
             //pass
         }
+
+        
     }
     /*
     public class RangedAttackState : EntityState

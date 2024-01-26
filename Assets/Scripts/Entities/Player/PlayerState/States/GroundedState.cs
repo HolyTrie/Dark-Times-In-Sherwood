@@ -19,7 +19,6 @@ namespace DTIS
             }
             if(ActionMap.Shoot.WasPressedThisFrame())
             {
-                Controller.Shoot(); // need to add delay according to frames.
                 SetStates(ESP.States.Grounded,ESP.States.RangedAttack);
             }
             // else if(ActionMap.Walk.IsPressed())
