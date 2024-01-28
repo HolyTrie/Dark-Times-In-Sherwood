@@ -71,6 +71,15 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""61c8d9a9-e992-4efb-9f39-df633df0e1e9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -205,6 +214,17 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5dfa6efc-85e5-443b-983f-a72e35d6a3d7"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -218,6 +238,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         m_All_Run = m_All.FindAction("Run", throwIfNotFound: true);
         m_All_GoGhost = m_All.FindAction("GoGhost", throwIfNotFound: true);
         m_All_Shoot = m_All.FindAction("Shoot", throwIfNotFound: true);
+        m_All_Down = m_All.FindAction("Down", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -284,6 +305,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_All_Run;
     private readonly InputAction m_All_GoGhost;
     private readonly InputAction m_All_Shoot;
+    private readonly InputAction m_All_Down;
     public struct AllActions
     {
         private @PlayerActionMap m_Wrapper;
@@ -293,6 +315,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_All_Run;
         public InputAction @GoGhost => m_Wrapper.m_All_GoGhost;
         public InputAction @Shoot => m_Wrapper.m_All_Shoot;
+        public InputAction @Down => m_Wrapper.m_All_Down;
         public InputActionMap Get() { return m_Wrapper.m_All; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -317,6 +340,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
+            @Down.started += instance.OnDown;
+            @Down.performed += instance.OnDown;
+            @Down.canceled += instance.OnDown;
         }
 
         private void UnregisterCallbacks(IAllActions instance)
@@ -336,6 +362,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
+            @Down.started -= instance.OnDown;
+            @Down.performed -= instance.OnDown;
+            @Down.canceled -= instance.OnDown;
         }
 
         public void RemoveCallbacks(IAllActions instance)
@@ -360,5 +389,6 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         void OnRun(InputAction.CallbackContext context);
         void OnGoGhost(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
     }
 }

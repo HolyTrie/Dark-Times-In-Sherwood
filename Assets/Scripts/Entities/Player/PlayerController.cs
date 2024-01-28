@@ -14,7 +14,7 @@ namespace DTIS
         [SerializeField] private float _jumpForce = 15f;
         [SerializeField] private float _walkSpeed = 10f;
         [SerializeField] private float _runSpeedMult = 1.75f;
-        public float RunSpeedMult{get { return _runSpeedMult;}}
+        public float RunSpeedMult { get { return _runSpeedMult; } }
         [SerializeField] private float _movementSmoothing = 0.35f;
         [SerializeField] private LayerMask _whatIsGround;							// A mask determining what is ground to the character
         [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider to be disabled on the 'crouch' player action.
@@ -23,10 +23,10 @@ namespace DTIS
         [SerializeField] float ShootDelay;
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
         private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
-        public Vector3 Velocity{get{return _rb2D.velocity;}}
+        public Vector3 Velocity { get { return _rb2D.velocity; } }
         private Vector3 _Velocity = Vector3.zero;                // Entitys current velocity as a 3D vector. 
         private Animator _animator;
-        public Animator Animator{get{return _animator;}}
+        public Animator Animator { get { return _animator; } }
         private ClickSpawn _clickSpawn; // class to spawn object by click.
         private Transform _transform;
         private bool canSpawn = true;
@@ -34,7 +34,7 @@ namespace DTIS
         private Renderer _renderer;
         private PlayerGhostBehaviour _gb;
         private GroundCheck _gc;
-        public bool IsGrounded{get{return _gc.Grounded;}}
+        public bool IsGrounded { get { return _gc.Grounded; } }
         void Awake()
         {
             _rb2D = GetComponent<Rigidbody2D>();
@@ -53,24 +53,25 @@ namespace DTIS
             _gb.TrySetGhostStatus();
             Flip();
         }
-        void FixedUpdate() {
-            
+        void FixedUpdate()
+        {
+
         }
-        
+
         /*Flips the chacater according to his velocity*/
         protected virtual void Flip()
         {
             Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            bool flipRight =  _rb2D.velocity.x <= 0 || mouseWorldPosition.x <=  transform.position.x; // mushlam
-            bool flipLeft  =  _rb2D.velocity.x >  0 || mouseWorldPosition.x >   transform.position.x; // WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            
-            if(_facingRight && flipRight) 
+            bool flipRight = _rb2D.velocity.x <= 0 || mouseWorldPosition.x <= transform.position.x; // mushlam
+            bool flipLeft = _rb2D.velocity.x > 0 || mouseWorldPosition.x > transform.position.x; // WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+
+            if (_facingRight && flipRight)
             {
                 _facingRight = !_facingRight;
                 // _transform.localScale = Vector3.Scale(_transform.localScale, new Vector3(-1,1,1)); //legacy flip
                 transform.GetComponent<SpriteRenderer>().flipX = true;
             }
-            if(!_facingRight && flipLeft)
+            if (!_facingRight && flipLeft)
             {
                 _facingRight = !_facingRight;
                 transform.GetComponent<SpriteRenderer>().flipX = false;
@@ -89,8 +90,8 @@ namespace DTIS
 
         public virtual void Jump(float forceMult = 1)
         {
-            _rb2D.velocity = new Vector2(_rb2D.velocity.x,0);
-            _rb2D.AddForce(new Vector2(0,_jumpForce * forceMult),ForceMode2D.Impulse);
+            _rb2D.velocity = new Vector2(_rb2D.velocity.x, 0);
+            _rb2D.AddForce(new Vector2(0, _jumpForce * forceMult), ForceMode2D.Impulse);
         }
         public virtual void Ghost()
         {
@@ -116,10 +117,11 @@ namespace DTIS
                 col.a = 1f;
                 _renderer.material.color = col;
             }
-        }        public virtual void Shoot()
+        }
+        public virtual void Shoot()
         {
-            if(canSpawn)
-            {   
+            if (canSpawn)
+            {
                 canSpawn = false;
                 this.StartCoroutine(DelayArrow());
             }

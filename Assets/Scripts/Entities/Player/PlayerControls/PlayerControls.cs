@@ -4,21 +4,22 @@ using UnityEngine.InputSystem;
 
 namespace DTIS
 {
-    public class PlayerControls : MonoBehaviour 
+    public class PlayerControls : MonoBehaviour
     {
         private PlayerActionMap _am;
-        public PlayerActionMap ActionMap{get{return _am;}}
+        public PlayerActionMap ActionMap { get { return _am; } }
         public InputAction moveHorizontal = new(type: InputActionType.Button);
 
         //public InputAction Attack2 = new(type: InputActionType.Button);
         private float _horizontalMove = 0f;
-        public float HorizontalMove{ get {return _horizontalMove;} set {_horizontalMove = value;}}
+        public float HorizontalMove { get { return _horizontalMove; } set { _horizontalMove = value; } }
 
         private void Awake()
         {
             _am = new PlayerActionMap();
         }
-        private void Start() {
+        private void Start()
+        {
             LogControls();
         }
 
@@ -26,7 +27,8 @@ namespace DTIS
         {
             //TODO
         }
-        void Update() {
+        void FixedUpdate()
+        {
             HorizontalMove = ActionMap.All.Walk.ReadValue<float>();
         }
 
@@ -42,5 +44,5 @@ namespace DTIS
         }
     }
 
-    
+
 }
