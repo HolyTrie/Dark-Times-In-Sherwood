@@ -49,7 +49,7 @@ namespace DTIS
                 //States.Jump2 => new Jump2State(),
                 //States.LightAttack => new LightAttackState(),
                 //States.HeavyAttack => new HeavyAttackState(),
-                //States.RangedAttack => new RangedAttackState(),
+                States.RangedAttack => new RangedAttackState(),
                 _ => throw new System.Exception("ESP Factory 'build' method does not support entity of type " + state + "\n\t * please check the States enum in the ESP"),
             };
         }

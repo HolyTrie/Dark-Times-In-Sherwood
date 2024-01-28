@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace DTIS
@@ -20,41 +18,59 @@ namespace DTIS
         [SerializeField] private float _movementSmoothing = 0.35f;
         [SerializeField] private LayerMask _whatIsGround;							// A mask determining what is ground to the character
         [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider to be disabled on the 'crouch' player action.
-        [SerializeField] private Transform _groundCheck;							// A position marking where to check if the entity is grounded.
+        [SerializeField] private GameObject _groundCheck;							// A position marking where to check if the entity is grounded.
         [SerializeField] private Transform _ceilingCheck;							// A position marking where to check for ceilings
+        [SerializeField] float ShootDelay;
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
         private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
         public Vector3 Velocity{get{return _rb2D.velocity;}}
         private Vector3 _Velocity = Vector3.zero;                // Entitys current velocity as a 3D vector. 
         private Animator _animator;
         public Animator Animator{get{return _animator;}}
-
+        private ClickSpawn _clickSpawn; // class to spawn object by click.
         private Transform _transform;
+        private bool canSpawn = true;
+        private Camera _mainCamera;
+        private Renderer _renderer;
+        private PlayerGhostBehaviour _gb;
+        private GroundCheck _gc;
+        public bool IsGrounded{get{return _gc.Grounded;}}
         void Awake()
         {
             _rb2D = GetComponent<Rigidbody2D>();
             _transform = GetComponent<Transform>();
             _animator = GetComponent<Animator>();
+            _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix 'magic number'
+            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>(); // is used to check where the player is looking at if we shoot, so we flip it.
+            _gc = GameObject.FindGameObjectWithTag("FloorCheck").GetComponent<GroundCheck>(); // TODO: fix 'magic number'
+            _renderer = GetComponent<Renderer>();
+            _gb = new PlayerGhostBehaviour(_renderer);
         }
 
         // Update is called once per frame
         void Update()
         {
+            _gb.TrySetGhostStatus();
             Flip();
         }
         void FixedUpdate() {
             
         }
         
+        /*Flips the chacater according to his velocity*/
         protected virtual void Flip()
         {
-            if(_facingRight && _rb2D.velocity.x < 0) 
+            Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            bool flipRight =  _rb2D.velocity.x <= 0 || mouseWorldPosition.x <=  transform.position.x; // mushlam
+            bool flipLeft  =  _rb2D.velocity.x >  0 || mouseWorldPosition.x >   transform.position.x; // WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            
+            if(_facingRight && flipRight) 
             {
                 _facingRight = !_facingRight;
                 // _transform.localScale = Vector3.Scale(_transform.localScale, new Vector3(-1,1,1)); //legacy flip
                 transform.GetComponent<SpriteRenderer>().flipX = true;
             }
-            if(!_facingRight && _rb2D.velocity.x > 0)
+            if(!_facingRight && flipLeft)
             {
                 _facingRight = !_facingRight;
                 transform.GetComponent<SpriteRenderer>().flipX = false;
@@ -73,10 +89,49 @@ namespace DTIS
 
         public virtual void Jump(float forceMult = 1)
         {
+            _rb2D.velocity = new Vector2(_rb2D.velocity.x,0);
             _rb2D.AddForce(new Vector2(0,_jumpForce * forceMult),ForceMode2D.Impulse);
         }
+        public virtual void Ghost()
+        {
+            GameManager.IsPlayerGhosted = !GameManager.IsPlayerGhosted;
+        }
+        private class PlayerGhostBehaviour : GhostBehaviour
+        {
+            private Renderer _renderer;
 
-
+            public PlayerGhostBehaviour(Renderer renderer)
+            {
+                _renderer = renderer;
+            }
+            protected override void OnGhostSet()
+            {
+                var col = _renderer.material.color;
+                col.a = 0.5f;
+                _renderer.material.color = col;
+            }
+            protected override void OnGhostUnset()
+            {
+                var col = _renderer.material.color;
+                col.a = 1f;
+                _renderer.material.color = col;
+            }
+        }        public virtual void Shoot()
+        {
+            if(canSpawn)
+            {   
+                canSpawn = false;
+                this.StartCoroutine(DelayArrow());
+            }
+        }
+        // delays the user from shooting every 'ShootDelay' seconds.
+        private IEnumerator DelayArrow()
+        {
+            Debug.Log("Arrow is loading...");
+            yield return new WaitForSeconds(ShootDelay);
+            _clickSpawn.spawnObject();
+            canSpawn = true;
+        }
     }
 }
 

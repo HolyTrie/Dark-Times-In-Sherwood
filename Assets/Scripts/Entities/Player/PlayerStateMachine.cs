@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem.XR.Haptics;
 
 namespace DTIS
 {
@@ -33,8 +34,6 @@ namespace DTIS
         private PlayerController _controller;
         private PlayerControls _controls;
         public PlayerControls Controls{get{return _controls;}}
-        private bool _grounded = true;
-        public bool Grounded{get{return _grounded;} set{_grounded = value;}}
         private PlayerState _state;
         private PlayerState _subState;
         //private PlayerState _prevState; // TODO: this should be a stack of states instead. (with curr being the top) - better solution.
@@ -59,6 +58,8 @@ namespace DTIS
             }
         }
 
+        public bool Grounded { get {return _controller.IsGrounded;}}
+
         protected void Awake()
         {
             _controller = gameObject.GetComponent<PlayerController>(); 
@@ -69,7 +70,7 @@ namespace DTIS
 
         protected void Start()
         {
-            //Controls.ActionMap.All.Jump.performed += _ => _controller.Jump();
+            Controls.ActionMap.All.GoGhost.performed += _ => _controller.Ghost();
         }
         public virtual void SetState(ESP.States state, ESP.States subState)
         {
