@@ -12,7 +12,6 @@ namespace DTIS
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // Critical!
-            // FSM.groundCheck.Grounded = false;
             _actionsMidAir = 1;
         }
         protected override void TryStateSwitch()
@@ -38,7 +37,7 @@ namespace DTIS
             }
             if(ActionMap.Walk.IsPressed()) // moving mid air
             {
-                if(!FSM.GroundCheck.Grounded) // if player touched ground
+                if(!FSM.Grounded) // if player touched ground
                     SetStates(ESP.States.Grounded,ESP.States.Walk);
                 else
                     SetSubState(ESP.States.Walk);

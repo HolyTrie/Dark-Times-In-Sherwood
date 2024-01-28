@@ -9,7 +9,6 @@ namespace DTIS
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // we do new to preserve the common inherited function
-            // FSM.groundCheck.Grounded = true;
         }
         protected override void TryStateSwitch()
         {

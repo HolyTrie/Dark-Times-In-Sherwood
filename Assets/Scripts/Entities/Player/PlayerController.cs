@@ -18,7 +18,7 @@ namespace DTIS
         [SerializeField] private float _movementSmoothing = 0.35f;
         [SerializeField] private LayerMask _whatIsGround;							// A mask determining what is ground to the character
         [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider to be disabled on the 'crouch' player action.
-        [SerializeField] private Transform _groundCheck;							// A position marking where to check if the entity is grounded.
+        [SerializeField] private GameObject _groundCheck;							// A position marking where to check if the entity is grounded.
         [SerializeField] private Transform _ceilingCheck;							// A position marking where to check for ceilings
         [SerializeField] float ShootDelay;
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
@@ -33,6 +33,8 @@ namespace DTIS
         private Camera _mainCamera;
         private Renderer _renderer;
         private PlayerGhostBehaviour _gb;
+        private GroundCheck _gc;
+        public bool IsGrounded{get{return _gc.Grounded;}}
         void Awake()
         {
             _rb2D = GetComponent<Rigidbody2D>();
@@ -40,6 +42,7 @@ namespace DTIS
             _animator = GetComponent<Animator>();
             _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix 'magic number'
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>(); // is used to check where the player is looking at if we shoot, so we flip it.
+            _gc = GameObject.FindGameObjectWithTag("FloorCheck").GetComponent<GroundCheck>(); // TODO: fix 'magic number'
             _renderer = GetComponent<Renderer>();
             _gb = new PlayerGhostBehaviour(_renderer);
         }
@@ -58,14 +61,16 @@ namespace DTIS
         protected virtual void Flip()
         {
             Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            bool flipRight =  _rb2D.velocity.x <= 0 || mouseWorldPosition.x <=  transform.position.x; // mushlam
+            bool flipLeft  =  _rb2D.velocity.x >  0 || mouseWorldPosition.x >   transform.position.x; // WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
             
-            if(_facingRight && ( _rb2D.velocity.x < 0 || mouseWorldPosition.x < transform.position.x)) 
+            if(_facingRight && flipRight) 
             {
                 _facingRight = !_facingRight;
                 // _transform.localScale = Vector3.Scale(_transform.localScale, new Vector3(-1,1,1)); //legacy flip
                 transform.GetComponent<SpriteRenderer>().flipX = true;
             }
-            if(!_facingRight && ( _rb2D.velocity.x > 0 || mouseWorldPosition.x >= transform.position.x))
+            if(!_facingRight && flipLeft)
             {
                 _facingRight = !_facingRight;
                 transform.GetComponent<SpriteRenderer>().flipX = false;
