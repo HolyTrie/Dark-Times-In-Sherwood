@@ -80,6 +80,15 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interaction"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb2020c3-435a-4426-8520-6a6b0a7df2b9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -225,6 +234,17 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""action"": ""Down"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""114f9ff6-0f18-4c6f-9de6-c6aeec4f205c"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -239,6 +259,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         m_All_GoGhost = m_All.FindAction("GoGhost", throwIfNotFound: true);
         m_All_Shoot = m_All.FindAction("Shoot", throwIfNotFound: true);
         m_All_Down = m_All.FindAction("Down", throwIfNotFound: true);
+        m_All_Interaction = m_All.FindAction("Interaction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -306,6 +327,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_All_GoGhost;
     private readonly InputAction m_All_Shoot;
     private readonly InputAction m_All_Down;
+    private readonly InputAction m_All_Interaction;
     public struct AllActions
     {
         private @PlayerActionMap m_Wrapper;
@@ -316,6 +338,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         public InputAction @GoGhost => m_Wrapper.m_All_GoGhost;
         public InputAction @Shoot => m_Wrapper.m_All_Shoot;
         public InputAction @Down => m_Wrapper.m_All_Down;
+        public InputAction @Interaction => m_Wrapper.m_All_Interaction;
         public InputActionMap Get() { return m_Wrapper.m_All; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -343,6 +366,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Down.started += instance.OnDown;
             @Down.performed += instance.OnDown;
             @Down.canceled += instance.OnDown;
+            @Interaction.started += instance.OnInteraction;
+            @Interaction.performed += instance.OnInteraction;
+            @Interaction.canceled += instance.OnInteraction;
         }
 
         private void UnregisterCallbacks(IAllActions instance)
@@ -365,6 +391,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Down.started -= instance.OnDown;
             @Down.performed -= instance.OnDown;
             @Down.canceled -= instance.OnDown;
+            @Interaction.started -= instance.OnInteraction;
+            @Interaction.performed -= instance.OnInteraction;
+            @Interaction.canceled -= instance.OnInteraction;
         }
 
         public void RemoveCallbacks(IAllActions instance)
@@ -390,5 +419,6 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         void OnGoGhost(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnDown(InputAction.CallbackContext context);
+        void OnInteraction(InputAction.CallbackContext context);
     }
 }
