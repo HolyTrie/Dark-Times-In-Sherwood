@@ -56,5 +56,8 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Dark-Times-In-Sherwood.sln"
+    "dotnet.defaultSolution": "Dark-Times-In-Sherwood.sln",
+    "[csharp]": {
+        "editor.defaultFormatter": "ms-dotnettools.csharp"
+    }
 }
