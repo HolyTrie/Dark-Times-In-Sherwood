@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TileAntiGhostListener : MonoBehaviour{
+public class TileGhostListener : MonoBehaviour{
     private TileGhostBehaviour _gb;
     private void Start() {
         _gb = new TileGhostBehaviour(GetComponent<Renderer>(),GetComponent<Collider2D>());
@@ -21,17 +21,16 @@ public class TileAntiGhostListener : MonoBehaviour{
             protected override void OnGhostSet()
             {
                 var col = _renderer.material.color;
-                col.a = 0.9f;
-                col.r = 255f;
+                col.a = 0.6f;
                 _renderer.material.color = col;
-                _collider.isTrigger = false;
+                _collider.isTrigger = true;
             }
             protected override void OnGhostUnset()
             {
                 var col = _renderer.material.color;
-                col.a = 0f;
+                col.a = 1f;
                 _renderer.material.color = col;
-                _collider.isTrigger = true;
+                _collider.isTrigger = false;
             }
         }
 }
