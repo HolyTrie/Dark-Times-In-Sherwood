@@ -12,12 +12,12 @@ namespace DTIS
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // Critical!
-            FSM.Grounded = false;
+            // FSM.groundCheck.Grounded = false;
             _actionsMidAir = 1;
         }
         protected override void TryStateSwitch()
         {
-            if(Controller.Velocity.y == 0)
+            if(Controller.Velocity.y == 0) // just falling
             {
                 SetStates(ESP.States.Grounded,ESP.States.Idle);
             }
@@ -36,10 +36,18 @@ namespace DTIS
                 }
                 */ 
             }
-            if(ActionMap.Walk.IsPressed())
+            if(ActionMap.Walk.IsPressed()) // moving mid air
             {
-                SetSubState(ESP.States.Walk);
+                if(!FSM.groundCheck.Grounded) // if player touched ground
+                    SetStates(ESP.States.Grounded,ESP.States.Walk);
+                else
+                    SetSubState(ESP.States.Walk);
             }
+            
+            // if(Controller.Velocity.y < 0)
+            // {   
+            //     SetSubState(ESP.States.Fall);
+            // }
         }
         protected override void PhysicsCalculation()
         {

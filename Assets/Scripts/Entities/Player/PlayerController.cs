@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace DTIS
@@ -22,13 +20,17 @@ namespace DTIS
         [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider to be disabled on the 'crouch' player action.
         [SerializeField] private Transform _groundCheck;							// A position marking where to check if the entity is grounded.
         [SerializeField] private Transform _ceilingCheck;							// A position marking where to check for ceilings
+        [SerializeField] float ShootDelay;
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
         private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
         public Vector3 Velocity{get{return _rb2D.velocity;}}
         private Vector3 _Velocity = Vector3.zero;                // Entitys current velocity as a 3D vector. 
         private Animator _animator;
         public Animator Animator{get{return _animator;}}
+        private ClickSpawn _clickSpawn; // class to spawn object by click.
         private Transform _transform;
+        private bool canSpawn = true;
+        private Camera _mainCamera;
         private Renderer _renderer;
         private PlayerGhostBehaviour _gb;
         void Awake()
@@ -36,6 +38,8 @@ namespace DTIS
             _rb2D = GetComponent<Rigidbody2D>();
             _transform = GetComponent<Transform>();
             _animator = GetComponent<Animator>();
+            _clickSpawn = GameObject.Find("RotatePoint").GetComponent<ClickSpawn>();
+            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>(); // is used to check where the player is looking at if we shoot, so we flip it.
             _renderer = GetComponent<Renderer>();
             _gb = new PlayerGhostBehaviour(_renderer);
         }
@@ -50,15 +54,18 @@ namespace DTIS
             
         }
         
+        /*Flips the chacater according to his velocity*/
         protected virtual void Flip()
         {
-            if(_facingRight && _rb2D.velocity.x < 0) 
+            Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            
+            if(_facingRight && ( _rb2D.velocity.x < 0 || mouseWorldPosition.x < transform.position.x)) 
             {
                 _facingRight = !_facingRight;
                 // _transform.localScale = Vector3.Scale(_transform.localScale, new Vector3(-1,1,1)); //legacy flip
                 transform.GetComponent<SpriteRenderer>().flipX = true;
             }
-            if(!_facingRight && _rb2D.velocity.x > 0)
+            if(!_facingRight && ( _rb2D.velocity.x > 0 || mouseWorldPosition.x >= transform.position.x))
             {
                 _facingRight = !_facingRight;
                 transform.GetComponent<SpriteRenderer>().flipX = false;
@@ -104,6 +111,21 @@ namespace DTIS
                 col.a = 1f;
                 _renderer.material.color = col;
             }
+        }        public virtual void Shoot()
+        {
+            if(canSpawn)
+            {   
+                canSpawn = false;
+                this.StartCoroutine(DelayArrow());
+            }
+        }
+        // delays the user from shooting every 'ShootDelay' seconds.
+        private IEnumerator DelayArrow()
+        {
+            Debug.Log("Arrow is loading...");
+            yield return new WaitForSeconds(ShootDelay);
+            _clickSpawn.spawnObject();
+            canSpawn = true;
         }
     }
 }
