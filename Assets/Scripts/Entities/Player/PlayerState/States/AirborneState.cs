@@ -38,7 +38,7 @@ namespace DTIS
             }
             if(ActionMap.Walk.IsPressed()) // moving mid air
             {
-                if(!FSM.groundCheck.Grounded) // if player touched ground
+                if(!FSM.GroundCheck.Grounded) // if player touched ground
                     SetStates(ESP.States.Grounded,ESP.States.Walk);
                 else
                     SetSubState(ESP.States.Walk);

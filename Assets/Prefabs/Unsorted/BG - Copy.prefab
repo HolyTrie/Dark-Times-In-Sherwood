@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1875893910050420686}
   m_Layer: 0
-  m_Name: BG
+  m_Name: BG - Copy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -15,14 +15,12 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace DTIS
+public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
 {
-    public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
+    public InputActionAsset asset { get; }
+    public @PlayerActionMap()
     {
-        public InputActionAsset asset { get; }
-        public @PlayerActionMap()
-        {
-            asset = InputActionAsset.FromJson(@"{
+        asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerActionMap"",
     ""maps"": [
         {
@@ -60,6 +58,15 @@ namespace DTIS
                     ""name"": ""GoGhost"",
                     ""type"": ""Button"",
                     ""id"": ""e6f12590-37c5-45ef-b4f9-6538ece1d0fa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""b5667f81-c08a-4d2d-9751-b9a73c3c3629"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -187,151 +194,171 @@ namespace DTIS
                     ""action"": ""GoGhost"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c597f359-1a92-4cba-a782-2b96643beb52"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
     ],
     ""controlSchemes"": []
 }");
-            // All
-            m_All = asset.FindActionMap("All", throwIfNotFound: true);
-            m_All_Jump = m_All.FindAction("Jump", throwIfNotFound: true);
-            m_All_Walk = m_All.FindAction("Walk", throwIfNotFound: true);
-            m_All_Run = m_All.FindAction("Run", throwIfNotFound: true);
-            m_All_GoGhost = m_All.FindAction("GoGhost", throwIfNotFound: true);
-        }
-
-        public void Dispose()
-        {
-            UnityEngine.Object.Destroy(asset);
-        }
-
-        public InputBinding? bindingMask
-        {
-            get => asset.bindingMask;
-            set => asset.bindingMask = value;
-        }
-
-        public ReadOnlyArray<InputDevice>? devices
-        {
-            get => asset.devices;
-            set => asset.devices = value;
-        }
-
-        public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
-
-        public bool Contains(InputAction action)
-        {
-            return asset.Contains(action);
-        }
-
-        public IEnumerator<InputAction> GetEnumerator()
-        {
-            return asset.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public void Enable()
-        {
-            asset.Enable();
-        }
-
-        public void Disable()
-        {
-            asset.Disable();
-        }
-
-        public IEnumerable<InputBinding> bindings => asset.bindings;
-
-        public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false)
-        {
-            return asset.FindAction(actionNameOrId, throwIfNotFound);
-        }
-
-        public int FindBinding(InputBinding bindingMask, out InputAction action)
-        {
-            return asset.FindBinding(bindingMask, out action);
-        }
-
         // All
-        private readonly InputActionMap m_All;
-        private List<IAllActions> m_AllActionsCallbackInterfaces = new List<IAllActions>();
-        private readonly InputAction m_All_Jump;
-        private readonly InputAction m_All_Walk;
-        private readonly InputAction m_All_Run;
-        private readonly InputAction m_All_GoGhost;
-        public struct AllActions
+        m_All = asset.FindActionMap("All", throwIfNotFound: true);
+        m_All_Jump = m_All.FindAction("Jump", throwIfNotFound: true);
+        m_All_Walk = m_All.FindAction("Walk", throwIfNotFound: true);
+        m_All_Run = m_All.FindAction("Run", throwIfNotFound: true);
+        m_All_GoGhost = m_All.FindAction("GoGhost", throwIfNotFound: true);
+        m_All_Shoot = m_All.FindAction("Shoot", throwIfNotFound: true);
+    }
+
+    public void Dispose()
+    {
+        UnityEngine.Object.Destroy(asset);
+    }
+
+    public InputBinding? bindingMask
+    {
+        get => asset.bindingMask;
+        set => asset.bindingMask = value;
+    }
+
+    public ReadOnlyArray<InputDevice>? devices
+    {
+        get => asset.devices;
+        set => asset.devices = value;
+    }
+
+    public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
+
+    public bool Contains(InputAction action)
+    {
+        return asset.Contains(action);
+    }
+
+    public IEnumerator<InputAction> GetEnumerator()
+    {
+        return asset.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    public void Enable()
+    {
+        asset.Enable();
+    }
+
+    public void Disable()
+    {
+        asset.Disable();
+    }
+
+    public IEnumerable<InputBinding> bindings => asset.bindings;
+
+    public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false)
+    {
+        return asset.FindAction(actionNameOrId, throwIfNotFound);
+    }
+
+    public int FindBinding(InputBinding bindingMask, out InputAction action)
+    {
+        return asset.FindBinding(bindingMask, out action);
+    }
+
+    // All
+    private readonly InputActionMap m_All;
+    private List<IAllActions> m_AllActionsCallbackInterfaces = new List<IAllActions>();
+    private readonly InputAction m_All_Jump;
+    private readonly InputAction m_All_Walk;
+    private readonly InputAction m_All_Run;
+    private readonly InputAction m_All_GoGhost;
+    private readonly InputAction m_All_Shoot;
+    public struct AllActions
+    {
+        private @PlayerActionMap m_Wrapper;
+        public AllActions(@PlayerActionMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Jump => m_Wrapper.m_All_Jump;
+        public InputAction @Walk => m_Wrapper.m_All_Walk;
+        public InputAction @Run => m_Wrapper.m_All_Run;
+        public InputAction @GoGhost => m_Wrapper.m_All_GoGhost;
+        public InputAction @Shoot => m_Wrapper.m_All_Shoot;
+        public InputActionMap Get() { return m_Wrapper.m_All; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AllActions set) { return set.Get(); }
+        public void AddCallbacks(IAllActions instance)
         {
-            private @PlayerActionMap m_Wrapper;
-            public AllActions(@PlayerActionMap wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Jump => m_Wrapper.m_All_Jump;
-            public InputAction @Walk => m_Wrapper.m_All_Walk;
-            public InputAction @Run => m_Wrapper.m_All_Run;
-            public InputAction @GoGhost => m_Wrapper.m_All_GoGhost;
-            public InputActionMap Get() { return m_Wrapper.m_All; }
-            public void Enable() { Get().Enable(); }
-            public void Disable() { Get().Disable(); }
-            public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(AllActions set) { return set.Get(); }
-            public void AddCallbacks(IAllActions instance)
-            {
-                if (instance == null || m_Wrapper.m_AllActionsCallbackInterfaces.Contains(instance)) return;
-                m_Wrapper.m_AllActionsCallbackInterfaces.Add(instance);
-                @Jump.started += instance.OnJump;
-                @Jump.performed += instance.OnJump;
-                @Jump.canceled += instance.OnJump;
-                @Walk.started += instance.OnWalk;
-                @Walk.performed += instance.OnWalk;
-                @Walk.canceled += instance.OnWalk;
-                @Run.started += instance.OnRun;
-                @Run.performed += instance.OnRun;
-                @Run.canceled += instance.OnRun;
-                @GoGhost.started += instance.OnGoGhost;
-                @GoGhost.performed += instance.OnGoGhost;
-                @GoGhost.canceled += instance.OnGoGhost;
-            }
-
-            private void UnregisterCallbacks(IAllActions instance)
-            {
-                @Jump.started -= instance.OnJump;
-                @Jump.performed -= instance.OnJump;
-                @Jump.canceled -= instance.OnJump;
-                @Walk.started -= instance.OnWalk;
-                @Walk.performed -= instance.OnWalk;
-                @Walk.canceled -= instance.OnWalk;
-                @Run.started -= instance.OnRun;
-                @Run.performed -= instance.OnRun;
-                @Run.canceled -= instance.OnRun;
-                @GoGhost.started -= instance.OnGoGhost;
-                @GoGhost.performed -= instance.OnGoGhost;
-                @GoGhost.canceled -= instance.OnGoGhost;
-            }
-
-            public void RemoveCallbacks(IAllActions instance)
-            {
-                if (m_Wrapper.m_AllActionsCallbackInterfaces.Remove(instance))
-                    UnregisterCallbacks(instance);
-            }
-
-            public void SetCallbacks(IAllActions instance)
-            {
-                foreach (var item in m_Wrapper.m_AllActionsCallbackInterfaces)
-                    UnregisterCallbacks(item);
-                m_Wrapper.m_AllActionsCallbackInterfaces.Clear();
-                AddCallbacks(instance);
-            }
+            if (instance == null || m_Wrapper.m_AllActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_AllActionsCallbackInterfaces.Add(instance);
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @Walk.started += instance.OnWalk;
+            @Walk.performed += instance.OnWalk;
+            @Walk.canceled += instance.OnWalk;
+            @Run.started += instance.OnRun;
+            @Run.performed += instance.OnRun;
+            @Run.canceled += instance.OnRun;
+            @GoGhost.started += instance.OnGoGhost;
+            @GoGhost.performed += instance.OnGoGhost;
+            @GoGhost.canceled += instance.OnGoGhost;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
         }
-        public AllActions @All => new AllActions(this);
-        public interface IAllActions
+
+        private void UnregisterCallbacks(IAllActions instance)
         {
-            void OnJump(InputAction.CallbackContext context);
-            void OnWalk(InputAction.CallbackContext context);
-            void OnRun(InputAction.CallbackContext context);
-            void OnGoGhost(InputAction.CallbackContext context);
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Walk.started -= instance.OnWalk;
+            @Walk.performed -= instance.OnWalk;
+            @Walk.canceled -= instance.OnWalk;
+            @Run.started -= instance.OnRun;
+            @Run.performed -= instance.OnRun;
+            @Run.canceled -= instance.OnRun;
+            @GoGhost.started -= instance.OnGoGhost;
+            @GoGhost.performed -= instance.OnGoGhost;
+            @GoGhost.canceled -= instance.OnGoGhost;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
         }
+
+        public void RemoveCallbacks(IAllActions instance)
+        {
+            if (m_Wrapper.m_AllActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IAllActions instance)
+        {
+            foreach (var item in m_Wrapper.m_AllActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_AllActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public AllActions @All => new AllActions(this);
+    public interface IAllActions
+    {
+        void OnJump(InputAction.CallbackContext context);
+        void OnWalk(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
+        void OnGoGhost(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }

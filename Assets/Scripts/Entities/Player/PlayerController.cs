@@ -38,7 +38,7 @@ namespace DTIS
             _rb2D = GetComponent<Rigidbody2D>();
             _transform = GetComponent<Transform>();
             _animator = GetComponent<Animator>();
-            _clickSpawn = GameObject.Find("RotatePoint").GetComponent<ClickSpawn>();
+            _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix 'magic number'
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>(); // is used to check where the player is looking at if we shoot, so we flip it.
             _renderer = GetComponent<Renderer>();
             _gb = new PlayerGhostBehaviour(_renderer);
