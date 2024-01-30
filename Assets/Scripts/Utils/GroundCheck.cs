@@ -10,12 +10,12 @@ namespace DTIS
         public bool Grounded { get { return _grounded; } set { _grounded = value; } }
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.tag == "Floor")
-                _grounded = false;
+            if (other.CompareTag("Floor") || other.CompareTag("Platform"))
+                _grounded = true;
         }
         private void OnTriggerExit2D()
         {
-            _grounded = true;
+            _grounded = false;
         }
     }
 }

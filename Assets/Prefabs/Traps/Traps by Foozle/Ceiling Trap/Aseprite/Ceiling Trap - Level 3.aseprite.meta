@@ -1,0 +1,612 @@
+fileFormatVersion: 2
+guid: 3c79e58a9d2d21c43bb32e5f7a719fdf
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: Ceiling Trap - Level 3_Frame_2
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 393
+      width: 26
+      height: 64
+    spriteID: a841ecac98b5da040a8ad67fbf2a73b6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 393}
+  - name: Ceiling Trap - Level 3_Frame_3
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 38
+      y: 393
+      width: 26
+      height: 64
+    spriteID: 1f5834142ab24a94ba05612ce93cff02
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 38, y: 393}
+  - name: Ceiling Trap - Level 3_Frame_4
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.40625}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 4
+      width: 26
+      height: 64
+    spriteID: 3c8271fb43beb614e8742df48125236f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 4}
+  - name: Ceiling Trap - Level 3_Frame_5
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.25}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 76
+      width: 26
+      height: 64
+    spriteID: 501150325e016e04d837c2f7138d8ede
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 76}
+  - name: Ceiling Trap - Level 3_Frame_6
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.09375}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 148
+      width: 26
+      height: 64
+    spriteID: 59c4eacf8584c0349bb5cb4ad8d0b09f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 148}
+  - name: Ceiling Trap - Level 3_Frame_7
+    originalName: 
+    pivot: {x: 0.49253732, y: 0.072463766}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 316
+      width: 67
+      height: 69
+    spriteID: 82e2a82dbce3806448e8b312fd0254fc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 316}
+  - name: Ceiling Trap - Level 3_Frame_8
+    originalName: 
+    pivot: {x: 0.49315068, y: 0.08571429}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 238
+      width: 73
+      height: 70
+    spriteID: 4168125cd1492b8408414165710318ce
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 238}
+  - name: Ceiling Trap - Level 3_Frame_9
+    originalName: 
+    pivot: {x: 0.4935065, y: 0.072463766}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 161
+      width: 77
+      height: 69
+    spriteID: 758e95583af6240459791038f6b4abae
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 161}
+  - name: Ceiling Trap - Level 3_Frame_10
+    originalName: 
+    pivot: {x: 0.49382716, y: 0.014492754}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 84
+      width: 81
+      height: 69
+    spriteID: b887d2544f5b2c34aa44c8153a6c24db
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 84}
+  - name: Ceiling Trap - Level 3_Frame_11
+    originalName: 
+    pivot: {x: 0.4939759, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 83
+      height: 72
+    spriteID: 07135a868d8021f42940352bfe156785
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: Ceiling Trap - Level 3_Frame_12
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.171875}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 220
+      width: 26
+      height: 64
+    spriteID: a5074b3594e69b948976fb139f7520b4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 220}
+  - name: Ceiling Trap - Level 3_Frame_13
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.25}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 292
+      width: 26
+      height: 64
+    spriteID: 58471455965394c4ca3cf5bee0fa7e44
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 292}
+  - name: Ceiling Trap - Level 3_Frame_14
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.328125}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 364
+      width: 26
+      height: 64
+    spriteID: d76b70e2a31f0684a985bc8ea9be8f2e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 364}
+  - name: Ceiling Trap - Level 3_Frame_15
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.40625}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 436
+      width: 26
+      height: 64
+    spriteID: d4610ce25e562564b8fadd976c3a6b4d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 436}
+  - name: Ceiling Trap - Level 3_Frame_16
+    originalName: 
+    pivot: {x: 0.49999997, y: -0.484375}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 129
+      y: 4
+      width: 26
+      height: 64
+    spriteID: b641378f5ee9ca347a9c6084966e7c75
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 129, y: 4}
+  - name: Ceiling Trap - Level 3_Frame_0
+    originalName: 
+    pivot: {x: 0.49999997, y: -1}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 465
+      width: 26
+      height: 32
+    spriteID: 10e075f2f2f03cd458099ebe41f559be
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 465}
+  - name: Ceiling Trap - Level 3_Frame_1
+    originalName: 
+    pivot: {x: 0.49999997, y: -1}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 38
+      y: 465
+      width: 26
+      height: 32
+    spriteID: 5653baf7042cf7d4cbaf914c27f50804
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 38, y: 465}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: 1329819180
+    name: Ceiling Trap - Level 3
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Ceiling Trap - Level 3_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 35
+        y: 32
+        width: 26
+        height: 64
+      spriteId: a841ecac98b5da040a8ad67fbf2a73b6
+    - name: Ceiling Trap - Level 3_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 35
+        y: 32
+        width: 26
+        height: 64
+      spriteId: 1f5834142ab24a94ba05612ce93cff02
+    - name: Ceiling Trap - Level 3_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 35
+        y: 26
+        width: 26
+        height: 64
+      spriteId: 3c8271fb43beb614e8742df48125236f
+    - name: Ceiling Trap - Level 3_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 35
+        y: 16
+        width: 26
+        height: 64
+      spriteId: 501150325e016e04d837c2f7138d8ede
+    - name: Ceiling Trap - Level 3_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 35
+        y: 6
+        width: 26
+        height: 64
+      spriteId: 59c4eacf8584c0349bb5cb4ad8d0b09f
+    - name: Ceiling Trap - Level 3_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 15
+        y: -5
+        width: 67
+        height: 69
+      spriteId: 82e2a82dbce3806448e8b312fd0254fc
+    - name: Ceiling Trap - Level 3_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 12
+        y: -6
+        width: 73
+        height: 70
+      spriteId: 4168125cd1492b8408414165710318ce
+    - name: Ceiling Trap - Level 3_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 10
+        y: -5
+        width: 77
+        height: 69
+      spriteId: 758e95583af6240459791038f6b4abae
+    - name: Ceiling Trap - Level 3_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 8
+        y: -1
+        width: 81
+        height: 69
+      spriteId: b887d2544f5b2c34aa44c8153a6c24db
+    - name: Ceiling Trap - Level 3_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: 7
+        y: 0
+        width: 83
+        height: 72
+      spriteId: 07135a868d8021f42940352bfe156785
+    - name: Ceiling Trap - Level 3_Frame_12
+      frameIndex: 12
+      cellRect:
+        x: 35
+        y: 11
+        width: 26
+        height: 64
+      spriteId: a5074b3594e69b948976fb139f7520b4
+    - name: Ceiling Trap - Level 3_Frame_13
+      frameIndex: 13
+      cellRect:
+        x: 35
+        y: 16
+        width: 26
+        height: 64
+      spriteId: 58471455965394c4ca3cf5bee0fa7e44
+    - name: Ceiling Trap - Level 3_Frame_14
+      frameIndex: 14
+      cellRect:
+        x: 35
+        y: 21
+        width: 26
+        height: 64
+      spriteId: d76b70e2a31f0684a985bc8ea9be8f2e
+    - name: Ceiling Trap - Level 3_Frame_15
+      frameIndex: 15
+      cellRect:
+        x: 35
+        y: 26
+        width: 26
+        height: 64
+      spriteId: d4610ce25e562564b8fadd976c3a6b4d
+    - name: Ceiling Trap - Level 3_Frame_16
+      frameIndex: 16
+      cellRect:
+        x: 35
+        y: 31
+        width: 26
+        height: 64
+      spriteId: b641378f5ee9ca347a9c6084966e7c75
+    - name: Ceiling Trap - Level 3_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 35
+        y: 32
+        width: 26
+        height: 32
+      spriteId: 10e075f2f2f03cd458099ebe41f559be
+    - name: Ceiling Trap - Level 3_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 35
+        y: 32
+        width: 26
+        height: 32
+      spriteId: 5653baf7042cf7d4cbaf914c27f50804
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 96, y: 64}

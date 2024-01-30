@@ -8,6 +8,8 @@ TagManager:
   - Arrow
   - AttackPosRef
   - FloorCheck
+  - Trap
+  - Platform
   layers:
   - Default
   - TransparentFX

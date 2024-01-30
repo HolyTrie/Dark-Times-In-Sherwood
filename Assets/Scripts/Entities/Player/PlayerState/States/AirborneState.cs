@@ -16,7 +16,7 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            if(Controller.Velocity.y == 0) // just falling
+            if(Controller.Velocity.y == 0 && Controller.IsGrounded) // just falling
             {
                 SetStates(ESP.States.Grounded,ESP.States.Idle);
             }
