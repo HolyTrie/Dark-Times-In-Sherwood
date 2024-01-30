@@ -1,0 +1,892 @@
+fileFormatVersion: 2
+guid: 55bc266f76ee6494084781a4abe014f2
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: Sandworm trap - Level 3_Frame_0
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 140
+      y: 256
+      width: 128
+      height: 32
+    spriteID: 93a62bcf79d05a442b0b6c47bd96f13a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 140, y: 256}
+  - name: Sandworm trap - Level 3_Frame_1
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 276
+      y: 256
+      width: 128
+      height: 32
+    spriteID: 837f0cf83484de44fa9494e00a2f6467
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 276, y: 256}
+  - name: Sandworm trap - Level 3_Frame_2
+    originalName: 
+    pivot: {x: 0.5, y: 0.05882353}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 140
+      y: 47
+      width: 128
+      height: 34
+    spriteID: d72f84cb28f8c2f4698920e86cf3f465
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 140, y: 47}
+  - name: Sandworm trap - Level 3_Frame_3
+    originalName: 
+    pivot: {x: 0.5, y: 0.030303031}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 276
+      y: 132
+      width: 128
+      height: 33
+    spriteID: 577d25c40a9e7fa4bab2a3ce2ee80e5b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 276, y: 132}
+  - name: Sandworm trap - Level 3_Frame_4
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 297
+      width: 128
+      height: 32
+    spriteID: 6bb55e9eaad020345ad8ce42d311815a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 297}
+  - name: Sandworm trap - Level 3_Frame_5
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 140
+      y: 297
+      width: 128
+      height: 32
+    spriteID: 688a7687b39cb8549a9e737ff343fd21
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 140, y: 297}
+  - name: Sandworm trap - Level 3_Frame_6
+    originalName: 
+    pivot: {x: 0.5, y: 0.05882353}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 276
+      y: 47
+      width: 128
+      height: 34
+    spriteID: c989ee0b7f6dc6348a33d9c2048974be
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 276, y: 47}
+  - name: Sandworm trap - Level 3_Frame_7
+    originalName: 
+    pivot: {x: 0.5, y: 0.030303031}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 174
+      width: 128
+      height: 33
+    spriteID: 29cde0c9b167548489fdbd2e6368fcdd
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 174}
+  - name: Sandworm trap - Level 3_Frame_8
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 276
+      y: 297
+      width: 128
+      height: 32
+    spriteID: 1a429fcef3cbaed478e93ea5bf78757c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 276, y: 297}
+  - name: Sandworm trap - Level 3_Frame_9
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 337
+      width: 128
+      height: 32
+    spriteID: fe7615c369354ce429e6f40478f141a1
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 337}
+  - name: Sandworm trap - Level 3_Frame_10
+    originalName: 
+    pivot: {x: 0.5, y: 0.05882353}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 90
+      width: 128
+      height: 34
+    spriteID: c2632674aae108a41b54c59c959139f2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 90}
+  - name: Sandworm trap - Level 3_Frame_11
+    originalName: 
+    pivot: {x: 0.5, y: 0.030303031}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 140
+      y: 174
+      width: 128
+      height: 33
+    spriteID: a9aa3630c963cc343bc4156401c4861d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 140, y: 174}
+  - name: Sandworm trap - Level 3_Frame_12
+    originalName: 
+    pivot: {x: 0.5, y: 0.030303031}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 276
+      y: 174
+      width: 128
+      height: 33
+    spriteID: a807212e48da61b459ff08559fd14113
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 276, y: 174}
+  - name: Sandworm trap - Level 3_Frame_13
+    originalName: 
+    pivot: {x: 0.5, y: 0.05882353}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 140
+      y: 90
+      width: 128
+      height: 34
+    spriteID: 6a87a398fd475214884a931ee8aab80e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 140, y: 90}
+  - name: Sandworm trap - Level 3_Frame_14
+    originalName: 
+    pivot: {x: 0.5, y: 0.08571429}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 128
+      height: 35
+    spriteID: cb30e6dca3e026d4bbda9c98dc594658
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: Sandworm trap - Level 3_Frame_15
+    originalName: 
+    pivot: {x: 0.5, y: 0.030303031}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 215
+      width: 128
+      height: 33
+    spriteID: e066478f2a9748046b3871a042abad0f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 215}
+  - name: Sandworm trap - Level 3_Frame_16
+    originalName: 
+    pivot: {x: 0.5, y: 0.030303031}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 140
+      y: 215
+      width: 128
+      height: 33
+    spriteID: b3814aa1c4bb613458251ef0cd46dba6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 140, y: 215}
+  - name: Sandworm trap - Level 3_Frame_17
+    originalName: 
+    pivot: {x: 0.5, y: 0.05882353}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 276
+      y: 90
+      width: 128
+      height: 34
+    spriteID: f911446790578b441afb8fcfaffaad01
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 276, y: 90}
+  - name: Sandworm trap - Level 3_Frame_18
+    originalName: 
+    pivot: {x: 0.5, y: 0.08571429}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 140
+      y: 4
+      width: 128
+      height: 35
+    spriteID: 66bbe8a79aea8f64faef712f01acf235
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 140, y: 4}
+  - name: Sandworm trap - Level 3_Frame_19
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 140
+      y: 337
+      width: 128
+      height: 32
+    spriteID: 2521920006a1bf945a452b1cf5377d54
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 140, y: 337}
+  - name: Sandworm trap - Level 3_Frame_20
+    originalName: 
+    pivot: {x: 0.5, y: 0.030303031}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 276
+      y: 215
+      width: 128
+      height: 33
+    spriteID: 9b39683f2f9e5da4a926616332f1d8f2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 276, y: 215}
+  - name: Sandworm trap - Level 3_Frame_21
+    originalName: 
+    pivot: {x: 0.5, y: 0.05882353}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 132
+      width: 128
+      height: 34
+    spriteID: 2e6bce719f4585d4eb8631b35be6a635
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 132}
+  - name: Sandworm trap - Level 3_Frame_22
+    originalName: 
+    pivot: {x: 0.5, y: 0.08571429}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 276
+      y: 4
+      width: 128
+      height: 35
+    spriteID: ad9235755e12826439670ed19a496e8d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 276, y: 4}
+  - name: Sandworm trap - Level 3_Frame_23
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 276
+      y: 337
+      width: 128
+      height: 32
+    spriteID: 21adfae00ce425a4fa742155f8976e09
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 276, y: 337}
+  - name: Sandworm trap - Level 3_Frame_24
+    originalName: 
+    pivot: {x: 0.5, y: 0.030303031}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 256
+      width: 128
+      height: 33
+    spriteID: 7e3dc4c065e9eee4293f382380e9c2f0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 256}
+  - name: Sandworm trap - Level 3_Frame_25
+    originalName: 
+    pivot: {x: 0.5, y: 0.05882353}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 140
+      y: 132
+      width: 128
+      height: 34
+    spriteID: 49e60646c81e0f44d91778a0560afb2b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 140, y: 132}
+  - name: Sandworm trap - Level 3_Frame_26
+    originalName: 
+    pivot: {x: 0.5, y: 0.08571429}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 47
+      width: 128
+      height: 35
+    spriteID: bee057bdba8fc9a4e93817bbf22909eb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 47}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -956374014
+    name: Sandworm trap - Level 3
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Sandworm trap - Level 3_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 128
+        height: 32
+      spriteId: 93a62bcf79d05a442b0b6c47bd96f13a
+    - name: Sandworm trap - Level 3_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 0
+        y: 0
+        width: 128
+        height: 32
+      spriteId: 837f0cf83484de44fa9494e00a2f6467
+    - name: Sandworm trap - Level 3_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 0
+        y: -2
+        width: 128
+        height: 34
+      spriteId: d72f84cb28f8c2f4698920e86cf3f465
+    - name: Sandworm trap - Level 3_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 0
+        y: -1
+        width: 128
+        height: 33
+      spriteId: 577d25c40a9e7fa4bab2a3ce2ee80e5b
+    - name: Sandworm trap - Level 3_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 0
+        y: 0
+        width: 128
+        height: 32
+      spriteId: 6bb55e9eaad020345ad8ce42d311815a
+    - name: Sandworm trap - Level 3_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 0
+        y: 0
+        width: 128
+        height: 32
+      spriteId: 688a7687b39cb8549a9e737ff343fd21
+    - name: Sandworm trap - Level 3_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 0
+        y: -2
+        width: 128
+        height: 34
+      spriteId: c989ee0b7f6dc6348a33d9c2048974be
+    - name: Sandworm trap - Level 3_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 0
+        y: -1
+        width: 128
+        height: 33
+      spriteId: 29cde0c9b167548489fdbd2e6368fcdd
+    - name: Sandworm trap - Level 3_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 0
+        y: 0
+        width: 128
+        height: 32
+      spriteId: 1a429fcef3cbaed478e93ea5bf78757c
+    - name: Sandworm trap - Level 3_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 0
+        y: 0
+        width: 128
+        height: 32
+      spriteId: fe7615c369354ce429e6f40478f141a1
+    - name: Sandworm trap - Level 3_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 0
+        y: -2
+        width: 128
+        height: 34
+      spriteId: c2632674aae108a41b54c59c959139f2
+    - name: Sandworm trap - Level 3_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: 0
+        y: -1
+        width: 128
+        height: 33
+      spriteId: a9aa3630c963cc343bc4156401c4861d
+    - name: Sandworm trap - Level 3_Frame_12
+      frameIndex: 12
+      cellRect:
+        x: 0
+        y: -1
+        width: 128
+        height: 33
+      spriteId: a807212e48da61b459ff08559fd14113
+    - name: Sandworm trap - Level 3_Frame_13
+      frameIndex: 13
+      cellRect:
+        x: 0
+        y: -2
+        width: 128
+        height: 34
+      spriteId: 6a87a398fd475214884a931ee8aab80e
+    - name: Sandworm trap - Level 3_Frame_14
+      frameIndex: 14
+      cellRect:
+        x: 0
+        y: -3
+        width: 128
+        height: 35
+      spriteId: cb30e6dca3e026d4bbda9c98dc594658
+    - name: Sandworm trap - Level 3_Frame_15
+      frameIndex: 15
+      cellRect:
+        x: 0
+        y: -1
+        width: 128
+        height: 33
+      spriteId: e066478f2a9748046b3871a042abad0f
+    - name: Sandworm trap - Level 3_Frame_16
+      frameIndex: 16
+      cellRect:
+        x: 0
+        y: -1
+        width: 128
+        height: 33
+      spriteId: b3814aa1c4bb613458251ef0cd46dba6
+    - name: Sandworm trap - Level 3_Frame_17
+      frameIndex: 17
+      cellRect:
+        x: 0
+        y: -2
+        width: 128
+        height: 34
+      spriteId: f911446790578b441afb8fcfaffaad01
+    - name: Sandworm trap - Level 3_Frame_18
+      frameIndex: 18
+      cellRect:
+        x: 0
+        y: -3
+        width: 128
+        height: 35
+      spriteId: 66bbe8a79aea8f64faef712f01acf235
+    - name: Sandworm trap - Level 3_Frame_19
+      frameIndex: 19
+      cellRect:
+        x: 0
+        y: 0
+        width: 128
+        height: 32
+      spriteId: 2521920006a1bf945a452b1cf5377d54
+    - name: Sandworm trap - Level 3_Frame_20
+      frameIndex: 20
+      cellRect:
+        x: 0
+        y: -1
+        width: 128
+        height: 33
+      spriteId: 9b39683f2f9e5da4a926616332f1d8f2
+    - name: Sandworm trap - Level 3_Frame_21
+      frameIndex: 21
+      cellRect:
+        x: 0
+        y: -2
+        width: 128
+        height: 34
+      spriteId: 2e6bce719f4585d4eb8631b35be6a635
+    - name: Sandworm trap - Level 3_Frame_22
+      frameIndex: 22
+      cellRect:
+        x: 0
+        y: -3
+        width: 128
+        height: 35
+      spriteId: ad9235755e12826439670ed19a496e8d
+    - name: Sandworm trap - Level 3_Frame_23
+      frameIndex: 23
+      cellRect:
+        x: 0
+        y: 0
+        width: 128
+        height: 32
+      spriteId: 21adfae00ce425a4fa742155f8976e09
+    - name: Sandworm trap - Level 3_Frame_24
+      frameIndex: 24
+      cellRect:
+        x: 0
+        y: -1
+        width: 128
+        height: 33
+      spriteId: 7e3dc4c065e9eee4293f382380e9c2f0
+    - name: Sandworm trap - Level 3_Frame_25
+      frameIndex: 25
+      cellRect:
+        x: 0
+        y: -2
+        width: 128
+        height: 34
+      spriteId: 49e60646c81e0f44d91778a0560afb2b
+    - name: Sandworm trap - Level 3_Frame_26
+      frameIndex: 26
+      cellRect:
+        x: 0
+        y: -3
+        width: 128
+        height: 35
+      spriteId: bee057bdba8fc9a4e93817bbf22909eb
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 128, y: 32}
