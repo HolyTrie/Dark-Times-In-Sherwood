@@ -21,7 +21,7 @@ public class BuffChestController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collider)
     {
-        if(collider.CompareTag("Floor"))
+        if (collider.CompareTag("Floor"))
             return;
         _playerFSM = collider.gameObject.GetComponent<PlayerStateMachine>();
         _playerController = collider.gameObject.GetComponent<PlayerController>();
