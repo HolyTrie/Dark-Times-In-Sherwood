@@ -44,6 +44,7 @@ public sealed class GameManager : MonoBehaviour
 
 	public static void LoadScene(int index)
 	{
+		IsPlayerGhosted = false; // reset ghost, todo much later - get this info from scene object
 		SceneManager.LoadScene(index);
 	}
 

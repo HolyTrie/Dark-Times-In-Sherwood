@@ -23,13 +23,17 @@ public class BuffChestController : MonoBehaviour
     {
         if (collider.CompareTag("Floor"))
             return;
-        _playerFSM = collider.gameObject.GetComponent<PlayerStateMachine>();
-        _playerController = collider.gameObject.GetComponent<PlayerController>();
-        if (!guard && collider.tag == "Player" && _playerFSM.Controls.ActionMap.All.Interaction.IsPressed())
+        
+        if (!guard && collider.CompareTag("Player"))
         {
-            guard = true;
-            _animator.Play("OpenChest");
-            StartCoroutine(BuffLength());
+            _playerFSM = collider.gameObject.GetComponent<PlayerStateMachine>();
+            _playerController = collider.gameObject.GetComponent<PlayerController>();
+            if(_playerFSM.Controls.ActionMap.All.Interaction.IsPressed())
+            {
+                guard = true;;
+                _animator.Play("OpenChest");
+                StartCoroutine(BuffLength()); //released guard when its time
+            }
         }
     }
     // private IEnumerator DestoryChest()
