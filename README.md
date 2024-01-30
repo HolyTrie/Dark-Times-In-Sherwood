@@ -4,6 +4,8 @@ Robin hood and his gang of thieves have been caught by the evil sheriff of Notth
 In their adventures they will have to face off againts horrid monsters, devious traps and complex puzzles all while looking for an opportunity to escape the clutches of the evil sherrif or DIE trying. </br>
 Endless Misery Awaits! </br>
 
+You can see an early PoC at [holytrie.itch.io](https://holytrie.itch.io/dark-times-in-sherwood)
+
 The game will be developed for PC players. </br>
 
 For further details see [Formal Elements](https://github.com/HolyTrie/Dark-Times-In-Sherwood/blob/main/formal-elements.md)
