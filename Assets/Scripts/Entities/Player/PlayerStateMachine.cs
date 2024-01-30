@@ -71,7 +71,7 @@ namespace DTIS
 
         protected void Start()
         {
-            Controls.ActionMap.All.GoGhost.performed += _ => _controller.Ghost();
+            Controls.ActionMap.All.GoGhost.performed += _ => _controller.Ghost(); // TODO: set this differently!
         }
         public virtual void SetState(ESP.States state, ESP.States subState)
         {
