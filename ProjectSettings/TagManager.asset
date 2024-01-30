@@ -8,6 +8,9 @@ TagManager:
   - Arrow
   - AttackPosRef
   - FloorCheck
+  - EntityEndPosition
+  - EntityStartPosition
+  - Interactable
   layers:
   - Default
   - TransparentFX
