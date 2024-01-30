@@ -21,14 +21,19 @@ public class BuffChestController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collider)
     {
-        _playerFSM = collider.gameObject.GetComponent<PlayerStateMachine>();
-        _playerController = collider.gameObject.GetComponent<PlayerController>();
-        if (!guard && collider.tag == "Player" && _playerFSM.Controls.ActionMap.All.Interaction.IsPressed())
+        if (collider.CompareTag("Floor"))
+            return;
+        
+        if (!guard && collider.CompareTag("Player"))
         {
-            guard = true;
-            _animator.Play("OpenChest");
-            Debug.Log("On platform");
-            StartCoroutine(BuffLength());
+            _playerFSM = collider.gameObject.GetComponent<PlayerStateMachine>();
+            _playerController = collider.gameObject.GetComponent<PlayerController>();
+            if(_playerFSM.Controls.ActionMap.All.Interaction.IsPressed())
+            {
+                guard = true;;
+                _animator.Play("OpenChest");
+                StartCoroutine(BuffLength()); //released guard when its time
+            }
         }
     }
     // private IEnumerator DestoryChest()
