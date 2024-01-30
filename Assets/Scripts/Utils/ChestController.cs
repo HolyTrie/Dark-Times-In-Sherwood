@@ -1,6 +1,5 @@
 using System.Collections;
 using DTIS;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChestController : MonoBehaviour
@@ -40,8 +39,10 @@ public class ChestController : MonoBehaviour
 
     private IEnumerator BuffLength() // Temporary
     {
+        Debug.Log("JumpForce:"+_playerController.JumpForce);
         _playerController.JumpForce = JumpForceBuff;
         yield return new WaitForSeconds(BuffTime);
         _playerController.JumpForce = 15f;
+        Debug.Log("JumpForce:"+_playerController.JumpForce);
     }
 }
