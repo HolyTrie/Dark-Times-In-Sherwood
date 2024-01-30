@@ -15,12 +15,12 @@ public class Door : MonoBehaviour
         if (!guard && collider.tag == "Player" && _playerFSM.Controls.ActionMap.All.Interaction.IsPressed())
         {
             guard = true;
-            GameManager.LoadScene(1); //TODO - fix
+            GameManager.NextScene();
             StartCoroutine(ReleaseGuard());
         }
     }
 
-    private IEnumerator ReleaseGuard(float seconds = 1f) // Temporary
+    private IEnumerator ReleaseGuard(float seconds = 1f)
     {
         yield return new WaitForSeconds(seconds);
         guard = false;

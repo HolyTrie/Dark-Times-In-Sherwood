@@ -27,12 +27,12 @@ public class EntityBoundedMovement : MonoBehaviour
         float deltaX = speed * Time.fixedDeltaTime;
         if (moveFromStartToEnd)
         {
-            Debug.Log("Moves To End");
+            //Debug.Log("Moves To End");
             transform.position = Vector3.MoveTowards(transform.position, endPoint.position, deltaX);
         }
         else
         {  // move from end to start
-            Debug.Log("Moves To Start");
+            //Debug.Log("Moves To Start");
             transform.position = Vector3.MoveTowards(transform.position, startPoint.position, deltaX);
         }
     }

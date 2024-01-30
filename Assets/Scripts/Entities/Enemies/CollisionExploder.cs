@@ -28,7 +28,7 @@ public class CollisionExploder : MonoBehaviour
             collision.collider.isTrigger = false; // after hitting the player, set the arrow to trigger so it can be destroyed once reached ground.
         }
         float impulse = collision.relativeVelocity.magnitude * rb.mass;
-        Debug.Log(gameObject.name + " collides with " + collision.collider.name + " at velocity " + collision.relativeVelocity + " [m/s], impulse " + impulse + " [kg*m/s]");
+        //Debug.Log(gameObject.name + " collides with " + collision.collider.name + " at velocity " + collision.relativeVelocity + " [m/s], impulse " + impulse + " [kg*m/s]");
         if (impulse > minImpulseForExplosion)
         {
             // StartCoroutine(Explosion());

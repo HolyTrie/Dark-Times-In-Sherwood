@@ -100319,12 +100319,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelSign
       objectReference: {fileID: 0}
-    - target: {fileID: 6568410669413255133, guid: 22e1524e9fe92764a80b01bbb81b6429, type: 3}
-      propertyPath: m_text
-      value: Floor - 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1549103658181794854, guid: 22e1524e9fe92764a80b01bbb81b6429, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -100508,11 +100503,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 523527795538815815, guid: ae4b4ad4560272a42a06b8a170edac1e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: -6.26
       objectReference: {fileID: 0}
     - target: {fileID: 523527795538815815, guid: ae4b4ad4560272a42a06b8a170edac1e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.5
+      value: 6.42
       objectReference: {fileID: 0}
     - target: {fileID: 523527795538815815, guid: ae4b4ad4560272a42a06b8a170edac1e, type: 3}
       propertyPath: m_LocalPosition.z
