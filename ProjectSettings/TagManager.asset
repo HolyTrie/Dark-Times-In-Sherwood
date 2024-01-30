@@ -10,6 +10,9 @@ TagManager:
   - FloorCheck
   - Trap
   - Platform
+  - EntityEndPosition
+  - EntityStartPosition
+  - Interactable
   layers:
   - Default
   - TransparentFX
