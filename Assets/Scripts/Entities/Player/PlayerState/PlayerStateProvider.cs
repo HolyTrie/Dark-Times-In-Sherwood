@@ -29,6 +29,7 @@ namespace DTIS
             LightAttack,
             HeavyAttack,
             RangedAttack,
+            Climbing
             // step 1: add new state reference here
         }
         public static PlayerState Build(States state) // this code is used to build a new instance of a given state
@@ -37,6 +38,7 @@ namespace DTIS
             {
                 States.Grounded => new GroundedState(),
                 States.Airborne => new AirborneState(),
+                States.Climbing => new ClimbingState(),
                 //States.Crouch => new CrouchState(),
                 States.Jump => new JumpState(),
                 //States.Attack => new AttackState(),

@@ -40,9 +40,9 @@ namespace DTIS
             _rb2D = GetComponent<Rigidbody2D>();
             _transform = GetComponent<Transform>();
             _animator = GetComponent<Animator>();
-            _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic string
+            _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic strings
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>(); // is used to check where the player is looking at if we shoot, so we flip it.
-            _gc = GameObject.FindGameObjectWithTag("FloorCheck").GetComponent<GroundCheck>(); // TODO: fix magic string
+            _gc = GameObject.FindGameObjectWithTag("FloorCheck").GetComponent<GroundCheck>();
             _renderer = GetComponent<Renderer>();
             _gb = new PlayerGhostBehaviour(_renderer);
         }
