@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 551429294125522716}
   - component: {fileID: 6139167263391916877}
   - component: {fileID: 5775483445102327536}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RopeSegment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 5
+  m_Mass: 0.25
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -138,8 +138,8 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 0
   m_AngleLimits:
-    m_LowerAngle: 0
-    m_UpperAngle: 359
+    m_LowerAngle: 60
+    m_UpperAngle: -60
 --- !u!61 &6139167263391916877
 BoxCollider2D:
   m_ObjectHideFlags: 0

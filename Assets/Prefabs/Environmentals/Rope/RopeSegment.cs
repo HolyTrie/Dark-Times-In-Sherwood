@@ -12,9 +12,9 @@ public class RopeSegment : MonoBehaviour
         {
             aboveSegment.connectedBelow = gameObject; //tells the upstairs neighbour they live right below them and can hear everything...
             float spriteBottom = connectedAbove.GetComponent<SpriteRenderer>().bounds.size.y; // tells us the offset we need to reach the bootom of the above sprite
-            GetComponent<HingeJoint2D>().connectedAnchor = new Vector2(0f,spriteBottom*=-1); //  hence the "*=-1" in this line
+            GetComponent<HingeJoint2D>().connectedAnchor = new Vector2(0f,spriteBottom*=-1); //  hence the "*=-1" in this line (because this objects anchor is set at the top center!)
         }
-        else //top and final segment
+        else //top and final segment, this will be the 'Hook'.
         {
             GetComponent<HingeJoint2D>().connectedAnchor = new Vector2(0f,0f);
         }

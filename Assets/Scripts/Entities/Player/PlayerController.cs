@@ -22,6 +22,7 @@ namespace DTIS
         [SerializeField] private Transform _ceilingCheck;							// A position marking where to check for ceilings
         [SerializeField] float ShootDelay;
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
+        public bool FacingRight{get{return _facingRight;}}
         private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
         public Vector3 Velocity { get { return _rb2D.velocity; } }
         public float JumpForce { get { return _jumpForce; } set { _jumpForce = value; } }
@@ -63,12 +64,11 @@ namespace DTIS
         {
             Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
             bool flipRight = _rb2D.velocity.x <= 0 || mouseWorldPosition.x <= transform.position.x; // mushlam
-            bool flipLeft = _rb2D.velocity.x > 0 || mouseWorldPosition.x > transform.position.x; // WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            bool flipLeft = _rb2D.velocity.x > 0 || mouseWorldPosition.x > transform.position.x; // gives priority to mouse position
 
             if (_facingRight && flipRight)
             {
                 _facingRight = !_facingRight;
-                // _transform.localScale = Vector3.Scale(_transform.localScale, new Vector3(-1,1,1)); //legacy flip
                 transform.GetComponent<SpriteRenderer>().flipX = true;
             }
             if (!_facingRight && flipLeft)
