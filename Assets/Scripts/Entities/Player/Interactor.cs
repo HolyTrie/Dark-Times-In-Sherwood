@@ -23,17 +23,15 @@ public class Interactor : MonoBehaviour
     }
     private void SetClosestObject()
     {
+        if(closestObject != null)
+                closestObject.GetComponent<Interactable>().SetGUI(false);
         if(_transformsInRange.Count == 0)
         {
-            if(closestObject != null)
-                closestObject.GetComponent<Interactable>().SetGUI(false);
             closestObject = null;
         }
         else
         {
-            if(closestObject != null)
-                closestObject.GetComponent<Interactable>().SetGUI(false);
-            closestObject = Util.NearestNTransforms(_transformsInRange,controller.transform.position)[0].gameObject; //returns array with one object.
+            closestObject = Util.NearestNTransforms(_transformsInRange,transform.position)[0].gameObject; //returns array with one object.
             if(closestObject != null)
                 closestObject.GetComponent<Interactable>().SetGUI(true);
         }
