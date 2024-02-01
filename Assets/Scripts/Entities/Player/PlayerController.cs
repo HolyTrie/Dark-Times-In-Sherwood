@@ -22,7 +22,7 @@ namespace DTIS
         [SerializeField] private Transform _ceilingCheck;							// A position marking where to check for ceilings
         [SerializeField] float ShootDelay;
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
-        public bool FacingRight{get{return _facingRight;}}
+        public bool FacingRight{get{return _facingRight;} private set{_facingRight = value;}}
         private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
         public Vector3 Velocity { get { return _rb2D.velocity; } }
         public float JumpForce { get { return _jumpForce; } set { _jumpForce = value; } }
@@ -60,22 +60,40 @@ namespace DTIS
         }
 
         /*Flips the chacater according to his velocity*/
-        protected virtual void Flip()
+        protected virtual void Flip(bool overrideMovement = false)
         {
-            Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            bool flipRight = _rb2D.velocity.x <= 0 || mouseWorldPosition.x <= transform.position.x; // mushlam
-            bool flipLeft = _rb2D.velocity.x > 0 || mouseWorldPosition.x > transform.position.x; // gives priority to mouse position
-
-            if (_facingRight && flipRight)
+            if(_rb2D.velocity.x == 0) // if idle
             {
-                _facingRight = !_facingRight;
-                transform.GetComponent<SpriteRenderer>().flipX = true;
+                Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                bool isMouseRightToPlayer = mouseWorldPosition.x > transform.position.x;
+                bool isMouseLeftToPlayer = mouseWorldPosition.x < transform.position.x;
+                if(FacingRight && isMouseLeftToPlayer)
+                {
+                    FacingRight = !FacingRight;
+                    transform.GetComponent<SpriteRenderer>().flipX = true; // flip to face Left
+                }
+                if(!FacingRight && isMouseRightToPlayer)
+                {
+                    FacingRight = !FacingRight;
+                    transform.GetComponent<SpriteRenderer>().flipX = false; // flip to face Right
+                }
             }
-            if (!_facingRight && flipLeft)
+            else
             {
-                _facingRight = !_facingRight;
-                transform.GetComponent<SpriteRenderer>().flipX = false;
+                bool movingRight = _rb2D.velocity.x > 0;
+                bool movingLeft = _rb2D.velocity.x < 0; 
+                if(FacingRight && movingLeft)
+                {
+                    FacingRight = !FacingRight;
+                    transform.GetComponent<SpriteRenderer>().flipX = true; // flip to face Left
+                }
+                if(!FacingRight && movingRight)
+                {
+                    FacingRight = !FacingRight;
+                    transform.GetComponent<SpriteRenderer>().flipX = false; // flip to face Right
+                }
             }
+            
         }
         public void MoveWithSmoothDamp(Vector2 velocityMult)
         {
@@ -99,7 +117,7 @@ namespace DTIS
         }
         private class PlayerGhostBehaviour : GhostBehaviour
         {
-            private Renderer _renderer;
+            private readonly Renderer _renderer;
 
             public PlayerGhostBehaviour(Renderer renderer)
             {
@@ -123,17 +141,18 @@ namespace DTIS
             if (canSpawn)
             {
                 canSpawn = false;
-                this.StartCoroutine(DelayArrow());
+                StartCoroutine(DelayArrow());
+            }
+
+            IEnumerator DelayArrow() // delays the user from shooting every 'ShootDelay' seconds.
+            {
+                Debug.Log("Arrow is loading...");
+                yield return new WaitForSeconds(ShootDelay);
+                _clickSpawn.spawnObject();
+                canSpawn = true;
             }
         }
-        // delays the user from shooting every 'ShootDelay' seconds.
-        private IEnumerator DelayArrow()
-        {
-            Debug.Log("Arrow is loading...");
-            yield return new WaitForSeconds(ShootDelay);
-            _clickSpawn.spawnObject();
-            canSpawn = true;
-        }
+        
     }
 }
 
