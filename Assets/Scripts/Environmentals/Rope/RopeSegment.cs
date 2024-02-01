@@ -4,7 +4,7 @@ public class RopeSegment : MonoBehaviour
 {
     // https://www.youtube.com/watch?v=yQiR2-0sbNw&ab_channel=juul1a - god bless.
     public GameObject connectedAbove,connectedBelow;
-    [SerializeField] private RopeSegmentInteractor _interactor;
+    [SerializeField] private RopeSegmentInteractable _interactor;
     void Start()
     {
         connectedAbove = GetComponent<HingeJoint2D>().connectedBody.gameObject;

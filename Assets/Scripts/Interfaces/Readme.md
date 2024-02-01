@@ -1,1 +1,1 @@
-Also contains Abstract classes - these are not prefixed with I!
+Impoertant, some interfaces will have appropriate abastract classes for monobehaviours!

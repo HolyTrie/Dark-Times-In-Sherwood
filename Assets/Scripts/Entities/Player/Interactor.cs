@@ -6,7 +6,7 @@ public class Interactor : MonoBehaviour
     //public Transform Referencepoint;
     private readonly IDictionary<int,Transform> _transformsInRange = new Dictionary<int,Transform>();
     [SerializeField] private PlayerController controller;
-    private Transform closestObject;
+    private GameObject closestObject;
     private Vector3 _fixedPos;
     void Start()
     {
@@ -17,16 +17,26 @@ public class Interactor : MonoBehaviour
     void Update()
     {
         SetClosestObject();
-        foreach(var transform in Util.NearestNTransforms(_transformsInRange,controller.transform.position,10))
-            Debug.Log(transform.gameObject.name);
+        //foreach(var transform in Util.NearestNTransforms(_transformsInRange,controller.transform.position,10))
+            //Debug.Log(transform.gameObject.name);
         FollowEntityPosition();
     }
     private void SetClosestObject()
     {
         if(_transformsInRange.Count == 0)
+        {
+            if(closestObject != null)
+                closestObject.GetComponent<Interactable>().SetGUI(false);
             closestObject = null;
+        }
         else
-            closestObject = Util.NearestNTransforms(_transformsInRange,controller.transform.position)[0]; //return array with one object
+        {
+            if(closestObject != null)
+                closestObject.GetComponent<Interactable>().SetGUI(false);
+            closestObject = Util.NearestNTransforms(_transformsInRange,controller.transform.position)[0].gameObject; //returns array with one object.
+            if(closestObject != null)
+                closestObject.GetComponent<Interactable>().SetGUI(true);
+        }
     }
     private void FollowEntityPosition()
     {
@@ -40,6 +50,7 @@ public class Interactor : MonoBehaviour
             {  
                 _transformsInRange.Add(other.gameObject.GetHashCode(),other.transform);
                 // NOTE - USING GetHashCode() AS A UNIQUE KEY IS BAD PRACTICE OUTSIDE OF UNITY!
+                // it just happens to be unique in this engine.
             }
         }
         
