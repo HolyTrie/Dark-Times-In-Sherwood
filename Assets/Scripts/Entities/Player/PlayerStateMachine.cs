@@ -16,6 +16,7 @@ namespace DTIS
     public class PlayerStateMachine : MonoBehaviour
     {
         [SerializeField] private PlayerController _controller;
+        public PlayerController Controller{get{return _controller;}}
         [SerializeField] private PlayerControls _controls;
         enum Directions // might move to utils later
         {

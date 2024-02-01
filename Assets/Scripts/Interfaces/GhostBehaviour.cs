@@ -1,7 +1,3 @@
-/*
-This file is meant to expose common interfaces or abastract classes to all entities, hence the 'funny' I in the class name.
-*/
-
 public abstract class GhostBehaviour //walls platforms player and enemies will need to know this exists!
 {
     private bool _ghosted = false;

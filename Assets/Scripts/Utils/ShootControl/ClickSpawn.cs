@@ -27,14 +27,8 @@ namespace DTIS
             Vector3 rotation = mouseWorldPosition - transform.position;
             float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, rotZ);
-            Instantiate(prefabToSpawn, spawnPosition.position, Quaternion.identity);
-            StartCoroutine(DestroyCountdown(_timeToLiveSeconds));
-        }
-        
-        IEnumerator DestroyCountdown(float ttl)
-        {
-            yield return new WaitForSeconds(ttl);
-            Destroy(this);
+            var go = Instantiate(prefabToSpawn, spawnPosition.position, Quaternion.identity);
+            StartCoroutine(Util.DestroyGameObjectCountdown(go,_timeToLiveSeconds));
         }
     }
 }

@@ -1,9 +1,5 @@
-using System.CodeDom.Compiler;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public class Rope : MonoBehaviour
+public class RopeGenerator : MonoBehaviour
 {
     //https://www.youtube.com/watch?v=dx3jb4muLjQ&ab_channel=Brackeys
     public Rigidbody2D m_hook;
@@ -13,8 +9,6 @@ public class Rope : MonoBehaviour
     {
         GenerateRope();
     }
-
-    // Update is called once per frame
     private void GenerateRope()
     {
         Rigidbody2D currRigidBody = m_hook;
