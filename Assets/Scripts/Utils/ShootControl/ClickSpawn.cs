@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /**
@@ -9,6 +10,7 @@ namespace DTIS
     {
         [SerializeField] protected GameObject prefabToSpawn;
         [SerializeField] Transform spawnPosition;
+        [SerializeField] private float _timeToLiveSeconds = 10f;
         private Vector3 mouseWorldPosition;
         private Camera _mainCamera;
         void Start()
@@ -26,6 +28,13 @@ namespace DTIS
             float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, rotZ);
             Instantiate(prefabToSpawn, spawnPosition.position, Quaternion.identity);
+            StartCoroutine(DestroyCountdown(_timeToLiveSeconds));
+        }
+        
+        IEnumerator DestroyCountdown(float ttl)
+        {
+            yield return new WaitForSeconds(ttl);
+            Destroy(this);
         }
     }
 }

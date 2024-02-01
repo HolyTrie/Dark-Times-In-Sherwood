@@ -15,6 +15,8 @@ namespace DTIS
     */
     public class PlayerStateMachine : MonoBehaviour
     {
+        [SerializeField] private PlayerController _controller;
+        [SerializeField] private PlayerControls _controls;
         enum Directions // might move to utils later
         {
             Left = -1,
@@ -32,8 +34,6 @@ namespace DTIS
                 _direction = value >= 0 ? Directions.Right : Directions.Left;
             }
         }
-        private PlayerController _controller;
-        private PlayerControls _controls;
         public PlayerControls Controls { get { return _controls; } }
         private PlayerState _state;
         private PlayerState _subState;
@@ -63,8 +63,9 @@ namespace DTIS
 
         protected void Awake()
         {
-            _controller = gameObject.GetComponent<PlayerController>();
-            _controls = GetComponent<PlayerControls>();
+            //_controller = gameObject.GetComponent<PlayerController>();
+            if(_controls == null)
+                _controls = GetComponent<PlayerControls>();
             SetState(ESP.States.Grounded, ESP.States.Idle);
             Direction = (float)Directions.Right;
         }
@@ -93,7 +94,7 @@ namespace DTIS
         // prints the state of the player above his head//
         private void OnGUI()
         {
-            var position = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+            var position = Camera.main.WorldToScreenPoint(_controller.gameObject.transform.position);
             float x, y, width, height;
             x = position.x - 50;
             y = Screen.height - position.y - 215;
