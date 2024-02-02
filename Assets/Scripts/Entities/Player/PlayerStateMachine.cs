@@ -16,6 +16,7 @@ namespace DTIS
     public class PlayerStateMachine : MonoBehaviour
     {
         [SerializeField] private PlayerController _controller;
+        [SerializeField] private PlayerInteractor _interactor;
         public PlayerController Controller{get{return _controller;}}
         [SerializeField] private PlayerControls _controls;
         enum Directions // might move to utils later
@@ -73,7 +74,9 @@ namespace DTIS
 
         protected void Start()
         {
+            //TODO: move all control related settings to playerControls wrapper!
             Controls.ActionMap.All.GoGhost.performed += _ => _controller.Ghost(); // TODO: set this differently!
+            Controls.ActionMap.All.Interaction.performed += _ => _interactor.Interact();
         }
         public virtual void SetState(ESP.States state, ESP.States subState)
         {

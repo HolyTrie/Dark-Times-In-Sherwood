@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public interface IInteractable
+public interface IInteractable // this allows me to use C# interfaces to reference Interactable
 {
     void SetGUI(bool value);
-    void OnClick();
+    void OnClick(GameObject entity);
 }
 
-public abstract class Interactable : MonoBehaviour, IInteractable //this allows me to use getComponent<Interactable>()
+public abstract class Interactable : MonoBehaviour, IInteractable // while this allows me to use getComponent<Interactable>()
 {
     [SerializeField] private GameObject _gui;
     protected void Start()
@@ -17,8 +17,5 @@ public abstract class Interactable : MonoBehaviour, IInteractable //this allows 
     {
         _gui.SetActive(value);
     }
-    public virtual void OnClick()
-    {
-        throw new System.NotImplementedException();
-    }
+    public abstract void OnClick(GameObject entity);
 }

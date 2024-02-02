@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RopeController : MonoBehaviour,IClimbable
+public class RopeController : Climbable
 {
     // Start is called before the first frame update
     [SerializeField] private RopeGenerator _generatorScript;
@@ -12,18 +12,13 @@ public class RopeController : MonoBehaviour,IClimbable
         }
     }
 
-    public void Attach(Transform entity)
+    protected override void OnAttach()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("On Attach");
     }
 
-    public void OnAttach()
+    protected override void OnDeattach()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnDeattach()
-    {
-        throw new System.NotImplementedException();
+        Debug.Log("On Deattach");
     }
 }
