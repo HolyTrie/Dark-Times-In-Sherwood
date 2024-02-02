@@ -11,12 +11,10 @@ public class RopeController : Climbable
             _generatorScript = GetComponent<RopeGenerator>();
         }
     }
-
     protected override void OnAttach()
     {
         Debug.Log("On Attach");
     }
-
     protected override void OnDeattach()
     {
         Debug.Log("On Deattach");

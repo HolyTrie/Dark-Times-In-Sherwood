@@ -19,7 +19,8 @@ public abstract class Climbable : MonoBehaviour, IClimbable
     }
     public void Deattach()
     {
-       OnDeattach();
+        AttachedEntity = null;
+        OnDeattach();
     }
     protected abstract void OnAttach();
     protected abstract void OnDeattach();

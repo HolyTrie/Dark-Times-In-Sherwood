@@ -7,10 +7,10 @@ public class RopeSegmentInteractable : Interactable
 
     public override void OnClick(GameObject entity)
     {
-        if(Parent.HasAttachedEntity)
-            Parent.Deattach();
-        else
+        if(!Parent.HasAttachedEntity)
             Parent.Attach(entity);
+        else
+            Parent.Deattach();
     }
 }
 
