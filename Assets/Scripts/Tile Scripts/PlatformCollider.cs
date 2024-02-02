@@ -25,7 +25,7 @@ public class PlatformCollider : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             //Debug.Log("On platform");
-            PlayerStateMachine _player = collision.gameObject.GetComponent<PlayerStateMachine>();
+            PlayerStateMachine _player = collision.gameObject.GetComponent<PlayerStateMachine>(); // TODO : this right now errors when clicking E on a platform // 
             if (_player.Controls.ActionMap.All.Down.IsPressed())
             {
                 //Debug.Log("Player Going Down");
