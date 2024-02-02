@@ -31958,7 +31958,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -100863,7 +100863,7 @@ HingeJoint2D:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_BreakAction: 3
-  m_AutoConfigureConnectedAnchor: 0
+  m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_UseMotor: 0
@@ -100933,11 +100933,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4515853546675641745, guid: 8d6e7128dd120c948a8e6dc196b3494a, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8060059674906807869, guid: 8d6e7128dd120c948a8e6dc196b3494a, type: 3}
       propertyPath: m_Name
       value: MiniMapCamera
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6408638704622400145, guid: 8d6e7128dd120c948a8e6dc196b3494a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -101352,75 +101357,6 @@ MonoBehaviour:
   _controller: {fileID: 502650921419218303}
   _interactor: {fileID: 1989094632}
   _controls: {fileID: 7016062622584537640}
---- !u!1001 &7864976612720543772
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1259987869326235720, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
-      propertyPath: m_text
-      value: 'I cant Believe I was sent here by that foul magic, I have to find my
-        way out ...
-
-        (use A and D to move around - Spacebar to jump, and
-        S to fall down Platforms)'
-      objectReference: {fileID: 0}
-    - target: {fileID: 2076354881200993279, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6797489683476309410, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
-      propertyPath: m_Name
-      value: ProximityMessage
-      objectReference: {fileID: 0}
-    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
 --- !u!1001 &7668498804862518226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -101518,6 +101454,75 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6e961c265112ed40abf0d47c7d6d8cc, type: 3}
+--- !u!1001 &7864976612720543772
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1259987869326235720, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
+      propertyPath: m_text
+      value: 'I cant Believe I was sent here by that foul magic, I have to find my
+        way out ...
+
+        (use A and D to move around - Spacebar to jump, and
+        S to fall down Platforms)'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2076354881200993279, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797489683476309410, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
+      propertyPath: m_Name
+      value: ProximityMessage
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391438505938679950, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 38a67f75301f9ae4ab02f87cc78b365d, type: 3}
 --- !u!1001 &8466796519754697917
 PrefabInstance:
   m_ObjectHideFlags: 0
