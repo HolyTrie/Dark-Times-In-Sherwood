@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class RopeSegmentInteractable : Interactable
+public class RopeSegmentInteractable : BaseInteractable
 {
-    private RopeController _parent;
-    public RopeController Parent{set{_parent = value;} private get{return _parent;}}
+    private RopeController _parentObj;
+    public RopeController ParentObject{set{_parentObj = value;} private get{return _parentObj;}}
 
     public override void OnClick(GameObject entity)
     {
-        if(!Parent.HasAttachedEntity)
-            Parent.Attach(entity);
+        if(!ParentObject.HasAttachedEntity)
+            ParentObject.Attach(entity);
         else
-            Parent.Deattach();
+            ParentObject.Deattach();
     }
 }
 

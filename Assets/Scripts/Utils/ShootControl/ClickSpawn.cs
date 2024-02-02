@@ -21,7 +21,7 @@ namespace DTIS
         /* This method generates an object according to the mouse cursor position */
         public void spawnObject()
         {
-            Debug.Log("Spawning a new object");
+            //Debug.Log("Spawning a new object");
             mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
             //Set positions//
             Vector3 rotation = mouseWorldPosition - transform.position;

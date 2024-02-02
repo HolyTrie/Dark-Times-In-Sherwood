@@ -9,7 +9,7 @@ public class RopeSegment : MonoBehaviour
     {
         connectedAbove = GetComponent<HingeJoint2D>().connectedBody.gameObject;
         RopeSegment aboveSegment = connectedAbove.GetComponent<RopeSegment>();
-        _interactor.Parent = transform.parent.GetComponent<RopeController>();
+        _interactor.ParentObject = transform.parent.GetComponent<RopeController>();
         if(aboveSegment != null) // iterative assignment of neighbours (Top --> Bottom) 
         {
             aboveSegment.connectedBelow = gameObject; //tells the upstairs neighbour they live right below them and can hear everything...

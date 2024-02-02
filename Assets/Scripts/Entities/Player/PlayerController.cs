@@ -146,7 +146,7 @@ namespace DTIS
 
             IEnumerator DelayArrow() // delays the user from shooting every 'ShootDelay' seconds.
             {
-                Debug.Log("Arrow is loading...");
+                //Debug.Log("Arrow is loading...");
                 yield return new WaitForSeconds(ShootDelay);
                 _clickSpawn.spawnObject();
                 canSpawn = true;
