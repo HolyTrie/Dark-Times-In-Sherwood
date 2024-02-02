@@ -47,10 +47,8 @@ public class PlayerInteractor : MonoBehaviour
        transform.position = controller.transform.position + _fixedPos;
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        //Debug.Log(other.gameObject.name);
         if(other.CompareTag("Interactable"))
         {
-            Debug.Log(other.gameObject.name);
             if(!_objectsInRange.ContainsKey(other.gameObject.GetHashCode()))
             {  
                 _objectsInRange.Add(other.gameObject.GetHashCode(),other.transform);
