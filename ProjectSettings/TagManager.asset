@@ -18,13 +18,12 @@ TagManager:
   - TransparentFX
   - Ignore Raycast
   - Player
-  - MiniMap
   - Water
   - UI
+  - 
   - Ground
   - Debris
   - Interactable
-  - 
   - 
   - 
   - 

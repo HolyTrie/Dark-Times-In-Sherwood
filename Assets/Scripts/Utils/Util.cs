@@ -31,5 +31,10 @@ namespace DTIS
                                     .ToArray();
         }
 
+        public static void MimicEntityMovement(Transform Mimic, Transform Target, Vector3 FixedRelativePosition)
+        {
+            Mimic.position = Target.position + FixedRelativePosition;
+        }
+
     }
 }

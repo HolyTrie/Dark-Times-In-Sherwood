@@ -19,6 +19,14 @@ namespace DTIS
         [SerializeField] private PlayerInteractor _interactor;
         public PlayerController Controller{get{return _controller;}}
         [SerializeField] private PlayerControls _controls;
+
+        private void InitChildScripts()
+        {
+            // this is a fair solution for now, but when this script becomes too complex
+            // we may need to refactor this into a new class / design pattern
+            _controller.FSM = this;
+            _interactor.Controller = _controller;
+        }
         enum Directions // might move to utils later
         {
             Left = -1,
@@ -70,6 +78,7 @@ namespace DTIS
                 _controls = GetComponent<PlayerControls>();
             SetState(ESP.States.Grounded, ESP.States.Idle);
             Direction = (float)Directions.Right;
+            InitChildScripts();
         }
 
         protected void Start()

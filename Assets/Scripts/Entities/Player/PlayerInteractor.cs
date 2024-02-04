@@ -5,7 +5,8 @@ public class PlayerInteractor : MonoBehaviour
 {
     //public Transform Referencepoint;
     private readonly IDictionary<int,Transform> _objectsInRange = new Dictionary<int,Transform>();
-    [SerializeField] private PlayerController controller;
+    private PlayerController _controller;
+    public PlayerController Controller{get{return _controller;} internal set{_controller = value;}}
     private GameObject closestObject;
     private Vector3 _fixedPos;
 
@@ -13,7 +14,7 @@ public class PlayerInteractor : MonoBehaviour
     {
         if(closestObject != null)
         {
-            closestObject.GetComponent<Interactable>().OnClick(controller.gameObject);
+            closestObject.GetComponent<Interactable>().OnClick(Controller.gameObject);
         }
     }
     void Start()
@@ -25,7 +26,7 @@ public class PlayerInteractor : MonoBehaviour
     void Update()
     {
         SetClosestObject();
-        MimicEntityMovement();
+        Util.MimicEntityMovement(transform, Controller.transform,_fixedPos);
     }
     private void SetClosestObject()
     {
@@ -41,10 +42,6 @@ public class PlayerInteractor : MonoBehaviour
             if(closestObject != null)
                 closestObject.GetComponent<Interactable>().SetGUI(true);
         }
-    }
-    private void MimicEntityMovement()
-    {
-       transform.position = controller.transform.position + _fixedPos;
     }
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("Interactable"))

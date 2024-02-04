@@ -37,6 +37,9 @@ namespace DTIS
         private PlayerGhostBehaviour _gb;
         private GroundCheck _gc;
         public bool IsGrounded { get { return _gc.Grounded; } }
+        [SerializeField] private PlayerStateMachine _fsm;
+        public PlayerStateMachine FSM { get{return _fsm;} internal set{_fsm = value;} }
+
         void Awake()
         {
             _rb2D = GetComponent<Rigidbody2D>();

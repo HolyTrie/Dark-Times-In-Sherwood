@@ -9,13 +9,13 @@ public class PlatformCollider : MonoBehaviour
 
     private void Start()
     {
-        _collider2d = this.gameObject.GetComponent<Collider2D>();
+        _collider2d = gameObject.GetComponent<Collider2D>();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Player"))
         {
-            Debug.Log("On platform");
+            //Debug.Log("On platform");
             _collider2d.isTrigger = false; // after jumping on the platform set the trigger to false.
         }
     }
@@ -24,8 +24,8 @@ public class PlatformCollider : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            //Debug.Log("On platform");
-            PlayerStateMachine _player = collision.gameObject.GetComponent<PlayerStateMachine>();
+            //Debug.Log(collision.gameObject.name);
+            PlayerStateMachine _player = collision.gameObject.GetComponent<PlayerController>().FSM;
             if (_player.Controls.ActionMap.All.Down.IsPressed())
             {
                 //Debug.Log("Player Going Down");
