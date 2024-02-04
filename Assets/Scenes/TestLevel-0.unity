@@ -12993,6 +12993,23 @@ Transform:
   - {fileID: 1089545788}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &760304116 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4210207189835909326, guid: 72bdbb93272460b4ba0f2d4c9cf3d1ce, type: 3}
+  m_PrefabInstance: {fileID: 7016062622584537638}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &760304119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760304116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8143ec81e3eb30c408217d006ff7030f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &787399630
 GameObject:
   m_ObjectHideFlags: 0
@@ -101158,18 +101175,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2156575083526122391, guid: 72bdbb93272460b4ba0f2d4c9cf3d1ce, type: 3}
-      propertyPath: m_Layer
-      value: 3
+    - target: {fileID: 2378854084785728345, guid: 72bdbb93272460b4ba0f2d4c9cf3d1ce, type: 3}
+      propertyPath: ShootLoad
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2378854084785728345, guid: 72bdbb93272460b4ba0f2d4c9cf3d1ce, type: 3}
       propertyPath: ShootDelay
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2378854084785728345, guid: 72bdbb93272460b4ba0f2d4c9cf3d1ce, type: 3}
-      propertyPath: _groundCheck
-      value: 
-      objectReference: {fileID: 9023713393512317541}
+      propertyPath: ShootReload
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2378854084785728345, guid: 72bdbb93272460b4ba0f2d4c9cf3d1ce, type: 3}
       propertyPath: m_CrouchDisableCollider
       value: 
@@ -101186,9 +101203,9 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4210207189835909326, guid: 72bdbb93272460b4ba0f2d4c9cf3d1ce, type: 3}
-      propertyPath: m_Layer
-      value: 3
+    - target: {fileID: 3526163837055125571, guid: 72bdbb93272460b4ba0f2d4c9cf3d1ce, type: 3}
+      propertyPath: m_MaskInteraction
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4210207189835909326, guid: 72bdbb93272460b4ba0f2d4c9cf3d1ce, type: 3}
       propertyPath: m_TagString
@@ -101286,6 +101303,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4912429889759390280, guid: 72bdbb93272460b4ba0f2d4c9cf3d1ce, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9023713393512317543}
+    - targetCorrespondingSourceObject: {fileID: 4210207189835909326, guid: 72bdbb93272460b4ba0f2d4c9cf3d1ce, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 760304119}
   m_SourcePrefab: {fileID: 100100000, guid: 72bdbb93272460b4ba0f2d4c9cf3d1ce, type: 3}
 --- !u!1 &7016062622584537639 stripped
 GameObject:

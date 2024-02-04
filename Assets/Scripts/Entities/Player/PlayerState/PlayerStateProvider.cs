@@ -29,6 +29,7 @@ namespace DTIS
             LightAttack,
             HeavyAttack,
             RangedAttack,
+            HighAttackState,
             Climbing
             // step 1: add new state reference here
         }
@@ -52,6 +53,7 @@ namespace DTIS
                 //States.LightAttack => new LightAttackState(),
                 //States.HeavyAttack => new HeavyAttackState(),
                 States.RangedAttack => new RangedAttackState(),
+                States.HighAttackState => new HighAttackState(),
                 _ => throw new System.Exception("ESP Factory 'build' method does not support entity of type " + state + "\n\t * please check the States enum in the ESP"),
             };
         }

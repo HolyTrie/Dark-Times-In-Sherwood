@@ -20,7 +20,8 @@ namespace DTIS
         [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider to be disabled on the 'crouch' player action.
         [SerializeField] private GameObject _groundCheck;							// A position marking where to check if the entity is grounded.
         [SerializeField] private Transform _ceilingCheck;							// A position marking where to check for ceilings
-        [SerializeField] float ShootDelay;
+        [SerializeField] private float ShootDelaySeconds;
+        [SerializeField] private float ShootReloadSeconds;
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
         public bool FacingRight{get{return _facingRight;} private set{_facingRight = value;}}
         private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
@@ -31,7 +32,7 @@ namespace DTIS
         public Animator Animator { get { return _animator; } }
         private ClickSpawn _clickSpawn; // class to spawn object by click.
         private Transform _transform;
-        private bool canSpawn = true;
+        private bool isShooting = false;
         private Camera _mainCamera;
         private Renderer _renderer;
         private PlayerGhostBehaviour _gb;
@@ -58,7 +59,8 @@ namespace DTIS
             _gb.TrySetGhostStatus();
             Flip();
         }
-        void FixedUpdate() {
+        void FixedUpdate()
+        {
             return;
         }
 
@@ -139,21 +141,33 @@ namespace DTIS
                 _renderer.material.color = col;
             }
         }
+
+        // int animLayer = 0;
+        // public bool isPlaying(string stateName)
+        // {
+        //     if (_animator.GetCurrentAnimatorStateInfo(animLayer).IsName(stateName) &&
+        //             _animator.GetCurrentAnimatorStateInfo(animLayer).normalizedTime < 1.0f)
+        //         return true;
+        //     else
+        //         return false;
+        // }
         public virtual void Shoot()
         {
-            if (canSpawn)
+            if (isShooting) return;
             {
-                canSpawn = false;
+                isShooting = true;
                 StartCoroutine(DelayArrow());
+
+                IEnumerator DelayArrow() // delays the user from shooting every 'ShootDelay' seconds.
+                {
+                    //Debug.Log("Arrow is loading...");
+                    yield return new WaitForSeconds(ShootDelaySeconds);
+                    _clickSpawn.spawnObject();
+                    isShooting = false;
+                }
             }
 
-            IEnumerator DelayArrow() // delays the user from shooting every 'ShootDelay' seconds.
-            {
-                //Debug.Log("Arrow is loading...");
-                yield return new WaitForSeconds(ShootDelay);
-                _clickSpawn.spawnObject();
-                canSpawn = true;
-            }
+            
         }
         
     }

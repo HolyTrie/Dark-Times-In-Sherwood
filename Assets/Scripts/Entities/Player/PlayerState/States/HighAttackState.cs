@@ -2,15 +2,15 @@ using UnityEngine;
 
 namespace DTIS
 {
-    public class RangedAttackState : PlayerState
+    public class HighAttackState : PlayerState
     {
-        public RangedAttackState(string name = "RangedAttack") 
+        public HighAttackState(string name = "HighAttack") 
         : base(name,true){}
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // we do new to preserve the common inherited function
             // FSM.groundCheck.Grounded = true;
-        //    if(controller.isPlaying("RangedAttack"))
+            // if(controller.isPlaying("HighAttack"))
                 Controller.Shoot(); // need to add delay according to frames.
         }
         protected override void TryStateSwitch()
