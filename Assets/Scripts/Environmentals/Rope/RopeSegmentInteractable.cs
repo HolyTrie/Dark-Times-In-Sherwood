@@ -7,8 +7,9 @@ public class RopeSegmentInteractable : BaseInteractable
 
     public override void OnClick(GameObject entity)
     {
+        Debug.Log("Entity Attached: " + entity);
         if(!ParentObject.HasAttachedEntity)
-            ParentObject.Attach(entity);
+            ParentObject.Attach(entity, this.gameObject);
         else
             ParentObject.Deattach();
     }
