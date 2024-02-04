@@ -24,7 +24,7 @@ namespace DTIS
                 isShooting = true;
                 float offset = 3f;
                 Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - FSM.Controls.transform.localPosition;
-                Debug.Log("Mouse Position: "+ dir + "PlayerPosition: "+ FSM.Controls.transform.localPosition );
+                //Debug.Log("Mouse Position: "+ dir + "PlayerPosition: "+ FSM.Controls.transform.localPosition );
                 if(dir.y - offset > FSM.Controls.transform.localPosition.y) // aiming above head
                     SetStates(ESP.States.Grounded,ESP.States.HighAttackState);
                 else

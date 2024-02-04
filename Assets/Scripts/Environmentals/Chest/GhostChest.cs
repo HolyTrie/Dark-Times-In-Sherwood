@@ -24,7 +24,7 @@ public class GhostChestController : MonoBehaviour
         if (collider.CompareTag("Floor"))
             return;
         
-        Debug.Log(guard +" ||| "+collider);
+        //Debug.Log(guard +" ||| "+collider);
         if (!guard && collider.CompareTag("Player"))
         {
             _playerController = collider.gameObject.GetComponent<PlayerController>();
