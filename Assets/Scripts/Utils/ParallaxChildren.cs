@@ -4,7 +4,8 @@ using UnityEngine.Rendering;
 public class ParallaxChildren : MonoBehaviour 
 {
 	/// <summary>
-	///  This script does exactly as the name suggests.
+	///  This script does exactly as the name suggests, this allows us to stack componenets into one layer and parallax those layers,
+	///  instead of every sprite/image individually
 	///  Built by referencing these sources:
 	///  1. https://www.youtube.com/watch?v=5E5_Fquw7BM&ab_channel=Brackeys
 	///  2. https://www.youtube.com/watch?v=zit45k6CUMk&ab_channel=Dani
