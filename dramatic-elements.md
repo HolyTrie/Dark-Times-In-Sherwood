@@ -29,10 +29,17 @@ we will present this with an open cutsence that simulates the story of the two. 
 * There will be more NPCs that the player will be able to talk to, get missions from and sell items to. </br>
 * During the game, the player will have a reputation bar that will effect how the NPCs react to him. </br>
 
-## Plot:TBD
+## Plot
+![WhatsApp Image 2024-02-06 at 18 05 16_424fa874](https://github.com/HolyTrie/Dark-Times-In-Sherwood/assets/73894107/5c18baa6-98bb-4d3a-94bd-1f85c84d320d)
+
+* The game takes place in the 13th century in England, it tells the story of an Evil sherriff that took by force over Nothingham, the plot develops with young robin growing and after losing his father he gets a task from the king - return to England and take back the land from the evil sheriff. as he reaches England he finds the people are being enslaved by the sheriff and his land teeming with abomanations he vows revenge for his people and set to reclaim his land, he went searching for people to join his crusade which then be named - The notorious gang of Sherwood. </br>
+In order to support the people of the town and his men, robin had to secure large sums of money, hence they began planning heists on the sheriff vaults which were filled with treasure and lots of coin. </br>
+However to thier surprise, the vaults were empty of cold and held dark artifcats depeer they kept descending until they reached a room with chanting, they found the sheriff sorrunded by tomes and artifacts in the middle of performing a ritual.</br>
+as the scary sights of the sheriff his gang left him in a rush, leaving robin to face the sheriff alone, a dark vortex caught robin and after a while he found himself in the same room alone. </br>
+a note was left by the sheriff telling him that he is now bound to him until he's returned all the lost artifacts from his vaults telling him that his body may soon be changing... </br>
 
 ## World Structure
 * nature laws will be simple, floating on water, wind that might shift or push objects (enemies, arrows, the player etc..), earth's gravitation, falling from a high edge can result in damage.</br>
 * geography - the world is a 2d, with rivers, lakes, structures to explore, tiles to climb and beatiful background scenery.</br>
-* history - TBD</br>
+* history - Takes place in the 13th century amidst a war with England and other countries. </br>
 * economoy - simple economy consists of gold coins that are used to purchase items in the head quarters from NPCs.</br>
