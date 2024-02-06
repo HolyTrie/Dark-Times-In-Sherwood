@@ -21,8 +21,8 @@ Sadness - losing a close friend. </br>
 Angriness - towards the main protagonist. </br>
 
 ## Background Story
-* The background story is with robin hood and his gang being kidnapped and enslaved by the evil sherrif of notthingham. </br>
-we will present this with an open cutsence that simulates the story of the two. </br>
+* The game takes place in the 13th century in England during the Crusades, after Robin of Locksley and his father left for the crusade the Evil sherrif of nottingham takes their fief Sherwood by force, while young robin loses his father in one of the earliest skirmishes of the war, eventually he grows to a trusted commander and near the end of the crusafe he gets a task from the king - return to England and ensure the stability of the region and to raise funds to pay the soon to return crusaders. </br>
+As he reaches England he finds the people are being enslaved by the sheriff and his land teeming with abominations, he vows revenge for his people and sets out to reclaim his land, to do so he recruited like minded individuals with grudges against the sheriff - The notorious gang of Sherwood. </br>
 
 ## Characters
 * The game will consist of robin hood as the main character and his protagonist - the evil sherriff. </br>
@@ -32,11 +32,10 @@ we will present this with an open cutsence that simulates the story of the two. 
 ## Plot
 ![WhatsApp Image 2024-02-06 at 18 05 16_424fa874](https://github.com/HolyTrie/Dark-Times-In-Sherwood/assets/73894107/5c18baa6-98bb-4d3a-94bd-1f85c84d320d)
 
-* The game takes place in the 13th century in England, it tells the story of an Evil sherriff that took by force over Nothingham, the plot develops with young robin growing and after losing his father he gets a task from the king - return to England and take back the land from the evil sheriff. as he reaches England he finds the people are being enslaved by the sheriff and his land teeming with abomanations he vows revenge for his people and set to reclaim his land, he went searching for people to join his crusade which then be named - The notorious gang of Sherwood. </br>
-In order to support the people of the town and his men, robin had to secure large sums of money, hence they began planning heists on the sheriff vaults which were filled with treasure and lots of coin. </br>
-However to thier surprise, the vaults were empty of cold and held dark artifcats depeer they kept descending until they reached a room with chanting, they found the sheriff sorrunded by tomes and artifacts in the middle of performing a ritual.</br>
-as the scary sights of the sheriff his gang left him in a rush, leaving robin to face the sheriff alone, a dark vortex caught robin and after a while he found himself in the same room alone. </br>
-a note was left by the sheriff telling him that he is now bound to him until he's returned all the lost artifacts from his vaults telling him that his body may soon be changing... </br>
+* In order to support the people of Sherwod and his men, robin had to secure a large sum of money, hence they began planning a heist on the sheriffs vaults which were filled with treasure and coin. </br>
+However to their surprise, the vaults were empty of gold and held dark artifacts and musky tomes, as the delved depeer into the vault they heard chanting, and eventually came upon the Sheriff performing a dark ritual.</br>
+At the sight of the profane ritual the gang scattered, leaving robin to face the sheriff alone, eventually robin is caught in the ritual as his mind is plagued by darkness and horror but he wakes up eventually. </br>
+Alobe in the same room with no sight of the sheriff, only a note that was left by the him telling Robin to 'clean up his mess' if he wishes to see the sun and informing him that the ritual has changed his body forever </br>
 
 ## World Structure
 * nature laws will be simple, floating on water, wind that might shift or push objects (enemies, arrows, the player etc..), earth's gravitation, falling from a high edge can result in damage.</br>
