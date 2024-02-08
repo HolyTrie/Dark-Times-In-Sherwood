@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace BehaviorTree
 {
@@ -8,11 +9,14 @@ namespace BehaviorTree
         private readonly K _prevBuilder;
         private Node _root;
         public Node Root => _root;
-        public CompositeBuilder(K prevBuilder, Node parent, Node node)
+        public string name;
+        public CompositeBuilder(K prevBuilder, Node parent, Node node, string _name = "Composite")
         {
             _prevBuilder = prevBuilder;
-            parent.Attach(Root);
             _root = node;
+            parent?.Attach(node);
+            name = _name+" {"+node.Id+"}";
+            //Debug.Log("start "+name);
         }
 
         public CompositeBuilder<CompositeBuilder<K,T>,T> Composite(Node node)
@@ -45,6 +49,7 @@ namespace BehaviorTree
 
         public K End()
         {
+            //Debug.Log("end "+name);
             return _prevBuilder;
         }
     }

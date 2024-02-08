@@ -45,7 +45,6 @@ namespace BehaviorTree
 
         public Node End()
         {
-            root.SetChildren(nodesToAdd,true); //sets this node as the root 
             return root;
         }
     }

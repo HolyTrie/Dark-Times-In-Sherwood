@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace BehaviorTree
 {
@@ -13,7 +13,6 @@ namespace BehaviorTree
     public class Node
     {
         public static uint LastId = 0;
-
         protected NodeState _state;
         public NodeState State { get => _state; }
 
@@ -24,8 +23,8 @@ namespace BehaviorTree
         protected Node Root => _root;
 
         private Node _parent;
-        protected List<Node> children = new List<Node>();
-        private Dictionary<string, object> _dataContext = new Dictionary<string, object>();
+        protected List<Node> children = new();
+        private readonly Dictionary<string, object> _dataContext = new();
         public Dictionary<string, object> Data => _dataContext;
         protected Dictionary<string, System.Action> _callbacks;
         public Dictionary<string, System.Action> Callbacks => _callbacks;
@@ -78,8 +77,7 @@ namespace BehaviorTree
 
         public object GetData(string key)
         {
-            object value = null;
-            if (_dataContext.TryGetValue(key, out value))
+            if (_dataContext.TryGetValue(key, out object value))
                 return value;
 
             Node node = _parent;
@@ -127,20 +125,6 @@ namespace BehaviorTree
             if (_callbacks == null)
                 _callbacks = new Dictionary<string, System.Action>();
             foreach (var p in callbacks) _callbacks.Add(p.Key, p.Value);
-        }
-
-        public void PrintRecursively()
-        {
-            PrintRecursively(_root);
-        }
-
-        public void PrintRecursively(Node root)
-        {
-            Console.WriteLine(root._id);
-            foreach(var child in root.Children)
-            {
-                PrintRecursively(child);
-            }
         }
     }
 }

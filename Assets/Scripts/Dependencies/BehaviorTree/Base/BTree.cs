@@ -14,10 +14,7 @@ namespace BehaviorTree
 
         private void Update()
         {
-            if (_root != null)
-            {
-                _root.Evaluate();
-            }
+            _root?.Evaluate();
         }
 
         public Node Root => _root;

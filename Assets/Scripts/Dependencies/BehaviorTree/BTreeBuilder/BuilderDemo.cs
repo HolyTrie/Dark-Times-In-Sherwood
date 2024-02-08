@@ -26,7 +26,6 @@ public class BuilderDemo : BTree
                 .End()
             .End()
         .End();
-        root.PrintRecursively();
         return root;
     }
 }

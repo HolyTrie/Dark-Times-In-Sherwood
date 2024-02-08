@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using UnityEngine;
 
 namespace BehaviorTree
 {
@@ -19,11 +20,14 @@ namespace BehaviorTree
         private readonly K _prevBuilder;
         private readonly Node _root;
         public Node Root => _root;
-        public DecoratorBuilder(K prevBuilder, Node parent, Node node)
+        public string name;
+        public DecoratorBuilder(K prevBuilder, Node parent, Node node,string _name = "Decorator")
         {
             _prevBuilder = prevBuilder;
             _root = node;
-            parent.Attach(_root);
+            parent?.Attach(_root);
+            name = _name+" {"+node.Id+"}";
+            //Debug.Log("start"+name);
 
         }
         public CompositeBuilder<DecoratorBuilder<K,T>,T> Composite(Node node)
@@ -56,6 +60,7 @@ namespace BehaviorTree
 
         public K End()
         {
+            //Debug.Log("end "+name);
             return _prevBuilder;
         }
     }
