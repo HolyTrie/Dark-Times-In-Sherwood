@@ -6,50 +6,45 @@ namespace BehaviorTree
     public class CompositeBuilder<K,T> where T : Node
     {
         private readonly K _prevBuilder;
-        private readonly Node _parent;
-        private IList<Func<T, object>> _callbacks;
-        private IList<object> _parameters;
-        private List<Node> nodesToAdd;
         private Node _root;
         public Node Root => _root;
         public CompositeBuilder(K prevBuilder, Node parent, Node node)
         {
-            _parent = parent;
             _prevBuilder = prevBuilder;
-            nodesToAdd = new List<Node>();
+            parent.Attach(Root);
             _root = node;
         }
 
         public CompositeBuilder<CompositeBuilder<K,T>,T> Composite(Node node)
         {
             var builder = new CompositeBuilder<CompositeBuilder<K, T>, T>(this, Root, node);
-            nodesToAdd.Add(builder.Root);
             return builder;
         }
 
-        public DecoratorBuilder<CompositeBuilder<K,T>,T> Decorator(Node node)
-        {
-            var builder = new DecoratorBuilder<CompositeBuilder<K,T>,T>(this,Root, node);
-            nodesToAdd.Add(builder.Root);
-            return builder;
-        }
         /// <summary>
+        /// Make sure Decorators only have 1 direct child node!
+        /// Otherwise expect undefined behaviour...
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns> <summary>
         /// 
         /// </summary>
         /// <param name="node"></param>
-        /// <returns>This Builder</returns>
-        public CompositeBuilder<K,T> Leaf(Node node)
+        /// <returns></returns>
+        public DecoratorBuilder<CompositeBuilder<K,T>,T> Decorator(Node node)
         {
-            nodesToAdd.Add(node);
-            return this;
-        } 
+            var builder = new DecoratorBuilder<CompositeBuilder<K,T>,T>(this,Root, node);
+            return builder;
+        }
 
-        //public CompositeBuilder<K,T> add
+        public LeafBuilder<CompositeBuilder<K,T>,T> Leaf(Node node)
+        {
+            var builder = new LeafBuilder<CompositeBuilder<K,T>,T>(this,Root, node);
+            return builder;
+        }
 
         public K End()
         {
-            Root.SetChildren(nodesToAdd);
-            _parent.Attach(Root);
             return _prevBuilder;
         }
     }

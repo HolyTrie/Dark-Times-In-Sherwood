@@ -23,6 +23,16 @@ namespace BehaviorTree
             return builder;
         }
 
+        /// <summary>
+        /// Make sure Decorators only have 1 direct child node!
+        /// Otherwise expect undefined behaviour...
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns> <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public DecoratorBuilder<BTreeBuilder,Node> Decorator(Node node)
         {
             var builder = new DecoratorBuilder<BTreeBuilder,Node>(this,root,node);
@@ -31,24 +41,6 @@ namespace BehaviorTree
             else
                 nodesToAdd.Add(builder.Root);
             return builder;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns> <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns> Reference to the same Builder</returns>
-        public BTreeBuilder Leaf(Node node)
-        {
-            if(root == null)
-                root = node;
-            else
-                nodesToAdd.Add(node);
-            return this;
         }
 
         public Node End()

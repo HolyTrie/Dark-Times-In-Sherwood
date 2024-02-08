@@ -47,7 +47,7 @@ namespace BehaviorTree
 
         public virtual NodeState Evaluate() => NodeState.FAILURE;
 
-        public void SetChildren(List<Node> children, bool forceRoot = false)
+        public void SetChildren(IList<Node> children, bool forceRoot = false)
         {
             foreach (Node c in children)
                 Attach(c);
