@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace BehaviorTree
 {
@@ -22,25 +20,28 @@ namespace BehaviorTree
             _root = node;
         }
 
-        public CompositeBuilder<CompositeBuilder<K,T>,T> Composite()
+        public CompositeBuilder<CompositeBuilder<K,T>,T> Composite(Node node)
         {
-            var builder = new CompositeBuilder<CompositeBuilder<K, T>, T>(this, Root);
+            var builder = new CompositeBuilder<CompositeBuilder<K, T>, T>(this, Root, node);
             nodesToAdd.Add(builder.Root);
             return builder;
         }
 
-        public DecoratorBuilder<CompositeBuilder<K,T>,T> Decorator()
+        public DecoratorBuilder<CompositeBuilder<K,T>,T> Decorator(Node node)
         {
-            var builder = new DecoratorBuilder<CompositeBuilder<K,T>,T>(this,Root);
+            var builder = new DecoratorBuilder<CompositeBuilder<K,T>,T>(this,Root, node);
             nodesToAdd.Add(builder.Root);
             return builder;
         }
-
-        public LeafBuilder<CompositeBuilder<K,T>,T> Leaf()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns>This Builder</returns>
+        public CompositeBuilder<K,T> Leaf(Node node)
         {
-            var builder = new LeafBuilder<CompositeBuilder<K,T>,T>(this,Root);
-            nodesToAdd.Add(builder.Root);
-            return builder;
+            nodesToAdd.Add(node);
+            return this;
         } 
 
         //public CompositeBuilder<K,T> add

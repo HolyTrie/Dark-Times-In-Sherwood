@@ -32,11 +32,15 @@ namespace BehaviorTree
             return builder;
         }
 
-        public LeafBuilder<DecoratorBuilder<K,T>,T> Leaf(Node node)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns>This Builder</returns>
+        public DecoratorBuilder<K,T> Leaf(Node node)
         {
-            var builder = new LeafBuilder<DecoratorBuilder<K,T>,T>(this,Root, node);
-            _nodesToAdd.Add(builder.Root);
-            return builder;
+            _nodesToAdd.Add(node);
+            return this;
         }
 
         public K End()

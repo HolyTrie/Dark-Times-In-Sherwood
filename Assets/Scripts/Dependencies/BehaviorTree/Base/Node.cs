@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace BehaviorTree
@@ -126,6 +127,20 @@ namespace BehaviorTree
             if (_callbacks == null)
                 _callbacks = new Dictionary<string, System.Action>();
             foreach (var p in callbacks) _callbacks.Add(p.Key, p.Value);
+        }
+
+        public void PrintRecursively()
+        {
+            PrintRecursively(_root);
+        }
+
+        public void PrintRecursively(Node root)
+        {
+            Console.WriteLine(root._id);
+            foreach(var child in root.Children)
+            {
+                PrintRecursively(child);
+            }
         }
     }
 }

@@ -2,6 +2,9 @@ using System.Collections.Generic;
 
 namespace BehaviorTree
 {
+    /// <summary>
+    /// This is mostly syntactic sugar to help initialize the trees hierarchy without getting lost in context 
+    /// </summary>
     public class BTreeBuilder
     {
         private Node root;
@@ -30,14 +33,22 @@ namespace BehaviorTree
             return builder;
         }
 
-        public LeafBuilder<BTreeBuilder,Node> Leaf(Node node)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns> <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns> Reference to the same Builder</returns>
+        public BTreeBuilder Leaf(Node node)
         {
-            var builder = new LeafBuilder<BTreeBuilder,Node>(this,root,node);
             if(root == null)
-                root = builder.Root;
+                root = node;
             else
-                nodesToAdd.Add(builder.Root);
-            return builder;
+                nodesToAdd.Add(node);
+            return this;
         }
 
         public Node End()
