@@ -10,7 +10,8 @@ namespace DTIS
         {
             base.Enter(controller,fsm); // we do new to preserve the common inherited function
             // FSM.groundCheck.Grounded = true;
-            Controller.Shoot(); // need to add delay according to frames.
+        //    if(controller.isPlaying("RangedAttack"))
+                Controller.Shoot(); // need to add delay according to frames.
         }
         protected override void TryStateSwitch()
         {

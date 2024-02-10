@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2103166328009713260}
   - component: {fileID: 2378854084785728345}
-  - component: {fileID: 6556040419227436723}
-  - component: {fileID: 1983716492328946345}
   - component: {fileID: 4270901907696537965}
   - component: {fileID: 141798089517779593}
   - component: {fileID: 7063999758691285583}
@@ -66,64 +64,6 @@ MonoBehaviour:
   _groundCheck: {fileID: 6425978984709881264}
   _ceilingCheck: {fileID: 2070774788767702965}
   ShootDelay: 0
---- !u!114 &6556040419227436723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508727149488127475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68ab498eb9d61124cbf6a0505ebf0b97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundCheck: {fileID: 0}
---- !u!114 &1983716492328946345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508727149488127475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62696f6da7fa6ae46bb1e9913a4ec8c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveHorizontal:
-    m_Name: Move Horizontal
-    m_Type: 1
-    m_ExpectedControlType: 
-    m_Id: c74620c6-1631-46ec-b651-6082a1f6be0d
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 1D Axis
-      m_Id: 4c7ad2b8-d9b8-404b-b274-3e29fc0900b0
-      m_Path: 1DAxis
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move Horizontal
-      m_Flags: 4
-    - m_Name: positive
-      m_Id: 06d96042-c383-480c-b96c-4aa43022afb3
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move Horizontal
-      m_Flags: 8
-    - m_Name: negative
-      m_Id: cfff04b7-1453-4e6d-a46b-ae484668bfaa
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move Horizontal
-      m_Flags: 8
-    m_Flags: 0
 --- !u!50 &4270901907696537965
 Rigidbody2D:
   serializedVersion: 4

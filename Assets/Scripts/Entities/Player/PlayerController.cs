@@ -20,8 +20,10 @@ namespace DTIS
         [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider to be disabled on the 'crouch' player action.
         [SerializeField] private GameObject _groundCheck;							// A position marking where to check if the entity is grounded.
         [SerializeField] private Transform _ceilingCheck;							// A position marking where to check for ceilings
-        [SerializeField] float ShootDelay;
+        [SerializeField] private float ShootDelaySeconds;
+        [SerializeField] private float ShootReloadSeconds;
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
+        public bool FacingRight{get{return _facingRight;} private set{_facingRight = value;}}
         private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
         public Vector3 Velocity { get { return _rb2D.velocity; } }
         public float JumpForce { get { return _jumpForce; } set { _jumpForce = value; } }
@@ -30,12 +32,15 @@ namespace DTIS
         public Animator Animator { get { return _animator; } }
         private ClickSpawn _clickSpawn; // class to spawn object by click.
         private Transform _transform;
-        private bool canSpawn = true;
+        private bool isShooting = false;
         private Camera _mainCamera;
         private Renderer _renderer;
         private PlayerGhostBehaviour _gb;
         private GroundCheck _gc;
         public bool IsGrounded { get { return _gc.Grounded; } }
+        private PlayerStateMachine _fsm;
+        public PlayerStateMachine FSM { get{return _fsm;} internal set{_fsm = value;} }
+
         void Awake()
         {
             _rb2D = GetComponent<Rigidbody2D>();
@@ -54,28 +59,46 @@ namespace DTIS
             _gb.TrySetGhostStatus();
             Flip();
         }
-        void FixedUpdate() {
+        void FixedUpdate()
+        {
             return;
         }
 
         /*Flips the chacater according to his velocity*/
-        protected virtual void Flip()
+        protected virtual void Flip(bool overrideMovement = false)
         {
-            Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            bool flipRight = _rb2D.velocity.x <= 0 || mouseWorldPosition.x <= transform.position.x; // mushlam
-            bool flipLeft = _rb2D.velocity.x > 0 || mouseWorldPosition.x > transform.position.x; // WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-
-            if (_facingRight && flipRight)
+            if(_rb2D.velocity.x == 0) // if idle
             {
-                _facingRight = !_facingRight;
-                // _transform.localScale = Vector3.Scale(_transform.localScale, new Vector3(-1,1,1)); //legacy flip
-                transform.GetComponent<SpriteRenderer>().flipX = true;
+                Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                bool isMouseRightToPlayer = mouseWorldPosition.x > transform.position.x;
+                bool isMouseLeftToPlayer = mouseWorldPosition.x < transform.position.x;
+                if(FacingRight && isMouseLeftToPlayer)
+                {
+                    FacingRight = !FacingRight;
+                    transform.GetComponent<SpriteRenderer>().flipX = true; // flip to face Left
+                }
+                if(!FacingRight && isMouseRightToPlayer)
+                {
+                    FacingRight = !FacingRight;
+                    transform.GetComponent<SpriteRenderer>().flipX = false; // flip to face Right
+                }
             }
-            if (!_facingRight && flipLeft)
+            else
             {
-                _facingRight = !_facingRight;
-                transform.GetComponent<SpriteRenderer>().flipX = false;
+                bool movingRight = _rb2D.velocity.x > 0;
+                bool movingLeft = _rb2D.velocity.x < 0; 
+                if(FacingRight && movingLeft)
+                {
+                    FacingRight = !FacingRight;
+                    transform.GetComponent<SpriteRenderer>().flipX = true; // flip to face Left
+                }
+                if(!FacingRight && movingRight)
+                {
+                    FacingRight = !FacingRight;
+                    transform.GetComponent<SpriteRenderer>().flipX = false; // flip to face Right
+                }
             }
+            
         }
         public void MoveWithSmoothDamp(Vector2 velocityMult)
         {
@@ -99,7 +122,7 @@ namespace DTIS
         }
         private class PlayerGhostBehaviour : GhostBehaviour
         {
-            private Renderer _renderer;
+            private readonly Renderer _renderer;
 
             public PlayerGhostBehaviour(Renderer renderer)
             {
@@ -118,22 +141,35 @@ namespace DTIS
                 _renderer.material.color = col;
             }
         }
+
+        // int animLayer = 0;
+        // public bool isPlaying(string stateName)
+        // {
+        //     if (_animator.GetCurrentAnimatorStateInfo(animLayer).IsName(stateName) &&
+        //             _animator.GetCurrentAnimatorStateInfo(animLayer).normalizedTime < 1.0f)
+        //         return true;
+        //     else
+        //         return false;
+        // }
         public virtual void Shoot()
         {
-            if (canSpawn)
+            if (isShooting) return;
             {
-                canSpawn = false;
-                this.StartCoroutine(DelayArrow());
+                isShooting = true;
+                StartCoroutine(DelayArrow());
+
+                IEnumerator DelayArrow() // delays the user from shooting every 'ShootDelay' seconds.
+                {
+                    //Debug.Log("Arrow is loading...");
+                    yield return new WaitForSeconds(ShootDelaySeconds);
+                    _clickSpawn.spawnObject();
+                    isShooting = false;
+                }
             }
+
+            
         }
-        // delays the user from shooting every 'ShootDelay' seconds.
-        private IEnumerator DelayArrow()
-        {
-            Debug.Log("Arrow is loading...");
-            yield return new WaitForSeconds(ShootDelay);
-            _clickSpawn.spawnObject();
-            canSpawn = true;
-        }
+        
     }
 }
 

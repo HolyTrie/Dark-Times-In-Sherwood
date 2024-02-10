@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /**
@@ -9,6 +10,7 @@ namespace DTIS
     {
         [SerializeField] protected GameObject prefabToSpawn;
         [SerializeField] Transform spawnPosition;
+        [SerializeField] private float _timeToLiveSeconds = 10f;
         private Vector3 mouseWorldPosition;
         private Camera _mainCamera;
         void Start()
@@ -19,13 +21,14 @@ namespace DTIS
         /* This method generates an object according to the mouse cursor position */
         public void spawnObject()
         {
-            Debug.Log("Spawning a new object");
+            //Debug.Log("Spawning a new object");
             mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
             //Set positions//
             Vector3 rotation = mouseWorldPosition - transform.position;
             float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, rotZ);
-            Instantiate(prefabToSpawn, spawnPosition.position, Quaternion.identity);
+            var go = Instantiate(prefabToSpawn, spawnPosition.position, Quaternion.identity);
+            StartCoroutine(Util.DestroyGameObjectCountdown(go,_timeToLiveSeconds));
         }
     }
 }

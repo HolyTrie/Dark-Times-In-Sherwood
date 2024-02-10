@@ -24,12 +24,11 @@ public class GhostChestController : MonoBehaviour
         if (collider.CompareTag("Floor"))
             return;
         
-        Debug.Log(guard +" ||| "+collider);
+        //Debug.Log(guard +" ||| "+collider);
         if (!guard && collider.CompareTag("Player"))
         {
-            _playerFSM = collider.gameObject.GetComponent<PlayerStateMachine>();
             _playerController = collider.gameObject.GetComponent<PlayerController>();
-            if(_playerFSM.Controls.ActionMap.All.Interaction.IsPressed())
+            if(_playerController.FSM.Controls.ActionMap.All.Interaction.IsPressed())
             {
                 guard = true;
                 _animator.Play("OpenChest");

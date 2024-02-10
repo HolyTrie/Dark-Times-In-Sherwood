@@ -26,9 +26,8 @@ public class BuffChestController : MonoBehaviour
         
         if (!guard && collider.CompareTag("Player"))
         {
-            _playerFSM = collider.gameObject.GetComponent<PlayerStateMachine>();
             _playerController = collider.gameObject.GetComponent<PlayerController>();
-            if(_playerFSM.Controls.ActionMap.All.Interaction.IsPressed())
+            if(_playerController.FSM.Controls.ActionMap.All.Interaction.IsPressed())
             {
                 guard = true;;
                 _animator.Play("OpenChest");
