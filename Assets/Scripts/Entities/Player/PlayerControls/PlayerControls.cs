@@ -31,6 +31,7 @@ namespace DTIS
         void FixedUpdate()
         {
             HorizontalMove = ActionMap.All.Walk.ReadValue<float>();
+            // HorizontalMove = Input.GetAxisRaw("Horizontal");
         }
 
         void OnEnable()

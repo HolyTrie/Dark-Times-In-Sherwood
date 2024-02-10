@@ -18,9 +18,9 @@ namespace DTIS
         public bool _debug = false;
         [SerializeField] private PlayerController _controller;
         [SerializeField] private PlayerInteractor _interactor;
-        public PlayerController Controller{get{return _controller;}}
+        public PlayerController Controller { get { return _controller; } }
         [SerializeField] private PlayerControls _controls;
-        
+
 
         private void InitChildScripts()
         {
@@ -76,7 +76,7 @@ namespace DTIS
         protected void Awake()
         {
             //_controller = gameObject.GetComponent<PlayerController>();
-            if(_controls == null)
+            if (_controls == null)
                 _controls = GetComponent<PlayerControls>();
             SetState(ESP.States.Grounded, ESP.States.Idle);
             Direction = (float)Directions.Right;
@@ -109,7 +109,7 @@ namespace DTIS
         // prints the state of the player above his head//
         private void OnGUI()
         {
-            if(_debug)
+            if (_debug)
             {
                 var position = Camera.main.WorldToScreenPoint(_controller.gameObject.transform.position);
                 float x, y, width, height;

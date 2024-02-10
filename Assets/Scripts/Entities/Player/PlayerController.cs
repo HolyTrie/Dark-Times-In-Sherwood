@@ -11,11 +11,11 @@ namespace DTIS
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private bool _airControl = true;
-        [SerializeField] private float _jumpForce = 15f;
-        [SerializeField] private float _walkSpeed = 10f;
-        [SerializeField] private float _runSpeedMult = 1.75f;
+        [SerializeField] private float _jumpForce;
+        [SerializeField] private float _walkSpeed;
+        [SerializeField] private float _runSpeedMult;
         public float RunSpeedMult { get { return _runSpeedMult; } }
-        [SerializeField] private float _movementSmoothing = 0.35f;
+        [SerializeField] private float _movementSmoothing;
         [SerializeField] private LayerMask _whatIsGround;							// A mask determining what is ground to the character
         [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider to be disabled on the 'crouch' player action.
         [SerializeField] private GameObject _groundCheck;							// A position marking where to check if the entity is grounded.
@@ -23,8 +23,9 @@ namespace DTIS
         [SerializeField] private float ShootDelaySeconds;
         [SerializeField] private float ShootReloadSeconds;
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
-        public bool FacingRight{get{return _facingRight;} private set{_facingRight = value;}}
+        public bool FacingRight { get { return _facingRight; } private set { _facingRight = value; } }
         private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
+        public float UpdateGravity { set { _rb2D.gravityScale = value; } } // this is updated once the player falls for a more conveinet falling.
         public Vector3 Velocity { get { return _rb2D.velocity; } }
         public float JumpForce { get { return _jumpForce; } set { _jumpForce = value; } }
         private Vector3 _Velocity = Vector3.zero;                // Entitys current velocity as a 3D vector. 
@@ -39,7 +40,7 @@ namespace DTIS
         private GroundCheck _gc;
         public bool IsGrounded { get { return _gc.Grounded; } }
         private PlayerStateMachine _fsm;
-        public PlayerStateMachine FSM { get{return _fsm;} internal set{_fsm = value;} }
+        public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } }
 
         void Awake()
         {
@@ -67,17 +68,17 @@ namespace DTIS
         /*Flips the chacater according to his velocity*/
         protected virtual void Flip(bool overrideMovement = false)
         {
-            if(_rb2D.velocity.x == 0) // if idle
+            if (_rb2D.velocity.x == 0) // if idle
             {
                 Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 bool isMouseRightToPlayer = mouseWorldPosition.x > transform.position.x;
                 bool isMouseLeftToPlayer = mouseWorldPosition.x < transform.position.x;
-                if(FacingRight && isMouseLeftToPlayer)
+                if (FacingRight && isMouseLeftToPlayer)
                 {
                     FacingRight = !FacingRight;
                     transform.GetComponent<SpriteRenderer>().flipX = true; // flip to face Left
                 }
-                if(!FacingRight && isMouseRightToPlayer)
+                if (!FacingRight && isMouseRightToPlayer)
                 {
                     FacingRight = !FacingRight;
                     transform.GetComponent<SpriteRenderer>().flipX = false; // flip to face Right
@@ -86,19 +87,19 @@ namespace DTIS
             else
             {
                 bool movingRight = _rb2D.velocity.x > 0;
-                bool movingLeft = _rb2D.velocity.x < 0; 
-                if(FacingRight && movingLeft)
+                bool movingLeft = _rb2D.velocity.x < 0;
+                if (FacingRight && movingLeft)
                 {
                     FacingRight = !FacingRight;
                     transform.GetComponent<SpriteRenderer>().flipX = true; // flip to face Left
                 }
-                if(!FacingRight && movingRight)
+                if (!FacingRight && movingRight)
                 {
                     FacingRight = !FacingRight;
                     transform.GetComponent<SpriteRenderer>().flipX = false; // flip to face Right
                 }
             }
-            
+
         }
         public void MoveWithSmoothDamp(Vector2 velocityMult)
         {
@@ -167,9 +168,9 @@ namespace DTIS
                 }
             }
 
-            
+
         }
-        
+
     }
 }
 
