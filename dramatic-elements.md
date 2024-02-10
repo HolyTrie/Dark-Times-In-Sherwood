@@ -2,14 +2,19 @@
 
 ## Challenge
 * To play our game the player will have to be skilled with playing games with keyboard and mouse and have an open minded regarding puzzle solving and trap avoidance, we will host a tutorial that will teach everything the new player is going to face, but will keep some things in the dark for excitment and challenge. </br>
-* Our game will start with simple proluge showing the player how the basic game mechanics works. Our goal is to make the levels in an ascending diffculity - At the start the levels will be "simple" and as he keeps progressing through the story he will unravel new game mechanincs and the levels will get more diffcult. </br>
+* Our game will start with simple proluge showing the player how the basic game mechanics works.
+* We are going to make the levels in an ascending diffculity - At the start the levels will be "simple", and will include simple traps and easy puzzles to solve. </br>
+As the player keeps progressing through the story he will unravel new game mechanincs such as:</br>
+* Ghost mechanic - when the player enters that state some tiles will change form and other will become rigid and visiblie.</br>
+* Buffs (extra jump force, speed..) that will assist the player in progressing thourgh the level.</br>
+Our main goal is to make the levels harder based on the player experience (that will be determined via how many levels he has passed). </br>
 
 ## Flow
 * To focus our player we will add ambient music to the game that will fit each stage the player is at (fighting/resting/main-menu). </br>
 * To give feedback to our player it will be based on quests - if the player succeded with the quest it will pop up with "mission completed". </br>
 
 ## Fun
-* To add extra layer to the game, we might add secret "coins" that the player has to collect during his voyage to the crypt. </br>
+* To add extra layer to the game, we might add hidden "items" that the player has to collect during his voyage to the crypts. </br>
 * Our game is mainly focused to audience - "achieveable" and "explorer" </br>
 * To add more audience level, we can add a scoreboard for each level which will present the fastest players who completed each level </br>
 
