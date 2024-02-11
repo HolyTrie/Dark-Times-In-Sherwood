@@ -35,6 +35,7 @@ namespace DTIS
                 }
                 */ 
             }
+            /*
             if(ActionMap.Walk.IsPressed()) // moving mid air
             {
                 if(!FSM.Grounded) // if player touched ground
@@ -42,6 +43,7 @@ namespace DTIS
                 else
                     SetSubState(ESP.States.Walk);
             }
+            */
             
             // if(Controller.Velocity.y < 0)
             // {   

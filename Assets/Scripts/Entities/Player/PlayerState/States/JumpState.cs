@@ -4,8 +4,12 @@ namespace DTIS
 {
     public class JumpState : PlayerState
     {
-        public JumpState(string name = "Jump") 
-        : base(name){}
+        private readonly bool _airControl;
+        public JumpState(bool airControl, string name = "Jump") 
+        : base(name)
+        {
+           _airControl = airControl;
+        }
 
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
@@ -21,6 +25,10 @@ namespace DTIS
         }
         protected override void PhysicsCalculation()
         {
+            if(_airControl)
+            {
+                Controller.Move(new Vector2(FSM.Controls.HorizontalMove, 0f));
+            }
         }
     }
 }

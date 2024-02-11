@@ -33,7 +33,7 @@ namespace DTIS
             Climbing
             // step 1: add new state reference here
         }
-        public static PlayerState Build(States state) // this code is used to build a new instance of a given state
+        public static PlayerState Build(States state,bool airControl = true) // this code is used to build a new instance of a given state
         {
             return state switch
             {
@@ -41,14 +41,14 @@ namespace DTIS
                 States.Airborne => new AirborneState(),
                 States.Climbing => new ClimbingState(),
                 //States.Crouch => new CrouchState(),
-                States.Jump => new JumpState(),
+                States.Jump => new JumpState(airControl),
                 //States.Attack => new AttackState(),
                 States.Idle => new IdleState(),
                 States.Walk => new WalkState(),
                 States.Fly => new FlyState(),
                 States.Run => new RunState(),
                 //States.Dash => new DashState(),
-                States.Fall => new FallState(),
+                States.Fall => new FallState(airControl),
                 //States.Jump2 => new Jump2State(),
                 //States.LightAttack => new LightAttackState(),
                 //States.HeavyAttack => new HeavyAttackState(),

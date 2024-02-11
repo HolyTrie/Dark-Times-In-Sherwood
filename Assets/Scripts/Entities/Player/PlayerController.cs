@@ -16,9 +16,7 @@ namespace DTIS
         [SerializeField] private float _runSpeedMult;
         public float RunSpeedMult { get { return _runSpeedMult; } }
         [SerializeField] private float _movementSmoothing;
-        [SerializeField] private LayerMask _whatIsGround;							// A mask determining what is ground to the character
         [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider to be disabled on the 'crouch' player action.
-        [SerializeField] private GameObject _groundCheck;							// A position marking where to check if the entity is grounded.
         [SerializeField] private Transform _ceilingCheck;							// A position marking where to check for ceilings
         [SerializeField] private float ShootDelaySeconds;
         [SerializeField] private float ShootReloadSeconds;
@@ -32,24 +30,22 @@ namespace DTIS
         private Animator _animator;
         public Animator Animator { get { return _animator; } }
         private ClickSpawn _clickSpawn; // class to spawn object by click.
-        private Transform _transform;
         private bool isShooting = false;
         private Camera _mainCamera;
         private Renderer _renderer;
         private PlayerGhostBehaviour _gb;
         private GroundCheck _gc;
-        public bool IsGrounded { get { return _gc.Grounded; } }
+        public bool IsGrounded { get { return _gc.Grounded(); } }
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } }
 
         void Awake()
         {
             _rb2D = GetComponent<Rigidbody2D>();
-            _transform = GetComponent<Transform>();
             _animator = GetComponent<Animator>();
             _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic strings
-            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>(); // is used to check where the player is looking at if we shoot, so we flip it.
-            _gc = GameObject.FindGameObjectWithTag("FloorCheck").GetComponent<GroundCheck>();
+            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+            _gc = GetComponentInChildren<GroundCheck>();
             _renderer = GetComponent<Renderer>();
             _gb = new PlayerGhostBehaviour(_renderer);
         }

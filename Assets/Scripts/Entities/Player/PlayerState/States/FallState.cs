@@ -4,10 +4,11 @@ namespace DTIS
 {
     public class FallState : PlayerState
     {
-        public FallState(string name = "Fall")
+        private readonly bool _airControl;
+        public FallState(bool airControl,string name = "Fall")
         : base(name, false)
         {
-
+            _airControl = airControl;
         }
         protected override void TryStateSwitch()
         {
@@ -20,7 +21,10 @@ namespace DTIS
         }
         protected override void PhysicsCalculation()
         {
-
+            if(_airControl)
+            {
+                Controller.Move(new Vector2(FSM.Controls.HorizontalMove, 0f));
+            }
         }
     }
 }
