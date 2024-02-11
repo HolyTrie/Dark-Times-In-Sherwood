@@ -30,6 +30,8 @@ public class GuardAI : BTree
 internal class TaskPatrol : Node
 {
     private readonly EntityController _controller;
+    private float _prevX;
+    private int stuckCounter = 0;
     private readonly Transform[] _waypoints;
     private int _currentWaypointIndex = 0;
     private float _waitTime = 1f; // in seconds
@@ -38,6 +40,7 @@ internal class TaskPatrol : Node
     public TaskPatrol(Transform[] waypoints, EntityController controller)
     {
         _controller = controller;
+        _prevX = _controller.transform.position.x;
         _waypoints = waypoints;
     }
 
@@ -68,13 +71,30 @@ internal class TaskPatrol : Node
             {
                 //_controller.transform.position = Vector2.MoveTowards(_controller.transform.position, new Vector2(wp.position.x,_controller.transform.position.y), _controller.WalkSpeed * Time.deltaTime);
                 // _controller.transform.LookAt(new Vector3(wp.position.x,_controller.transform.position.y,_controller.transform.position.z));
-                var direction = _controller.transform.position.x < wp.position.x ? 1.0f: -1.0f;
-                _controller.Move(new Vector2(direction,0.25f));
+                float direction = _controller.transform.position.x < wp.position.x ? 1.0f: -1.0f;
+                _controller.Move(new Vector2(direction,0f));
+
+                if(Math.Abs(_controller.transform.position.x - _prevX) < 0.01f)
+                {
+                    stuckCounter += 1;
+                    if(stuckCounter > 2)
+                    {
+                        Nudge(new Vector2(direction,0.05f));
+                        stuckCounter = 0;
+                    }
+                }
             }
         }
-
-
+        _prevX = _controller.transform.position.x;
         _state = NodeState.RUNNING;
         return _state;
+    }
+
+    private void Nudge(Vector2 direction)
+    {
+        Vector2 newPos = _controller.transform.position;
+        newPos.x += direction.x * Time.deltaTime;
+        newPos.y += direction.y * Time.deltaTime;
+        _controller.transform.position = newPos;
     }
 }
