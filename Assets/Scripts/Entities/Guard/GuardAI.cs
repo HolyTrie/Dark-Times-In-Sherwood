@@ -13,6 +13,7 @@ public class GuardAI : BTree
 
     protected override void Awake(){
         _controller = GetComponent<GuardController>(); // does NOT instantiate a Guard Controller if none exists!s
+        patrolTranforms ??= new Transform[0];
         base.Awake(); // calls SetupTree
     }
     protected override Node SetupTree()
@@ -46,45 +47,50 @@ internal class TaskPatrol : Node
 
     public override NodeState Evaluate()
     {
-        if (_waiting)
+        if(_waypoints != null)
         {
-            _waitCounter += Time.deltaTime;
-            if (_waitCounter >= _waitTime)
+            if(_waypoints.Length != 0)
             {
-                _waiting = false;
-                _controller.Animator.SetInteger("AnimState", 2);
-            }
-        }
-        else
-        {
-            Transform wp = _waypoints[_currentWaypointIndex];
-            if (Math.Abs(_controller.transform.position.x - wp.position.x) < 0.01f)
-            {
-                _controller.transform.position = new Vector2(wp.position.x,_controller.transform.position.y);
-                _waitCounter = 0f;
-                _waiting = true;
-
-                _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
-                _controller.Animator.SetInteger("AnimState", 0);
-            }
-            else
-            {
-                //_controller.transform.position = Vector2.MoveTowards(_controller.transform.position, new Vector2(wp.position.x,_controller.transform.position.y), _controller.WalkSpeed * Time.deltaTime);
-                // _controller.transform.LookAt(new Vector3(wp.position.x,_controller.transform.position.y,_controller.transform.position.z));
-                float direction = _controller.transform.position.x < wp.position.x ? 1.0f: -1.0f;
-                _controller.Move(new Vector2(direction,0f));
-
-                if(Math.Abs(_controller.transform.position.x - _prevX) < 0.01f)
+                if (_waiting)
                 {
-                    stuckCounter += 1;
-                    if(stuckCounter > 2)
+                    _waitCounter += Time.deltaTime;
+                    if (_waitCounter >= _waitTime)
                     {
-                        Nudge(new Vector2(direction,0.05f));
-                        stuckCounter = 0;
+                        _waiting = false;
+                        _controller.Animator.SetInteger("AnimState", 2);
+                    }
+                }
+                else
+                {
+                    Transform wp = _waypoints[_currentWaypointIndex];
+                    if (Math.Abs(_controller.transform.position.x - wp.position.x) < 0.01f)
+                    {
+                        _controller.transform.position = new Vector2(wp.position.x,_controller.transform.position.y);
+                        _waitCounter = 0f;
+                        _waiting = true;
+
+                        _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
+                        _controller.Animator.SetInteger("AnimState", 0);
+                    }
+                    else
+                    {
+                        float direction = _controller.transform.position.x < wp.position.x ? 1.0f: -1.0f;
+                        _controller.Move(new Vector2(direction,0f));
+
+                        if(Math.Abs(_controller.transform.position.x - _prevX) < 0.01f)
+                        {
+                            stuckCounter += 1;
+                            if(stuckCounter > 2)
+                            {
+                                Nudge(new Vector2(direction,0.05f));
+                                stuckCounter = 0;
+                            }
+                        }
                     }
                 }
             }
-        }
+        }   
+        
         _prevX = _controller.transform.position.x;
         _state = NodeState.RUNNING;
         return _state;
