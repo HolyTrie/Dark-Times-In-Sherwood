@@ -1,5 +1,3 @@
-using UnityEngine;
-using UnityEngine.Diagnostics;
 
 namespace DTIS
 {

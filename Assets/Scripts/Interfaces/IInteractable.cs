@@ -3,7 +3,7 @@ using UnityEngine;
 public interface IInteractable // this allows me to use C# interfaces to reference Interactable
 {
     void SetGUI(bool value);
-    void OnClick(GameObject entity);
+    void OnClick(GameObject clickingEntity);
 }
 
 public abstract class Interactable : MonoBehaviour, IInteractable // while this allows me to use getComponent<Interactable>()
@@ -17,5 +17,5 @@ public abstract class Interactable : MonoBehaviour, IInteractable // while this 
     {
         _gui.SetActive(value);
     }
-    public abstract void OnClick(GameObject entity);
+    public abstract void OnClick(GameObject clickingEntity);
 }

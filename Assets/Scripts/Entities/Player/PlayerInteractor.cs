@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerInteractor : MonoBehaviour
 {
     //public Transform Referencepoint;
-    private readonly IDictionary<int, Transform> _objectsInRange = new Dictionary<int, Transform>();
+    private readonly Dictionary<int, Transform> _objectsInRange = new();
     private PlayerController _controller;
     public PlayerController Controller { get { return _controller; } internal set { _controller = value; } }
     private GameObject closestObject;

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR.Haptics;
 
 namespace DTIS
@@ -20,8 +22,6 @@ namespace DTIS
         [SerializeField] private PlayerInteractor _interactor;
         public PlayerController Controller { get { return _controller; } }
         [SerializeField] private PlayerControls _controls;
-
-
         private void InitChildScripts()
         {
             // this is a fair solution for now, but when this script becomes too complex
@@ -49,7 +49,7 @@ namespace DTIS
         public PlayerControls Controls { get { return _controls; } }
         private PlayerState _state;
         private PlayerState _subState;
-        //private PlayerState _prevState; // TODO: this should be a stack of states instead. (with curr being the top) - better solution.
+        // Refactor option : Hierarchical state machine instead of state + substate
         public PlayerState State // Property with simple getter and a setter that handles state switch by calling exit and enter appropriately.
         {
             get { return _state; }
@@ -75,17 +75,16 @@ namespace DTIS
 
         protected void Awake()
         {
-            //_controller = gameObject.GetComponent<PlayerController>();
             if (_controls == null)
                 _controls = GetComponent<PlayerControls>();
             SetState(ESP.States.Grounded, ESP.States.Idle);
             Direction = (float)Directions.Right;
             InitChildScripts();
+            InitControls();
         }
 
-        protected void Start()
+        protected void InitControls()
         {
-            //TODO: move all control related settings to playerControls wrapper!
             Controls.ActionMap.All.GoGhost.performed += _ => _controller.Ghost(); // TODO: set this differently!
             Controls.ActionMap.All.Interaction.performed += _ => _interactor.Interact();
         }
