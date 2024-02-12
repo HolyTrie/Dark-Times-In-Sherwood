@@ -10,8 +10,6 @@ namespace DTIS
         public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
             base.Enter(controller, fsm);
-            FSM.Controller.UpdateGravity = 2f; // if player falls set his mass to bigger just for better smooting
-
         }
         protected override void TryStateSwitch()
         {

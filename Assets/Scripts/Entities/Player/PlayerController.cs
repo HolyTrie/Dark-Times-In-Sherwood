@@ -23,7 +23,6 @@ namespace DTIS
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
         public bool FacingRight { get { return _facingRight; } private set { _facingRight = value; } }
         private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
-        public float UpdateGravity { set { _rb2D.gravityScale = value; } } // this is updated once the player falls for a more conveinet falling.
         public Vector3 Velocity { get { return _rb2D.velocity; } }
         public float JumpForce { get { return _jumpForce; } set { _jumpForce = value; } }
         private Vector3 _Velocity = Vector3.zero;                // Entitys current velocity as a 3D vector. 

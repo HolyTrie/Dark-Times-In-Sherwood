@@ -12,7 +12,8 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            FSM.Controller.UpdateGravity = 2f; // if player falls set his mass to bigger just for better smooting
+            // TODO: control jump velocities VVVVV          like so VVVV
+            //FSM.Controller.UpdateGravity = 2f; // if player falls set his mass to bigger just for better smooting
 
             // if(Controller.Velocity.y == 0)
             // {
