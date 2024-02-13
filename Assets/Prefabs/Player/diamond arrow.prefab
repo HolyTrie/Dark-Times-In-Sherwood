@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 1114030021221141669}
   - component: {fileID: 6375425070069452676}
   - component: {fileID: 6154515810001218398}
-  m_Layer: 0
+  - component: {fileID: 5956321674479705992}
+  m_Layer: 13
   m_Name: diamond arrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}
@@ -172,12 +173,21 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.32, y: 0.08}
-      - {x: -0.32, y: -0.04}
-      - {x: 0.28, y: -0.04}
-      - {x: 0.32, y: 0}
-      - {x: 0.32, y: 0.049999997}
-      - {x: 0.29999998, y: 0.08}
+    - - {x: 0.25548077, y: 0.06498909}
+      - {x: 0.25780678, y: 0.035773277}
+      - {x: -0.2158041, y: 0.03946781}
+      - {x: -0.23526382, y: 0.06245327}
+      - {x: -0.31539375, y: 0.06503208}
+      - {x: -0.2900629, y: 0.020608425}
+      - {x: -0.31769782, y: -0.026183642}
+      - {x: -0.23775196, y: -0.024270535}
+      - {x: -0.21329212, y: 0.0033130646}
+      - {x: 0.2542019, y: 0.0034570694}
+      - {x: 0.25458527, y: -0.026081085}
+      - {x: 0.2834542, y: -0.02272991}
+      - {x: 0.31654674, y: 0.010363102}
+      - {x: 0.3153947, y: 0.030426785}
+      - {x: 0.28042677, y: 0.06272896}
   m_UseDelaunayMesh: 0
 --- !u!114 &6154515810001218398
 MonoBehaviour:
@@ -191,3 +201,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4051cac87d875e84498410b64435b259, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &5956321674479705992
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1923659477458512111}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 15144
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0033051074, y: 0.0191679}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.64}
+    newSize: {x: 0.64, y: 0.64}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.6333898, y: 0.030591965}
+  m_EdgeRadius: 0

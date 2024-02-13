@@ -13,6 +13,8 @@ TagManager:
   - EntityEndPosition
   - EntityStartPosition
   - Interactable
+  - Pusheable
+  - DialogueChoice
   layers:
   - Default
   - TransparentFX
@@ -20,14 +22,14 @@ TagManager:
   - Player
   - Water
   - UI
-  - 
+  - Platforms
   - Ground
   - Debris
   - Interactable
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - Puzzle
+  - PostProcessing
+  - Projectile
   - 
   - 
   - 

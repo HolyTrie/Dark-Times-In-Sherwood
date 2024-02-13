@@ -1,5 +1,3 @@
-using UnityEngine;
-using UnityEngine.Diagnostics;
 
 namespace DTIS
 {
@@ -16,7 +14,7 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            if(Controller.Velocity.y == 0 && Controller.IsGrounded) // just falling
+            if(Controller.Velocity.y == 0 && Controller.IsGrounded)
             {
                 SetStates(ESP.States.Grounded,ESP.States.Idle);
             }
@@ -35,18 +33,6 @@ namespace DTIS
                 }
                 */ 
             }
-            if(ActionMap.Walk.IsPressed()) // moving mid air
-            {
-                if(!FSM.Grounded) // if player touched ground
-                    SetStates(ESP.States.Grounded,ESP.States.Walk);
-                else
-                    SetSubState(ESP.States.Walk);
-            }
-            
-            // if(Controller.Velocity.y < 0)
-            // {   
-            //     SetSubState(ESP.States.Fall);
-            // }
         }
         protected override void PhysicsCalculation()
         {
