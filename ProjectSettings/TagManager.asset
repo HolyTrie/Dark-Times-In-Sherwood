@@ -13,6 +13,7 @@ TagManager:
   - EntityEndPosition
   - EntityStartPosition
   - Interactable
+  - Pusheable
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Debris
   - Interactable
   - Enemy
-  - 
+  - Puzzle
   - 
   - 
   - 
