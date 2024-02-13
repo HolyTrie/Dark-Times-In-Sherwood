@@ -33,6 +33,7 @@ public sealed class ProximityMessage : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
+        if (!other.CompareTag("Player"))
         _player = other.gameObject;
         _textGUI.enabled = true;
     }
