@@ -22,20 +22,31 @@ namespace DTIS
             _grounded = false;
         }
         */
-        [SerializeField] private Vector2 _groundCheckBoxSize;
+        [SerializeField] private Vector2 _leftBoxSize;
+        [SerializeField] private float _leftBoxOffsetX;
+        [SerializeField] private Vector2 _rightBoxSize;
+        [SerializeField] private float _rightBoxOffsetX;
         [SerializeField] private float _castDistance;
         [SerializeField] private LayerMask _groundLayer;
         private const int _downAngle = 0; //directly down from the origin.
         public bool Grounded()
         {
-            var hit = Physics2D.BoxCast(transform.position,_groundCheckBoxSize,_downAngle,-transform.up,_castDistance,_groundLayer);
-            if(hit)
+            Vector3 _left = new(transform.position.x - _leftBoxOffsetX,transform.position.y,transform.position.z);
+            Vector3 _right = new(transform.position.x + _rightBoxOffsetX,transform.position.y,transform.position.z);
+            var hitLeft = Physics2D.BoxCast(_left,_leftBoxSize,_downAngle,-transform.up,_castDistance,_groundLayer);
+            var hitRight = Physics2D.BoxCast(_right,_rightBoxSize,_downAngle,-transform.up,_castDistance,_groundLayer);
+            if(hitLeft && hitRight)
                 return true;
             return false;
         }
 
         private void OnDrawGizmos() {
-            Gizmos.DrawWireCube(transform.position-transform.up*_castDistance,_groundCheckBoxSize);
+            Vector3 _center = transform.position - transform.up * _castDistance;
+            Vector3 _left = new(_center.x - _leftBoxOffsetX,_center.y,_center.z);
+            Vector3 _right = new(_center.x + _rightBoxOffsetX,_center.y,_center.z);
+
+            Gizmos.DrawWireCube(_left,_leftBoxSize);
+            Gizmos.DrawWireCube(_right,_rightBoxSize);
         }
     }
 }
