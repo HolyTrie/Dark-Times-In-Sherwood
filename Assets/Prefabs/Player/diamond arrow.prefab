@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1114030021221141669}
   - component: {fileID: 6375425070069452676}
   - component: {fileID: 6154515810001218398}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: diamond arrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}
