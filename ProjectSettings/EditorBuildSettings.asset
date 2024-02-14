@@ -8,21 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prologue(Heist).unity
     guid: e26150ad17cfe0842981b43c463ddd9a
-  - enabled: 0
-    path: Assets/Scenes/SherifRitual.unity
-    guid: 5788b5ddd49d75d4da61e495326b4f1d
-  - enabled: 0
-    path: Assets/Scenes/TestLevel-0.unity
-    guid: 7f069780e1db5a841a90aef11c3afb90
-  - enabled: 0
-    path: Assets/Scenes/TestLevel-1.unity
-    guid: 9bfa98b8c14b21e468bdb444c0e8c507
-  - enabled: 0
-    path: Assets/Scenes/TestLevel-2.unity
-    guid: 33af08a7c525bd2449ecfa44e6042d49
-  - enabled: 0
-    path: Assets/TestDFQ/TestRitual.unity
-    guid: 902b8d56bcd5b7d4f9e6cafcf7aafed1
   - enabled: 1
     path: Assets/TestDFQ/Test.unity
     guid: 33f904947e225b94b9d1eadd0f08fd52
