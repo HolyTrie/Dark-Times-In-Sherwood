@@ -9,9 +9,9 @@ public class PlayerInteractor : MonoBehaviour
     public PlayerController Controller { get { return _controller; } internal set { _controller = value; } }
     private GameObject closestObject;
     private Vector3 _fixedPos;
-
     public void Interact()
     {
+        Debug.Log("Attempting to Interact");
         if (closestObject != null)
         {
             closestObject.GetComponent<Interactable>().OnClick(Controller.gameObject);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DTIS;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 //auto-created singleton class - https://gist.github.com/kurtdekker/775bb97614047072f7004d6fb9ccce30
@@ -9,6 +10,7 @@ public sealed class GameManager : MonoBehaviour
     // !!!!!! DO NOT PUT THIS IN ANY SCENE; this code auto-instantiates itself once.
     private static GameManager _Instance;
 	private static int currSceneIndex;
+	private static PlayerStateMachine fsm;
 	public static GameManager Instance
 	{
 		get
@@ -46,7 +48,15 @@ public sealed class GameManager : MonoBehaviour
 	{
 		IsPlayerGhosted = false; // reset ghost, todo much later - get this info from scene object
 		SceneManager.LoadScene(index);
+		Instance.StartCoroutine(DisableEnableControls());
 	}
+
+	private static IEnumerator DisableEnableControls()
+	{
+		yield return null; // wait 1 frame.
+		fsm.Controls.enabled = false;
+		fsm.Controls.enabled = true;
+	} 
 
 	public static void NextScene(int offset = 0)
 	{
@@ -55,4 +65,9 @@ public sealed class GameManager : MonoBehaviour
 		//Debug.Log(String.Format("Curr Index = {0}, SceneManager.sceneCount = {1}",currSceneIndex,SceneManager.sceneCountInBuildSettings));
 		LoadScene(currSceneIndex);
 	}
+
+    internal static void SetFSM(PlayerStateMachine playerStateMachine)
+    {
+        fsm = playerStateMachine;
+    }
 }
