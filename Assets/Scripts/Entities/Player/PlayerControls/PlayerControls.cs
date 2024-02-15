@@ -20,15 +20,6 @@ namespace DTIS
         {
             _am = new PlayerActionMap();
         }
-        private void Start()
-        {
-            LogControls();
-        }
-
-        private void LogControls()
-        {
-            //TODO
-        }
         void FixedUpdate()
         {
             HorizontalMove = ActionMap.All.Walk.ReadValue<float>();

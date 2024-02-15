@@ -81,6 +81,7 @@ namespace DTIS
             Direction = (float)Directions.Right;
             InitChildScripts();
             InitControls();
+            GameManager.SetFSM(this);
         }
 
         protected void InitControls()

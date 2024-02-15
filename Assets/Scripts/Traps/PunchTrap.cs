@@ -40,12 +40,12 @@ public class PunchTrap : MonoBehaviour
         }
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("trigger - "+other.gameObject.name);
+        //Debug.Log("trigger - "+other.gameObject.name);
         if(other.gameObject.CompareTag("Player"))
             StartCoroutine(StartPunch());
     }
     private void OnCollisionEnter2D(Collision2D other) {
-        Debug.Log("collider - "+other.gameObject.name);
+        //Debug.Log("collider - "+other.gameObject.name);
         if(other.gameObject.CompareTag("Player"))
             other.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(_direction*_force,0), ForceMode2D.Force);
     }

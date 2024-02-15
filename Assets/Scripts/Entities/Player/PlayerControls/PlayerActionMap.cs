@@ -249,7 +249,13 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""New control scheme"",
+            ""bindingGroup"": ""New control scheme"",
+            ""devices"": []
+        }
+    ]
 }");
         // All
         m_All = asset.FindActionMap("All", throwIfNotFound: true);
@@ -411,6 +417,15 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         }
     }
     public AllActions @All => new AllActions(this);
+    private int m_NewcontrolschemeSchemeIndex = -1;
+    public InputControlScheme NewcontrolschemeScheme
+    {
+        get
+        {
+            if (m_NewcontrolschemeSchemeIndex == -1) m_NewcontrolschemeSchemeIndex = asset.FindControlSchemeIndex("New control scheme");
+            return asset.controlSchemes[m_NewcontrolschemeSchemeIndex];
+        }
+    }
     public interface IAllActions
     {
         void OnJump(InputAction.CallbackContext context);
