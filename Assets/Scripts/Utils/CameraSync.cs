@@ -5,11 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class CameraSync : MonoBehaviour
 {
-    private Camera _camera;
+
     [SerializeField] private Camera _cameraToSyncWith;
-    public Camera CameraToSyncWith{get{return _cameraToSyncWith;}set{_cameraToSyncWith = value;}}
+    public Camera CameraToSyncWith { get { return _cameraToSyncWith; } set { _cameraToSyncWith = value; } }
+
+    private Camera _camera;
+
     void Awake()
-    {   
+    {
         _camera = GetComponent<Camera>();
     }
     void Update()

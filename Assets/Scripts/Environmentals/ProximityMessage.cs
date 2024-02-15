@@ -3,12 +3,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(CapsuleCollider2D),typeof(TextMeshProUGUI))]
-public sealed class ProximityMessage : MonoBehaviour {
+[RequireComponent(typeof(CapsuleCollider2D), typeof(TextMeshProUGUI))]
+public sealed class ProximityMessage : MonoBehaviour
+{
     private TextMeshProUGUI _textGUI;
     private Collider2D _collider;
     private GameObject _player;
-    private void Awake() 
+    private void Awake()
     {
         _collider = GetComponent<CapsuleCollider2D>();
         _textGUI = GetComponent<TextMeshProUGUI>();
@@ -19,7 +20,7 @@ public sealed class ProximityMessage : MonoBehaviour {
     }
     private void Update()
     {
-        if(_player != null)
+        if (_player != null)
         {
             /*
             var distance = Vector2.Distance(_player.transform.position,transform.position);
@@ -32,13 +33,15 @@ public sealed class ProximityMessage : MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerEnter2D(Collider2D other)
+    {
         if (!other.CompareTag("Player"))
-        _player = other.gameObject;
+            _player = other.gameObject;
         _textGUI.enabled = true;
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
+    private void OnTriggerExit2D(Collider2D other)
+    {
         _player = null;
         _textGUI.enabled = false;
     }

@@ -7,11 +7,12 @@ using UnityEngine;
 
 public class GuardAI : BTree
 {
-    // Start is called before the first frame update
-    private EntityController _controller;
+    [Tooltip("Points that the guard will walk to")]
     [SerializeField] private Transform[] patrolTranforms;
 
-    protected override void Awake(){
+    private EntityController _controller;
+    protected override void Awake()
+    {
         _controller = GetComponent<GuardController>(); // does NOT instantiate a Guard Controller if none exists!s
         patrolTranforms ??= new Transform[0];
         base.Awake(); // calls SetupTree
@@ -20,7 +21,7 @@ public class GuardAI : BTree
     {
         Node root = new BTreeBuilder()
             .Composite(new Selector())
-                .Leaf(new TaskPatrol(patrolTranforms,_controller))
+                .Leaf(new TaskPatrol(patrolTranforms, _controller))
                 .End
             .End
         .End;
@@ -47,9 +48,9 @@ internal class TaskPatrol : Node
 
     public override NodeState Evaluate()
     {
-        if(_waypoints != null)
+        if (_waypoints != null)
         {
-            if(_waypoints.Length != 0)
+            if (_waypoints.Length != 0)
             {
                 if (_waiting)
                 {
@@ -65,7 +66,7 @@ internal class TaskPatrol : Node
                     Transform wp = _waypoints[_currentWaypointIndex];
                     if (Math.Abs(_controller.transform.position.x - wp.position.x) < 0.01f)
                     {
-                        _controller.transform.position = new Vector2(wp.position.x,_controller.transform.position.y);
+                        _controller.transform.position = new Vector2(wp.position.x, _controller.transform.position.y);
                         _waitCounter = 0f;
                         _waiting = true;
 
@@ -74,23 +75,23 @@ internal class TaskPatrol : Node
                     }
                     else
                     {
-                        float direction = _controller.transform.position.x < wp.position.x ? 1.0f: -1.0f;
-                        _controller.Move(new Vector2(direction,0f));
+                        float direction = _controller.transform.position.x < wp.position.x ? 1.0f : -1.0f;
+                        _controller.Move(new Vector2(direction, 0f));
 
-                        if(Math.Abs(_controller.transform.position.x - _prevX) < 0.01f)
+                        if (Math.Abs(_controller.transform.position.x - _prevX) < 0.01f)
                         {
                             stuckCounter += 1;
-                            if(stuckCounter > 2)
+                            if (stuckCounter > 2)
                             {
-                                Nudge(new Vector2(direction,0.05f));
+                                Nudge(new Vector2(direction, 0.05f));
                                 stuckCounter = 0;
                             }
                         }
                     }
                 }
             }
-        }   
-        
+        }
+
         _prevX = _controller.transform.position.x;
         _state = NodeState.RUNNING;
         return _state;

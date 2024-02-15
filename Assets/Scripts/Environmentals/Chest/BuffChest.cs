@@ -7,8 +7,14 @@ public class BuffChestController : MonoBehaviour
     // Start is called before the first frame update
     // [SerializeField] private Item Item; // The item this chest gives the player.
     // [SerializeField] private float DestroyDelay;
+
+    [Tooltip("How long the buff lasts")]
     [SerializeField] private float BuffTime;
+
+    [Tooltip("How strong the power it gives")]
     [SerializeField] private float JumpForceMultiplier;
+
+    //extra vars//
     private float prevForce;
     private bool guard = false;
     private Animator _animator;
@@ -23,13 +29,13 @@ public class BuffChestController : MonoBehaviour
     {
         if (collider.CompareTag("Floor"))
             return;
-        
+
         if (!guard && collider.CompareTag("Player"))
         {
             _playerController = collider.gameObject.GetComponent<PlayerController>();
-            if(_playerController.FSM.Controls.ActionMap.All.Interaction.IsPressed())
+            if (_playerController.FSM.Controls.ActionMap.All.Interaction.IsPressed())
             {
-                guard = true;;
+                guard = true; ;
                 _animator.Play("OpenChest");
                 StartCoroutine(BuffLength()); //released guard when its time
             }

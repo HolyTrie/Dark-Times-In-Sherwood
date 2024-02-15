@@ -26,7 +26,7 @@ public class SherifController : MonoBehaviour, IDialog
                                 ChoiceList(
                                     Choice("Fine", fine),
                                     Choice("Not so fine...", not_fine)));
-        
+
         Monologue a = new(localName, "Good Morning, I'm Sheriff", b);
 
         return a;
