@@ -2,17 +2,22 @@ using UnityEngine;
 
 public class BaseSpawner : MonoBehaviour, ISpawner
 {
+    [Tooltip("Prefab to spawn")]
     [SerializeField] private GameObject _prefab;
-    [SerializeField] private int _howMany; 
+
+    [Tooltip("How many prefabs to spawn")]
+    [SerializeField] private int _howMany;
+
+    [Tooltip("The location to spawn the prefab")]
     [SerializeField] private Transform _spawnLocation;
     public GameObject Prefab => _prefab;
 
     public void TrySpawn()
     {
         int i;
-        for(i = 0; i < _howMany; ++i)
+        for (i = 0; i < _howMany; ++i)
         {
-            Instantiate(Prefab,_spawnLocation); //sets _spawnLocation as the parent transform of prefab
+            Instantiate(Prefab, _spawnLocation); //sets _spawnLocation as the parent transform of prefab
         }
     }
 
@@ -22,17 +27,17 @@ public class BaseSpawner : MonoBehaviour, ISpawner
         TrySpawn();
     }
 
-    private void OnDrawGizmos() 
+    private void OnDrawGizmos()
     {
         if (Prefab == null)
             return;
- 
+
         if (!Prefab.TryGetComponent<SpriteRenderer>(out var spriteRenderer)) // note the out var!
             return;
- 
-       var spriteRect = new Rect(transform.position, spriteRenderer.bounds.size);
-       var spriteTexture = spriteRenderer.sprite.texture;
- 
+
+        var spriteRect = new Rect(transform.position, spriteRenderer.bounds.size);
+        var spriteTexture = spriteRenderer.sprite.texture;
+
         Graphics.DrawTexture(spriteRect, spriteTexture);
     }
 }

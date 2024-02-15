@@ -8,7 +8,9 @@ public class EntityBoundedMovement : MonoBehaviour
 {
     [Tooltip("The points between which the platform moves")]
     [SerializeField] Transform startPoint = null, endPoint = null;
+    [Tooltip("Entity Speed")]
     [SerializeField] float speed = 1f;
+    
     bool moveFromStartToEnd = true;
 
     private void Start()

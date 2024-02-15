@@ -10,33 +10,50 @@ namespace DTIS
     */
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private bool _airControl = true;
+        [Header("Player Forces")]
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _walkSpeed;
         [SerializeField] private float _runSpeedMult;
         public float RunSpeedMult { get { return _runSpeedMult; } }
-        [SerializeField] private float _movementSmoothing;
+
+        [Header("Environmentals Checkers")]
+        // [SerializeField] private bool _airControl = true;
         [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider to be disabled on the 'crouch' player action.
-        [SerializeField] private Transform _ceilingCheck;							// A position marking where to check for ceilings
+        [SerializeField] private Transform _ceilingCheck;                           // A position marking where to check for ceilings
+
+        [Header("Smoothment")]
+        [SerializeField] private float _movementSmoothing;
         [SerializeField] private float ShootDelaySeconds;
         [SerializeField] private float ShootReloadSeconds;
+
+        //Player related vars//
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
         public bool FacingRight { get { return _facingRight; } private set { _facingRight = value; } }
+
         private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
         public Vector3 Velocity { get { return _rb2D.velocity; } }
         public float JumpForce { get { return _jumpForce; } set { _jumpForce = value; } }
-        private Vector3 _Velocity = Vector3.zero;                // Entitys current velocity as a 3D vector. 
+
         private Animator _animator;
         public Animator Animator { get { return _animator; } }
-        private ClickSpawn _clickSpawn; // class to spawn object by click.
-        private bool isShooting = false;
-        private Camera _mainCamera;
-        private Renderer _renderer;
-        private PlayerGhostBehaviour _gb;
-        private GroundCheck _gc;
-        public bool IsGrounded { get { return _gc.Grounded(); } }
+
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } }
+
+        private GroundCheck _gc;
+        public bool IsGrounded { get { return _gc.Grounded(); } }
+
+        //Ghost player//
+        private Renderer _renderer;
+        private PlayerGhostBehaviour _gb;
+
+        //Shooting vars//
+        private ClickSpawn _clickSpawn; // class to spawn object by click.
+        private bool isShooting = false;
+
+        //Extra Vars//
+        private Camera _mainCamera;
+        private Vector3 _Velocity = Vector3.zero;  // Entitys current velocity as a 3D vector.
 
         void Awake()
         {
@@ -137,16 +154,6 @@ namespace DTIS
                 _renderer.material.color = col;
             }
         }
-
-        // int animLayer = 0;
-        // public bool isPlaying(string stateName)
-        // {
-        //     if (_animator.GetCurrentAnimatorStateInfo(animLayer).IsName(stateName) &&
-        //             _animator.GetCurrentAnimatorStateInfo(animLayer).normalizedTime < 1.0f)
-        //         return true;
-        //     else
-        //         return false;
-        // }
         public virtual void Shoot()
         {
             if (isShooting) return;
@@ -162,10 +169,17 @@ namespace DTIS
                     isShooting = false;
                 }
             }
-
-
         }
 
+        //this method should check if a certain animation is still playing (like shooting, if so DO NOT SHOOT)
+        public bool isPlaying(string stateName)
+        {
+            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(stateName) &&
+                    _animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+                return true;
+            else
+                return false;
+        }
     }
 }
 

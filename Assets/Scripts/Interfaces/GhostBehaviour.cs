@@ -3,7 +3,7 @@ public abstract class GhostBehaviour //walls platforms player and enemies will n
     private bool _ghosted = false;
     public void TrySetGhostStatus() // be sure to put this in your Update() method!
     {
-        if(_ghosted != GameManager.IsPlayerGhosted)
+        if (_ghosted != GameManager.IsPlayerGhosted)
         {
             _ghosted = GameManager.IsPlayerGhosted;
             OnGhostStateSwitch();
@@ -11,7 +11,7 @@ public abstract class GhostBehaviour //walls platforms player and enemies will n
     }
     protected void OnGhostStateSwitch()
     {
-        if(_ghosted)
+        if (_ghosted)
         {
             OnGhostSet();
         }

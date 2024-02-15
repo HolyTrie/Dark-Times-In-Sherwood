@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 public class CharacterController : MonoBehaviour
 {
     [SerializeField] private float m_JumpForce = 50f;                          // Amount of force added when the player jumps.
-    [Range(0, 1)][SerializeField] private float m_CrouchSpeed = .36f;           // Amount of maxSpeed applied to crouching movement. 1 = 100%
+    // [Range(0, 1)][SerializeField] private float m_CrouchSpeed = .36f;           // Amount of maxSpeed applied to crouching movement. 1 = 100%
     [SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
     [SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
     [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
@@ -117,10 +117,10 @@ public class CharacterController : MonoBehaviour
         else
             player_anim.SetBool("Jumping", false);
 
-        if(dash)
+        if (dash)
             PlayerDash();
         else
-            player_anim.SetBool("Dash",false);
+            player_anim.SetBool("Dash", false);
 
     }
 
@@ -128,8 +128,8 @@ public class CharacterController : MonoBehaviour
     void PlayerDash()
     {
         float DashSpeed = 100f; // tmp //
-        player_anim.SetBool("Dash",true);
-        m_Rigidbody2D.velocity = new Vector2(Mathf.Lerp(horizontal * DashSpeed,0.5f,0), m_Rigidbody2D.velocity.y); //lerp is added to smooth transition movment
+        player_anim.SetBool("Dash", true);
+        m_Rigidbody2D.velocity = new Vector2(Mathf.Lerp(horizontal * DashSpeed, 0.5f, 0), m_Rigidbody2D.velocity.y); //lerp is added to smooth transition movment
     }
 
     //tells the player to jump
@@ -139,26 +139,26 @@ public class CharacterController : MonoBehaviour
         player_anim.SetBool("Jumping", true);
         // Add a vertical force to the player.
         m_Grounded = false;
-        m_Rigidbody2D.AddForce(new Vector2(0f, Mathf.Lerp(m_JumpForce,0f,0f))); //lerp is added to smooth transition movment
+        m_Rigidbody2D.AddForce(new Vector2(0f, Mathf.Lerp(m_JumpForce, 0f, 0f))); //lerp is added to smooth transition movment
     }
 
     //tells the player to move
     void Movement()
     {
         player_anim.SetBool("Walking", true);
-        m_Rigidbody2D.velocity = new Vector2(Mathf.Lerp(horizontal * Speed,0.5f,0), m_Rigidbody2D.velocity.y); //lerp is added to smooth transition movment
+        m_Rigidbody2D.velocity = new Vector2(Mathf.Lerp(horizontal * Speed, 0.5f, 0), m_Rigidbody2D.velocity.y); //lerp is added to smooth transition movment
     }
 
     //flips the player's side (1 to left, -1 to right)
     void FlipPlayer(int side)
     {
-        if(side == 1) // left side
+        if (side == 1) // left side
         {
             // player.localScale = new Vector3(player.localScale.x, player.localScale.y, player.localScale.z);
             transform.GetComponent<SpriteRenderer>().flipX = true;
         }
-            
-        if(side == -1) // right side
+
+        if (side == -1) // right side
         {
             // player.localScale = new Vector3(-1*player.localScale.x, player.localScale.y, player.localScale.z);
             transform.GetComponent<SpriteRenderer>().flipX = false;

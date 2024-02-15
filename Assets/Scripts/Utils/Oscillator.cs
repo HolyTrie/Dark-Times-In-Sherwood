@@ -14,7 +14,7 @@ public class Oscillator : MonoBehaviour
 
     float omega;
     float amplitude;
-    float _x,_y,_z;
+    float _x, _y, _z;
 
     void Start() // Start is called before the first frame update
     {
@@ -34,8 +34,8 @@ public class Oscillator : MonoBehaviour
         _x = transform.rotation.x;
         _y = transform.rotation.y;
         _z = amplitude * Mathf.Sin(Time.time * omega);
-        UnityEngine.Quaternion _rotation = UnityEngine.Quaternion.Euler(_x,_y,_z);
+        UnityEngine.Quaternion _rotation = UnityEngine.Quaternion.Euler(_x, _y, _z);
         transform.rotation = _rotation;
     }
-    
+
 }

@@ -11,7 +11,5 @@ public sealed class TextDisplayInteractable : Interactable
         Debug.Log("Empty on-click");
         return; // this is a class with no logic for OnClick!.
     }
-    
+
 }
-
-

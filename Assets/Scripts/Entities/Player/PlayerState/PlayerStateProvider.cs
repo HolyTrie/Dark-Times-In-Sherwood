@@ -12,7 +12,7 @@ namespace DTIS
             1. add an identifier to the states enum.
             2. add a pattern to the match expression, which returns a new object reference (see examples below)
         */
-           public enum States
+        public enum States
         {
             Grounded,
             Airborne,
@@ -33,7 +33,7 @@ namespace DTIS
             Climbing
             // step 1: add new state reference here
         }
-        public static PlayerState Build(States state,bool airControl = true) // this code is used to build a new instance of a given state
+        public static PlayerState Build(States state, bool airControl = true) // this code is used to build a new instance of a given state
         {
             return state switch
             {
