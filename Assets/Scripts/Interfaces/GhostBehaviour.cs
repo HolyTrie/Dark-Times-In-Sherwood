@@ -21,6 +21,9 @@ public abstract class GhostBehaviour //walls platforms player and enemies will n
         }
     }
 
-    protected abstract void OnGhostSet(); // these are very different per entity!
-    protected abstract void OnGhostUnset(); // these are very different per entity!
+    // this state tells what happens when the entity is ghosted
+    protected abstract void OnGhostSet(); 
+
+    // this state tells what happens when the entity stops being ghosted
+    protected abstract void OnGhostUnset(); 
 }
