@@ -14,7 +14,7 @@ namespace DTIS
         protected override void TryStateSwitch()
         {
 
-            if (ActionMap.Jump.WasPressedThisFrame())
+            if (ActionMap.Jump.WasPressedThisFrame() && Controller.StaminaBar.canUseStamina)
             {
                 SetStates(ESP.States.Airborne, ESP.States.Jump);
             }

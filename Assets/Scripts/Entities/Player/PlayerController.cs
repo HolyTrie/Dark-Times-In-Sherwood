@@ -14,6 +14,7 @@ namespace DTIS
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _walkSpeed;
         [SerializeField] private float _runSpeedMult;
+        [SerializeField] public int _jumpStaminaCost;
         public float RunSpeedMult { get { return _runSpeedMult; } }
 
         [Header("Environmentals Checkers")]
@@ -43,6 +44,9 @@ namespace DTIS
         private GroundCheck _gc;
         public bool IsGrounded { get { return _gc.Grounded(); } }
 
+        private StaminaBar _staminabar;
+        public StaminaBar StaminaBar {get {return _staminabar;}}
+
         //Ghost player//
         private Renderer _renderer;
         private PlayerGhostBehaviour _gb;
@@ -64,6 +68,7 @@ namespace DTIS
             _gc = GetComponentInChildren<GroundCheck>();
             _renderer = GetComponent<Renderer>();
             _gb = new PlayerGhostBehaviour(_renderer);
+            _staminabar = GetComponent<StaminaBar>();
         }
 
         // Update is called once per frame
