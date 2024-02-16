@@ -1,25 +1,27 @@
+using System.Collections;
 using UnityEngine;
 
 namespace DTIS
 {
     public class RangedAttackState : PlayerState
     {
-        public RangedAttackState(string name = "RangedAttack") 
-        : base(name,true){}
-        public override void Enter(PlayerController controller,PlayerStateMachine fsm)
+        public RangedAttackState(string name = "RangedAttack")
+        : base(name, true) { }
+        public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
-            base.Enter(controller,fsm); // we do new to preserve the common inherited function
-            // FSM.groundCheck.Grounded = true;
-        //    if(controller.isPlaying("RangedAttack"))
-                Controller.Shoot(); // need to add delay according to frames.
+            base.Enter(controller, fsm); // we do new to preserve the common inherited function
+                                         // FSM.groundCheck.Grounded = true;
+                                         //    if(controller.isPlaying("RangedAttack"))
+            Controller.Shoot(); // need to add delay according to frames.
         }
         protected override void TryStateSwitch()
         {
             // Controller.WaitForAnimtaion();
-            SetSubState(ESP.States.Idle);
+            FSM.StartCoroutine(Reload());
+           
             // else if(ActionMap.Walk.IsPressed())
             // {
-                
+
             //     SetSubState(ESP.States.Walk);
             // }
             /* TODO IF TIME - add falling from platforms behaviour
@@ -30,13 +32,17 @@ namespace DTIS
             }
             */
         }
-        
+
         protected override void PhysicsCalculation()
         {
             //pass
         }
 
-        
+        private IEnumerator Reload()
+        {
+            yield return new WaitForSeconds(1f); // wait 2 seconds untill regen after used
+            SetSubState(ESP.States.Idle);
+        }
     }
     /*
     public class RangedAttackState : EntityState
