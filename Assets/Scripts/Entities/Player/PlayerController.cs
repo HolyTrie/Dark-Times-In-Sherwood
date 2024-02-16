@@ -162,6 +162,7 @@ namespace DTIS
                 }
             }
         }
+        
 
         //this method should check if a certain animation is still playing (like shooting, if so DO NOT SHOOT)
         public bool isPlaying(string stateName)

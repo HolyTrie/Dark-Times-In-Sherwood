@@ -27,12 +27,12 @@ namespace DTIS
                 if (dir.y - offset > FSM.Controls.transform.localPosition.y) // aiming above head
                 {
                     if (!Controller.isPlaying("HighAttack"))
-                        SetStates(ESP.States.Grounded, ESP.States.HighAttackState);
+                        SetStates(ESP.States.Grounded, ESP.States.HighAttackState); // TODO: MAIN STATE - ATTACK
                 }
                 else if (dir.y - offset <= FSM.Controls.transform.localPosition.y)
                 {
                     if (!Controller.isPlaying("RangedAttack"))
-                        SetStates(ESP.States.Grounded, ESP.States.RangedAttack);
+                        SetStates(ESP.States.Grounded, ESP.States.RangedAttack); // TODO: MAIN STATE - ATTACK
                 }
             }
             else
