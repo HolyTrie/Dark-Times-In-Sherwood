@@ -8,20 +8,20 @@ using UnityEngine;
 public class GuardAI : BTree
 {
     [Tooltip("Points that the guard will walk to")]
-    [SerializeField] private Transform[] patrolTranforms;
+    [SerializeField] private Transform[] patrolTransforms;
 
     private EntityController _controller;
     protected override void Awake()
     {
         _controller = GetComponent<GuardController>(); // does NOT instantiate a Guard Controller if none exists!s
-        patrolTranforms ??= new Transform[0];
+        patrolTransforms ??= new Transform[0];
         base.Awake(); // calls SetupTree
     }
     protected override Node SetupTree()
     {
         Node root = new BTreeBuilder()
             .Composite(new Selector())
-                .Leaf(new TaskPatrol(patrolTranforms, _controller))
+                .Leaf(new TaskPatrol(patrolTransforms,_controller))
                 .End
             .End
         .End;
