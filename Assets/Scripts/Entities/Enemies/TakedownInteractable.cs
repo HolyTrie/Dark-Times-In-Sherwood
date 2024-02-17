@@ -1,11 +1,13 @@
 using DTIS;
 using UnityEngine;
 
-public class TakedownInteractable : Interactable,IStealthable
+public class TakedownInteractable : Interactable, IStealthable
 {
     [SerializeField] private GameObject _goToTakedown;
     [SerializeField] private bool _KillsEntity = false;
+    [Tooltip("How long it take to take down an entity")]
     [SerializeField] private float _timeToTakedownSeconds = 0.025f;
+    
     private GameObject _takeDownOrigin;
     public GameObject GO => _goToTakedown;
 
@@ -20,7 +22,7 @@ public class TakedownInteractable : Interactable,IStealthable
 
     void IStealthable.Takedown(bool kill)
     {
-        if(kill)
+        if (kill)
         {
             throw new System.NotImplementedException();
         }
@@ -29,9 +31,9 @@ public class TakedownInteractable : Interactable,IStealthable
             var playerController = _takeDownOrigin.GetComponent<PlayerController>();
             var currPos = playerController.transform.position;
             var targetPos = GO.transform.position;
-            var newPos = Vector2.Lerp(currPos,targetPos,0.5f);
+            var newPos = Vector2.Lerp(currPos, targetPos, 0.5f);
             playerController.transform.position = newPos;
-            StartCoroutine(Util.DestroyGameObjectCountdown(_goToTakedown,_timeToTakedownSeconds));
+            StartCoroutine(Util.DestroyGameObjectCountdown(_goToTakedown, _timeToTakedownSeconds));
         }
     }
 

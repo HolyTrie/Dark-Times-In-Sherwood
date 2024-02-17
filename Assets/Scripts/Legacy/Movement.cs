@@ -52,21 +52,21 @@ public class Movement : MonoBehaviour
 
     void MoveCheck()
     {
-        if(MoveLeft.IsPressed())
+        if (MoveLeft.IsPressed())
         {
             move_left = true;
         }
-        if(MoveRight.IsPressed())
+        if (MoveRight.IsPressed())
         {
             move_right = true;
         }
-        if(Jump.IsPressed())
+        if (Jump.IsPressed())
         {
             jump = true;
         }
-        if(Crouch.WasPerformedThisFrame())
+        if (Crouch.WasPerformedThisFrame())
         {
-            if(crouch)
+            if (crouch)
             {
                 Debug.Log("Pressed crouch 2ND");
                 crouch = false;
@@ -77,10 +77,10 @@ public class Movement : MonoBehaviour
                 crouch = true;
             }
         }
-        if(Dash.WasPerformedThisFrame())
+        if (Dash.WasPerformedThisFrame())
         {
             dash = true;
-            
+
         }
     }
 

@@ -7,7 +7,8 @@ public class DebrisCollider : MonoBehaviour
     private bool _facingRight;
     private Vector3 _fixedPos;
 
-    private void Awake() {
+    private void Awake()
+    {
         if (_controller == null)
         {
             try
@@ -17,7 +18,7 @@ public class DebrisCollider : MonoBehaviour
             catch (System.Exception)
             {
                 throw; // parent must include player controller as a child.
-            } 
+            }
         }
     }
 
@@ -28,12 +29,12 @@ public class DebrisCollider : MonoBehaviour
     }
     void Update()
     {
-       Util.MimicEntityMovement(transform, _controller.transform,_fixedPos);
-       FollowEntityFlip();
+        Util.MimicEntityMovement(transform, _controller.transform, _fixedPos);
+        FollowEntityFlip();
     }
     private void FollowEntityFlip()
     {
-        if(_facingRight != _controller.FacingRight) //flip this object when the player flips.
+        if (_facingRight != _controller.FacingRight) //flip this object when the player flips.
         {
             _facingRight = !_facingRight;
             _fixedPos.x *= -1;

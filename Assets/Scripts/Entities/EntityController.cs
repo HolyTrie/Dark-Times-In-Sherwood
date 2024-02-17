@@ -9,17 +9,24 @@ namespace DTIS
     */
     public class EntityController : MonoBehaviour
     {
+
+        [Header("Entity Forces")]
         [SerializeField] private float _jumpSpeed, _walkSpeed, _runSpeedMult , _movementSmoothing ;
         public float JumpSpeed{get { return _jumpSpeed;} set{_jumpSpeed = value;}}
         public float WalkSpeed{get { return _walkSpeed;} set{_walkSpeed = value;}}
         public float RunSpeedMult{get { return _runSpeedMult;} set{_runSpeedMult = value;}}
         public float MoveSmoothSpeed{get { return _movementSmoothing;} set{_movementSmoothing = value;}}
+
+        [Header("Environmentals Checkers")]
         [SerializeField] private Transform _ceilingCheck;							// A position marking where to check for ceilings
+        
+        //entity vars//
         [HideInInspector] private bool _facingRight = true;                         // A boolean marking the entity's orientation.
         [HideInInspector] private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
         [HideInInspector] private Vector3 _Velocity = Vector3.zero;                // Entitys current velocity as a 3D vector. 
         private Animator _animator;
         public Animator Animator{get{return _animator;}}
+
         void Awake()
         {
             _rb2D = GetComponent<Rigidbody2D>();

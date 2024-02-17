@@ -17,11 +17,16 @@ namespace DTIS
     */
     public class PlayerStateMachine : MonoBehaviour
     {
-        public bool _debug = false;
+
+        [Tooltip("Used for activating and deactivating debug state machine mode")]
+        [SerializeField] bool _debug = false;
+
+        [Header("Player Scripts")]
         [SerializeField] private PlayerController _controller;
+        [SerializeField] private PlayerControls _controls;
         [SerializeField] private PlayerInteractor _interactor;
         public PlayerController Controller { get { return _controller; } }
-        [SerializeField] private PlayerControls _controls;
+
         private void InitChildScripts()
         {
             // this is a fair solution for now, but when this script becomes too complex

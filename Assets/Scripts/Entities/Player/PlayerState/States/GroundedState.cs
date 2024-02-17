@@ -14,20 +14,26 @@ namespace DTIS
         protected override void TryStateSwitch()
         {
 
-            if (ActionMap.Jump.WasPressedThisFrame())
+            if (ActionMap.Jump.WasPressedThisFrame() && Controller.StaminaBar.canUseStamina)
             {
                 SetStates(ESP.States.Airborne, ESP.States.Jump);
             }
-            if (ActionMap.Shoot.WasPressedThisFrame() && !isShooting)
+            if (ActionMap.Shoot.IsPressed() && !isShooting)
             {
                 isShooting = true;
                 float offset = 3f;
                 Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - FSM.Controls.transform.localPosition;
                 //Debug.Log("Mouse Position: "+ dir + "PlayerPosition: "+ FSM.Controls.transform.localPosition );
                 if (dir.y - offset > FSM.Controls.transform.localPosition.y) // aiming above head
-                    SetStates(ESP.States.Grounded, ESP.States.HighAttackState);
-                else
-                    SetStates(ESP.States.Grounded, ESP.States.RangedAttack);
+                {
+                    if (!Controller.isPlaying("HighAttack"))
+                        SetStates(ESP.States.Grounded, ESP.States.HighAttackState); // TODO: MAIN STATE - ATTACK
+                }
+                else if (dir.y - offset <= FSM.Controls.transform.localPosition.y)
+                {
+                    if (!Controller.isPlaying("RangedAttack"))
+                        SetStates(ESP.States.Grounded, ESP.States.RangedAttack); // TODO: MAIN STATE - ATTACK
+                }
             }
             else
             {

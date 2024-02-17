@@ -18,7 +18,7 @@ namespace DTIS
             {
                 SetStates(ESP.States.Grounded,ESP.States.Idle);
             }
-            else if(_actionsMidAir < _maxActions)
+            else if(_actionsMidAir < _maxActions && Controller.StaminaBar.canUseStamina)
             {
                 if(ActionMap.Jump.WasPressedThisFrame())
                 {

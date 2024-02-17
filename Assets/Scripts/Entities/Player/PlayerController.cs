@@ -10,33 +10,61 @@ namespace DTIS
     */
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private bool _airControl = true;
+        [Header("Player Forces")]
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _walkSpeed;
         [SerializeField] private float _runSpeedMult;
+
+        [Header("Player Attributes")]
+        [SerializeField] public int _jumpStaminaCost;
+        [SerializeField] public int _ghostedSanityCost;
+
         public float RunSpeedMult { get { return _runSpeedMult; } }
-        [SerializeField] private float _movementSmoothing;
+
+        [Header("Environmentals Checkers")]
+        // [SerializeField] private bool _airControl = true;
         [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider to be disabled on the 'crouch' player action.
-        [SerializeField] private Transform _ceilingCheck;							// A position marking where to check for ceilings
+        [SerializeField] private Transform _ceilingCheck;                           // A position marking where to check for ceilings
+
+        [Header("Smoothment")]
+        [SerializeField] private float _movementSmoothing;
         [SerializeField] private float ShootDelaySeconds;
         [SerializeField] private float ShootReloadSeconds;
+
+        //Player related vars//
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
         public bool FacingRight { get { return _facingRight; } private set { _facingRight = value; } }
+
         private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
         public Vector3 Velocity { get { return _rb2D.velocity; } }
         public float JumpForce { get { return _jumpForce; } set { _jumpForce = value; } }
-        private Vector3 _Velocity = Vector3.zero;                // Entitys current velocity as a 3D vector. 
+
         private Animator _animator;
         public Animator Animator { get { return _animator; } }
-        private ClickSpawn _clickSpawn; // class to spawn object by click.
-        private bool isShooting = false;
-        private Camera _mainCamera;
-        private Renderer _renderer;
-        private PlayerGhostBehaviour _gb;
-        private GroundCheck _gc;
-        public bool IsGrounded { get { return _gc.Grounded(); } }
+
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } }
+
+        private GroundCheck _gc;
+        public bool IsGrounded { get { return _gc.Grounded(); } }
+
+        private StaminaBar _staminabar;
+        public StaminaBar StaminaBar { get { return _staminabar; } }
+
+        private SanityBar _sanityBar;
+        public SanityBar SanityBar { get { return _sanityBar; } }
+
+        //Ghost player//
+        private PlayerGhostBehaviour _playerGhostBehaviour;
+        private SpriteRenderer _spriteRenderer;
+
+        //Shooting vars//
+        private ClickSpawn _clickSpawn; // class to spawn object by click.
+        private bool isShooting = false;
+
+        //Extra Vars//
+        private Camera _mainCamera;
+        private Vector3 _Velocity = Vector3.zero;  // Entitys current velocity as a 3D vector.
 
         void Awake()
         {
@@ -45,14 +73,16 @@ namespace DTIS
             _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic strings
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
             _gc = GetComponentInChildren<GroundCheck>();
-            _renderer = GetComponent<Renderer>();
-            _gb = new PlayerGhostBehaviour(_renderer);
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _staminabar = GetComponent<StaminaBar>();
+            _sanityBar = GetComponent<SanityBar>();
+            _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
         }
 
         // Update is called once per frame
         void Update()
         {
-            _gb.TrySetGhostStatus();
+            _playerGhostBehaviour.TrySetGhostStatus();
             Flip();
         }
         void FixedUpdate()
@@ -71,12 +101,12 @@ namespace DTIS
                 if (FacingRight && isMouseLeftToPlayer)
                 {
                     FacingRight = !FacingRight;
-                    transform.GetComponent<SpriteRenderer>().flipX = true; // flip to face Left
+                    _spriteRenderer.flipX = true; // flip to face Left
                 }
                 if (!FacingRight && isMouseRightToPlayer)
                 {
                     FacingRight = !FacingRight;
-                    transform.GetComponent<SpriteRenderer>().flipX = false; // flip to face Right
+                    _spriteRenderer.flipX = false; // flip to face Right
                 }
             }
             else
@@ -86,12 +116,12 @@ namespace DTIS
                 if (FacingRight && movingLeft)
                 {
                     FacingRight = !FacingRight;
-                    transform.GetComponent<SpriteRenderer>().flipX = true; // flip to face Left
+                    _spriteRenderer.flipX = true; // flip to face Left
                 }
                 if (!FacingRight && movingRight)
                 {
                     FacingRight = !FacingRight;
-                    transform.GetComponent<SpriteRenderer>().flipX = false; // flip to face Right
+                    _spriteRenderer.flipX = false; // flip to face Right
                 }
             }
 
@@ -116,37 +146,6 @@ namespace DTIS
         {
             GameManager.IsPlayerGhosted = !GameManager.IsPlayerGhosted;
         }
-        private class PlayerGhostBehaviour : GhostBehaviour
-        {
-            private readonly Renderer _renderer;
-
-            public PlayerGhostBehaviour(Renderer renderer)
-            {
-                _renderer = renderer;
-            }
-            protected override void OnGhostSet()
-            {
-                var col = _renderer.material.color;
-                col.a = 0.5f;
-                _renderer.material.color = col;
-            }
-            protected override void OnGhostUnset()
-            {
-                var col = _renderer.material.color;
-                col.a = 1f;
-                _renderer.material.color = col;
-            }
-        }
-
-        // int animLayer = 0;
-        // public bool isPlaying(string stateName)
-        // {
-        //     if (_animator.GetCurrentAnimatorStateInfo(animLayer).IsName(stateName) &&
-        //             _animator.GetCurrentAnimatorStateInfo(animLayer).normalizedTime < 1.0f)
-        //         return true;
-        //     else
-        //         return false;
-        // }
         public virtual void Shoot()
         {
             if (isShooting) return;
@@ -162,10 +161,18 @@ namespace DTIS
                     isShooting = false;
                 }
             }
-
-
         }
+        
 
+        //this method should check if a certain animation is still playing (like shooting, if so DO NOT SHOOT)
+        public bool isPlaying(string stateName)
+        {
+            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(stateName) &&
+                    _animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+                return true;
+            else
+                return false;
+        }
     }
 }
 

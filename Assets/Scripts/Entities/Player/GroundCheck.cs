@@ -22,10 +22,13 @@ namespace DTIS
             _grounded = false;
         }
         */
+        [Header("Ground Checks Details")]
         [SerializeField] private Vector2 _leftBoxSize;
-        [SerializeField] private float _leftBoxOffsetX;
         [SerializeField] private Vector2 _rightBoxSize;
+        [SerializeField] private float _leftBoxOffsetX;
         [SerializeField] private float _rightBoxOffsetX;
+        
+        [Header("")]
         [SerializeField] private float _castDistance;
         [SerializeField] private LayerMask _groundLayer;
         private const int _downAngle = 0; //directly down from the origin.

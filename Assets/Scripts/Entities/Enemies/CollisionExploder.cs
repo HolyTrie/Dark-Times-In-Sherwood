@@ -7,9 +7,14 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CollisionExploder : MonoBehaviour
 {
+    [Header("Details")]
+    [Tooltip("Required Impulse For Explosion")]
     [SerializeField] float minImpulseForExplosion = 1.0f;
-    [SerializeField] GameObject explosionEffect = null;
+    [Tooltip("Delay In Explosion")]
     [SerializeField] float explosionEffectTime = 0.68f;
+    [Tooltip("Effect that will be when object explodes")]
+    [SerializeField] GameObject explosionEffect = null;
+
     private Rigidbody2D rb;
 
     void Start()
