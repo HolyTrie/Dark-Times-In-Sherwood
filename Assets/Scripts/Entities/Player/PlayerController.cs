@@ -144,6 +144,7 @@ namespace DTIS
         }
         public virtual void Ghost()
         {
+            //Debug.Log("ghost callback");
             GameManager.IsPlayerGhosted = !GameManager.IsPlayerGhosted;
         }
         public virtual void Shoot()
