@@ -54,13 +54,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a788737a4fe84b0499431664dc79123b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _airControl: 1
   _jumpForce: 15
   _walkSpeed: 15
   _runSpeedMult: 1.75
-  _movementSmoothing: 0.2
+  _jumpStaminaCost: 0
+  _ghostedSanityCost: 0
   m_CrouchDisableCollider: {fileID: 141798089517779593}
   _ceilingCheck: {fileID: 2070774788767702965}
+  _movementSmoothing: 0.2
   ShootDelaySeconds: 1
   ShootReloadSeconds: 1
 --- !u!50 &4270901907696537965
@@ -211,7 +212,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fac3b37eabbb3f34282f245f96837075, type: 2}
+  - {fileID: 2100000, guid: bf640de533d95e9468a3aee653a4d546, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -494,8 +495,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _debug: 0
   _controller: {fileID: 2378854084785728345}
-  _interactor: {fileID: 3749679563243129570}
   _controls: {fileID: 8256062527257390219}
+  _interactor: {fileID: 3749679563243129570}
 --- !u!114 &8256062527257390219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -894,8 +895,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _leftBoxSize: {x: 0.2, y: 0.05}
-  _leftBoxOffsetX: 0.15
   _rightBoxSize: {x: 0.2, y: 0.05}
+  _leftBoxOffsetX: 0.15
   _rightBoxOffsetX: 0.2
   _castDistance: -0.55
   _groundLayer:
