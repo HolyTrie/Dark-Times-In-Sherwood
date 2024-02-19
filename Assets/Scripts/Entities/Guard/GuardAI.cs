@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using BehaviorTree;
 using DTIS;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class GuardAI : BTree
 {
     [Tooltip("Points that the guard will walk to")]
-    [SerializeField] private Transform[] patrolTransforms;
+    [SerializeField] public Transform[] patrolTransforms;
+
+    [SerializeField] public static float fovRange = 6f;
 
     private EntityController _controller;
     protected override void Awake()
@@ -19,15 +22,101 @@ public class GuardAI : BTree
     }
     protected override Node SetupTree()
     {
-        Node root = new BTreeBuilder()
-            .Composite(new Selector())
-                .Leaf(new TaskPatrol(patrolTransforms,_controller))
-                .End
-            .End
-        .End;
+        // Node root = new BTreeBuilder()
+        //     .Composite(new Selector())
+        //         .Leaf(new TaskPatrol(patrolTransforms, _controller))
+        //         .End
+        //     .End
+        // .End;
+
+        Node root = new Selector(new List<Node>
+                {
+                    new Sequence(new List<Node>
+                    {
+                        new CheckPlayerInFOVRange(transform,_controller),
+                        new TaskGoToTarget(transform,_controller),
+                    }),
+                    new TaskPatrol(patrolTransforms,_controller),
+                });
         return root;
     }
 }
+
+internal class TaskGoToTarget : Node
+{
+    private readonly EntityController _controller;
+    private Transform _transform;
+    private float patrolRange = 10f;
+
+    public TaskGoToTarget(Transform transform, EntityController controller)
+    {
+        _transform = transform;
+        _controller = controller;
+    }
+
+    public override NodeState Evaluate()
+    {
+        Transform target = (Transform)GetData("target");
+        
+
+        if (target == null || Vector3.Distance(_controller.transform.position, target.position) > patrolRange) // this indicates the player ran from the enemy so he stops chasing
+        {
+            _state = NodeState.FAILURE;
+            return _state;
+        }
+
+        if (Math.Abs(_controller.transform.position.x - target.position.x) > 0.01f) //player is nearby enemy, so it will chase him
+        {
+            float direction = _controller.transform.position.x < target.position.x ? 1.0f : -1.0f;
+            _controller.Move(new Vector2(direction, 0f));
+
+            _state = NodeState.RUNNING;
+            return _state;
+        }
+
+        _state = NodeState.FAILURE;
+        return _state;
+    }
+
+}
+
+
+internal class CheckPlayerInFOVRange : Node
+{
+    private readonly EntityController _controller;
+    private static int _PlayerLayerMask = 1 << 3; // tbd 
+    private Transform _transform;
+
+    public CheckPlayerInFOVRange(Transform transform, EntityController controller)
+    {
+        _transform = transform;
+        _controller = controller;
+    }
+
+    public override NodeState Evaluate()
+    {
+        object t = GetData("target");
+        if (t == null)
+        {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(_transform.position, GuardAI.fovRange, _PlayerLayerMask);
+
+            if (colliders.Length > 0)
+            {
+                Parent.Parent.SetData("target", colliders[0].transform);
+                _controller.Animator.SetInteger("AnimState", 2);
+                _state = NodeState.SUCCESS; // we have a target, so its a success
+                return _state;
+            }
+
+            _state = NodeState.FAILURE; // we dont have a target, so state "fails"
+            return _state;
+        }
+
+        _state = NodeState.SUCCESS; // we have a target, so its a success
+        return _state;
+    }
+}
+
 
 internal class TaskPatrol : Node
 {
@@ -64,7 +153,7 @@ internal class TaskPatrol : Node
                 else
                 {
                     Transform wp = _waypoints[_currentWaypointIndex];
-                    if(wp != null)
+                    if (wp != null)
                     {
                         if (Math.Abs(_controller.transform.position.x - wp.position.x) < 0.01f)
                         {

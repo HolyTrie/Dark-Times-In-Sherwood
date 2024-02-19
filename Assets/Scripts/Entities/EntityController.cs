@@ -22,6 +22,7 @@ namespace DTIS
         
         //entity vars//
         [HideInInspector] private bool _facingRight = true;                         // A boolean marking the entity's orientation.
+        public bool FacingRight{get {return _facingRight;} set {_facingRight = value;}} //used to determine where to move the player
         [HideInInspector] private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
         [HideInInspector] private Vector3 _Velocity = Vector3.zero;                // Entitys current velocity as a 3D vector. 
         private Animator _animator;
