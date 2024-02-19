@@ -19,7 +19,7 @@ namespace DTIS
         }
         protected override void PhysicsCalculation()
         {
-            Controller.Move(new Vector2(FSM.Controls.HorizontalMove, 0f));
+            Controller.Physics.Move = new Vector2(FSM.Controls.HorizontalMove, 0f);
         }
     }
 }

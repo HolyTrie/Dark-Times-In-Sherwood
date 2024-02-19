@@ -15,6 +15,7 @@ public class PhysicsObject : MonoBehaviour
     protected bool grounded;
     protected Rigidbody2D _rb2d;
     protected Vector2 _velocity;
+    protected Vector2 _targetVelocity;
     protected Vector2 _groundNormal;
     protected ContactFilter2D _contactFilter2d;
     protected RaycastHit2D[] _hitBuffer = new RaycastHit2D[16]; // todo - variable length?
@@ -23,24 +24,37 @@ public class PhysicsObject : MonoBehaviour
     protected void OnEnable() {
         _rb2d = GetComponent<Rigidbody2D>();
     }
-    protected void Start()
+    void Start()
     {
         _contactFilter2d.useTriggers = false;
         _contactFilter2d.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer)); // get the Physics@d collision mask for this layer to filter by.
         _contactFilter2d.useLayerMask = true;
     }
-    protected void Update()
+    void Update()
     {
-        
+        _targetVelocity = Vector2.zero;
+        ComputeVelocity();
     }
 
-    protected void FixedUpdate()
+    protected virtual void ComputeVelocity()
     {
-        _velocity += Time.deltaTime * _gravityModifier * Physics2D.gravity;
+
+    }
+
+    void FixedUpdate()
+    {
+        _velocity += Time.deltaTime * _gravityModifier * Physics2D.gravity; // apply gravity
+        _velocity.x = _targetVelocity.x;
         grounded = false;
         Vector2 deltaPostion = _velocity * Time.deltaTime;
-        Vector2 move = Vector2.up * deltaPostion.y;
-        Movement(move, true); // yMovement = true
+
+        Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x);
+        Vector2 move = moveAlongGround * deltaPostion;
+        Movement(move, false); // horizontal movement
+        
+        move = Vector2.up * deltaPostion.y;
+
+        Movement(move, true); // vertical movement
     }
 
     void Movement(Vector2 move, bool yMovement)

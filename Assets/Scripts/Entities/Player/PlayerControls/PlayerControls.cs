@@ -11,11 +11,6 @@ namespace DTIS
 
         private PlayerActionMap _am;
         public PlayerActionMap ActionMap { get { return _am; } }
-
-        public InputAction moveHorizontal = new(type: InputActionType.Button);
-        //TODO: this class should provide wrappers for checking input.
-        //public InputAction Attack2 = new(type: InputActionType.Button);
-
         private float _horizontalMove = 0f;
         public float HorizontalMove { get { return _horizontalMove; } set { _horizontalMove = value; } }
 

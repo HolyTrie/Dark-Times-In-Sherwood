@@ -19,8 +19,8 @@ namespace DTIS
         }
         protected override void PhysicsCalculation()
         {
-            float speed = FSM.Controls.HorizontalMove * Controller.RunSpeedMult;
-            Controller.Move(new Vector2(speed, 0f));
+            //float speed = FSM.Controls.HorizontalMove * Controller.RunSpeedMult;
+            //Controller.Move(new Vector2(speed, 0f));
         }
     }
 }

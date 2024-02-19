@@ -10,35 +10,32 @@ namespace DTIS
     */
     public class PlayerController : MonoBehaviour
     {
-        [Header("Player Forces")]
+        [Header("Player Physics")]
         [SerializeField] private float _jumpForce;
+        public float JumpForce{get{return _jumpForce;}set{_jumpForce = value;}}
         [SerializeField] private float _walkSpeed;
         [SerializeField] private float _runSpeedMult;
+        [SerializeField] private PlayerPhysics _physicsObject;
+        public PlayerPhysics Physics{get{return _physicsObject;}}
+        public Vector2 Move{get{return _physicsObject.Move;}}
+        public Vector2 Velocity{get{return _physicsObject.Velocity;}}
 
         [Header("Player Attributes")]
         [SerializeField] public int _jumpStaminaCost;
         [SerializeField] public int _ghostedSanityCost;
 
-        public float RunSpeedMult { get { return _runSpeedMult; } }
-
         [Header("Environmentals Checkers")]
         // [SerializeField] private bool _airControl = true;
         [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider to be disabled on the 'crouch' player action.
-        [SerializeField] private Transform _ceilingCheck;                           // A position marking where to check for ceilings
+        //[SerializeField] private Transform _ceilingCheck;                           // A position marking where to check for ceilings
 
-        [Header("Smoothment")]
-        [SerializeField] private float _movementSmoothing;
+        [Header("Shooting")]
         [SerializeField] private float ShootDelaySeconds;
         [SerializeField] private float ShootReloadSeconds;
 
         //Player related vars//
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
         public bool FacingRight { get { return _facingRight; } private set { _facingRight = value; } }
-
-        private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
-        public Vector3 Velocity { get { return _rb2D.velocity; } }
-        public float JumpForce { get { return _jumpForce; } set { _jumpForce = value; } }
-
         private Animator _animator;
         public Animator Animator { get { return _animator; } }
 
@@ -56,7 +53,7 @@ namespace DTIS
 
         //Ghost player//
         private PlayerGhostBehaviour _playerGhostBehaviour;
-        private SpriteRenderer _spriteRenderer;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
 
         //Shooting vars//
         private ClickSpawn _clickSpawn; // class to spawn object by click.
@@ -68,12 +65,11 @@ namespace DTIS
 
         void Awake()
         {
-            _rb2D = GetComponent<Rigidbody2D>();
-            _animator = GetComponent<Animator>();
+            _animator = GetComponentInChildren<Animator>();
             _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic strings
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
             _gc = GetComponentInChildren<GroundCheck>();
-            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             _staminabar = GetComponent<StaminaBar>();
             _sanityBar = GetComponent<SanityBar>();
             _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
@@ -93,7 +89,7 @@ namespace DTIS
         /*Flips the chacater according to his velocity*/
         protected virtual void Flip(bool overrideMovement = false)
         {
-            if (_rb2D.velocity.x == 0) // if idle
+            if (_physicsObject.Velocity.x == 0) // if idle
             {
                 Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 bool isMouseRightToPlayer = mouseWorldPosition.x > transform.position.x;
@@ -111,8 +107,8 @@ namespace DTIS
             }
             else
             {
-                bool movingRight = _rb2D.velocity.x > 0;
-                bool movingLeft = _rb2D.velocity.x < 0;
+                bool movingRight = _physicsObject.Velocity.x > 0;
+                bool movingLeft = _physicsObject.Velocity.x < 0;
                 if (FacingRight && movingLeft)
                 {
                     FacingRight = !FacingRight;
@@ -125,22 +121,6 @@ namespace DTIS
                 }
             }
 
-        }
-        public void MoveWithSmoothDamp(Vector2 velocityMult)
-        {
-            float speedMultiplier = velocityMult.x;
-            Vector3 targetVelocity = new Vector2(_walkSpeed * speedMultiplier, _rb2D.velocity.y); // Move the character by finding the target velocity
-            _rb2D.velocity = Vector3.SmoothDamp(_rb2D.velocity, targetVelocity, ref _Velocity, _movementSmoothing); // And then smoothing it out and applying it to the character
-        }
-        public virtual void Move(Vector2 velocityMult)
-        {
-            MoveWithSmoothDamp(velocityMult); // TODO: user Lerp?? 
-        }
-
-        public virtual void Jump(float forceMult = 1)
-        {
-            _rb2D.velocity = new Vector2(_rb2D.velocity.x, 0);
-            _rb2D.AddForce(new Vector2(0, _jumpForce * forceMult), ForceMode2D.Impulse);
         }
         public virtual void Ghost()
         {

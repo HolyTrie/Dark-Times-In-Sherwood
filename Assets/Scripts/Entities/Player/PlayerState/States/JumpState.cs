@@ -15,7 +15,7 @@ namespace DTIS
         {
             base.Enter(controller,fsm); // critical!
             Controller.StaminaBar.UseStamina(Controller._jumpStaminaCost); // jump co
-            Controller.Jump();
+            Controller.Physics.Jump();
         }
         protected override void TryStateSwitch()
         {
@@ -28,7 +28,7 @@ namespace DTIS
         {
             if(_airControl)
             {
-                Controller.Move(new Vector2(FSM.Controls.HorizontalMove, 0f));
+                Controller.Physics.Move = new Vector2(FSM.Controls.HorizontalMove, 0f);
             }
         }
     }

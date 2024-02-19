@@ -24,7 +24,7 @@ namespace DTIS
         {
             if(_airControl)
             {
-                Controller.Move(new Vector2(FSM.Controls.HorizontalMove, 0f));
+                //Controller.Move(new Vector2(FSM.Controls.HorizontalMove, 0f));
             }
         }
     }
