@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerGhostBehaviour : GhostBehaviour
 {
+    [SerializeField] private readonly string _propertyNameInMaterial = "_Ghost";
+    private const float _true = 1f;
+    private const float _false = 0f;
     private readonly Renderer _renderer;
     private SanityBar _sanityBar;
     private int _sanityCost = 5;
@@ -18,9 +21,8 @@ public class PlayerGhostBehaviour : GhostBehaviour
     protected override void OnGhostSet()
     {
         //related to how the ghosted player looks//
-        var col = _renderer.material.color;
-        col.a = 0.5f;
-        _renderer.material.color = col;
+        Debug.Log("SET");
+        _renderer.material.SetFloat(_propertyNameInMaterial,_true);
 
         //sanity depletes//
         _sanityBar.UseSanity(_sanityCost);
@@ -29,10 +31,8 @@ public class PlayerGhostBehaviour : GhostBehaviour
     protected override void OnGhostUnset()
     {
         //related to how the ghosted player looks//
-        var col = _renderer.material.color;
-        col.a = 1f;
-        _renderer.material.color = col;
-
+        _renderer.material.SetFloat(_propertyNameInMaterial,_false);
+        Debug.Log("UNSET");
         //sanity regen//
         _sanityBar.RegenSanity(_sanityCost);
     }

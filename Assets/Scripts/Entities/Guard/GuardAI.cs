@@ -64,27 +64,30 @@ internal class TaskPatrol : Node
                 else
                 {
                     Transform wp = _waypoints[_currentWaypointIndex];
-                    if (Math.Abs(_controller.transform.position.x - wp.position.x) < 0.01f)
+                    if(wp != null)
                     {
-                        _controller.transform.position = new Vector2(wp.position.x, _controller.transform.position.y);
-                        _waitCounter = 0f;
-                        _waiting = true;
-
-                        _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
-                        _controller.Animator.SetInteger("AnimState", 0);
-                    }
-                    else
-                    {
-                        float direction = _controller.transform.position.x < wp.position.x ? 1.0f : -1.0f;
-                        _controller.Move(new Vector2(direction, 0f));
-
-                        if (Math.Abs(_controller.transform.position.x - _prevX) < 0.01f)
+                        if (Math.Abs(_controller.transform.position.x - wp.position.x) < 0.01f)
                         {
-                            stuckCounter += 1;
-                            if (stuckCounter > 2)
+                            _controller.transform.position = new Vector2(wp.position.x, _controller.transform.position.y);
+                            _waitCounter = 0f;
+                            _waiting = true;
+
+                            _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
+                            _controller.Animator.SetInteger("AnimState", 0);
+                        }
+                        else
+                        {
+                            float direction = _controller.transform.position.x < wp.position.x ? 1.0f : -1.0f;
+                            _controller.Move(new Vector2(direction, 0f));
+
+                            if (Math.Abs(_controller.transform.position.x - _prevX) < 0.01f)
                             {
-                                Nudge(new Vector2(direction, 0.05f));
-                                stuckCounter = 0;
+                                stuckCounter += 1;
+                                if (stuckCounter > 2)
+                                {
+                                    Nudge(new Vector2(direction, 0.05f));
+                                    stuckCounter = 0;
+                                }
                             }
                         }
                     }
