@@ -12,10 +12,12 @@
 ```health,stamina,sanity``` for the player we are giving 100 as starting points. </br>
 He will be able to increase those as he progresses further in the game. </br>
 ```attack```, at first the player will have 0 attack, he will need to get a weapon or upgrade his bow to add to it attack. at the prologue we will prevent him from attacking, but using stealth mechanics. </br>
+each upgrade will give the player 10 hit points to his bow. </br>
 
 * **Enemies** </br>
 ```health``` </br>
 Guards will have infinite health, they are required to be killed by stealth. </br>
+Mushrooms will have 100 health. </br>
 
 Our calcualtaions were mostly trial and error, we started with some fixed numbers that sounded good to us, and then tried to play with them. </br>
 Also we took some inspiration from other games to see how they defined their attribute system. </br>
@@ -29,4 +31,23 @@ Also we took some inspiration from other games to see how they defined their att
 
 
 
+## Object Behavior - TBD
 
+## Econmoy 
+Our game consist of a simple economy system - </br>
+kill enemies, get coins, and with that coin you can purchase upgrades from the blacksmith. </br>
+
+## Information 
+* At any given time the player has most of the information available for him his current goal will be in his ```journal``` that can be accessed from the game. </br>
+we will hide from him side objectives such as collecting hidden items in the vault or finding seceret rooms. </br>
+
+* The game's perspetive is a 2D side-view. </br>
+  we chose this in particular because we thought it fit well with our games design goal and timeframe that was alloted to us. </br>
+
+
+## Control
+The player game control is fast paced with a direct approach - what the player decides to do (in given boundaries), he can do and its not a turn-based game. </br>
+
+## Choices
+* The player will have to choose wether to keep helping the main protagonist in order to free himself or to help the town's people. </br>
+* The player can decide wether we wants to upgrade his skills for easier combat, or chose a challenging course of action. </br>
