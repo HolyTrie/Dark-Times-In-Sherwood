@@ -30,6 +30,7 @@ public class HpBar : MonoBehaviour
 
     public void depleteHp(int amount)
     {
+        Debug.Log("HITS PLAYER");
         currentHP -= amount;
         hpBar.value = currentHP;
     }
@@ -38,5 +39,10 @@ public class HpBar : MonoBehaviour
     {
         currentHP += amount;
         hpBar.value = currentHP;
+    }
+
+    public int currentHp()
+    {
+        return currentHP;
     }
 }

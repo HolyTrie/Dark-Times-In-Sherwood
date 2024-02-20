@@ -13,6 +13,8 @@ public class GuardAI : BTree
 
     [SerializeField] public static float fovRange = 6f;
 
+    [SerializeField] public static float attackRange = 1f;
+
     private EntityController _controller;
     protected override void Awake()
     {
@@ -33,8 +35,13 @@ public class GuardAI : BTree
                 {
                     new Sequence(new List<Node>
                     {
-                        new CheckPlayerInFOVRange(transform,_controller),
-                        new TaskGoToTarget(transform,_controller),
+                        new CheckPlayerInAttackRange(_controller),
+                        new TaskAttack(_controller),
+                    }),
+                    new Sequence(new List<Node>
+                    {
+                        new CheckPlayerInFOVRange(_controller),
+                        new TaskGoToTarget(_controller),
                     }),
                     new TaskPatrol(patrolTransforms,_controller),
                 });
@@ -42,24 +49,102 @@ public class GuardAI : BTree
     }
 }
 
+internal class TaskAttack : Node
+{
+
+    private readonly EntityController _controller;
+    private Transform _lastTarget;
+    private PlayerController player;
+
+
+    //timers for delays between attacks//
+    private float _attackTime = 1f;
+    private float _attackCounter = 0f;
+
+    public TaskAttack(EntityController controller)
+    {
+        _controller = controller;
+    }
+
+    //in this eval function, we consider that the player is already in sight of the enemy. so there's no need to look for colliders.
+    public override NodeState Evaluate()
+    {
+        Transform target = (Transform)GetData("target");
+        if (target != _lastTarget)
+        {
+            player = target.GetComponent<PlayerController>();
+            _lastTarget = target;
+        }
+
+        _attackCounter = Time.deltaTime;
+        if (_attackCounter >= _attackTime) 
+        {
+            player.HpBar.depleteHp(_controller.AttackDMG); // should make this better in terms of hit with collider maybe?
+            Debug.Log("HP:+" + player.HpBar.currentHp());
+            if (player.HpBar.currentHp() <= 0) // player is dead
+            {
+                ClearData("target");
+                _controller.Animator.SetInteger("AnimState", 0);
+            }
+            else
+                _attackCounter = 0f;
+        }
+
+        _state = NodeState.RUNNING;
+        return _state;
+    }
+
+}
+
+internal class CheckPlayerInAttackRange : Node
+{
+    private readonly EntityController _controller;
+
+    public CheckPlayerInAttackRange(EntityController controller)
+    {
+        _controller = controller;
+    }
+
+    //in this eval function, we consider that the player is already in sight of the enemy. so there's no need to look for colliders.
+    public override NodeState Evaluate()
+    {
+        Transform target = (Transform)GetData("target");
+        
+        if (target == null || Math.Abs(_controller.transform.position.x - target.position.x) > GuardAI.attackRange) // player not in range or target is not available.
+        {
+            Debug.Log("Player not in attack range");
+            _state = NodeState.FAILURE;
+            return _state;
+        }
+
+        if (Math.Abs(_controller.transform.position.x - target.position.x) <= GuardAI.attackRange) // this indicates the player is in range of the enemy, so it can attack him
+        {
+            Debug.Log("Player in attack range" + Math.Abs(_controller.transform.position.x - target.position.x));
+            _controller.Animator.SetInteger("AnimState", 3);
+
+            _state = NodeState.SUCCESS;
+            return _state;
+        }
+        _state = NodeState.FAILURE;
+        return _state;
+    }
+}
+
 internal class TaskGoToTarget : Node
 {
     private readonly EntityController _controller;
-    private Transform _transform;
-    private float patrolRange = 10f;
 
-    public TaskGoToTarget(Transform transform, EntityController controller)
+    public TaskGoToTarget(EntityController controller)
     {
-        _transform = transform;
         _controller = controller;
     }
 
     public override NodeState Evaluate()
     {
         Transform target = (Transform)GetData("target");
-        
 
-        if (target == null || Vector3.Distance(_controller.transform.position, target.position) > patrolRange) // this indicates the player ran from the enemy so he stops chasing
+
+        if (target == null || Math.Abs(_controller.transform.position.x - target.position.x) > GuardAI.fovRange) // this indicates the player ran from the enemy so he stops chasing
         {
             _state = NodeState.FAILURE;
             return _state;
@@ -69,7 +154,7 @@ internal class TaskGoToTarget : Node
         {
             float direction = _controller.transform.position.x < target.position.x ? 1.0f : -1.0f;
             _controller.Move(new Vector2(direction, 0f));
-
+            Debug.Log("Chasing Player");
             _state = NodeState.RUNNING;
             return _state;
         }
@@ -77,7 +162,6 @@ internal class TaskGoToTarget : Node
         _state = NodeState.FAILURE;
         return _state;
     }
-
 }
 
 
@@ -85,11 +169,9 @@ internal class CheckPlayerInFOVRange : Node
 {
     private readonly EntityController _controller;
     private static int _PlayerLayerMask = 1 << 3; // tbd 
-    private Transform _transform;
 
-    public CheckPlayerInFOVRange(Transform transform, EntityController controller)
+    public CheckPlayerInFOVRange(EntityController controller)
     {
-        _transform = transform;
         _controller = controller;
     }
 
@@ -98,7 +180,7 @@ internal class CheckPlayerInFOVRange : Node
         object t = GetData("target");
         if (t == null)
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(_transform.position, GuardAI.fovRange, _PlayerLayerMask);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(_controller.transform.position, GuardAI.fovRange, _PlayerLayerMask);
 
             if (colliders.Length > 0)
             {
@@ -116,7 +198,6 @@ internal class CheckPlayerInFOVRange : Node
         return _state;
     }
 }
-
 
 internal class TaskPatrol : Node
 {

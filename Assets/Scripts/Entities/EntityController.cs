@@ -11,22 +11,26 @@ namespace DTIS
     {
 
         [Header("Entity Forces")]
-        [SerializeField] private float _jumpSpeed, _walkSpeed, _runSpeedMult , _movementSmoothing ;
-        public float JumpSpeed{get { return _jumpSpeed;} set{_jumpSpeed = value;}}
-        public float WalkSpeed{get { return _walkSpeed;} set{_walkSpeed = value;}}
-        public float RunSpeedMult{get { return _runSpeedMult;} set{_runSpeedMult = value;}}
-        public float MoveSmoothSpeed{get { return _movementSmoothing;} set{_movementSmoothing = value;}}
+        [SerializeField] private float _jumpSpeed, _walkSpeed, _runSpeedMult, _movementSmoothing;
+        public float JumpSpeed { get { return _jumpSpeed; } set { _jumpSpeed = value; } }
+        public float WalkSpeed { get { return _walkSpeed; } set { _walkSpeed = value; } }
+        public float RunSpeedMult { get { return _runSpeedMult; } set { _runSpeedMult = value; } }
+        public float MoveSmoothSpeed { get { return _movementSmoothing; } set { _movementSmoothing = value; } }
+
+        [Header("Entity Attributes")]
+        [SerializeField] private int _attackDMG;
+        public int AttackDMG { get { return _attackDMG; } set { _attackDMG = value; } }
 
         [Header("Environmentals Checkers")]
-        [SerializeField] private Transform _ceilingCheck;							// A position marking where to check for ceilings
-        
+        [SerializeField] private Transform _ceilingCheck;                           // A position marking where to check for ceilings
+
         //entity vars//
         [HideInInspector] private bool _facingRight = true;                         // A boolean marking the entity's orientation.
-        public bool FacingRight{get {return _facingRight;} set {_facingRight = value;}} //used to determine where to move the player
+        public bool FacingRight { get { return _facingRight; } set { _facingRight = value; } } //used to determine where to move the player
         [HideInInspector] private Rigidbody2D _rb2D;                         // for manipulating an entity's physics by an IEntityMovement
         [HideInInspector] private Vector3 _Velocity = Vector3.zero;                // Entitys current velocity as a 3D vector. 
         private Animator _animator;
-        public Animator Animator{get{return _animator;}}
+        public Animator Animator { get { return _animator; } }
 
         void Awake()
         {
@@ -39,7 +43,8 @@ namespace DTIS
         {
 
         }
-        void FixedUpdate() {
+        void FixedUpdate()
+        {
             Flip();
         }
         public void MoveWithSmoothDamp(Vector2 velocityMult)
@@ -70,7 +75,6 @@ namespace DTIS
         //private void Walk();
         //private void Jump();
         //private void Run();
-
 
     }
 }
