@@ -71,16 +71,14 @@ internal class TaskAttack : Node
         Debug.Log(target.parent.name);
         if (target != _lastTarget)
         {
-            player = target.parent.GetComponent<PlayerController>();
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             _lastTarget = target;
         }
 
         _attackCounter += Time.deltaTime;
-        Debug.Log(_attackCounter + " ATTTT" + _attackTime);
         if (_attackCounter >= _attackTime)
         {
             player.HpBar.depleteHp(_controller.AttackDMG); // should make this better in terms of hit with collider maybe?
-            Debug.Log("HP:+" + player.HpBar.currentHp());
             if (player.HpBar.currentHp() <= 0) // player is dead
             {
                 ClearData("target");

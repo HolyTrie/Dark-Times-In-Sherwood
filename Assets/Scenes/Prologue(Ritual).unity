@@ -306,11 +306,93 @@ PrefabInstance:
       addedObject: {fileID: 258292156}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a61646b7f5cc0544ba45e00ac69c000, type: 3}
+--- !u!1 &196081971 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5966071231233309208, guid: a38352be83da6a149a7017552b0e352c, type: 3}
+  m_PrefabInstance: {fileID: 1128151331}
+  m_PrefabAsset: {fileID: 0}
+--- !u!19719996 &196081973
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196081971}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!4 &258292156 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8657280276057563493, guid: dfbe929c802fffd45a5416eff64558b5, type: 3}
   m_PrefabInstance: {fileID: 2050642094}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &367796167 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1663133434273963935, guid: a38352be83da6a149a7017552b0e352c, type: 3}
+  m_PrefabInstance: {fileID: 1128151331}
+  m_PrefabAsset: {fileID: 0}
+--- !u!19719996 &367796169
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367796167}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1001 &372337610
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -333,7 +415,7 @@ PrefabInstance:
       objectReference: {fileID: 997936600}
     - target: {fileID: 3286865043905294376, guid: 6d35ae8ad1aa0c74ba05c1b80f9d0fab, type: 3}
       propertyPath: maxHP
-      value: 99999999
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 3640809353600630678, guid: 6d35ae8ad1aa0c74ba05c1b80f9d0fab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -374,6 +456,10 @@ PrefabInstance:
     - target: {fileID: 3640809353600630678, guid: 6d35ae8ad1aa0c74ba05c1b80f9d0fab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5672978501707426727, guid: 6d35ae8ad1aa0c74ba05c1b80f9d0fab, type: 3}
+      propertyPath: _jumpStaminaCost
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6717860920833597228, guid: 6d35ae8ad1aa0c74ba05c1b80f9d0fab, type: 3}
       propertyPath: sanityBar
@@ -1374,7 +1460,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5966071231233309208, guid: a38352be83da6a149a7017552b0e352c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 196081973}
+    - targetCorrespondingSourceObject: {fileID: 1663133434273963935, guid: a38352be83da6a149a7017552b0e352c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 367796169}
   m_SourcePrefab: {fileID: 100100000, guid: a38352be83da6a149a7017552b0e352c, type: 3}
 --- !u!1 &1176749832
 GameObject:
@@ -1817,6 +1909,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 129778755687077440, guid: 88b27893fdc733a44813637512d97a1c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 261144534324355788, guid: 88b27893fdc733a44813637512d97a1c, type: 3}
       propertyPath: m_Name
       value: GuardStart
