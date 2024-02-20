@@ -1,11 +1,13 @@
 using System.Collections;
 using DTIS;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal.Internal;
 
 public class PlatformCollider : MonoBehaviour
 {
     private Collider2D _collider2d;
-    private float _wait = 0.5f;
+    [SerializeField] private float _wait = 0.5f;
 
     private void Start()
     {
@@ -15,8 +17,23 @@ public class PlatformCollider : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            //Debug.Log("On platform");
-            _collider2d.isTrigger = false; // after jumping on the platform set the trigger to false.
+            var contactPoint = collision.GetContact(0).point;
+            var dir = collision.transform.position - (Vector3)contactPoint;
+            dir = collision.transform.InverseTransformDirection(dir);
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            bool below_platform = angle < 0; 
+
+            if(below_platform)
+            {
+                Debug.Log("from below");
+                _collider2d.enabled = false;
+                StartCoroutine(WaitThenEnable(_wait));
+            }
+            else
+            {
+                Debug.Log("from above");
+                _collider2d.enabled = true;
+            }
         }
     }
 
@@ -24,19 +41,20 @@ public class PlatformCollider : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            //Debug.Log(collision.gameObject.name);
+            
+            Debug.Log(collision.gameObject.name);
             PlayerStateMachine _player = collision.gameObject.GetComponent<PlayerController>().FSM;
             if (_player.Controls.ActionMap.All.Down.IsPressed())
             {
                 //Debug.Log("Player Going Down");
-                _collider2d.isTrigger = true; // after leaving it / pressing down to jump set it to true, so the player can go through it down.
-                StartCoroutine(DisableTrigger()); // disalbe trigger after player has passed it.
+                _collider2d.enabled = false; 
+                StartCoroutine(WaitThenEnable(_wait));
             }
         }
     }
-    private IEnumerator DisableTrigger()
+    private IEnumerator WaitThenEnable(float seconds)
     {
-        yield return new WaitForSeconds(_wait);
-        _collider2d.isTrigger = false;
+        yield return new WaitForSeconds(seconds);
+        _collider2d.enabled = true;
     }
 }

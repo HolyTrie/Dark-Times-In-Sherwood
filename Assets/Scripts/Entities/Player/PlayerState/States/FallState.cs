@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace DTIS
 {
@@ -7,19 +7,28 @@ namespace DTIS
     {
         private readonly bool _airControl;
         public FallState(bool airControl,string name = "fall")
-        : base(name, false)
+        : base(name, true)
         {
             _airControl = airControl;
         }
+        public override void Enter(PlayerController controller,PlayerStateMachine fsm)
+        {
+            base.Enter(controller,fsm); // Critical!
+            if (HasAnimation)
+            {
+                try
+                {
+                    controller.Animator.Play(Name);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
+        }
         protected override void TryStateSwitch()
         {
-            // TODO: control jump velocities VVVVV          like so VVVV
-            //FSM.Controller.UpdateGravity = 2f; // if player falls set his mass to bigger just for better smooting
-
-            // if(Controller.Velocity.y == 0)
-            // {
-            //     SetStates(ESP.States.Grounded,ESP.States.Idle);
-            // }
+            //pass
         }
         protected override void PhysicsCalculation()
         {
@@ -29,7 +38,7 @@ namespace DTIS
             }
             if(Controller.Velocity.y > 0)
             {
-                Controller.DeaccelarateJump();
+                Controller.AccelarateFall();
             }
         }
     }

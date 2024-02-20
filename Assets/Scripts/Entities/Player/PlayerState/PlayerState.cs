@@ -46,19 +46,6 @@ namespace DTIS
         }
         public virtual void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
-            if (HasAnimation)
-            {
-                try
-                {
-                    controller.Animator.Play(Name);         // this is good enough for now however using triggers will
-                    //controller.Animator.SetTrigger(Name); // activate transitions as well - but it weirds out.
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                }
-            }
-
             _controller = controller;
             _fsm = fsm;
         }
@@ -80,11 +67,11 @@ namespace DTIS
             }
             */
         }
-        public virtual void Update()
+        public void Update()
         {
             TryStateSwitch();  // this should check input from player and switch states appropriately
         }
-        public virtual void FixedUpdate()
+        public void FixedUpdate()
         {
             PhysicsCalculation(); // must be implemented but can remain empty if nothing is to be done!
         }

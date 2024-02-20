@@ -49,7 +49,7 @@ namespace DTIS
                 States.Run => new RunState(),
                 //States.Dash => new DashState(),
                 States.Fall => new FallState(airControl),
-                //States.Jump2 => new Jump2State(),
+                States.Jump2 => new Jump2State(airControl),
                 //States.LightAttack => new LightAttackState(),
                 //States.HeavyAttack => new HeavyAttackState(),
                 States.RangedAttack => new RangedAttackState(),

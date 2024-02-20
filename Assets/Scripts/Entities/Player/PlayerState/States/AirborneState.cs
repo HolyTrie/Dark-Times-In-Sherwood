@@ -1,9 +1,12 @@
+using System;
+using UnityEngine;
 
 namespace DTIS
 {
     public class AirborneState : PlayerState
     {
         private readonly int _maxActions = Util.Constants.MaxActionsMidAir;
+        private const float _epsilon = 0.001f;
         private int _actionsMidAir = 0;
         public AirborneState(string name = "Airborne") 
         : base(name,false){}
@@ -11,10 +14,21 @@ namespace DTIS
         {
             base.Enter(controller,fsm); // Critical!
             _actionsMidAir = 1;
+            if (HasAnimation)
+            {
+                try
+                {
+                    controller.Animator.Play(Name);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
         }
         protected override void TryStateSwitch()
         {
-            if(Controller.Velocity.y == 0 && Controller.IsGrounded)
+            if(Controller.IsGrounded)
             {
                 SetStates(ESP.States.Grounded,ESP.States.Idle);
             }
@@ -30,7 +44,7 @@ namespace DTIS
                     if(canJump)
                     {
                         ++_actionsMidAir;
-                        SetSubState(ESP.States.Jump);
+                        SetSubState(ESP.States.Jump2);
                     }
                 }
                 /*

@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,12 +9,27 @@ namespace DTIS
         bool isShooting = false;
         public GroundedState(string name = "Grounded")
         : base(name, false) { }
-        public override void Enter(PlayerController controller, PlayerStateMachine fsm)
+        public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
-            base.Enter(controller, fsm);
+            base.Enter(controller,fsm); // Critical!
+            if (HasAnimation)
+            {
+                try
+                {
+                    controller.Animator.Play(Name);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
         }
         protected override void TryStateSwitch()
         {
+            if(Controller.Velocity.y < -0.1f)
+            {
+                SetStates(ESP.States.Airborne, ESP.States.Fall);
+            }
             if (ActionMap.Jump.WasPressedThisFrame())
             {
                 bool canJump = true;

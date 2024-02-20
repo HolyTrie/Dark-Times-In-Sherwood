@@ -43,7 +43,7 @@ public class PhysicsObject : MonoBehaviour
         _grounded = false;
         Vector2 deltaPosition = _velocity * Time.deltaTime;
 
-        Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x);
+        Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x); //helps with slopes
         Vector2 move = moveAlongGround * deltaPosition;
         Movement(move, false); // horizontal movement
         //Debug.Log($"Horizontal move = {move}");

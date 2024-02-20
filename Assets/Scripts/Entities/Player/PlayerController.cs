@@ -14,8 +14,8 @@ namespace DTIS
         [Header("Player Physics")]
         [SerializeField] private float _jumpForce;
         public float JumpForce{get{return _jumpForce;}set{_jumpForce = value;}}
-        [SerializeField] private float _jumpDeaccelarateMult = 0.5f;
-        public float JumpDeaccelarateMult{get{return _jumpDeaccelarateMult;}}
+        [SerializeField] private float _fallGravityMult = 2.5f;
+        [SerializeField] private float _weakJumpGravityMult = 2f;
         [SerializeField] private float _walkSpeed;
         public float WalkSpeed{get{return _walkSpeed;}}
         [SerializeField] private float _runSpeedMult;
@@ -44,9 +44,9 @@ namespace DTIS
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
 
-        private GroundCheck _gc;
-        public bool IsGrounded { get { return _gc.Grounded(); } }
-
+        [SerializeField] private GroundCheck _gc;
+        public bool IsGrounded { get { return _grounded; } }
+        //public bool IsGrounded { get { return _gc.Grounded(); } }
         private StaminaBar _staminabar;
         public StaminaBar StaminaBar { get { return _staminabar; } }
 
@@ -160,9 +160,10 @@ namespace DTIS
         {
             _velocity.y = _jumpForce;
         }
-        internal void DeaccelarateJump()
+
+        internal void AccelarateFall()
         {
-            _velocity.y *= _jumpDeaccelarateMult;
+            _velocity += (_fallGravityMult - 1) * Time.deltaTime * Physics2D.gravity * Vector2.up;
         }
         public void ResetVelocityY()
         {
