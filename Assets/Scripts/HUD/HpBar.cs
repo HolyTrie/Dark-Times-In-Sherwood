@@ -7,7 +7,7 @@ public class HpBar : MonoBehaviour
 {
     [SerializeField] public Slider hpBar;
     [SerializeField] private int maxHP = 100;
-    
+
     private int currentHP;
     private WaitForSeconds regenTimer = new WaitForSeconds(0.1f);
 
