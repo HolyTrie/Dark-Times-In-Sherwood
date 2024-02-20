@@ -1,8 +1,4 @@
-using System;
-using System.Numerics;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Oscillator : MonoBehaviour
 {
@@ -31,11 +27,11 @@ public class Oscillator : MonoBehaviour
             instead of localRotation or RigidBody.
             Users 'Awesome2819' comment in https://discussions.unity.com/t/problem-with-oscillation/23029/3
         */
-        _x = transform.rotation.x;
-        _y = transform.rotation.y;
+        _x = transform.localRotation.x;
+        _y = transform.localRotation.y;
         _z = amplitude * Mathf.Sin(Time.time * omega);
         UnityEngine.Quaternion _rotation = UnityEngine.Quaternion.Euler(_x, _y, _z);
-        transform.rotation = _rotation;
+        transform.localRotation = _rotation;
     }
 
 }

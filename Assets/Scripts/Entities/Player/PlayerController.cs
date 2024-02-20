@@ -80,6 +80,7 @@ namespace DTIS
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _staminabar = GetComponent<StaminaBar>();
             _sanityBar = GetComponent<SanityBar>();
+            _hpBar = GetComponent<HpBar>();
             _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
         }
 
