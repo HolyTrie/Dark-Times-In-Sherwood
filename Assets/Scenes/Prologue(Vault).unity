@@ -90307,8 +90307,44 @@ PrefabInstance:
       value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: _walkSpeed
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: _playbackSpeed
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: _minGroundNormalY
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: _castDistance
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: _leftBoxSize.x
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: _leftBoxSize.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: _leftBoxOffsetX
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: _rightBoxSize.x
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: _rightBoxSize.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: _rightBoxOffsetX
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 3626721765967056002, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: m_Mass

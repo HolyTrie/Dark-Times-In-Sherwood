@@ -11,6 +11,8 @@ namespace DTIS
     */
     public class PlayerController : PhysicsObject
     {
+        [Header("Animation")]
+        [SerializeField][Range(0,1)] private float _playbackSpeed = 1f;
         [Header("Player Physics")]
         [SerializeField] private float _jumpForce;
         public float JumpForce{get{return _jumpForce;}set{_jumpForce = value;}}
@@ -95,6 +97,7 @@ namespace DTIS
         void Start()
         {
             _initialGroundLayerMask = _contactFilter2d.layerMask;
+            _animator.speed = _playbackSpeed;
         }
 
         // Update is called once per frame

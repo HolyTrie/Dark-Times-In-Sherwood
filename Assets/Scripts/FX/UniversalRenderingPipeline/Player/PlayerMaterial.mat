@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PlayerMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: d3eafc478438f78468f6715fd4f9287b, type: 3}
-  m_Parent: {fileID: -876546973899608171, guid: d3eafc478438f78468f6715fd4f9287b, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 54699e54578989047972bef5dc464848, type: 3}
+  m_Parent: {fileID: -876546973899608171, guid: 54699e54578989047972bef5dc464848, type: 3}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -29,9 +29,10 @@ Material:
     - _GhostEffectIsInwards: 1
     - _GhostEffectSpeed: 2
     - _GhostEffectStrength: 0.005
-    - _OutlineThickness: 1
+    - _OutlineThickness: 0.5
     - _QueueControl: 0
     m_Colors:
+    - _EffectColor: {r: 0.6451515, g: 0.042452812, b: 1, a: 0}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5677008280239917600

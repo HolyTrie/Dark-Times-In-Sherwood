@@ -26,6 +26,10 @@ namespace DTIS
                 }
             }
         }
+        public override void Exit()
+        {
+            base.Exit();
+        }
         protected override void TryStateSwitch()
         {
             FSM.StartCoroutine(AttackCommitment(.5f));
@@ -34,7 +38,6 @@ namespace DTIS
         {
            //
         }
-
         IEnumerator AttackCommitment(float seconds)
         {
             yield return new WaitForSeconds(seconds);

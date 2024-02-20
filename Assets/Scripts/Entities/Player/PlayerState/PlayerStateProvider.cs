@@ -42,7 +42,7 @@ namespace DTIS
                 States.Climbing => new ClimbingState(),
                 //States.Crouch => new CrouchState(),
                 States.Jump => new JumpState(airControl),
-                //States.Attack => new AttackState(),
+                States.Attack => new AttackState(),
                 States.Idle => new IdleState(),
                 States.Walk => new WalkState(),
                 States.Fly => new FlyState(),

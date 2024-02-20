@@ -26,7 +26,8 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            if(Controller.Velocity.y < -0.1f)
+            Debug.Log($"Grounded = {Controller.IsGrounded}");
+            if(Controller.Velocity.y < -0.01f && !Controller.IsGrounded) //some cases like stairs will have negative velocity but are still 'ground'
             {
                 SetStates(ESP.States.Airborne, ESP.States.Fall);
             }
@@ -41,21 +42,21 @@ namespace DTIS
                     SetStates(ESP.States.Airborne, ESP.States.Jump);
                 }
             }
-            if (ActionMap.Shoot.IsPressed() && !isShooting)
+            if (ActionMap.Shoot.WasPerformedThisFrame() && !isShooting)
             {
                 isShooting = true;
                 float offset = 3f;
-                Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - FSM.Controls.transform.localPosition;
+                Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - Controller.transform.localPosition;
                 //Debug.Log("Mouse Position: "+ dir + "PlayerPosition: "+ FSM.Controls.transform.localPosition );
-                if (dir.y - offset > FSM.Controls.transform.localPosition.y) // aiming above head
+                if (dir.y - offset > Controller.transform.localPosition.y) // aiming above head
                 {
-                    if (!Controller.isPlaying("HighAttack"))
-                        SetStates(ESP.States.Grounded, ESP.States.HighAttackState); // TODO: MAIN STATE - ATTACK
+                    //if (!Controller.isPlaying("HighAttack"))
+                    SetStates(ESP.States.Attack, ESP.States.HighAttackState);
                 }
-                else if (dir.y - offset <= FSM.Controls.transform.localPosition.y)
+                else
                 {
-                    if (!Controller.isPlaying("RangedAttack"))
-                        SetStates(ESP.States.Grounded, ESP.States.RangedAttack); // TODO: MAIN STATE - ATTACK
+                    //if (!Controller.isPlaying("RangedAttack"))
+                    SetStates(ESP.States.Attack, ESP.States.RangedAttack);
                 }
             }
             else

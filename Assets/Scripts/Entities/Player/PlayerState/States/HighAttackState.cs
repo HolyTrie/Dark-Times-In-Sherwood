@@ -28,7 +28,7 @@ namespace DTIS
         protected override void TryStateSwitch()
         {
             // Controller.WaitForAnimtaion();
-            SetSubState(ESP.States.Idle);
+            //SetSubState(ESP.States.Idle);
             // else if(ActionMap.Walk.IsPressed())
             // {
                 

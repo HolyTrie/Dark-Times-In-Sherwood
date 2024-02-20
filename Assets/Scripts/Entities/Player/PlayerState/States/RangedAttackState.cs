@@ -29,18 +29,11 @@ namespace DTIS
         protected override void TryStateSwitch()
         {
             // Controller.WaitForAnimtaion();
-            FSM.StartCoroutine(Reload());
         }
 
         protected override void PhysicsCalculation()
         {
             //pass
-        }
-
-        private IEnumerator Reload()
-        {
-            yield return new WaitForSeconds(1f); // wait 2 seconds untill regen after used
-            SetSubState(ESP.States.Idle);
         }
     }
     /*
