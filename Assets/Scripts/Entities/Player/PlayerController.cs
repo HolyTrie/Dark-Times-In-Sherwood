@@ -48,11 +48,15 @@ namespace DTIS
         private GroundCheck _gc;
         public bool IsGrounded { get { return _gc.Grounded(); } }
 
+        // Bars // 
         private StaminaBar _staminabar;
         public StaminaBar StaminaBar { get { return _staminabar; } }
 
         private SanityBar _sanityBar;
         public SanityBar SanityBar { get { return _sanityBar; } }
+
+        private HpBar _hpBar;
+        public HpBar HpBar { get { return _hpBar; } }
 
         //Ghost player//
         private PlayerGhostBehaviour _playerGhostBehaviour;
@@ -163,7 +167,7 @@ namespace DTIS
                 }
             }
         }
-        
+
 
         //this method should check if a certain animation is still playing (like shooting, if so DO NOT SHOOT)
         public bool isPlaying(string stateName)
