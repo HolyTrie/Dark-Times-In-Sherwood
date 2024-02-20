@@ -83,12 +83,12 @@ internal class TaskAttack : Node
         {
             player.HpBar.depleteHp(_controller.AttackDMG); // should make this better in terms of hit with collider maybe?
             Debug.Log("HP:+" + player.HpBar.currentHp());
-            // if (player.HpBar.currentHp() <= 0) // player is dead
-            // {
-            //     ClearData("target");
-            //     _controller.Animator.SetInteger("AnimState", 0);
-            // }
-            // else
+            if (player.HpBar.currentHp() <= 0) // player is dead
+            {
+                ClearData("target");
+                _controller.Animator.SetInteger("AnimState", 0);
+            }
+            else
                 _attackCounter = 0f;
         }
 

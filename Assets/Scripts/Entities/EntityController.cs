@@ -20,6 +20,8 @@ namespace DTIS
         [Header("Entity Attributes")]
         [SerializeField] private int _attackDMG;
         public int AttackDMG { get { return _attackDMG; } set { _attackDMG = value; } }
+        private HpBar _hpBar;
+        public HpBar HpBar { get { return _hpBar; } }
 
         [Header("Environmentals Checkers")]
         [SerializeField] private Transform _ceilingCheck;                           // A position marking where to check for ceilings
@@ -36,6 +38,7 @@ namespace DTIS
         {
             _rb2D = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
+            _hpBar = GetComponent<HpBar>();
         }
 
         // Update is called once per frame
