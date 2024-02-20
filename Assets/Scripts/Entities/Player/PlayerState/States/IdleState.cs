@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DTIS
 {
     public class IdleState:PlayerState {
-        public IdleState(string name = "Idle") 
+        public IdleState(string name = "idle") 
         : base(name){}
         protected override void TryStateSwitch()
         {

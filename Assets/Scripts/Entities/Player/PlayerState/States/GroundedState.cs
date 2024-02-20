@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DTIS
@@ -13,10 +14,16 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-
-            if (ActionMap.Jump.WasPressedThisFrame() && Controller.StaminaBar.canUseStamina)
+            if (ActionMap.Jump.WasPressedThisFrame())
             {
-                SetStates(ESP.States.Airborne, ESP.States.Jump);
+                bool canJump = true;
+                if(Controller.StaminaBar != null)
+                    if(!Controller.StaminaBar.canUseStamina)
+                        canJump = false;
+                if(canJump)
+                {
+                    SetStates(ESP.States.Airborne, ESP.States.Jump);
+                }
             }
             if (ActionMap.Shoot.IsPressed() && !isShooting)
             {

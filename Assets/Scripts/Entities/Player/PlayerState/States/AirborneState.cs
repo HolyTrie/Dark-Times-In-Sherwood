@@ -18,12 +18,20 @@ namespace DTIS
             {
                 SetStates(ESP.States.Grounded,ESP.States.Idle);
             }
-            else if(_actionsMidAir < _maxActions && Controller.StaminaBar.canUseStamina)
+            else if(_actionsMidAir < _maxActions)
             {
+                
                 if(ActionMap.Jump.WasPressedThisFrame())
                 {
-                    ++_actionsMidAir;
-                    SetSubState(ESP.States.Jump);
+                    bool canJump = true;
+                    if(Controller.StaminaBar!= null)
+                        if(Controller.StaminaBar.canUseStamina)
+                            canJump = false;
+                    if(canJump)
+                    {
+                        ++_actionsMidAir;
+                        SetSubState(ESP.States.Jump);
+                    }
                 }
                 /*
                 else if(ActionMap.Dash.WasPressedThisFrame())

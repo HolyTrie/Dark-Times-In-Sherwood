@@ -85,8 +85,11 @@ namespace DTIS
             SetState(ESP.States.Grounded, ESP.States.Idle);
             Direction = (float)Directions.Right;
             InitChildScripts();
-            InitControls();
             GameManager.SetFSM(this);
+        }
+        protected void Start()
+        {
+            InitControls();
         }
 
         protected void InitControls()

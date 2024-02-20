@@ -24,8 +24,9 @@ public class PlayerGhostBehaviour : GhostBehaviour
         Debug.Log("SET");
         _renderer.material.SetFloat(_propertyNameInMaterial,_true);
 
-        //sanity depletes//
-        _sanityBar.UseSanity(_sanityCost);
+        //sanity depletes/
+        if(_sanityBar!=null)
+            _sanityBar.UseSanity(_sanityCost);
         
     }
     protected override void OnGhostUnset()
@@ -34,6 +35,7 @@ public class PlayerGhostBehaviour : GhostBehaviour
         _renderer.material.SetFloat(_propertyNameInMaterial,_false);
         Debug.Log("UNSET");
         //sanity regen//
-        _sanityBar.RegenSanity(_sanityCost);
+        if(_sanityBar!=null)
+            _sanityBar.RegenSanity(_sanityCost);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,21 +9,22 @@ namespace DTIS
         Important reference:
         - https://stackoverflow.com/questions/12662072/what-is-protected-virtual-new
     */
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : PhysicsObject
     {
         [Header("Player Physics")]
         [SerializeField] private float _jumpForce;
         public float JumpForce{get{return _jumpForce;}set{_jumpForce = value;}}
+        [SerializeField] private float _jumpDeaccelarateMult = 0.5f;
+        public float JumpDeaccelarateMult{get{return _jumpDeaccelarateMult;}}
         [SerializeField] private float _walkSpeed;
+        public float WalkSpeed{get{return _walkSpeed;}}
         [SerializeField] private float _runSpeedMult;
-        [SerializeField] private PlayerPhysics _physicsObject;
-        public PlayerPhysics Physics{get{return _physicsObject;}}
-        public Vector2 Move{get{return _physicsObject.Move;}}
-        public Vector2 Velocity{get{return _physicsObject.Velocity;}}
+        public float RunSpeedMult{get{return _runSpeedMult;}}
+        public Vector2 Velocity{get{return _velocity;}set{_velocity = value;}}
 
         [Header("Player Attributes")]
-        [SerializeField] public int _jumpStaminaCost;
-        [SerializeField] public int _ghostedSanityCost;
+        public int _jumpStaminaCost;
+        public int _ghostedSanityCost;
 
         [Header("Environmentals Checkers")]
         // [SerializeField] private bool _airControl = true;
@@ -40,7 +42,7 @@ namespace DTIS
         public Animator Animator { get { return _animator; } }
 
         private PlayerStateMachine _fsm;
-        public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } }
+        public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
 
         private GroundCheck _gc;
         public bool IsGrounded { get { return _gc.Grounded(); } }
@@ -61,8 +63,6 @@ namespace DTIS
 
         //Extra Vars//
         private Camera _mainCamera;
-        private Vector3 _Velocity = Vector3.zero;  // Entitys current velocity as a 3D vector.
-
         void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
@@ -81,15 +81,11 @@ namespace DTIS
             _playerGhostBehaviour.TrySetGhostStatus();
             Flip();
         }
-        void FixedUpdate()
-        {
-            return;
-        }
 
         /*Flips the chacater according to his velocity*/
         protected virtual void Flip(bool overrideMovement = false)
         {
-            if (_physicsObject.Velocity.x == 0) // if idle
+            if (_velocity.x == 0) // if idle
             {
                 Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 bool isMouseRightToPlayer = mouseWorldPosition.x > transform.position.x;
@@ -107,8 +103,8 @@ namespace DTIS
             }
             else
             {
-                bool movingRight = _physicsObject.Velocity.x > 0;
-                bool movingLeft = _physicsObject.Velocity.x < 0;
+                bool movingRight = _velocity.x > 0;
+                bool movingLeft = _velocity.x < 0;
                 if (FacingRight && movingLeft)
                 {
                     FacingRight = !FacingRight;
@@ -153,6 +149,24 @@ namespace DTIS
                 return true;
             else
                 return false;
+        }
+
+        public void Move(Vector2 move)
+        {
+            _targetVelocity = move * _walkSpeed;
+        }
+
+        public void Jump()
+        {
+            _velocity.y = _jumpForce;
+        }
+        internal void DeaccelarateJump()
+        {
+            _velocity.y *= _jumpDeaccelarateMult;
+        }
+        public void ResetVelocityY()
+        {
+            _velocity.y = 0f;
         }
     }
 }

@@ -205,7 +205,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""190e58d1-bd5b-49b8-b9cb-37a4d5bf0cc3"",
-                    ""path"": ""<Keyboard>/semicolon"",
+                    ""path"": ""<Keyboard>/g"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

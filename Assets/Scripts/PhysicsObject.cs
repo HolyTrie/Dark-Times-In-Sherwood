@@ -11,13 +11,14 @@ public class PhysicsObject : MonoBehaviour
 
     [SerializeField] private float _gravityModifier = 1f;
     [SerializeField] private float _minGroundNormalY = 0.65f;
+    [SerializeField] protected ContactFilter2D _contactFilter2d;
 
-    protected bool grounded;
+    protected bool _grounded;
     protected Rigidbody2D _rb2d;
     protected Vector2 _velocity;
     protected Vector2 _targetVelocity;
+    public Vector2 TargetVelocity{get{return _targetVelocity;}set{_targetVelocity = value;}}
     protected Vector2 _groundNormal;
-    protected ContactFilter2D _contactFilter2d;
     protected RaycastHit2D[] _hitBuffer = new RaycastHit2D[16]; // todo - variable length?
     protected List<RaycastHit2D> _hitBufferList = new(16);
     
@@ -26,35 +27,29 @@ public class PhysicsObject : MonoBehaviour
     }
     void Start()
     {
-        _contactFilter2d.useTriggers = false;
-        _contactFilter2d.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer)); // get the Physics@d collision mask for this layer to filter by.
-        _contactFilter2d.useLayerMask = true;
+        //_contactFilter2d.useTriggers = false;
+        //_contactFilter2d.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer)); // get the Physics@d collision mask for this layer to filter by.
+        //_contactFilter2d.useLayerMask = true;
     }
     void Update()
     {
-        _targetVelocity = Vector2.zero;
-        ComputeVelocity();
-    }
-
-    protected virtual void ComputeVelocity()
-    {
-
+        _targetVelocity = Vector2.zero; // critical
     }
 
     void FixedUpdate()
     {
-        _velocity += Time.deltaTime * _gravityModifier * Physics2D.gravity; // apply gravity
+        _velocity += Time.deltaTime * _gravityModifier * Physics2D.gravity; // apply gravity to the objects velocity
         _velocity.x = _targetVelocity.x;
-        grounded = false;
-        Vector2 deltaPostion = _velocity * Time.deltaTime;
+        _grounded = false;
+        Vector2 deltaPosition = _velocity * Time.deltaTime;
 
         Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x);
-        Vector2 move = moveAlongGround * deltaPostion;
+        Vector2 move = moveAlongGround * deltaPosition;
         Movement(move, false); // horizontal movement
-        
-        move = Vector2.up * deltaPostion.y;
-
-        Movement(move, true); // vertical movement
+        //Debug.Log($"Horizontal move = {move}");
+        Vector2 moveY = Vector2.up * deltaPosition.y;
+        //Debug.Log($"vertical move = {moveY}");
+        Movement(moveY, true); // vertical movement
     }
 
     void Movement(Vector2 move, bool yMovement)
@@ -63,7 +58,7 @@ public class PhysicsObject : MonoBehaviour
 
         if (distance > _minMoveDistance)
         {
-            int count = _rb2d.Cast(move, new ContactFilter2D(), _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
+            int count = _rb2d.Cast(move, _contactFilter2d, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
             _hitBufferList.Clear();
             for(int i = 0; i < count; ++i) // DO NOT Refactor this with foreach! it will iterate over empty spaces.
             {
@@ -71,10 +66,11 @@ public class PhysicsObject : MonoBehaviour
             }
             foreach(var hit in _hitBufferList)
             {
+                //Debug.Log(hit.rigidbody.gameObject.name);
                 Vector2 currentNormal = hit.normal;
                 if(currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the set value.
                 {
-                    grounded = true;
+                    _grounded = true;
                     if(yMovement)
                     {
                         _groundNormal = currentNormal;
@@ -91,9 +87,8 @@ public class PhysicsObject : MonoBehaviour
                 float modifiedDistance = hit.distance - _shellRadius;
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
             }
-
-
         }
+        //Debug.Log($"distance = {distance} |postion +={move.normalized * distance}");
         _rb2d.position += move.normalized * distance;
     }
 }

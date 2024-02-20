@@ -5,7 +5,7 @@ namespace DTIS
     public class JumpState : PlayerState
     {
         private readonly bool _airControl;
-        public JumpState(bool airControl, string name = "Jump") 
+        public JumpState(bool airControl, string name = "jump") 
         : base(name)
         {
            _airControl = airControl;
@@ -14,21 +14,23 @@ namespace DTIS
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // critical!
-            Controller.StaminaBar.UseStamina(Controller._jumpStaminaCost); // jump co
-            Controller.Physics.Jump();
+            if(Controller.StaminaBar!= null)
+                Controller.StaminaBar.UseStamina(Controller._jumpStaminaCost); // jump co
+            Controller.Jump();
         }
-        protected override void TryStateSwitch()
+        protected override void TryStateSwitch() //is called in Update
         {
-            if(Controller.Velocity.y < 0)
+            if(Controller.Velocity.y < 0 || ActionMap.Jump.WasReleasedThisFrame())
             {
                 SetSubState(ESP.States.Fall);
             }
+            
         }
-        protected override void PhysicsCalculation()
+        protected override void PhysicsCalculation() // is called in FixedUpdate
         {
             if(_airControl)
             {
-                Controller.Physics.Move = new Vector2(FSM.Controls.HorizontalMove, 0f);
+                Controller.Move(new Vector2(FSM.Controls.ActionMap.All.Walk.ReadValue<float>(), 0f));
             }
         }
     }

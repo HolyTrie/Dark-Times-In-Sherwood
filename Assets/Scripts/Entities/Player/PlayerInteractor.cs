@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using DTIS;
 using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerInteractor : MonoBehaviour
 {
     //public Transform Referencepoint;

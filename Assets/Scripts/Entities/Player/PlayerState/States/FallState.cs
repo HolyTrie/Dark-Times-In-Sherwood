@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DTIS
 {
     public class FallState : PlayerState
     {
         private readonly bool _airControl;
-        public FallState(bool airControl,string name = "Fall")
+        public FallState(bool airControl,string name = "fall")
         : base(name, false)
         {
             _airControl = airControl;
@@ -24,7 +25,11 @@ namespace DTIS
         {
             if(_airControl)
             {
-                //Controller.Move(new Vector2(FSM.Controls.HorizontalMove, 0f));
+                Controller.Move(new Vector2(FSM.Controls.ActionMap.All.Walk.ReadValue<float>(), 0f));
+            }
+            if(Controller.Velocity.y > 0)
+            {
+                Controller.DeaccelarateJump();
             }
         }
     }

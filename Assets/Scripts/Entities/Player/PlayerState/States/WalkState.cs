@@ -4,7 +4,7 @@ namespace DTIS
 {
     public class WalkState : PlayerState
     {
-        public WalkState(string name = "Walk")
+        public WalkState(string name = "walk")
         : base(name) { }
         protected override void TryStateSwitch()
         {
@@ -19,7 +19,7 @@ namespace DTIS
         }
         protected override void PhysicsCalculation()
         {
-            Controller.Physics.Move = new Vector2(FSM.Controls.HorizontalMove, 0f);
+            Controller.Move(new Vector2(FSM.Controls.ActionMap.All.Walk.ReadValue<float>(), 0f));
         }
     }
 }
