@@ -28,6 +28,7 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
+            
             if(Controller.IsGrounded)
             {
                 SetStates(ESP.States.Grounded,ESP.States.Idle);
@@ -47,7 +48,7 @@ namespace DTIS
                         SetSubState(ESP.States.Jump2);
                     }
                 }
-                /*
+                /*TODO: Dash
                 else if(ActionMap.Dash.WasPressedThisFrame())
                 {
                     ++_actionsMidAir;
@@ -55,7 +56,13 @@ namespace DTIS
                 }
                 */ 
             }
-        }
+            //TODO: add slam (downards jump)
+            /*if(ActionMap.DownwardsJump.WasPerformedThisFrame())
+            {
+                SetSubState(ESP.States.DownwardsJump);
+            }
+            */
+        }   
         protected override void PhysicsCalculation()
         {
 

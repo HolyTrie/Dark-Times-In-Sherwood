@@ -41,7 +41,6 @@ public class PlatformCollider : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            
             Debug.Log(collision.gameObject.name);
             PlayerStateMachine _player = collision.gameObject.GetComponent<PlayerController>().FSM;
             if (_player.Controls.ActionMap.All.Down.IsPressed())

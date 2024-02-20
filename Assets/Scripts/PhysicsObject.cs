@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -8,10 +9,13 @@ public class PhysicsObject : MonoBehaviour
     // source - https://www.youtube.com/watch?v=wGI2e3Dzk_w&list=PLX2vGYjWbI0SUWwVPCERK88Qw8hpjEGd8&index=1&ab_channel=Unity
     protected const float _minMoveDistance = 0.001f;
     protected const float _shellRadius = 0.01f;
-
+    [Header("Base Physics")]
     [SerializeField] private float _gravityModifier = 1f;
     [SerializeField] private float _minGroundNormalY = 0.65f;
+    [Tooltip("primary ground filter - what's considered 'ground' most of the time'")]
     [SerializeField] protected ContactFilter2D _contactFilter2d;
+    [Tooltip("secondary ground filter for when disabling other layers and only a base 'ground' layer is desired")]
+    [SerializeField] protected ContactFilter2D _groundOnlyFilter;
 
     protected bool _grounded;
     protected Rigidbody2D _rb2d;

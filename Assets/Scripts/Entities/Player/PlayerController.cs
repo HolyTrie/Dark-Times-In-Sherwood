@@ -63,6 +63,24 @@ namespace DTIS
 
         //Extra Vars//
         private Camera _mainCamera;
+        private bool _passingThroughPlatform = false;
+        private LayerMask _initialGroundLayerMask;
+
+        public bool PassingThroughPlatform{get{return _passingThroughPlatform;}private set{_passingThroughPlatform=value;}}
+        public void SetPassingThroughPlatform(bool value)
+        {
+            Debug.Log("Set Passing Through Platform = "+value);
+            if(value)
+            {
+                _contactFilter2d.SetLayerMask(_groundOnlyFilter.layerMask);
+            }
+            else
+            {
+                _contactFilter2d.SetLayerMask(_initialGroundLayerMask);
+            }
+            PassingThroughPlatform = true;
+        }
+
         void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
@@ -73,6 +91,10 @@ namespace DTIS
             _staminabar = GetComponent<StaminaBar>();
             _sanityBar = GetComponent<SanityBar>();
             _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
+        }
+        void Start()
+        {
+            _initialGroundLayerMask = _contactFilter2d.layerMask;
         }
 
         // Update is called once per frame

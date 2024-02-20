@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gravityModifier: 1
-  _minGroundNormalY: 0.65
+  _minGroundNormalY: 0.25
   _contactFilter2d:
     useTriggers: 0
     useLayerMask: 1
@@ -190,10 +190,24 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  _jumpForce: 10
+  _groundOnlyFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  _jumpForce: 11
   _fallGravityMult: 25
-  _weakJumpGravityMult: 2
-  _walkSpeed: 10
+  _weakJumpGravityMult: 20
+  _walkSpeed: 8
   _runSpeedMult: 1.5
   _jumpStaminaCost: 5
   _ghostedSanityCost: 2
@@ -467,6 +481,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7963331873846951152}
   - component: {fileID: 7537257570492181783}
+  - component: {fileID: 8250742024698867884}
+  - component: {fileID: 4408382304582925662}
+  - component: {fileID: 292457902774436244}
   m_Layer: 3
   m_Name: CeilingCheck
   m_TagString: FloorCheck
@@ -507,6 +524,91 @@ MonoBehaviour:
   _ceilLayer:
     serializedVersion: 2
     m_Bits: 0
+--- !u!50 &8250742024698867884
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509464066026284075}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!61 &4408382304582925662
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509464066026284075}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.02690689, y: 0.44925553}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.050467398, y: 0.38670957}
+  m_EdgeRadius: 0
+--- !u!114 &292457902774436244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509464066026284075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3886d31777e69104a89bee006aa44474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transformToFollow: {fileID: 7864872784442246559}
 --- !u!1 &4406160831740475785
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +652,7 @@ GameObject:
   - component: {fileID: 5963810554702668624}
   - component: {fileID: 7254347907059986154}
   - component: {fileID: 3626721765967056002}
+  - component: {fileID: 8349300644769446090}
   m_Layer: 3
   m_Name: Interactor
   m_TagString: Interactable
@@ -631,10 +734,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -646,6 +749,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8349300644769446090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338099083435877839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3886d31777e69104a89bee006aa44474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transformToFollow: {fileID: 7864872784442246559}
 --- !u!1 &7246814835122503706
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,11 +912,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9195c005dfaec4f5fa66fc1d115db7b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leftBoxSize: {x: 0.3, y: 0.05}
-  _rightBoxSize: {x: 0.3, y: 0.05}
-  _leftBoxOffsetX: 0.05
-  _rightBoxOffsetX: 0.4
-  _castDistance: 0.3
+  _leftBoxSize: {x: 0.3, y: 0.5}
+  _rightBoxSize: {x: 0.3, y: 0.5}
+  _leftBoxOffsetX: 0.2
+  _rightBoxOffsetX: 0.55
+  _castDistance: 0.5
   _groundLayer:
     serializedVersion: 2
     m_Bits: 192
