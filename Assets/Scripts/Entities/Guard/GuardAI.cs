@@ -77,7 +77,7 @@ internal class TaskAttack : Node
         }
 
         _attackCounter = Time.deltaTime;
-        if (_attackCounter >= _attackTime) 
+        if (_attackCounter >= _attackTime)
         {
             player.HpBar.depleteHp(_controller.AttackDMG); // should make this better in terms of hit with collider maybe?
             Debug.Log("HP:+" + player.HpBar.currentHp());
@@ -109,7 +109,7 @@ internal class CheckPlayerInAttackRange : Node
     public override NodeState Evaluate()
     {
         Transform target = (Transform)GetData("target");
-        
+
         if (target == null || Math.Abs(_controller.transform.position.x - target.position.x) > GuardAI.attackRange) // player not in range or target is not available.
         {
             Debug.Log("Player not in attack range");
