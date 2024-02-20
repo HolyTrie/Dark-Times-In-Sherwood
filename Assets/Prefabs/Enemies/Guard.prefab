@@ -266,7 +266,7 @@ PolygonCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 1032
+    m_Bits: 7687
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -334,6 +334,7 @@ MonoBehaviour:
   _walkSpeed: 5
   _runSpeedMult: 1.5
   _movementSmoothing: 0.15
+  _attackDMG: 0
   _ceilingCheck: {fileID: 0}
 --- !u!1 &8498945673699254991
 GameObject:

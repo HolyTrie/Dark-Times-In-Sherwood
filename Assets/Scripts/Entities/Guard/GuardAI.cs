@@ -18,7 +18,7 @@ public class GuardAI : BTree
     private EntityController _controller;
     protected override void Awake()
     {
-        _controller = GetComponent<GuardController>(); // does NOT instantiate a Guard Controller if none exists!s
+        _controller = GetComponent<EntityController>(); // does NOT instantiate a Guard Controller if none exists!s
         patrolTransforms ??= new Transform[0];
         base.Awake(); // calls SetupTree
     }
@@ -58,7 +58,7 @@ internal class TaskAttack : Node
 
 
     //timers for delays between attacks//
-    private float _attackTime = 1f;
+    private float _attackTime = 1f; // how long it takes to attack with animation
     private float _attackCounter = 0f;
 
     public TaskAttack(EntityController controller)
@@ -70,23 +70,25 @@ internal class TaskAttack : Node
     public override NodeState Evaluate()
     {
         Transform target = (Transform)GetData("target");
+        Debug.Log(target.parent.name);
         if (target != _lastTarget)
         {
-            player = target.GetComponent<PlayerController>();
+            player = target.parent.GetComponent<PlayerController>();
             _lastTarget = target;
         }
 
-        _attackCounter = Time.deltaTime;
+        _attackCounter += Time.deltaTime;
+        Debug.Log(_attackCounter + " ATTTT" + _attackTime);
         if (_attackCounter >= _attackTime)
         {
             player.HpBar.depleteHp(_controller.AttackDMG); // should make this better in terms of hit with collider maybe?
             Debug.Log("HP:+" + player.HpBar.currentHp());
-            if (player.HpBar.currentHp() <= 0) // player is dead
-            {
-                ClearData("target");
-                _controller.Animator.SetInteger("AnimState", 0);
-            }
-            else
+            // if (player.HpBar.currentHp() <= 0) // player is dead
+            // {
+            //     ClearData("target");
+            //     _controller.Animator.SetInteger("AnimState", 0);
+            // }
+            // else
                 _attackCounter = 0f;
         }
 
