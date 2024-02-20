@@ -154,6 +154,7 @@ internal class TaskGoToTarget : Node
         {
             float direction = _controller.transform.position.x < target.position.x ? 1.0f : -1.0f;
             _controller.Move(new Vector2(direction, 0f));
+            _controller.Animator.SetInteger("AnimState", 2);
             Debug.Log("Chasing Player");
             _state = NodeState.RUNNING;
             return _state;
