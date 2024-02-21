@@ -23,7 +23,7 @@ namespace DTIS
 
         private PlayerStateMachine _fsm;
         public virtual PlayerStateMachine FSM { get { return _fsm; } }
-
+        public virtual PlayerControls Controls {get {return _fsm.Controls;}}
         public virtual PlayerActionMap.AllActions ActionMap { get { return FSM.Controls.ActionMap.All; } }
         // TODO: ^ this ^ is currently hard coupled to return any 'auto generated' action map named 'All' <-- fix if time.
         protected virtual void SetStates(ESP.States State, ESP.States SubState) // for changing both at once

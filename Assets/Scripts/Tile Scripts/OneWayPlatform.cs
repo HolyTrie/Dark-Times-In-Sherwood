@@ -36,8 +36,7 @@ public class OneWayPlatform : MonoBehaviour
         bool isPlayerBelow = GetContactAngle(other) < 0; //negative angle --> player is collidng form below
         if(isPlayerBelow && allowsGoingDown)
         {
-            Debug.Log("Entered and trying to ignore player");
-            //IgnorePlayerCollision(true); // ignore player colliders
+            IgnorePlayerCollision(true); // ignore player colliders
             _player.GetComponent<PlayerController>().SetPassingThroughPlatform(true);
             StartCoroutine(WaitToReapplyCollision(_delay));
         }
@@ -51,7 +50,6 @@ public class OneWayPlatform : MonoBehaviour
         bool isPlayerBelow = GetContactAngle(other) < 0; //negative angle --> player is collidng form below
         if(isPlayerBelow && allowsGoingDown)
         {
-            Debug.Log("Entered and trying to ignore player");
             IgnorePlayerCollision(true); // ignore player colliders
             _player.GetComponent<PlayerController>().SetPassingThroughPlatform(true);
             StartCoroutine(WaitToReapplyCollision(_delay));
@@ -66,7 +64,6 @@ public class OneWayPlatform : MonoBehaviour
         bool allowsGoingUp = Type != OneWayPlatforms.GoingUp;
         if(downwardsPressed && isPlayerAbove && allowsGoingUp)
         {
-            Debug.Log("Stayed and trying to ignore player");
             IgnorePlayerCollision(true); // ignore player colliders
             _player.GetComponent<PlayerController>().SetPassingThroughPlatform(true);
             StartCoroutine(WaitToReapplyCollision(_delay));

@@ -28,6 +28,10 @@ namespace DTIS
             {
                 SetSubState(ESP.States.Idle);
             }
+            // if(Controller.Velocity.y == 0)
+            // {
+            //     SetStates(ESP.States.Fall)
+            // }
         }
         protected override void PhysicsCalculation()
         {

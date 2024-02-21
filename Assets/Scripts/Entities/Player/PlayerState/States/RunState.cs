@@ -4,7 +4,7 @@ using UnityEngine;
 namespace DTIS
 {
     public class RunState:PlayerState {
-        public RunState(string name = "Run") 
+        public RunState(string name = "run") 
         : base(name){}
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
@@ -23,20 +23,16 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            /*if(!FSM.Controls.Run.triggered)
+            if(!Controls.ActionMap.All.Run.WasPerformedThisFrame())
             {
-                
-                if(FSM.Controls.HorizontalMove == 0f)
-                    FSM.SubState = ESP.Build(ESP.States.Idle);
-                else
-                    FSM.SubState = ESP.Build(ESP.States.Walk);
-                
-            }*/
+                FSM.SubState = ESP.Build(ESP.States.Walk);
+            }
         }
         protected override void PhysicsCalculation()
         {
-            //float speed = FSM.Controls.HorizontalMove * Controller.RunSpeedMult;
-            //Controller.Move(new Vector2(speed, 0f));
+            var direction = Controls.ActionMap.All.Run.ReadValue<float>();
+            var move =  Controller.RunSpeedMult * new Vector2(direction, 0f);
+            Controller.Move(move);
         }
     }
 }

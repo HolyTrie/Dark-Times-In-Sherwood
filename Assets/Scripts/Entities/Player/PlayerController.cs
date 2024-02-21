@@ -71,7 +71,6 @@ namespace DTIS
         public bool PassingThroughPlatform{get{return _passingThroughPlatform;}private set{_passingThroughPlatform=value;}}
         public void SetPassingThroughPlatform(bool value)
         {
-            Debug.Log("Set Passing Through Platform = "+value);
             if(value)
             {
                 _contactFilter2d.SetLayerMask(_groundOnlyFilter.layerMask);

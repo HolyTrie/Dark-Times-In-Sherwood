@@ -26,7 +26,6 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            Debug.Log($"Grounded = {Controller.IsGrounded}");
             if(Controller.Velocity.y < -1f && !Controller.IsGrounded) //some cases like stairs will have negative velocity but are still 'ground'
             {
                 SetStates(ESP.States.Airborne, ESP.States.Fall);
