@@ -20,16 +20,6 @@ namespace DTIS
         {
             _am = new PlayerActionMap();
         }
-        private void Start()
-        {
-            //ActionMap.All.Dash.started += _ => Debug.Log("Started interaction");
-            //ActionMap.All.Dash.performed += _ => Debug.Log("Performed interaction");
-            //ActionMap.All.Dash.canceled += _ => Debug.Log("Cancelled interaction");
-        }
-        private void Update()
-        {
-            //
-        }
         private void FixedUpdate()
         {
             RunningDirection = ActionMap.All.Run.ReadValue<float>();

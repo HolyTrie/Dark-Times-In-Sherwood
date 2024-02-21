@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &11868586 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2716304582116443492, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+  m_PrefabInstance: {fileID: 1939398223787425238}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &12986261
 GameObject:
   m_ObjectHideFlags: 0
@@ -90415,10 +90420,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
-      propertyPath: _jumpForce
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: _walkSpeed
       value: 3.5
       objectReference: {fileID: 0}
@@ -90427,16 +90428,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
-      propertyPath: _playbackSpeed
-      value: 0.75
-      objectReference: {fileID: 0}
+      propertyPath: _dashLengthRef
+      value: 
+      objectReference: {fileID: 11868586}
     - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: _fallGravityMult
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: _minGroundNormalY
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: _ray1Size.x
@@ -90475,34 +90476,6 @@ PrefabInstance:
       value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
-      propertyPath: _castDistance
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
-      propertyPath: _leftBoxSize.x
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
-      propertyPath: _leftBoxSize.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
-      propertyPath: _leftBoxOffsetX
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
-      propertyPath: _rightBoxSize.x
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
-      propertyPath: _rightBoxSize.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
-      propertyPath: _rightBoxOffsetX
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: _ray1CastDistance
       value: 0.65
       objectReference: {fileID: 0}
@@ -90518,6 +90491,10 @@ PrefabInstance:
       propertyPath: _controller
       value: 
       objectReference: {fileID: 1607602230}
+    - target: {fileID: 6338099083435877839, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7864872784442246559, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.71

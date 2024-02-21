@@ -254,37 +254,15 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "4d7411b2-fdde-409b-8eab-88317ab560fd",
-                    "path": "1DAxis",
+                    "name": "",
+                    "id": "44754426-0bcb-4218-9b78-83cd52ebcc10",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "New control scheme",
                     "action": "Dash",
-                    "isComposite": true,
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "positive",
-                    "id": "c1fab6ae-81c3-4d16-89c8-d06d092ffd9c",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "New control scheme",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "negative",
-                    "id": "885dca4f-551f-40bc-a8e5-f5cc7eb2fb1d",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "New control scheme",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         }

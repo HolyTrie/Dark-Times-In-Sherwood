@@ -10,8 +10,8 @@ public class PhysicsObject : MonoBehaviour
     protected const float _minMoveDistance = 0.001f;
     protected const float _shellRadius = 0.01f;
     [Header("Base Physics")]
-    [SerializeField] private float _gravityModifier = 1f;
-    [SerializeField] private float _minGroundNormalY = 0.65f;
+    [SerializeField] protected private float _gravityModifier = 1f;
+    [SerializeField] protected private float _minGroundNormalY = 0.65f;
     [Tooltip("primary ground filter - what's considered 'ground' most of the time'")]
     [SerializeField] protected ContactFilter2D _contactFilter2d;
     [Tooltip("secondary ground filter for when disabling other layers and only a base 'ground' layer is desired")]
@@ -29,18 +29,12 @@ public class PhysicsObject : MonoBehaviour
     protected void OnEnable() {
         _rb2d = GetComponent<Rigidbody2D>();
     }
-    void Start()
-    {
-        //_contactFilter2d.useTriggers = false;
-        //_contactFilter2d.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer)); // get the Physics@d collision mask for this layer to filter by.
-        //_contactFilter2d.useLayerMask = true;
-    }
     void Update()
     {
         _targetVelocity = Vector2.zero; // critical
     }
 
-    void FixedUpdate()
+    protected private virtual void FixedUpdate()
     {
         _velocity += Time.deltaTime * _gravityModifier * Physics2D.gravity; // apply gravity to the objects velocity
         _velocity.x = _targetVelocity.x;
@@ -48,12 +42,11 @@ public class PhysicsObject : MonoBehaviour
         Vector2 deltaPosition = _velocity * Time.deltaTime;
 
         Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x); //helps with slopes
+        Debug.Log($"{moveAlongGround} | {deltaPosition}");
         Vector2 move = moveAlongGround * deltaPosition;
         Movement(move, false); // horizontal movement
-        //Debug.Log($"Horizontal move = {move}");
-        Vector2 moveY = Vector2.up * deltaPosition.y;
-        //Debug.Log($"vertical move = {moveY}");
-        Movement(moveY, true); // vertical movement
+        move = Vector2.up * deltaPosition.y;
+        Movement(move, true); // vertical movement
     }
 
     void Movement(Vector2 move, bool yMovement)
@@ -96,7 +89,8 @@ public class PhysicsObject : MonoBehaviour
         _rb2d.position += move.normalized * distance;
     }
 
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos() 
+    {
         Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x);
         Gizmos.DrawRay(transform.position,moveAlongGround);
     }

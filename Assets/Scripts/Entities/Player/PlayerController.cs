@@ -40,31 +40,41 @@ namespace DTIS
         //Player related vars//
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
         public bool FacingRight { get { return _facingRight; } private set { _facingRight = value; } }
+
+        /* *** ANIMATOR *** */
         private Animator _animator;
         public Animator Animator { get { return _animator; } }
+        
+        /* *** PARTICLES *** */
+        private TrailRenderer _tr;
 
+        /* *** FSM *** */
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
 
+        /* *** GROUND CHECK*** */
         [SerializeField] private GroundCheck _gc;
-        //public bool IsGrounded { get { return _grounded; } }
         public bool IsGrounded { get { return _gc.Grounded(); } }
+
+        /* *** STAMINA *** */
         private StaminaBar _staminabar;
         public StaminaBar StaminaBar { get { return _staminabar; } }
 
+        /* *** SANITY *** */
         private SanityBar _sanityBar;
         public SanityBar SanityBar { get { return _sanityBar; } }
 
-        //Ghost player//
+        /* *** GHOST MECHANIC *** */
         private PlayerGhostBehaviour _playerGhostBehaviour;
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
-        //Shooting vars//
+        /* *** SHOOTING */
         private ClickSpawn _clickSpawn; // class to spawn object by click.
         private bool isShooting = false;
 
-        //Extra Vars//
+        /* *** CAMERA*** */
         private Camera _mainCamera;
+
         /* *** PLATFORMS *** */
         private bool _passingThroughPlatform = false;
         private LayerMask _initialGroundLayerMask;
@@ -82,18 +92,21 @@ namespace DTIS
             PassingThroughPlatform = true;
         }
 
+        /* *** DASH *** */
         [Header("Dash Settings")]
         private bool _canDash = true;
         private bool _isDashing = false;
-        [SerializeField] private float _dashPower = 24f;
-        [SerializeField] private float _dashDuration = 0.2f;
-        [SerializeField] private float _dashCooldown = 24f;
-        [SerializeField] private int _ConsecutiveDashes = 2;
-        [SerializeField] private float _ConsecutiveDashTimeframe = 0.5f;
+        [SerializeField, Range(0.001f, 5)] private float _dashDurationSeconds = 0.2f;
+        [SerializeField] private Transform _dashLengthRef;
+        private float _dashDistance = 5f;
+        [SerializeField] private float _dashCooldown = 1f;
+        //[SerializeField] private int _ConsecutiveDashes = 2;
+        //[SerializeField] private float _ConsecutiveDashTimeframe = 0.5f;
 
         void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
+            _tr = GetComponent<TrailRenderer>();
             _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic strings
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
             _gc = GetComponentInChildren<GroundCheck>();
@@ -106,9 +119,11 @@ namespace DTIS
         {
             _initialGroundLayerMask = _contactFilter2d.layerMask;
             _animator.speed = _playbackSpeed;
+            if(_dashLengthRef != null) 
+            {
+                _dashDistance = Math.Abs(Vector2.Distance(transform.position,_dashLengthRef.transform.position));
+            }
         }
-
-        // Update is called once per frame
         void Update()
         {
             _playerGhostBehaviour.TrySetGhostStatus();
@@ -133,7 +148,6 @@ namespace DTIS
                     _spriteRenderer.flipX = false; // flip to face Right
                 }
             }
-
         }
         private void FlipByCursorPos()
         {
@@ -154,7 +168,6 @@ namespace DTIS
 
         public virtual void Ghost()
         {
-            //Debug.Log("ghost callback");
             GameManager.IsPlayerGhosted = !GameManager.IsPlayerGhosted;
         }
         public virtual void Shoot()
@@ -199,14 +212,36 @@ namespace DTIS
         {
             _velocity += (_fallGravityMult - 1) * Time.deltaTime * Physics2D.gravity * Vector2.up;
         }
-        public void ResetVelocityY()
-        {
-            _velocity.y = 0f;
-        }
 
         public void Dash()
         {
-            //TODO: add particle fx
+            if(_canDash)
+                StartCoroutine(StartDash(_gravityModifier));
+        }
+        private protected override void FixedUpdate() // fully overriden to support more complex behaviour like dashing.
+        {
+            if(_isDashing)
+            {
+                _velocity = new(0f,0f);
+                var direction = _facingRight ? 1.0f : -1.0f;
+                var velocity = _dashDistance / _dashDurationSeconds;// S = V * T --> S/T = V
+                _gravityModifier = 0f;
+                _targetVelocity = new(direction * velocity,0f);
+            }
+            base.FixedUpdate();
+        }
+        private IEnumerator StartDash(float OriginalGravityModifier)
+        {
+            _canDash = false;
+            _isDashing = true;
+            _tr.emitting = true;
+            yield return new WaitForSeconds(_dashDurationSeconds);
+            _tr.emitting = false;
+            _gravityModifier = OriginalGravityModifier;
+            _isDashing = false;
+            yield return new WaitForSeconds(_dashCooldown);
+            _canDash = true;
+            _velocity.x = 0f;
         }
     }
 }
