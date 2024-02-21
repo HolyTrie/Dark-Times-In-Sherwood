@@ -119,7 +119,6 @@ internal class CheckPlayerInAttackRange : Node
 
         if (Math.Abs(_controller.transform.position.x - target.position.x) <= GuardAI.attackRange) // this indicates the player is in range of the enemy, so it can attack him
         {
-            Debug.Log("Player in attack range" + Math.Abs(_controller.transform.position.x - target.position.x));
             _controller.Animator.SetInteger("AnimState", 3);
 
             _state = NodeState.SUCCESS;
