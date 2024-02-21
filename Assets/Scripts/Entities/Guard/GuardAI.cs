@@ -12,6 +12,7 @@ public class GuardAI : BTree
     [SerializeField] public static float fovRange = 6f;
 
     [SerializeField] public static float attackRange = 1f;
+    [SerializeField] public static float offset = 1f;
 
     private EntityController _controller;
     protected override void Awake()
@@ -152,8 +153,19 @@ internal class TaskGoToTarget : Node
         {
             float direction = _controller.transform.position.x < target.position.x ? 1.0f : -1.0f;
             _controller.Move(new Vector2(direction, 0f));
+
+            if (target.position.x > _controller.transform.position.x)
+            {
+                // If target is to the right, flip sprite to face right
+                _controller.Flip(false);
+            }
+            else
+            {
+                // If target is to the left, flip sprite to face left
+                _controller.Flip(true);
+            }
+
             _controller.Animator.SetInteger("AnimState", 2);
-            Debug.Log("Chasing Player");
             _state = NodeState.RUNNING;
             return _state;
         }
@@ -235,6 +247,18 @@ internal class TaskPatrol : Node
                     Transform wp = _waypoints[_currentWaypointIndex];
                     if (wp != null)
                     {
+
+                        if (wp.position.x > _controller.transform.position.x)
+                        {
+                            // If target is to the right, flip sprite to face right
+                            _controller.Flip(false);
+                        }
+                        else
+                        {
+                            // If target is to the left, flip sprite to face left
+                            _controller.Flip(true);
+                        }
+
                         if (Math.Abs(_controller.transform.position.x - wp.position.x) < 0.01f)
                         {
                             _controller.transform.position = new Vector2(wp.position.x, _controller.transform.position.y);

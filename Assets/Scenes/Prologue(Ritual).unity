@@ -137,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 863259433373264389, guid: 22e1524e9fe92764a80b01bbb81b6429, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 3.5799866
+      value: 3.579956
       objectReference: {fileID: 0}
     - target: {fileID: 4806562818678049607, guid: 22e1524e9fe92764a80b01bbb81b6429, type: 3}
       propertyPath: m_Pivot.x
@@ -234,10 +234,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1409831002929609860, guid: 22e1524e9fe92764a80b01bbb81b6429, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22e1524e9fe92764a80b01bbb81b6429, type: 3}
 --- !u!1001 &189770492
 PrefabInstance:
@@ -494,27 +491,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4637397867263835350, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: 4637397867263835350, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7124868211084850946, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.24
       objectReference: {fileID: 0}
     - target: {fileID: 7124868211084850946, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7211410048857418346, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: 7211410048857418346, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8748137096368480907, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_Pivot.x
@@ -1483,7 +1480,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1176749833
 Transform:
   m_ObjectHideFlags: 0

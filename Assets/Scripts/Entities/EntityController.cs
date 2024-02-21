@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace DTIS
@@ -48,7 +49,7 @@ namespace DTIS
         }
         void FixedUpdate()
         {
-            Flip();
+            // Flip();
         }
         public void MoveWithSmoothDamp(Vector2 velocityMult)
         {
@@ -60,20 +61,28 @@ namespace DTIS
         {
             MoveWithSmoothDamp(velocityMult);
         }
-        protected virtual void Flip()
+        // protected virtual void Flip()
+        // {
+        //     bool movingRight = _rb2D.velocity.x > 0;
+        //     bool movingLeft = _rb2D.velocity.x < 0;
+        //     if (_facingRight && movingLeft)
+        //     {
+        //         _facingRight = !_facingRight;
+        //         transform.GetComponent<SpriteRenderer>().flipX = true; // flip to face Left
+        //     }
+        //     if (!_facingRight && movingRight)
+        //     {
+        //         _facingRight = !_facingRight;
+        //         transform.GetComponent<SpriteRenderer>().flipX = false; // flip to face Right
+        //     }
+        // }
+
+        public void Flip(bool direction)
         {
-            bool movingRight = _rb2D.velocity.x > 0;
-            bool movingLeft = _rb2D.velocity.x < 0;
-            if (_facingRight && movingLeft)
-            {
-                _facingRight = !_facingRight;
-                transform.GetComponent<SpriteRenderer>().flipX = true; // flip to face Left
-            }
-            if (!_facingRight && movingRight)
-            {
-                _facingRight = !_facingRight;
-                transform.GetComponent<SpriteRenderer>().flipX = false; // flip to face Right
-            }
+            if(direction) // facing left
+                transform.GetComponent<SpriteRenderer>().flipX = true;
+            else // facing right
+                transform.GetComponent<SpriteRenderer>().flipX = false; 
         }
         //private void Walk();
         //private void Jump();
