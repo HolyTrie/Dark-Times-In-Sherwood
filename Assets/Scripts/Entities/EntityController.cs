@@ -77,12 +77,19 @@ namespace DTIS
         //     }
         // }
 
-        public void Flip(bool direction)
+        public void Flip(float targetX)
         {
-            if(direction) // facing left
+            if (targetX > transform.position.x)
+            {
+                // If target is to the right, flip sprite to face right
+                transform.GetComponent<SpriteRenderer>().flipX = false;
+            }
+            else
+            {
+                // If target is to the left, flip sprite to face left
                 transform.GetComponent<SpriteRenderer>().flipX = true;
-            else // facing right
-                transform.GetComponent<SpriteRenderer>().flipX = false; 
+            }
+
         }
         //private void Walk();
         //private void Jump();

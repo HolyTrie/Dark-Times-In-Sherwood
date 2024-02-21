@@ -9,10 +9,11 @@ public class GuardAI : BTree
     [Tooltip("Points that the guard will walk to")]
     [SerializeField] public Transform[] patrolTransforms;
 
+    [Tooltip("The range that the entity can see and start chasing the player")]
     [SerializeField] public static float fovRange = 6f;
 
+    [Tooltip("The range that the entity will start attacking")]
     [SerializeField] public static float attackRange = 1f;
-    [SerializeField] public static float offset = 1f;
 
     private EntityController _controller;
     protected override void Awake()
@@ -154,16 +155,7 @@ internal class TaskGoToTarget : Node
             float direction = _controller.transform.position.x < target.position.x ? 1.0f : -1.0f;
             _controller.Move(new Vector2(direction, 0f));
 
-            if (target.position.x > _controller.transform.position.x)
-            {
-                // If target is to the right, flip sprite to face right
-                _controller.Flip(false);
-            }
-            else
-            {
-                // If target is to the left, flip sprite to face left
-                _controller.Flip(true);
-            }
+            _controller.Flip(target.position.x); // flips the entity according the the position x of target.
 
             _controller.Animator.SetInteger("AnimState", 2);
             _state = NodeState.RUNNING;
@@ -248,16 +240,7 @@ internal class TaskPatrol : Node
                     if (wp != null)
                     {
 
-                        if (wp.position.x > _controller.transform.position.x)
-                        {
-                            // If target is to the right, flip sprite to face right
-                            _controller.Flip(false);
-                        }
-                        else
-                        {
-                            // If target is to the left, flip sprite to face left
-                            _controller.Flip(true);
-                        }
+                        _controller.Flip(wp.position.x); // flips the entity according the the position x of target.
 
                         if (Math.Abs(_controller.transform.position.x - wp.position.x) < 0.01f)
                         {
