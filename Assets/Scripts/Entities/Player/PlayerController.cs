@@ -47,8 +47,8 @@ namespace DTIS
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
 
         [SerializeField] private GroundCheck _gc;
-        public bool IsGrounded { get { return _grounded; } }
-        //public bool IsGrounded { get { return _gc.Grounded(); } }
+        //public bool IsGrounded { get { return _grounded; } }
+        public bool IsGrounded { get { return _gc.Grounded(); } }
         private StaminaBar _staminabar;
         public StaminaBar StaminaBar { get { return _staminabar; } }
 

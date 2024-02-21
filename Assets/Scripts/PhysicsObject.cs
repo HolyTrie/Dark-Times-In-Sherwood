@@ -83,12 +83,12 @@ public class PhysicsObject : MonoBehaviour
                 }
 
                 float projection = Vector2.Dot(_velocity, currentNormal); // differnece between velocity and currentNormal to know how much to subtract if the player collides with a wall/ceiling
-                if(projection < 0)
+                if(projection < 0 /*&& yMovement*/) //TODO: test && yMovement
                 {
-                    _velocity -= projection * currentNormal;
+                    _velocity -= projection * currentNormal; // cancel out the velocity that would be lost on impact.
                 }
 
-                float modifiedDistance = hit.distance - _shellRadius;
+                float modifiedDistance = hit.distance - _shellRadius; 
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
             }
         }
