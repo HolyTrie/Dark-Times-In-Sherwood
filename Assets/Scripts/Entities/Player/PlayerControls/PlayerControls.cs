@@ -11,27 +11,19 @@ namespace DTIS
 
         private PlayerActionMap _am;
         public PlayerActionMap ActionMap { get { return _am; } }
-        private float _horizontalMove = 0f;
-        private bool _isRunning = false;
-        public float HorizontalMove { get { return _horizontalMove; } set { _horizontalMove = value; } }
+        private float _walking = 0f;
+        private float _running = 0f;
+        public float RunningDirection {get{return _running;}private set{_running=value;}}
+        public float WalkingDirection { get { return _walking; } private set { _walking = value; } }
 
         private void Awake()
         {
             _am = new PlayerActionMap();
         }
-        void Update() 
-        {
-            //if(ActionMap.All.Run.WasPressedThisFrame()) {_isRunning = true;}
-            //if(ActionMap.All.Run.WasReleasedThisFrame()) {_isRunning = false;}
-        }
         void FixedUpdate()
         {
-            /*
-            if(_isRunning)
-                HorizontalMove = ActionMap.All.Run.ReadValue<int>();
-            else*/
-            HorizontalMove = ActionMap.All.Walk.ReadValue<float>();
-            
+            RunningDirection = ActionMap.All.Run.ReadValue<float>();
+            WalkingDirection = ActionMap.All.Walk.ReadValue<float>();
         }
 
         void OnEnable()

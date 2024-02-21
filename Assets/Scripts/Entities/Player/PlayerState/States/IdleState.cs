@@ -24,7 +24,11 @@ namespace DTIS
         protected override void TryStateSwitch()
         {
             var direction = Controls.ActionMap.All.Walk.ReadValue<float>();
-            if(direction != 0f)
+            if(Controls.ActionMap.All.Run.WasPressedThisFrame() || Controls.ActionMap.All.Run.WasPerformedThisFrame())
+            {
+                SetSubState(ESP.States.Run);
+            }
+            else if(direction != 0f)
             {
                 FSM.SubState = ESP.Build(ESP.States.Walk);
             }
