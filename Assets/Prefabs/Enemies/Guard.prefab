@@ -335,7 +335,7 @@ MonoBehaviour:
   _walkSpeed: 5
   _runSpeedMult: 1.5
   _movementSmoothing: 0.15
-  _attackDMG: 0
+  _attackDMG: 10
   _ceilingCheck: {fileID: 0}
 --- !u!114 &4592435105334733807
 MonoBehaviour:
@@ -350,6 +350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBar: {fileID: 5924383850299357521}
+  maxHP: 100
 --- !u!1 &8498945673699254991
 GameObject:
   m_ObjectHideFlags: 0
