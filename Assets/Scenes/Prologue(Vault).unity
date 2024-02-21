@@ -90308,15 +90308,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: _walkSpeed
-      value: 3.5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: _playbackSpeed
       value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: _fallGravityMult
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: _minGroundNormalY
-      value: 0.25
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: _castDistance

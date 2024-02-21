@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gravityModifier: 1
-  _minGroundNormalY: 0.25
+  _minGroundNormalY: 0.5
   _contactFilter2d:
     useTriggers: 0
     useLayerMask: 1
@@ -204,10 +204,11 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  _playbackSpeed: 0.75
   _jumpForce: 11
   _fallGravityMult: 25
   _weakJumpGravityMult: 20
-  _walkSpeed: 8
+  _walkSpeed: 2.5
   _runSpeedMult: 1.5
   _jumpStaminaCost: 5
   _ghostedSanityCost: 2
@@ -912,11 +913,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9195c005dfaec4f5fa66fc1d115db7b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leftBoxSize: {x: 0.3, y: 0.5}
-  _rightBoxSize: {x: 0.3, y: 0.5}
-  _leftBoxOffsetX: 0.2
-  _rightBoxOffsetX: 0.55
-  _castDistance: 0.5
+  _leftBoxSize: {x: 0.35, y: 0.1}
+  _rightBoxSize: {x: 0.35, y: 0.1}
+  _leftBoxOffsetX: 0.1
+  _rightBoxOffsetX: 0.4
+  _castDistance: 0.35
   _groundLayer:
     serializedVersion: 2
     m_Bits: 192
