@@ -37,6 +37,15 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""DownJump"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ba61c6a-0749-43ea-973a-99a4820aba7b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Walk"",
                     ""type"": ""Button"",
                     ""id"": ""2cef54db-9845-4ab7-88f0-969b12ae0765"",
@@ -91,12 +100,12 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DownJump"",
+                    ""name"": ""Dash"",
                     ""type"": ""Button"",
-                    ""id"": ""7ba61c6a-0749-43ea-973a-99a4820aba7b"",
+                    ""id"": ""dc5d494b-c821-4862-93d7-43ca20133692"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""MultiTap"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -265,6 +274,39 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""action"": ""DownJump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""4d7411b2-fdde-409b-8eab-88317ab560fd"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""c1fab6ae-81c3-4d16-89c8-d06d092ffd9c"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""New control scheme"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""885dca4f-551f-40bc-a8e5-f5cc7eb2fb1d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""New control scheme"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -280,13 +322,14 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         // All
         m_All = asset.FindActionMap("All", throwIfNotFound: true);
         m_All_Jump = m_All.FindAction("Jump", throwIfNotFound: true);
+        m_All_DownJump = m_All.FindAction("DownJump", throwIfNotFound: true);
         m_All_Walk = m_All.FindAction("Walk", throwIfNotFound: true);
         m_All_Run = m_All.FindAction("Run", throwIfNotFound: true);
         m_All_GoGhost = m_All.FindAction("GoGhost", throwIfNotFound: true);
         m_All_Shoot = m_All.FindAction("Shoot", throwIfNotFound: true);
         m_All_Down = m_All.FindAction("Down", throwIfNotFound: true);
         m_All_Interaction = m_All.FindAction("Interaction", throwIfNotFound: true);
-        m_All_DownJump = m_All.FindAction("DownJump", throwIfNotFound: true);
+        m_All_Dash = m_All.FindAction("Dash", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -349,25 +392,27 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_All;
     private List<IAllActions> m_AllActionsCallbackInterfaces = new List<IAllActions>();
     private readonly InputAction m_All_Jump;
+    private readonly InputAction m_All_DownJump;
     private readonly InputAction m_All_Walk;
     private readonly InputAction m_All_Run;
     private readonly InputAction m_All_GoGhost;
     private readonly InputAction m_All_Shoot;
     private readonly InputAction m_All_Down;
     private readonly InputAction m_All_Interaction;
-    private readonly InputAction m_All_DownJump;
+    private readonly InputAction m_All_Dash;
     public struct AllActions
     {
         private @PlayerActionMap m_Wrapper;
         public AllActions(@PlayerActionMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @Jump => m_Wrapper.m_All_Jump;
+        public InputAction @DownJump => m_Wrapper.m_All_DownJump;
         public InputAction @Walk => m_Wrapper.m_All_Walk;
         public InputAction @Run => m_Wrapper.m_All_Run;
         public InputAction @GoGhost => m_Wrapper.m_All_GoGhost;
         public InputAction @Shoot => m_Wrapper.m_All_Shoot;
         public InputAction @Down => m_Wrapper.m_All_Down;
         public InputAction @Interaction => m_Wrapper.m_All_Interaction;
-        public InputAction @DownJump => m_Wrapper.m_All_DownJump;
+        public InputAction @Dash => m_Wrapper.m_All_Dash;
         public InputActionMap Get() { return m_Wrapper.m_All; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -380,6 +425,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @DownJump.started += instance.OnDownJump;
+            @DownJump.performed += instance.OnDownJump;
+            @DownJump.canceled += instance.OnDownJump;
             @Walk.started += instance.OnWalk;
             @Walk.performed += instance.OnWalk;
             @Walk.canceled += instance.OnWalk;
@@ -398,9 +446,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Interaction.started += instance.OnInteraction;
             @Interaction.performed += instance.OnInteraction;
             @Interaction.canceled += instance.OnInteraction;
-            @DownJump.started += instance.OnDownJump;
-            @DownJump.performed += instance.OnDownJump;
-            @DownJump.canceled += instance.OnDownJump;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         private void UnregisterCallbacks(IAllActions instance)
@@ -408,6 +456,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @DownJump.started -= instance.OnDownJump;
+            @DownJump.performed -= instance.OnDownJump;
+            @DownJump.canceled -= instance.OnDownJump;
             @Walk.started -= instance.OnWalk;
             @Walk.performed -= instance.OnWalk;
             @Walk.canceled -= instance.OnWalk;
@@ -426,9 +477,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Interaction.started -= instance.OnInteraction;
             @Interaction.performed -= instance.OnInteraction;
             @Interaction.canceled -= instance.OnInteraction;
-            @DownJump.started -= instance.OnDownJump;
-            @DownJump.performed -= instance.OnDownJump;
-            @DownJump.canceled -= instance.OnDownJump;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         public void RemoveCallbacks(IAllActions instance)
@@ -458,12 +509,13 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
     public interface IAllActions
     {
         void OnJump(InputAction.CallbackContext context);
+        void OnDownJump(InputAction.CallbackContext context);
         void OnWalk(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnGoGhost(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnDown(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
-        void OnDownJump(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
 }

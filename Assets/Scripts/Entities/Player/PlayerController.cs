@@ -65,9 +65,9 @@ namespace DTIS
 
         //Extra Vars//
         private Camera _mainCamera;
+        /* *** PLATFORMS *** */
         private bool _passingThroughPlatform = false;
         private LayerMask _initialGroundLayerMask;
-
         public bool PassingThroughPlatform{get{return _passingThroughPlatform;}private set{_passingThroughPlatform=value;}}
         public void SetPassingThroughPlatform(bool value)
         {
@@ -81,6 +81,15 @@ namespace DTIS
             }
             PassingThroughPlatform = true;
         }
+
+        [Header("Dash Settings")]
+        private bool _canDash = true;
+        private bool _isDashing = false;
+        [SerializeField] private float _dashPower = 24f;
+        [SerializeField] private float _dashDuration = 0.2f;
+        [SerializeField] private float _dashCooldown = 24f;
+        [SerializeField] private int _ConsecutiveDashes = 2;
+        [SerializeField] private float _ConsecutiveDashTimeframe = 0.5f;
 
         void Awake()
         {
@@ -109,23 +118,7 @@ namespace DTIS
         /*Flips the chacater according to his velocity*/
         protected virtual void Flip(bool overrideMovement = false)
         {
-            if (_velocity.x == 0) // if idle
-            {
-                Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-                bool isMouseRightToPlayer = mouseWorldPosition.x > transform.position.x;
-                bool isMouseLeftToPlayer = mouseWorldPosition.x < transform.position.x;
-                if (FacingRight && isMouseLeftToPlayer)
-                {
-                    FacingRight = !FacingRight;
-                    _spriteRenderer.flipX = true; // flip to face Left
-                }
-                if (!FacingRight && isMouseRightToPlayer)
-                {
-                    FacingRight = !FacingRight;
-                    _spriteRenderer.flipX = false; // flip to face Right
-                }
-            }
-            else
+            if (_velocity.x != 0) // if not idle
             {
                 bool movingRight = _velocity.x > 0;
                 bool movingLeft = _velocity.x < 0;
@@ -142,6 +135,23 @@ namespace DTIS
             }
 
         }
+        private void FlipByCursorPos()
+        {
+            Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            bool isMouseRightToPlayer = mouseWorldPosition.x > transform.position.x;
+            bool isMouseLeftToPlayer = mouseWorldPosition.x < transform.position.x;
+            if (FacingRight && isMouseLeftToPlayer)
+            {
+                FacingRight = !FacingRight;
+                _spriteRenderer.flipX = true; // flip to face Left
+            }
+            if (!FacingRight && isMouseRightToPlayer)
+            {
+                FacingRight = !FacingRight;
+                _spriteRenderer.flipX = false; // flip to face Right
+            }
+        }
+
         public virtual void Ghost()
         {
             //Debug.Log("ghost callback");
@@ -192,6 +202,11 @@ namespace DTIS
         public void ResetVelocityY()
         {
             _velocity.y = 0f;
+        }
+
+        public void Dash()
+        {
+            //TODO: add particle fx
         }
     }
 }

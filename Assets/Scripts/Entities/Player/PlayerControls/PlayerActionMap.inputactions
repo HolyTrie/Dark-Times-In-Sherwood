@@ -15,6 +15,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "DownJump",
+                    "type": "Button",
+                    "id": "7ba61c6a-0749-43ea-973a-99a4820aba7b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Walk",
                     "type": "Button",
                     "id": "2cef54db-9845-4ab7-88f0-969b12ae0765",
@@ -69,12 +78,12 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DownJump",
+                    "name": "Dash",
                     "type": "Button",
-                    "id": "7ba61c6a-0749-43ea-973a-99a4820aba7b",
+                    "id": "dc5d494b-c821-4862-93d7-43ca20133692",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "MultiTap",
                     "initialStateCheck": false
                 }
             ],
@@ -241,6 +250,39 @@
                     "processors": "",
                     "groups": "New control scheme",
                     "action": "DownJump",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "4d7411b2-fdde-409b-8eab-88317ab560fd",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "c1fab6ae-81c3-4d16-89c8-d06d092ffd9c",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "New control scheme",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "885dca4f-551f-40bc-a8e5-f5cc7eb2fb1d",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "New control scheme",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

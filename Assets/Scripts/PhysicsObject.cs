@@ -83,7 +83,7 @@ public class PhysicsObject : MonoBehaviour
                 }
 
                 float projection = Vector2.Dot(_velocity, currentNormal); // differnece between velocity and currentNormal to know how much to subtract if the player collides with a wall/ceiling
-                if(projection < 0 /*&& yMovement*/) //TODO: test && yMovement
+                if(projection < 0)
                 {
                     _velocity -= projection * currentNormal; // cancel out the velocity that would be lost on impact.
                 }
@@ -94,5 +94,10 @@ public class PhysicsObject : MonoBehaviour
         }
         //Debug.Log($"distance = {distance} |postion +={move.normalized * distance}");
         _rb2d.position += move.normalized * distance;
+    }
+
+    private void OnDrawGizmos() {
+        Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x);
+        Gizmos.DrawRay(transform.position,moveAlongGround);
     }
 }

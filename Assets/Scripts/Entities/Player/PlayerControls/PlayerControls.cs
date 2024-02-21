@@ -20,18 +20,28 @@ namespace DTIS
         {
             _am = new PlayerActionMap();
         }
-        void FixedUpdate()
+        private void Start()
+        {
+            //ActionMap.All.Dash.started += _ => Debug.Log("Started interaction");
+            //ActionMap.All.Dash.performed += _ => Debug.Log("Performed interaction");
+            //ActionMap.All.Dash.canceled += _ => Debug.Log("Cancelled interaction");
+        }
+        private void Update()
+        {
+            //
+        }
+        private void FixedUpdate()
         {
             RunningDirection = ActionMap.All.Run.ReadValue<float>();
             WalkingDirection = ActionMap.All.Walk.ReadValue<float>();
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             ActionMap.Enable();
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             ActionMap.Disable();
         }

@@ -96,6 +96,7 @@ namespace DTIS
         {
             Controls.ActionMap.All.GoGhost.performed += _ => _controller.Ghost(); // TODO: set this differently!
             Controls.ActionMap.All.Interaction.performed += _ => _interactor.Interact();
+            Controls.ActionMap.All.Dash.performed += _ => _controller.Dash();
         }
         public virtual void SetState(ESP.States state, ESP.States subState)
         {
