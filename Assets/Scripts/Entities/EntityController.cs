@@ -23,6 +23,9 @@ namespace DTIS
         public int AttackDMG { get { return _attackDMG; } set { _attackDMG = value; } }
         private HpBar _hpBar;
         public HpBar HpBar { get { return _hpBar; } }
+        [SerializeField] private float _FieldOfView, _AttackRange, Scale;
+        public float AttackRange { get { return _AttackRange; } set { _AttackRange = value; } }
+        public float FieldOfView { get { return _FieldOfView; } set { _FieldOfView = value; } }
 
         [Header("Environmentals Checkers")]
         [SerializeField] private Transform _ceilingCheck;                           // A position marking where to check for ceilings
@@ -81,13 +84,15 @@ namespace DTIS
         {
             if (targetX > transform.position.x)
             {
+                transform.localScale = new Vector3(-Scale, transform.localScale.y, transform.localScale.z);
                 // If target is to the right, flip sprite to face right
-                transform.GetComponent<SpriteRenderer>().flipX = false;
+                // transform.GetComponent<SpriteRenderer>().flipX = false;
             }
             else
             {
+                transform.localScale = new Vector3(Scale, transform.localScale.y, transform.localScale.z);
                 // If target is to the left, flip sprite to face left
-                transform.GetComponent<SpriteRenderer>().flipX = true;
+                // transform.GetComponent<SpriteRenderer>().flipX = true;
             }
 
         }

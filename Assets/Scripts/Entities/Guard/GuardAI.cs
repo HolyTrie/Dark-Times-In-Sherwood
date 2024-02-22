@@ -10,10 +10,10 @@ public class GuardAI : BTree
     [SerializeField] public Transform[] patrolTransforms;
 
     [Tooltip("The range that the entity can see and start chasing the player")]
-    [SerializeField] public static float fovRange = 6f;
+    [SerializeField] public static float fovRange;
 
     [Tooltip("The range that the entity will start attacking")]
-    [SerializeField] public static float attackRange = 1f;
+    [SerializeField] public static float attackRange;
 
     private EntityController _controller;
     protected override void Awake()
@@ -21,6 +21,8 @@ public class GuardAI : BTree
         _controller = GetComponent<EntityController>(); // does NOT instantiate a Guard Controller if none exists!s
         patrolTransforms ??= new Transform[0];
         base.Awake(); // calls SetupTree
+        attackRange = _controller.AttackRange;
+        fovRange = _controller.FieldOfView;
     }
     protected override Node SetupTree()
     {
