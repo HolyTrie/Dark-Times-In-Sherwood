@@ -4,7 +4,7 @@ using UnityEditor.EditorTools;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PhysicsObject : MonoBehaviour
+public class PhysicsObject2D : MonoBehaviour
 {
     // source - https://www.youtube.com/watch?v=wGI2e3Dzk_w&list=PLX2vGYjWbI0SUWwVPCERK88Qw8hpjEGd8&index=1&ab_channel=Unity
     protected const float _minMoveDistance = 0.001f;
@@ -42,7 +42,6 @@ public class PhysicsObject : MonoBehaviour
         Vector2 deltaPosition = _velocity * Time.deltaTime;
 
         Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x); //helps with slopes
-        Debug.Log($"{moveAlongGround} | {deltaPosition}");
         Vector2 move = moveAlongGround * deltaPosition;
         Movement(move, false); // horizontal movement
         move = Vector2.up * deltaPosition.y;
@@ -76,7 +75,7 @@ public class PhysicsObject : MonoBehaviour
                 }
 
                 float projection = Vector2.Dot(_velocity, currentNormal); // differnece between velocity and currentNormal to know how much to subtract if the player collides with a wall/ceiling
-                if(projection < 0)
+                if(projection < 0 && !yMovement) //TODO: is '&& !yMovement' actually good??
                 {
                     _velocity -= projection * currentNormal; // cancel out the velocity that would be lost on impact.
                 }

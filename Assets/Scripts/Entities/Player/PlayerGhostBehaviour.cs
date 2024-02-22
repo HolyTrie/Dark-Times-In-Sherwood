@@ -21,7 +21,7 @@ public class PlayerGhostBehaviour : GhostBehaviour
     protected override void OnGhostSet()
     {
         //related to how the ghosted player looks//
-        Debug.Log("SET");
+        //Debug.Log("SET");
         _renderer.material.SetFloat(_propertyNameInMaterial,_true);
 
         //sanity depletes/
@@ -33,7 +33,7 @@ public class PlayerGhostBehaviour : GhostBehaviour
     {
         //related to how the ghosted player looks//
         _renderer.material.SetFloat(_propertyNameInMaterial,_false);
-        Debug.Log("UNSET");
+        //Debug.Log("UNSET");
         //sanity regen//
         if(_sanityBar!=null)
             _sanityBar.RegenSanity(_sanityCost);

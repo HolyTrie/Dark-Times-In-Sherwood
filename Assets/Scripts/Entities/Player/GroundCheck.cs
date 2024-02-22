@@ -9,19 +9,6 @@ namespace DTIS
     /// </summary>
     public class GroundCheck : MonoBehaviour
     {
-        /*
-        private bool _grounded = true;
-        public bool Grounded { get { return _grounded; } set { _grounded = value; } }
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.CompareTag("Floor") || other.CompareTag("Platform"))
-                _grounded = true;
-        }
-        private void OnTriggerExit2D()
-        {
-            _grounded = false;
-        }
-        */
         [Header("Ray 1")]
         [SerializeField] private Vector2 _ray1Size;
         [SerializeField] private float  _ray1OffsetX;
