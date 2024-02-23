@@ -27,7 +27,7 @@ namespace DTIS
             }
             if(Controller.StaminaBar!= null)
                 Controller.StaminaBar.UseStamina(Controller._jumpStaminaCost); // jump cost
-            Controller.Jump();
+            Controller.Jump(); //sets jumping to true!
         }
         public override void Exit()
         {
@@ -44,6 +44,12 @@ namespace DTIS
         }
         protected override void PhysicsCalculation() // is called in FixedUpdate
         {
+            /*
+            if(Mathf.Abs(Controller.Velocity.y) < Controller.JumpPeakHangThreshold)
+            {
+                Controller.CurrGravity *= Controller.JumpPeakGravityMult;
+            }
+            */
             if(_airControl)
             {
                 Controller.Move(new Vector2(FSM.Controls.ActionMap.All.Walk.ReadValue<float>(), 0f));

@@ -90488,9 +90488,21 @@ PrefabInstance:
       value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: _gravityMultAtPeak
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: _JumpHorizontalMove
       value: 
       objectReference: {fileID: 1195863837}
+    - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: _jumpPeakHangThreshold
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2825296926808989834, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
+      propertyPath: _groundOnlyFilter.useLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3381926249485653145, guid: d6e2d8698e9e86a4f925c1ae91da6346, type: 3}
       propertyPath: _ray2Size.x
       value: 0.2

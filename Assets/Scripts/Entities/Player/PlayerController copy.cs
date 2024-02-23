@@ -9,7 +9,7 @@ namespace DTIS
         Important reference:
         - https://stackoverflow.com/questions/12662072/what-is-protected-virtual-new
     */
-    public class PlayerController : PhysicsObject2D
+    public class PlayerControllerCOPY : PhysicsObject2D
     {
         [Header("Player Physics")]
         /*** WALK & RUN ***/
@@ -30,31 +30,16 @@ namespace DTIS
         [SerializeField] private float _fallGravityMult = 2.5f;
         [SerializeField] private float _weakJumpGravityMult = 2f;
         private bool _isJumping = false;
-        private bool _isFalling = false;
         private float _jumpForce;
         private float _timeToJumpPeak;
         private float _jumpGravity;
         private Vector2 _baseGravity;
-        public Vector2 CurrGravity
-        {
-            get
-            {
-                var ans = _baseGravity;
-                if(_isJumping)
-                {
-                    ans = new Vector2(0f,_jumpGravity);
-                }
-                if(_isFalling)
-                {
-                    ans = new Vector2(0f,_jumpGravity*_fallGravityMult);
-                }
-                return ans;
-            }
-        }
+        private Vector2 _currGravity;
         public float JumpPeakGravityMult{get{return _gravityMultAtPeak;}}
+        public Vector2 CurrGravity{get{return _currGravity;}set{_currGravity = value;}}
         public bool IsJumping { get{return _isJumping;}set{_isJumping = value;}}
-        public bool IsFalling { get{return _isFalling;}set{_isFalling = value;}}
         public float JumpForce{get{return _jumpForce;}set{_jumpForce = value;}}
+        public float JumpPeakHangThreshold{get{return _jumpPeakHangThreshold;}}
 
         [Header("Animation")]
         [SerializeField][Range(0,1)] private float _playbackSpeed = 1f;
@@ -113,7 +98,6 @@ namespace DTIS
         private bool _passingThroughPlatform = false;
         private LayerMask _initialGroundLayerMask;
         public bool PassingThroughPlatform{get{return _passingThroughPlatform;}private set{_passingThroughPlatform=value;}}
-
         public void SetPassingThroughPlatform(bool value)
         {
             if(value)
@@ -153,20 +137,19 @@ namespace DTIS
         void Start()
         {
             _baseGravity = Physics2D.gravity;
-            var jumpHeight = Vector2.Distance(transform.position,_JumpHeight.position); // h
-            var jumpHorizontalMove = Vector2.Distance(transform.position,_JumpHeight.position); // X_h
+            var jumpHeight = Math.Abs(Vector2.Distance(transform.position,_JumpHeight.position)); // h
+            var jumpHorizontalMove = Math.Abs(Vector2.Distance(transform.position,_JumpHeight.position)); // X_h
             var direction = _facingRight == true ? 1.0f:-1.0f;
             var Vx = direction * _walkSpeed;
-            var Th = jumpHorizontalMove / Vx;
-            _timeToJumpPeak = Th;
-            _jumpForce = 2*jumpHeight / Th ;
-            _jumpGravity = -2*jumpHeight / (Th * Th);
+            _timeToJumpPeak = jumpHorizontalMove / Vx;
+            _jumpForce = 2*jumpHeight / _timeToJumpPeak ;
+            _jumpGravity = -2*jumpHeight / (_timeToJumpPeak * _timeToJumpPeak);
             Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
             _initialGroundLayerMask = _contactFilter2d.layerMask;
             _animator.speed = _playbackSpeed;
             if(_dashLengthRef != null) 
             {
-                _dashDistance = Vector2.Distance(transform.position,_dashLengthRef.transform.position);
+                _dashDistance = Math.Abs(Vector2.Distance(transform.position,_dashLengthRef.transform.position));
             }
         }
         protected private override void Update()
@@ -176,7 +159,7 @@ namespace DTIS
             Flip();
         }
 
-        /*Flips the chacater according to his velocity*/
+        /*Flips the character according to his velocity*/
         protected virtual void Flip(bool overrideMovement = false)
         {
             if (_velocity.x != 0) // if not idle
@@ -332,6 +315,12 @@ namespace DTIS
             {
                 int count = _rb2d.Cast(move, _contactFilter2d, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
                 _hitBufferList.Clear();
+                /*
+                for(int i = 0; i < count; ++i) // DO NOT Refactor this with foreach! it will iterate over empty spaces.
+                {
+                    _hitBufferList.Add(_hitBuffer[i]);
+                }
+                */
                 float collisionDist;
                 Vector2 closestCollision;
                 if(count > 0)
@@ -387,6 +376,11 @@ namespace DTIS
             Gizmos.color = Color.yellow;
             Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x);
             Gizmos.DrawRay(transform.position,moveAlongGround);
+        }
+
+        public void ResetGravity()
+        {
+            CurrGravity = _baseGravity;
         }
     }
 }
