@@ -14,7 +14,8 @@ namespace DTIS
         [Header("Animation")]
         [SerializeField][Range(0,1)] private float _playbackSpeed = 1f;
         [Header("Player Physics")]
-        [SerializeField] private float _jumpForce;
+        [SerializeField] private Transform _maxJumpHeight;
+        private float _jumpForce;
         public float JumpForce{get{return _jumpForce;}set{_jumpForce = value;}}
         [SerializeField] private float _fallGravityMult = 2.5f;
         [SerializeField] private float _weakJumpGravityMult = 2f;
@@ -117,6 +118,8 @@ namespace DTIS
         }
         void Start()
         {
+            var jumpHeight = Math.Abs(Vector2.Distance(transform.position,_maxJumpHeight.position));
+            _jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * _gravityModifier)); //calculate the force needed to jump to the specified height exactly ,src - https://gamedevbeginner.com/how-to-jump-in-unity-with-or-without-physics/#jump_unity
             _initialGroundLayerMask = _contactFilter2d.layerMask;
             _animator.speed = _playbackSpeed;
             if(_dashLengthRef != null) 
@@ -216,7 +219,14 @@ namespace DTIS
         public void Dash()
         {
             if(_canDash)
+            {
+                var hit = Physics2D.Raycast(transform.position,_facingRight == true ? Vector2.right:Vector2.left,_contactFilter2d.layerMask);
+                if(hit.distance < _dashDistance)
+                {
+                    _dashDistance = hit.distance;
+                }
                 StartCoroutine(StartDash(_gravityModifier));
+            }
         }
         private protected override void FixedUpdate() // fully overriden to support more complex behaviour like dashing.
         {

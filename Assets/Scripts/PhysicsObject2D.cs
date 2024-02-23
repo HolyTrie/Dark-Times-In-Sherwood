@@ -40,12 +40,13 @@ public class PhysicsObject2D : MonoBehaviour
         _velocity.x = _targetVelocity.x;
         _grounded = false;
         Vector2 deltaPosition = _velocity * Time.deltaTime;
+        Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x); //helps with slopes  
 
-        Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x); //helps with slopes
-        Vector2 move = moveAlongGround * deltaPosition;
-        Movement(move, false); // horizontal movement
-        move = Vector2.up * deltaPosition.y;
-        Movement(move, true); // vertical movement
+        Vector2 moveX = moveAlongGround * deltaPosition;
+        Vector2 moveY = Vector2.up * deltaPosition.y;
+        
+        Movement(moveY, true); // vertical movement
+        Movement(moveX, false); // horizontal movement
     }
 
     void Movement(Vector2 move, bool yMovement)
@@ -62,20 +63,23 @@ public class PhysicsObject2D : MonoBehaviour
             }
             foreach(var hit in _hitBufferList)
             {
-                //Debug.Log(hit.rigidbody.gameObject.name);
                 Vector2 currentNormal = hit.normal;
                 if(currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the set value.
                 {
                     _grounded = true;
+                    bool _onSlope = currentNormal.y > 0 && currentNormal.y< 1;
+                    Debug.Log($"current normal y = {currentNormal.y}, on slope = {_onSlope}");
                     if(yMovement)
                     {
                         _groundNormal = currentNormal;
-                        currentNormal.x = 0;
+                        if(!_onSlope)
+                            currentNormal.x = 0;
+                        else
+                            currentNormal = Vector2.down;
                     }
                 }
-
                 float projection = Vector2.Dot(_velocity, currentNormal); // differnece between velocity and currentNormal to know how much to subtract if the player collides with a wall/ceiling
-                if(projection < 0 && !yMovement) //TODO: is '&& !yMovement' actually good??
+                if(projection < 0 ) 
                 {
                     _velocity -= projection * currentNormal; // cancel out the velocity that would be lost on impact.
                 }
@@ -86,11 +90,22 @@ public class PhysicsObject2D : MonoBehaviour
         }
         //Debug.Log($"distance = {distance} |postion +={move.normalized * distance}");
         _rb2d.position += move.normalized * distance;
+        // DEBUG:
+        var _color = Color.white;
+        if(!_grounded)
+        {
+            _color = Color.magenta;
+            //Debug.Log($"y movement = {yMovement} && grounde == {_grounded}!");
+        }
+        var direction = _rb2d.velocity.x >= 0f ? Vector2.right : Vector2.left;
+        Debug.DrawRay(transform.position,direction,_color,2.5f);
     }
 
     private void OnDrawGizmos() 
     {
+        Gizmos.color = Color.yellow;
         Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x);
         Gizmos.DrawRay(transform.position,moveAlongGround);
+
     }
 }

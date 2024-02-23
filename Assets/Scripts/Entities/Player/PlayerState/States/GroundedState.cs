@@ -7,6 +7,8 @@ namespace DTIS
     public class GroundedState : PlayerState
     {
         bool isShooting = false;
+        private const float _minYChange = -1.5f;
+
         public GroundedState(string name = "Grounded")
         : base(name, false) { }
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
@@ -26,7 +28,7 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            if(Controller.Velocity.y < -1f && !Controller.IsGrounded) //some cases like stairs will have negative velocity but are still 'ground'
+            if(Controller.Velocity.y < _minYChange && !Controller.IsGrounded) //some cases like stairs will have negative velocity but are still 'ground'
             {
                 SetStates(ESP.States.Airborne, ESP.States.Fall);
             }

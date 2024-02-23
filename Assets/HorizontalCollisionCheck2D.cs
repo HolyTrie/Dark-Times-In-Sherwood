@@ -86,15 +86,16 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
     {
         CastLeftRays();
         CastRightRays();
-        Debug.Log($"Left Collision = {_leftCollisionType} ||| Right Collision = {_rightCollisionType}");
+        //Debug.Log($"Left Collision = {_leftCollisionType} ||| Right Collision = {_rightCollisionType}");
     }
     private void CastLeftRays()
     {
         _leftRayHitBufferList.Clear();
         var origin = _leftParentBottom.position;
+        Vector2 pos;
         for(int i =0; i<_leftRayCount; ++i)
         {
-            Vector2 pos = new(origin.x+_leftRayOffsets[i].x,origin.y+_leftRayOffsets[i].y);
+            pos = new(origin.x+_leftRayOffsets[i].x,origin.y+_leftRayOffsets[i].y);
             _leftRayHitBufferList.Add(Physics2D.Raycast(pos,Vector2.left,_leftRaysCastDistance,_layerMask));
             Debug.DrawRay(pos,Vector2.left,Color.blue);
         }
@@ -121,9 +122,10 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
     {
         _rightRayHitBufferList.Clear();
         var origin = _rightParentBottom.position;
+        Vector2 pos;
         for(int i =0; i<_rightRayCount; ++i)
         {
-            Vector2 pos = new(origin.x+_rightRayOffsets[i].x,origin.y+_rightRayOffsets[i].y);
+            pos = new(origin.x+_rightRayOffsets[i].x,origin.y+_rightRayOffsets[i].y);
             _rightRayHitBufferList.Add(Physics2D.Raycast(pos,Vector2.right,_rightRaysCastDistance,_layerMask));
             Debug.DrawRay(pos,Vector2.right,Color.red);
         }

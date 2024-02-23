@@ -8,7 +8,7 @@ public class OneWayPlatform : MonoBehaviour
     public enum OneWayPlatforms {GoingUp, GoingDown, Both}
     [SerializeField] private OneWayPlatforms _type = OneWayPlatforms.Both;
     public OneWayPlatforms Type {get{return _type;}}
-    [SerializeField] private float _delay = 0.5f;
+    [SerializeField] private float _delay = 0.75f;
     private Collider2D _collider;
     [SerializeField] private GameObject _player;
     [Tooltip("optional game object attached ahead of player for detection")]
@@ -21,7 +21,7 @@ public class OneWayPlatform : MonoBehaviour
     void Start()
     {
         _collider = GetComponent<Collider2D>();
-        _playerColliders = _player.GetComponents<Collider2D>(); //TODO: null check?
+        _playerColliders = _player.GetComponents<Collider2D>();
     }
     private void IgnorePlayerCollision(bool value)
     {
