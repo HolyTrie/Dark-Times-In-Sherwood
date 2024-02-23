@@ -11,8 +11,6 @@ namespace DTIS
     */
     public class PlayerController : PhysicsObject2D
     {
-        [Header("Animation")]
-        [SerializeField][Range(0,1)] private float _playbackSpeed = 1f;
         [Header("Player Physics")]
         [SerializeField] private Transform _maxJumpHeight;
         private float _jumpForce;
@@ -24,7 +22,10 @@ namespace DTIS
         [SerializeField] private float _runSpeedMult;
         public float RunSpeedMult{get{return _runSpeedMult;}}
         public Vector2 Velocity{get{return _velocity;}set{_velocity = value;}}
-
+        private bool _jumping = false;
+        private bool _wasOnSlopePrevFrame = false;
+        [Header("Animation")]
+        [SerializeField][Range(0,1)] private float _playbackSpeed = 1f;
         [Header("Player Attributes")]
         public int _jumpStaminaCost;
         public int _ghostedSanityCost;
@@ -127,8 +128,9 @@ namespace DTIS
                 _dashDistance = Math.Abs(Vector2.Distance(transform.position,_dashLengthRef.transform.position));
             }
         }
-        void Update()
+        protected private override void Update()
         {
+            base.Update();
             _playerGhostBehaviour.TrySetGhostStatus();
             Flip();
         }
@@ -220,25 +222,17 @@ namespace DTIS
         {
             if(_canDash)
             {
-                var hit = Physics2D.Raycast(transform.position,_facingRight == true ? Vector2.right:Vector2.left,_contactFilter2d.layerMask);
-                if(hit.distance < _dashDistance)
+                /*
+                var direction = _facingRight == true ? Vector2.right:Vector2.left;
+                var hit = Physics2D.Raycast(transform.position,direction,_dashDistance,_contactFilter2d.layerMask);
+                if(hit.distance < _dashDistance && hit.distance > 0)
                 {
+                    Debug.Log($"hit dist = {hit.distance}");
                     _dashDistance = hit.distance;
                 }
+                */
                 StartCoroutine(StartDash(_gravityModifier));
             }
-        }
-        private protected override void FixedUpdate() // fully overriden to support more complex behaviour like dashing.
-        {
-            if(_isDashing)
-            {
-                _velocity = new(0f,0f);
-                var direction = _facingRight ? 1.0f : -1.0f;
-                var velocity = _dashDistance / _dashDurationSeconds;// S = V * T --> S/T = V
-                _gravityModifier = 0f;
-                _targetVelocity = new(direction * velocity,0f);
-            }
-            base.FixedUpdate();
         }
         private IEnumerator StartDash(float OriginalGravityModifier)
         {
@@ -251,7 +245,103 @@ namespace DTIS
             _isDashing = false;
             yield return new WaitForSeconds(_dashCooldown);
             _canDash = true;
-            _velocity.x = 0f;
+            //_velocity.x = 0f;
+        }
+
+        protected private override void FixedUpdate()
+        {
+            if(_isDashing)
+            {
+                _velocity = new(0f,0f);
+                var direction = _facingRight ? 1.0f : -1.0f;
+                var velocity = _dashDistance / _dashDurationSeconds;// S = V * T --> S/T = V
+                _gravityModifier = 0f; //re applied by a corutine!
+                _targetVelocity = new(direction * velocity,0f);
+            }
+
+            _wasOnSlopePrevFrame = _onSlope;
+            _grounded = false;
+            _onSlope = false;
+
+            _velocity += Time.deltaTime * _gravityModifier * Physics2D.gravity; // apply gravity to the objects velocity
+            _velocity.x = _targetVelocity.x;
+            Vector2 deltaPosition = _velocity * Time.deltaTime;
+            Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x); //helps with slopes  
+
+            Vector2 moveX = moveAlongGround * deltaPosition;
+            Vector2 moveY = Vector2.up * deltaPosition.y;
+            
+            Movement(moveY, true); // vertical movement
+            Movement(moveX, false); // horizontal movement
+        }
+
+        protected private override void Movement(Vector2 move, bool yMovement)
+        {
+            float distance = move.magnitude;
+            bool setOnce = false;
+
+            if (distance > _minMoveDistance)
+            {
+                int count = _rb2d.Cast(move, _contactFilter2d, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
+                _hitBufferList.Clear();
+                for(int i = 0; i < count; ++i) // DO NOT Refactor this with foreach! it will iterate over empty spaces.
+                {
+                    _hitBufferList.Add(_hitBuffer[i]);
+                }
+                foreach(var hit in _hitBufferList)
+                {
+                    Vector2 currentNormal = hit.normal;
+                    if(currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the set value.
+                    {
+                        if(!setOnce)
+                        {
+                            _grounded = true;
+                            _onSlope = currentNormal.y > 0 && currentNormal.y < 1;
+                            setOnce = true;
+                        }
+                        if(yMovement)
+                        {
+                            _groundNormal = currentNormal;
+                            if(!_onSlope)
+                                currentNormal.x = 0;
+                        }
+                    }
+                    float projection = Vector2.Dot(_velocity, currentNormal); // differnece between velocity and currentNormal to know how much to subtract if the player collides with a wall/ceiling
+                    if(projection < 0 ) 
+                    {
+                        if(yMovement)
+                        {
+                            _velocity -= projection * currentNormal; // cancel out the velocity that would be lost on impact.
+                        }
+                        else
+                        {
+                            _velocity -= projection * currentNormal;
+                            _velocity.y = 0;
+                        }
+                    }
+
+                    float modifiedDistance = hit.distance - _shellRadius; 
+                    distance = modifiedDistance < distance ? modifiedDistance : distance;
+                }
+            }
+            _rb2d.position += move.normalized * distance;
+            // DEBUG:
+            var _color = Color.white;
+            if(!_grounded)
+            {
+                _color = Color.magenta;
+                //Debug.Log($"grounded = {_grounded} | on slope prev frame = {_wasOnSlopePrevFrame} | on slope = {_onSlope} | rb vel = {_rb2d.velocity} | y movement = {yMovement}");
+            }
+            var direction = _rb2d.velocity.x >= 0f ? Vector2.right : Vector2.left;
+            Debug.DrawRay(transform.position,direction,_color,2.5f);
+        }
+
+        private void OnDrawGizmos() 
+        {
+            Gizmos.color = Color.yellow;
+            Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x);
+            Gizmos.DrawRay(transform.position,moveAlongGround);
+
         }
     }
 }

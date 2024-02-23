@@ -17,7 +17,8 @@ public class PhysicsObject2D : MonoBehaviour
     [Tooltip("secondary ground filter for when disabling other layers and only a base 'ground' layer is desired")]
     [SerializeField] protected ContactFilter2D _groundOnlyFilter;
 
-    protected bool _grounded;
+    protected bool _grounded = false;
+    protected bool _onSlope = false;
     protected Rigidbody2D _rb2d;
     protected Vector2 _velocity;
     protected Vector2 _targetVelocity;
@@ -29,7 +30,7 @@ public class PhysicsObject2D : MonoBehaviour
     protected void OnEnable() {
         _rb2d = GetComponent<Rigidbody2D>();
     }
-    void Update()
+    protected private virtual void Update()
     {
         _targetVelocity = Vector2.zero; // critical
     }
@@ -39,6 +40,7 @@ public class PhysicsObject2D : MonoBehaviour
         _velocity += Time.deltaTime * _gravityModifier * Physics2D.gravity; // apply gravity to the objects velocity
         _velocity.x = _targetVelocity.x;
         _grounded = false;
+        _onSlope = false;
         Vector2 deltaPosition = _velocity * Time.deltaTime;
         Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x); //helps with slopes  
 
@@ -49,7 +51,7 @@ public class PhysicsObject2D : MonoBehaviour
         Movement(moveX, false); // horizontal movement
     }
 
-    void Movement(Vector2 move, bool yMovement)
+    protected private virtual void Movement(Vector2 move, bool yMovement)
     {
         float distance = move.magnitude;
 
@@ -67,8 +69,7 @@ public class PhysicsObject2D : MonoBehaviour
                 if(currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the set value.
                 {
                     _grounded = true;
-                    bool _onSlope = currentNormal.y > 0 && currentNormal.y< 1;
-                    Debug.Log($"current normal y = {currentNormal.y}, on slope = {_onSlope}");
+                    _onSlope = currentNormal.y > 0 && currentNormal.y < 1;
                     if(yMovement)
                     {
                         _groundNormal = currentNormal;
@@ -79,7 +80,7 @@ public class PhysicsObject2D : MonoBehaviour
                     }
                 }
                 float projection = Vector2.Dot(_velocity, currentNormal); // differnece between velocity and currentNormal to know how much to subtract if the player collides with a wall/ceiling
-                if(projection < 0 ) 
+                if(projection < 0) 
                 {
                     _velocity -= projection * currentNormal; // cancel out the velocity that would be lost on impact.
                 }
