@@ -37,16 +37,14 @@ namespace DTIS
         }
         protected override void PhysicsCalculation()
         {
-            /*
             if(Mathf.Abs(Controller.Velocity.y) < Controller.JumpPeakHangThreshold)
             {
                 Controller.CurrGravity *= Controller.JumpPeakGravityMult;
             }
-            */
-            //else
-            //{
+            else
+            {
                 Controller.AccelarateFall();
-            //}
+            }
             if(_airControl)
             {
                 Controller.Move(new Vector2(FSM.Controls.ActionMap.All.Walk.ReadValue<float>(), 0f));

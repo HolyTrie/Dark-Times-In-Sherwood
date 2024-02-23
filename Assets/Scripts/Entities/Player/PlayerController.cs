@@ -35,22 +35,9 @@ namespace DTIS
         private float _timeToJumpPeak;
         private float _jumpGravity;
         private Vector2 _baseGravity;
-        public Vector2 CurrGravity
-        {
-            get
-            {
-                var ans = _baseGravity;
-                if(_isJumping)
-                {
-                    ans = new Vector2(0f,_jumpGravity);
-                }
-                if(_isFalling)
-                {
-                    ans = new Vector2(0f,_jumpGravity*_fallGravityMult);
-                }
-                return ans;
-            }
-        }
+        private Vector2 _currGravity;
+        public Vector2 CurrGravity{get{return _currGravity;}set{_currGravity = value;}}
+        public float JumpPeakHangThreshold{get{return _jumpPeakHangThreshold;}}
         public float JumpPeakGravityMult{get{return _gravityMultAtPeak;}}
         public bool IsJumping { get{return _isJumping;}set{_isJumping = value;}}
         public bool IsFalling { get{return _isFalling;}set{_isFalling = value;}}
@@ -153,6 +140,7 @@ namespace DTIS
         void Start()
         {
             _baseGravity = Physics2D.gravity;
+            _currGravity = _baseGravity;
             var jumpHeight = Vector2.Distance(transform.position,_JumpHeight.position); // h
             var jumpHorizontalMove = Vector2.Distance(transform.position,_JumpHeight.position); // X_h
             var direction = _facingRight == true ? 1.0f:-1.0f;
@@ -248,11 +236,13 @@ namespace DTIS
         public void Jump()
         {
             _isJumping = true;
+            CurrGravity = new(0f,_jumpGravity);
             _velocity.y = _jumpForce;
         }
         internal void AccelarateFall()
         {
-            _velocity += (_fallGravityMult - 1) * Time.deltaTime * CurrGravity * Vector2.up; //TODO: clamp to some max value.
+            CurrGravity = new(0f,_jumpGravity*_fallGravityMult);
+            //_velocity += (_fallGravityMult - 1) * Time.deltaTime * CurrGravity * Vector2.up; //TODO: clamp to some max value.
         }
         public void Dash()
         {
