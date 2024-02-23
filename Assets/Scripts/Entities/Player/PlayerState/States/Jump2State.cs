@@ -9,7 +9,7 @@ namespace DTIS
         public Jump2State(bool airControl, string name = "smrslt") 
         : base(name)
         {
-           _airControl = airControl;
+            _airControl = airControl;
         }
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
@@ -28,6 +28,11 @@ namespace DTIS
             if(Controller.StaminaBar!= null)
                 Controller.StaminaBar.UseStamina(Controller._jumpStaminaCost); // jump co
             Controller.Jump();
+        }
+        public override void Exit()
+        {
+            base.Exit();
+            Controller.IsJumping = false;
         }
         protected override void TryStateSwitch() //is called in Update
         {

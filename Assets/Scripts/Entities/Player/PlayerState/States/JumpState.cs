@@ -26,8 +26,13 @@ namespace DTIS
                 }
             }
             if(Controller.StaminaBar!= null)
-                Controller.StaminaBar.UseStamina(Controller._jumpStaminaCost); // jump co
+                Controller.StaminaBar.UseStamina(Controller._jumpStaminaCost); // jump cost
             Controller.Jump();
+        }
+        public override void Exit()
+        {
+            base.Exit();
+            Controller.IsJumping = false;
         }
         protected override void TryStateSwitch() //is called in Update
         {

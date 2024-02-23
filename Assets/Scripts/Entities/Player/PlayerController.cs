@@ -12,18 +12,31 @@ namespace DTIS
     public class PlayerController : PhysicsObject2D
     {
         [Header("Player Physics")]
-        [SerializeField] private Transform _maxJumpHeight;
-        private float _jumpForce;
-        public float JumpForce{get{return _jumpForce;}set{_jumpForce = value;}}
-        [SerializeField] private float _fallGravityMult = 2.5f;
-        [SerializeField] private float _weakJumpGravityMult = 2f;
+        /*** WALK & RUN ***/
         [SerializeField] private float _walkSpeed;
         public float WalkSpeed{get{return _walkSpeed;}}
         [SerializeField] private float _runSpeedMult;
         public float RunSpeedMult{get{return _runSpeedMult;}}
         public Vector2 Velocity{get{return _velocity;}set{_velocity = value;}}
-        private bool _jumping = false;
+        
+        /*** SLOPES ***/
         private bool _wasOnSlopePrevFrame = false;
+
+        /*** JUMP & FALL ***/
+        [SerializeField] private Transform _JumpHeight;
+        [SerializeField] private Transform _JumpHorizontalMove;
+        [SerializeField] private float _fallGravityMult = 2.5f;
+        [SerializeField] private float _weakJumpGravityMult = 2f;
+        private bool _isJumping = false;
+        private float _jumpForce;
+        private float _timeToJumpApex;
+        private float _jumpGravity;
+        private Vector2 _baseGravity;
+        public Vector2 CurrGravity
+        {get{var ans = _baseGravity;if(_isJumping) {ans = new Vector2(0f,-_jumpGravity);}return ans;}}
+        public bool IsJumping { get{return _isJumping;}set{_isJumping = value;}}
+        public float JumpForce{get{return _jumpForce;}set{_jumpForce = value;}}
+
         [Header("Animation")]
         [SerializeField][Range(0,1)] private float _playbackSpeed = 1f;
         [Header("Player Attributes")]
@@ -81,6 +94,7 @@ namespace DTIS
         private bool _passingThroughPlatform = false;
         private LayerMask _initialGroundLayerMask;
         public bool PassingThroughPlatform{get{return _passingThroughPlatform;}private set{_passingThroughPlatform=value;}}
+
         public void SetPassingThroughPlatform(bool value)
         {
             if(value)
@@ -119,13 +133,20 @@ namespace DTIS
         }
         void Start()
         {
-            var jumpHeight = Math.Abs(Vector2.Distance(transform.position,_maxJumpHeight.position));
-            _jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics2D.gravity.y * _gravityModifier)); //calculate the force needed to jump to the specified height exactly ,src - https://gamedevbeginner.com/how-to-jump-in-unity-with-or-without-physics/#jump_unity
+            _baseGravity = Physics2D.gravity;
+            var jumpHeight = Vector2.Distance(transform.position,_JumpHeight.position); // h
+            var jumpHorizontalMove = Vector2.Distance(transform.position,_JumpHeight.position); // X_h
+            var direction = _facingRight == true ? 1.0f:-1.0f;
+            var Vx = direction * _walkSpeed;
+            var Th = jumpHorizontalMove / Vx;
+            _jumpForce = 2*jumpHeight / Th ;
+            _jumpGravity = -2*jumpHeight / (Th * Th);
+            Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
             _initialGroundLayerMask = _contactFilter2d.layerMask;
             _animator.speed = _playbackSpeed;
             if(_dashLengthRef != null) 
             {
-                _dashDistance = Math.Abs(Vector2.Distance(transform.position,_dashLengthRef.transform.position));
+                _dashDistance = Vector2.Distance(transform.position,_dashLengthRef.transform.position);
             }
         }
         protected private override void Update()
@@ -210,27 +231,27 @@ namespace DTIS
 
         public void Jump()
         {
+            _isJumping = true;
             _velocity.y = _jumpForce;
         }
 
         internal void AccelarateFall()
         {
-            _velocity += (_fallGravityMult - 1) * Time.deltaTime * Physics2D.gravity * Vector2.up;
+            _velocity += (_fallGravityMult - 1) * Time.deltaTime * CurrGravity * Vector2.up; //TODO: clamp to some max value.
         }
 
         public void Dash()
         {
             if(_canDash)
             {
-                /*
                 var direction = _facingRight == true ? Vector2.right:Vector2.left;
                 var hit = Physics2D.Raycast(transform.position,direction,_dashDistance,_contactFilter2d.layerMask);
-                if(hit.distance < _dashDistance && hit.distance > 0)
+                var distance = Vector2.Distance(transform.position,hit.point);
+                if(distance < _dashDistance)
                 {
-                    Debug.Log($"hit dist = {hit.distance}");
-                    _dashDistance = hit.distance;
+                    Debug.Log($"hit dist = {distance}");
+                    _dashDistance = distance;
                 }
-                */
                 StartCoroutine(StartDash(_gravityModifier));
             }
         }
@@ -262,8 +283,9 @@ namespace DTIS
             _wasOnSlopePrevFrame = _onSlope;
             _grounded = false;
             _onSlope = false;
+            var acc = Time.deltaTime * _gravityModifier * CurrGravity;
 
-            _velocity += Time.deltaTime * _gravityModifier * Physics2D.gravity; // apply gravity to the objects velocity
+            _velocity += acc; // apply gravity to the objects velocity
             _velocity.x = _targetVelocity.x;
             Vector2 deltaPosition = _velocity * Time.deltaTime;
             Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x); //helps with slopes  
@@ -273,6 +295,12 @@ namespace DTIS
             
             Movement(moveY, true); // vertical movement
             Movement(moveX, false); // horizontal movement
+
+            // predict future position using a simplified euler integration (0.5 pixel error rate, resets when landing so it does not accumulate)
+            var futurePos = _velocity * Time.deltaTime + 0.5f * Time.deltaTime * acc; // pos = velocity*deltaTime +0.5*accelaration*(deltaTime^2)
+            var futureVel = acc; // vel = accelaration * deltaTime
+            futurePos = (Vector2)transform.position+futurePos;
+            Debug.Log($"future position = {futurePos} | future velocity = {futureVel}");
         }
 
         protected private override void Movement(Vector2 move, bool yMovement)
@@ -337,15 +365,14 @@ namespace DTIS
                 //Debug.Log($"grounded = {_grounded} | on slope prev frame = {_wasOnSlopePrevFrame} | on slope = {_onSlope} | rb vel = {_rb2d.velocity} | y movement = {yMovement}");
             }
             var direction = _rb2d.velocity.x >= 0f ? Vector2.right : Vector2.left;
-            Debug.DrawRay(transform.position,direction,_color,2.5f);
+            //Debug.DrawRay(transform.position,direction,_color,2.5f);
         }
 
         private void OnDrawGizmos() 
         {
             Gizmos.color = Color.yellow;
             Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x);
-            Gizmos.DrawRay(transform.position,moveAlongGround);
-
+            //Gizmos.DrawRay(transform.position,moveAlongGround);
         }
     }
 }
