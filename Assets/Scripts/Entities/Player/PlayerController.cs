@@ -9,7 +9,7 @@ namespace DTIS
         Important reference:
         - https://stackoverflow.com/questions/12662072/what-is-protected-virtual-new
     */
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : PhysicsObject2D
     {
         private static PlayerController _Instance;
         public static PlayerController Instance
