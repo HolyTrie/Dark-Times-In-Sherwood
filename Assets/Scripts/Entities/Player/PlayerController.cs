@@ -284,9 +284,19 @@ namespace DTIS
             {
                 int count = _rb2d.Cast(move, _contactFilter2d, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
                 _hitBufferList.Clear();
+                /*
                 for(int i = 0; i < count; ++i) // DO NOT Refactor this with foreach! it will iterate over empty spaces.
                 {
                     _hitBufferList.Add(_hitBuffer[i]);
+                }
+                */
+                float collisionDist;
+                Vector2 closestCollision;
+                if(count > 0)
+                {
+                    collisionDist = _hitBuffer[0].distance;
+                    closestCollision = _rb2d.ClosestPoint(_hitBuffer[0].point);
+                    _hitBufferList.Add(_hitBuffer[0]);
                 }
                 foreach(var hit in _hitBufferList)
                 {
@@ -306,18 +316,12 @@ namespace DTIS
                                 currentNormal.x = 0;
                         }
                     }
-                    float projection = Vector2.Dot(_velocity, currentNormal); // differnece between velocity and currentNormal to know how much to subtract if the player collides with a wall/ceiling
+                    float projection = Vector2.Dot(_velocity,currentNormal);
                     if(projection < 0 ) 
                     {
-                        if(yMovement)
-                        {
-                            _velocity -= projection * currentNormal; // cancel out the velocity that would be lost on impact.
-                        }
-                        else
-                        {
-                            _velocity -= projection * currentNormal;
-                            _velocity.y = 0;
-                        }
+                        //Debug.Log($"vel before = {_velocity} | ymove = {yMovement} | current normal = {currentNormal} || projection = {projection}");
+                        _velocity -= projection * currentNormal; // cancel out the velocity that would be lost on impact.
+                        //Debug.Log($"new vel = {_velocity} | ymove = {yMovement} | move projection = {projection * currentNormal}");
                     }
 
                     float modifiedDistance = hit.distance - _shellRadius; 
