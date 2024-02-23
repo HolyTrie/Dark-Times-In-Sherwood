@@ -4,11 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 using static Dialogue;
-
-public interface IDialog
-{
-    public void StartDialog();
-}
 public class SherifController : MonoBehaviour, IDialog
 {
     public void StartDialog()

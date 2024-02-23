@@ -22,7 +22,7 @@ namespace DTIS
 
             if (target == null || Math.Abs(_AIcontroller.transform.position.x - target.position.x) > _AIcontroller.AttackRange) // player not in range or target is not available.
             {
-                Debug.Log("Player not in attack range");
+                // Debug.Log("Player not in attack range");
                 _state = NodeState.FAILURE;
                 return _state;
             }
