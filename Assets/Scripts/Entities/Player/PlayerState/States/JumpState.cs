@@ -6,6 +6,7 @@ namespace DTIS
     public class JumpState : PlayerState
     {
         private readonly bool _airControl;
+        private bool IsInPeakHang{get{return Controller.IsInPeakHang;}set{Controller.IsInPeakHang=value;}}
         public JumpState(bool airControl, string name = "jump") 
         : base(name)
         {
@@ -27,6 +28,10 @@ namespace DTIS
             }
             if(Controller.StaminaBar!= null)
                 Controller.StaminaBar.UseStamina(Controller._jumpStaminaCost); // jump cost
+            if(IsInPeakHang)
+            {
+                IsInPeakHang = false;
+            }
             Controller.Jump(); //sets jumping to true!
         }
         public override void Exit()
@@ -44,9 +49,14 @@ namespace DTIS
         }
         protected override void PhysicsCalculation() // is called in FixedUpdate
         {
-            if(Mathf.Abs(Controller.Velocity.y) < Controller.JumpPeakHangThreshold)
+            if(Mathf.Abs(Controller.Velocity.y) < Controller.JumpPeakHangThreshold && !IsInPeakHang)
             {
-                Controller.CurrGravity *= Controller.JumpPeakGravityMult;
+                if(!IsInPeakHang) // enter peak hang mode when in threshold 
+                {
+                    Debug.Log("Jump State Entered PeakHang!");
+                    IsInPeakHang = true;
+                    Controller.CurrGravity *= Controller.JumpPeakGravityMult; 
+                }
             }
             if(_airControl)
             {

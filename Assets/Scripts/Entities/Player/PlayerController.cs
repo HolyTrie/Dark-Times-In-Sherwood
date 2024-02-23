@@ -41,7 +41,7 @@ namespace DTIS
         [SerializeField] private Transform _JumpHorizontalMove;
         [SerializeField, Range(0f,1f)] private float _gravityMultAtPeak = 0.25f;
         [SerializeField] private float _jumpPeakHangThreshold;
-        [SerializeField] private float _fallGravityMult = 2.5f;
+        [SerializeField] private float _fallGravityMult = 1.5f;
         [SerializeField] private float _weakJumpGravityMult = 2f;
         private bool _isJumping = false;
         private bool _isFalling = false;
@@ -50,12 +50,16 @@ namespace DTIS
         private float _jumpGravity;
         private Vector2 _baseGravity;
         private Vector2 _currGravity;
+        private Vector2 _fallGravity;
+        private bool _isInPeakHang;
         public Vector2 CurrGravity{get{return _currGravity;}set{_currGravity = value;}}
         public float JumpPeakHangThreshold{get{return _jumpPeakHangThreshold;}}
         public float JumpPeakGravityMult{get{return _gravityMultAtPeak;}}
+        public Vector2 FallGravity {get{return _fallGravity;} set{_fallGravity = value;}}
         public bool IsJumping { get{return _isJumping;}set{_isJumping = value;}}
         public bool IsFalling { get{return _isFalling;}set{_isFalling = value;}}
         public float JumpForce{get{return _jumpForce;}set{_jumpForce = value;}}
+        public bool IsInPeakHang{get{return _isInPeakHang;}set{_isInPeakHang=value;}}
 
         [Header("Animation")]
         [SerializeField][Range(0,1)] private float _playbackSpeed = 1f;
@@ -157,8 +161,10 @@ namespace DTIS
         }
         void Start()
         {
+            _isInPeakHang = false;
             _baseGravity = Physics2D.gravity;
             _currGravity = _baseGravity;
+            _fallGravity = _baseGravity * _fallGravityMult;
             var jumpHeight = Vector2.Distance(transform.position,_JumpHeight.position); // h
             var jumpHorizontalMove = Vector2.Distance(transform.position,_JumpHeight.position); // X_h
             var direction = _facingRight == true ? 1.0f:-1.0f;
@@ -166,7 +172,7 @@ namespace DTIS
             var Th = jumpHorizontalMove / Vx;
             _timeToJumpPeak = Th;
             _jumpForce = 2*jumpHeight / Th ;
-            _jumpGravity = -2*jumpHeight / (Th * Th);
+            _jumpGravity = -2*jumpHeight / Th; /* Th);*/
             Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
             _initialGroundLayerMask = _contactFilter2d.layerMask;
             _animator.speed = _playbackSpeed;
@@ -251,6 +257,11 @@ namespace DTIS
         {
             _targetVelocity = move * _walkSpeed;
         }
+        /// <summary>
+        /// Sets _isJumping=true and gravity to jumping gravity.
+        /// </summary> <summary>
+        /// 
+        /// </summary>
         public void Jump()
         {
             _isJumping = true;
@@ -317,11 +328,11 @@ namespace DTIS
             Movement(moveY, true); // vertical movement
             Movement(moveX, false); // horizontal movement
 
-            // predict future position using a simplified euler integration (0.5 pixel error rate, resets when landing so it does not accumulate)
+            // predict future position using a simplified euler integration (~0.5 pixel error rate, resets when landing so it does not accumulate)
             var futurePos = _velocity * Time.deltaTime + 0.5f * Time.deltaTime * acc; // pos = velocity*deltaTime +0.5*accelaration*(deltaTime^2)
             var futureVel = acc; // vel = accelaration * deltaTime
-            futurePos = (Vector2)transform.position+futurePos;
-            Debug.Log($"future position = {futurePos} | future velocity = {futureVel}");
+            futurePos = (Vector2)transform.position+futurePos; //TODO:
+            //Debug.Log($"future position = {futurePos} | future velocity = {futureVel}");
         }
 
         protected private override void Movement(Vector2 move, bool yMovement)

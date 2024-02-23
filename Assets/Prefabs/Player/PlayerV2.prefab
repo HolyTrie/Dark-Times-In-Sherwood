@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gravityModifier: 1
-  _minGroundNormalY: 0.25
+  _minGroundNormalY: 0.75
   _contactFilter2d:
     useTriggers: 0
     useLayerMask: 1
@@ -194,7 +194,7 @@ MonoBehaviour:
     maxNormalAngle: 0
   _groundOnlyFilter:
     useTriggers: 0
-    useLayerMask: 0
+    useLayerMask: 1
     useDepth: 0
     useOutsideDepth: 0
     useNormalAngle: 0
@@ -206,12 +206,15 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  _playbackSpeed: 0.75
-  _maxJumpHeight: {fileID: 7415180589409833121}
-  _fallGravityMult: 20
-  _weakJumpGravityMult: 20
   _walkSpeed: 3.5
   _runSpeedMult: 2
+  _JumpHeight: {fileID: 7415180589409833121}
+  _JumpHorizontalMove: {fileID: 2463569648458988155}
+  _gravityMultAtPeak: 0.5
+  _jumpPeakHangThreshold: 0.1
+  _fallGravityMult: 3.5
+  _weakJumpGravityMult: 1.25
+  _playbackSpeed: 0.75
   _jumpStaminaCost: 5
   _ghostedSanityCost: 2
   m_CrouchDisableCollider: {fileID: 6458761042367217407}
@@ -438,6 +441,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8143ec81e3eb30c408217d006ff7030f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &936958004725457127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2463569648458988155}
+  m_Layer: 0
+  m_Name: JumpHorizontalMax
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2463569648458988155
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936958004725457127}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.5, y: 5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7579223540725856723}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &988444511521167936
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +794,7 @@ Transform:
   m_Children:
   - {fileID: 2716304582116443492}
   - {fileID: 7415180589409833121}
+  - {fileID: 2463569648458988155}
   - {fileID: 943239972132923098}
   - {fileID: 7082708802343232708}
   - {fileID: 1143537608116398366}
@@ -846,12 +881,12 @@ MonoBehaviour:
     m_Bits: 192
   _leftParentTop: {fileID: 943239972132923098}
   _leftParentBottom: {fileID: 7082708802343232708}
-  _leftRayCount: 7
+  _leftRayCount: 9
   _leftRaysOffsetX: 0
   _leftRaysCastDistance: 1
   _rightParentTop: {fileID: 1143537608116398366}
   _rightParentBottom: {fileID: 7774258908674193458}
-  _rightRayCount: 7
+  _rightRayCount: 9
   _rightRaysOffsetX: 0
   _rightRaysCastDistance: 1
 --- !u!1 &4406160831740475785
@@ -895,7 +930,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7415180589409833121}
   m_Layer: 0
-  m_Name: JumpMax
+  m_Name: JumpVerticalMax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1063,7 +1098,7 @@ Transform:
   m_GameObject: {fileID: 6482100816060713960}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 1, z: 0}
+  m_LocalPosition: {x: 0.3, y: 1.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1231,7 +1266,7 @@ Transform:
   m_GameObject: {fileID: 7942803907368079991}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.3, y: 1, z: 0}
+  m_LocalPosition: {x: -0.3, y: 1.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1315,12 +1350,15 @@ MonoBehaviour:
   _ray1Size: {x: 0.2, y: 0.75}
   _ray1OffsetX: -0.2
   _ray1CastDistance: 0.65
-  _ray2Size: {x: 0.5, y: 0.1}
+  _ray2Size: {x: 0.2, y: 0.75}
   _ray2OffsetX: 0.175
-  _ray2CastDistance: 0.3
+  _ray2CastDistance: 0.65
   _ray3Size: {x: 0.2, y: 0.75}
   _ray3OffsetX: 0.56
   _ray3CastDistance: 0.65
+  _ray4Size: {x: 1, y: 0.1}
+  _ray4OffsetX: 0.18
+  _ray4CastDistance: 0.3
   _groundLayer:
     serializedVersion: 2
     m_Bits: 192
@@ -1336,21 +1374,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
-    - target: {fileID: 7124868211084850946, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
-      propertyPath: m_AnchorMax.x
+    - target: {fileID: 1233274087504199499, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7124868211084850946, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124868211084850946, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7211410048857418346, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: 7211410048857418346, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8748137096368480907, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_Pivot.x

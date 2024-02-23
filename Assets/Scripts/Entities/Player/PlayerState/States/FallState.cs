@@ -6,6 +6,8 @@ namespace DTIS
     public class FallState : PlayerState
     {
         private readonly bool _airControl;
+        private bool IsInPeakHang{get{return Controller.IsInPeakHang;}set{Controller.IsInPeakHang=value;}}
+
         public FallState(bool airControl,string name = "fall")
         : base(name, true)
         {
@@ -37,17 +39,21 @@ namespace DTIS
         }
         protected override void PhysicsCalculation()
         {
-            if(Mathf.Abs(Controller.Velocity.y) < Controller.JumpPeakHangThreshold)
+            if(Mathf.Abs(Controller.Velocity.y) >= Controller.JumpPeakHangThreshold && IsInPeakHang)
             {
-                Controller.CurrGravity *= Controller.JumpPeakGravityMult;
-            }
-            else
-            {
-                Controller.AccelarateFall();
+                Debug.Log("Fall exits from peak hang mode");
+                IsInPeakHang = false;
+                Controller.CurrGravity = Controller.FallGravity;
             }
             if(_airControl)
             {
-                Controller.Move(new Vector2(FSM.Controls.ActionMap.All.Walk.ReadValue<float>(), 0f));
+                var direction = FSM.Controls.ActionMap.All.Walk.ReadValue<float>();
+                float mult = 1.0f;
+                if(IsInPeakHang)
+                {
+                    mult = 0.5f;
+                }
+                Controller.Move(new Vector2(mult*direction, 0f));
             }
         }
     }
