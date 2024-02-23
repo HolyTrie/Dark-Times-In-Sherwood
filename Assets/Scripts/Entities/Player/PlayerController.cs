@@ -40,8 +40,12 @@ namespace DTIS
         /*** JUMP & FALL ***/
 
         [Header("Jump Parameters")]
-        [SerializeField] private Transform _JumpHeight;
-        [SerializeField] private Transform _JumpHorizontalMove;
+        [SerializeField] private Transform _jumpHeight;
+        [SerializeField] private Transform _jumpHorizontalMove;
+        [SerializeField] private Transform _strongJumpHeight;
+        [SerializeField] private Transform _strongJumpHorizontalMove;
+        [SerializeField,Range(1,2)] private float _strongJumpHeightMult;
+        [SerializeField,Range(1,2)] private float  _strongJumpHorizontalMoveMult;
         [SerializeField] private float _maxFallSpeed = 25f;
         [SerializeField, Range(0f,1f)] private float _gravityMultAtPeak = 0.25f;
         [SerializeField] private float _jumpPeakHangThreshold;
@@ -52,6 +56,9 @@ namespace DTIS
         private float _jumpForce;
         private float _timeToJumpPeak;
         private float _jumpGravity;
+        private float _strongJumpForce;
+        private float _timeToStrongJumpPeak;
+        private float _strongJumpGravity;
         private Vector2 _baseGravity;
         private Vector2 _currGravity;
         private Vector2 _fallGravity;
@@ -147,6 +154,11 @@ namespace DTIS
         [SerializeField] private Transform _dashLengthRef;
         private float _dashDistance = 5f;
         [SerializeField] private float _dashCooldown = 1f;
+        private bool _isRunning;
+        public bool IsRunning{get{return _isRunning;}set{_isRunning=value;}}
+        private bool _wasRunning;
+        public bool WasRunning{get{return _wasRunning;}}
+
         //[SerializeField] private int _ConsecutiveDashes = 2;
         //[SerializeField] private float _ConsecutiveDashTimeframe = 0.5f;
 
@@ -165,19 +177,12 @@ namespace DTIS
         }
         void Start()
         {
-            _isInPeakHang = false;
+            
             _baseGravity = Physics2D.gravity;
             _currGravity = _baseGravity;
-            _fallGravity = _baseGravity * _fallGravityMult;
-            var jumpHeight = Vector2.Distance(transform.position,_JumpHeight.position); // h
-            var jumpHorizontalMove = Vector2.Distance(transform.position,_JumpHeight.position); // X_h
-            var direction = _facingRight == true ? 1.0f:-1.0f;
-            var Vx = direction * _walkSpeed;
-            var Th = jumpHorizontalMove / Vx;
-            _timeToJumpPeak = Th;
-            _jumpForce = 2*jumpHeight / Th ;
-            _jumpGravity = -2*jumpHeight / Th; /* Th);*/
-            Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
+            _isRunning = false;
+            _wasRunning = false;
+            InitJumpParams();
             _initialGroundLayerMask = _contactFilter2d.layerMask;
             _animator.speed = _playbackSpeed;
             if(_dashLengthRef != null) 
@@ -185,9 +190,32 @@ namespace DTIS
                 _dashDistance = Vector2.Distance(transform.position,_dashLengthRef.transform.position);
             }
         }
+
+        void InitJumpParams()
+        {
+            _isInPeakHang = false;
+            _fallGravity = _baseGravity * _fallGravityMult;
+            var jumpHeight = Vector2.Distance(transform.position,_jumpHeight.position); // h
+            var jumpHorizontalMove = Vector2.Distance(transform.position,_jumpHorizontalMove.position); // X_h
+            var Vx = _walkSpeed;
+            var Th = jumpHorizontalMove / Vx;
+            _timeToJumpPeak = Th;
+            _jumpForce = 2*jumpHeight / Th ;
+            _jumpGravity = -2*jumpHeight / Th; // (Th * Th);
+            Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
+            // strong jump
+            jumpHeight = Vector2.Distance(transform.position,_strongJumpHeight.position); // h
+            jumpHorizontalMove = Vector2.Distance(transform.position,_strongJumpHorizontalMove.position); // X_h
+            Vx = _walkSpeed * _runSpeedMult;
+            Th = jumpHorizontalMove / Vx;
+            _strongJumpForce = 2*jumpHeight / Th;
+            _strongJumpGravity = -2*jumpHeight / Th; // (Th * Th);
+            Debug.Log($"strong jump force = {_strongJumpForce} | strong jump gravity = {_strongJumpGravity}");
+        }
         protected private override void Update()
         {
             base.Update();
+            _wasRunning = _isRunning; //TODO; is this correct or should it be in FixedUpdate?
             _playerGhostBehaviour.TrySetGhostStatus();
             Flip();
         }
@@ -269,8 +297,16 @@ namespace DTIS
         public void Jump()
         {
             _isJumping = true;
-            CurrGravity = new(0f,_jumpGravity);
-            _velocity.y = _jumpForce;
+            var jumpForce = _jumpForce;
+            var gravity = _jumpGravity;
+            if(_wasRunning)
+            {
+                _wasRunning = false;
+                jumpForce = _strongJumpForce;
+                gravity = _strongJumpGravity;
+            }
+            CurrGravity = new(0f,gravity);
+            _velocity.y = jumpForce;
         }
         internal void AccelarateFall()
         {
@@ -395,7 +431,7 @@ namespace DTIS
                 //Debug.Log($"grounded = {_grounded} | on slope prev frame = {_wasOnSlopePrevFrame} | on slope = {_onSlope} | rb vel = {_rb2d.velocity} | y movement = {yMovement}");
             }
             var direction = _rb2d.velocity.x >= 0f ? Vector2.right : Vector2.left;
-            Debug.DrawRay(transform.position,direction,_color,2.5f);
+            Debug.DrawRay(transform.position,direction,_color,4f);
         }
 
         private void OnDrawGizmos() 

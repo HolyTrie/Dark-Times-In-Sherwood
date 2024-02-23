@@ -20,6 +20,12 @@ namespace DTIS
                     Debug.Log(e);
                 }
             }
+            controller.IsRunning = true;
+        }
+        public override void Exit()
+        {
+            base.Exit();
+            Controller.IsRunning = false;
         }
         protected override void TryStateSwitch()
         {
