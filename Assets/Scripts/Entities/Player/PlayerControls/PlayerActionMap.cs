@@ -37,6 +37,15 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""DownJump"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ba61c6a-0749-43ea-973a-99a4820aba7b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Walk"",
                     ""type"": ""Button"",
                     ""id"": ""2cef54db-9845-4ab7-88f0-969b12ae0765"",
@@ -89,6 +98,15 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc5d494b-c821-4862-93d7-43ca20133692"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""MultiTap"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -137,9 +155,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""1D Axis Pos"",
-                    ""id"": ""55dc779d-74ef-434b-85fc-21df82912b59"",
-                    ""path"": ""OneModifier"",
+                    ""name"": ""Axis Modifier"",
+                    ""id"": ""1cc4fb8b-0d14-4916-b850-33644a67e57e"",
+                    ""path"": ""AxisModifier"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -149,55 +167,33 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""modifier"",
-                    ""id"": ""5f7a9201-109b-4470-ae44-3b3575d3484a"",
+                    ""id"": ""8f5d226b-eb1e-40c3-8609-2678c8a74b12"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""New control scheme"",
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""binding"",
-                    ""id"": ""4ca5a02c-7d5a-4982-8478-a2ea5cf28bfc"",
+                    ""name"": ""positive"",
+                    ""id"": ""df5596a6-9960-4642-bbd1-d69e3d2a09ab"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""New control scheme"",
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""1D Axis Neg"",
-                    ""id"": ""792e56db-815d-405f-95cc-520576ba6c22"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Run"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""689fd8f6-2e61-41f1-8e33-9c6e21bd9061"",
-                    ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Run"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""cae9fff4-0565-43d5-8487-a2cb389a9d52"",
+                    ""name"": ""negative"",
+                    ""id"": ""694787fa-6b3d-422c-a8d7-c8f78f25301b"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""New control scheme"",
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -205,7 +201,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""190e58d1-bd5b-49b8-b9cb-37a4d5bf0cc3"",
-                    ""path"": ""<Keyboard>/semicolon"",
+                    ""path"": ""<Keyboard>/g"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -245,6 +241,50 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""action"": ""Interaction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""df3c9901-cd98-4155-8fee-b110785bc826"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DownJump"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""5045cad3-a045-4eb2-9efd-4760f1bc7740"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""New control scheme"",
+                    ""action"": ""DownJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""ea70f07f-33b6-443c-a9f3-02b43bd18678"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""New control scheme"",
+                    ""action"": ""DownJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""44754426-0bcb-4218-9b78-83cd52ebcc10"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""New control scheme"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -260,12 +300,14 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         // All
         m_All = asset.FindActionMap("All", throwIfNotFound: true);
         m_All_Jump = m_All.FindAction("Jump", throwIfNotFound: true);
+        m_All_DownJump = m_All.FindAction("DownJump", throwIfNotFound: true);
         m_All_Walk = m_All.FindAction("Walk", throwIfNotFound: true);
         m_All_Run = m_All.FindAction("Run", throwIfNotFound: true);
         m_All_GoGhost = m_All.FindAction("GoGhost", throwIfNotFound: true);
         m_All_Shoot = m_All.FindAction("Shoot", throwIfNotFound: true);
         m_All_Down = m_All.FindAction("Down", throwIfNotFound: true);
         m_All_Interaction = m_All.FindAction("Interaction", throwIfNotFound: true);
+        m_All_Dash = m_All.FindAction("Dash", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -328,23 +370,27 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_All;
     private List<IAllActions> m_AllActionsCallbackInterfaces = new List<IAllActions>();
     private readonly InputAction m_All_Jump;
+    private readonly InputAction m_All_DownJump;
     private readonly InputAction m_All_Walk;
     private readonly InputAction m_All_Run;
     private readonly InputAction m_All_GoGhost;
     private readonly InputAction m_All_Shoot;
     private readonly InputAction m_All_Down;
     private readonly InputAction m_All_Interaction;
+    private readonly InputAction m_All_Dash;
     public struct AllActions
     {
         private @PlayerActionMap m_Wrapper;
         public AllActions(@PlayerActionMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @Jump => m_Wrapper.m_All_Jump;
+        public InputAction @DownJump => m_Wrapper.m_All_DownJump;
         public InputAction @Walk => m_Wrapper.m_All_Walk;
         public InputAction @Run => m_Wrapper.m_All_Run;
         public InputAction @GoGhost => m_Wrapper.m_All_GoGhost;
         public InputAction @Shoot => m_Wrapper.m_All_Shoot;
         public InputAction @Down => m_Wrapper.m_All_Down;
         public InputAction @Interaction => m_Wrapper.m_All_Interaction;
+        public InputAction @Dash => m_Wrapper.m_All_Dash;
         public InputActionMap Get() { return m_Wrapper.m_All; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -357,6 +403,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @DownJump.started += instance.OnDownJump;
+            @DownJump.performed += instance.OnDownJump;
+            @DownJump.canceled += instance.OnDownJump;
             @Walk.started += instance.OnWalk;
             @Walk.performed += instance.OnWalk;
             @Walk.canceled += instance.OnWalk;
@@ -375,6 +424,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Interaction.started += instance.OnInteraction;
             @Interaction.performed += instance.OnInteraction;
             @Interaction.canceled += instance.OnInteraction;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         private void UnregisterCallbacks(IAllActions instance)
@@ -382,6 +434,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @DownJump.started -= instance.OnDownJump;
+            @DownJump.performed -= instance.OnDownJump;
+            @DownJump.canceled -= instance.OnDownJump;
             @Walk.started -= instance.OnWalk;
             @Walk.performed -= instance.OnWalk;
             @Walk.canceled -= instance.OnWalk;
@@ -400,6 +455,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Interaction.started -= instance.OnInteraction;
             @Interaction.performed -= instance.OnInteraction;
             @Interaction.canceled -= instance.OnInteraction;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         public void RemoveCallbacks(IAllActions instance)
@@ -429,11 +487,13 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
     public interface IAllActions
     {
         void OnJump(InputAction.CallbackContext context);
+        void OnDownJump(InputAction.CallbackContext context);
         void OnWalk(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnGoGhost(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnDown(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
 }

@@ -9,47 +9,57 @@ namespace DTIS
     /// </summary>
     public class GroundCheck : MonoBehaviour
     {
-        /*
-        private bool _grounded = true;
-        public bool Grounded { get { return _grounded; } set { _grounded = value; } }
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.CompareTag("Floor") || other.CompareTag("Platform"))
-                _grounded = true;
-        }
-        private void OnTriggerExit2D()
-        {
-            _grounded = false;
-        }
-        */
-        [Header("Ground Checks Details")]
-        [SerializeField] private Vector2 _leftBoxSize;
-        [SerializeField] private Vector2 _rightBoxSize;
-        [SerializeField] private float _leftBoxOffsetX;
-        [SerializeField] private float _rightBoxOffsetX;
+        [Header("Ray 1")]
+        [SerializeField] private Vector2 _ray1Size;
+        [SerializeField] private float  _ray1OffsetX;
+        [SerializeField] private float _ray1CastDistance;
+        [Header("Ray 2")]
+        [SerializeField] private Vector2 _ray2Size;
+        [SerializeField] private float  _ray2OffsetX;
+        [SerializeField] private float _ray2CastDistance;
+        [Header("Ray 3")]
+        [SerializeField] private Vector2 _ray3Size;
+        [SerializeField] private float  _ray3OffsetX;
+        [SerializeField] private float _ray3CastDistance;
+        [Header("Ray 4")]
+        [SerializeField] private Vector2 _ray4Size;
+        [SerializeField] private float  _ray4OffsetX;
+        [SerializeField] private float _ray4CastDistance;
         
-        [Header("")]
-        [SerializeField] private float _castDistance;
+        [Header("Common Parameters")]
+        
         [SerializeField] private LayerMask _groundLayer;
         private const int _downAngle = 0; //directly down from the origin.
         public bool Grounded()
         {
-            Vector3 _left = new(transform.position.x - _leftBoxOffsetX,transform.position.y,transform.position.z);
-            Vector3 _right = new(transform.position.x + _rightBoxOffsetX,transform.position.y,transform.position.z);
-            var hitLeft = Physics2D.BoxCast(_left,_leftBoxSize,_downAngle,-transform.up,_castDistance,_groundLayer);
-            var hitRight = Physics2D.BoxCast(_right,_rightBoxSize,_downAngle,-transform.up,_castDistance,_groundLayer);
-            if(hitLeft && hitRight)
-                return true;
-            return false;
+            var ans = false;
+            Vector3 pos1 = new(transform.position.x + _ray1OffsetX,transform.position.y,transform.position.z);
+            Vector3 pos2 = new(transform.position.x + _ray2OffsetX,transform.position.y,transform.position.z);
+            Vector3 pos3 = new(transform.position.x + _ray3OffsetX,transform.position.y,transform.position.z);
+            Vector3 pos4 = new(transform.position.x + _ray4OffsetX,transform.position.y,transform.position.z);
+            var hitOne = Physics2D.BoxCast(pos1,_ray1Size,_downAngle,-transform.up,_ray1CastDistance,_groundLayer);
+            var hitTwo = Physics2D.BoxCast(pos2,_ray2Size,_downAngle,-transform.up,_ray2CastDistance,_groundLayer);
+            var hitThree = Physics2D.BoxCast(pos3,_ray3Size,_downAngle,-transform.up,_ray3CastDistance,_groundLayer);
+            var hitFour = Physics2D.BoxCast(pos4,_ray4Size,_downAngle,-transform.up,_ray4CastDistance,_groundLayer);
+            if(hitOne && hitTwo && hitThree && hitFour)
+                ans = true;
+            return ans;
         }
 
         private void OnDrawGizmos() {
-            Vector3 _center = transform.position - transform.up * _castDistance;
-            Vector3 _left = new(_center.x - _leftBoxOffsetX,_center.y,_center.z);
-            Vector3 _right = new(_center.x + _rightBoxOffsetX,_center.y,_center.z);
+            Vector3 center1 = transform.position - transform.up * _ray1CastDistance;
+            Vector3 center2 = transform.position - transform.up * _ray2CastDistance;
+            Vector3 center3 = transform.position - transform.up * _ray3CastDistance;
+            Vector3 center4 = transform.position - transform.up * _ray4CastDistance;
+            Vector3 one = new(center1.x + _ray1OffsetX,center1.y,center1.z);
+            Vector3 two = new(center2.x + _ray2OffsetX,center2.y,center2.z);
+            Vector3 three = new(center3.x + _ray3OffsetX,center3.y,center3.z);
+            Vector3 four = new(center4.x + _ray4OffsetX,center4.y,center4.z);
 
-            Gizmos.DrawWireCube(_left,_leftBoxSize);
-            Gizmos.DrawWireCube(_right,_rightBoxSize);
+            Gizmos.DrawWireCube(one,_ray1Size);
+            Gizmos.DrawWireCube(two,_ray2Size);
+            Gizmos.DrawWireCube(three,_ray3Size);
+            Gizmos.DrawWireCube(four,_ray4Size);
         }
     }
 }

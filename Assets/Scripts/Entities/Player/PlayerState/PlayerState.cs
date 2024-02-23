@@ -23,7 +23,7 @@ namespace DTIS
 
         private PlayerStateMachine _fsm;
         public virtual PlayerStateMachine FSM { get { return _fsm; } }
-
+        public virtual PlayerControls Controls {get {return _fsm.Controls;}}
         public virtual PlayerActionMap.AllActions ActionMap { get { return FSM.Controls.ActionMap.All; } }
         // TODO: ^ this ^ is currently hard coupled to return any 'auto generated' action map named 'All' <-- fix if time.
         protected virtual void SetStates(ESP.States State, ESP.States SubState) // for changing both at once
@@ -46,19 +46,6 @@ namespace DTIS
         }
         public virtual void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
-            if (HasAnimation)
-            {
-                try
-                {
-                    controller.Animator.Play(Name);         // this is good enough for now however using triggers will
-                    //controller.Animator.SetTrigger(Name); // activate transitions as well - but it weirds out.
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                }
-            }
-
             _controller = controller;
             _fsm = fsm;
         }
@@ -80,11 +67,11 @@ namespace DTIS
             }
             */
         }
-        public virtual void Update()
+        public void Update()
         {
             TryStateSwitch();  // this should check input from player and switch states appropriately
         }
-        public virtual void FixedUpdate()
+        public void FixedUpdate()
         {
             PhysicsCalculation(); // must be implemented but can remain empty if nothing is to be done!
         }

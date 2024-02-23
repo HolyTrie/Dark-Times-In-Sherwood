@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using DTIS;
 using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerInteractor : MonoBehaviour
 {
     //public Transform Referencepoint;
@@ -8,7 +10,6 @@ public class PlayerInteractor : MonoBehaviour
     private PlayerController _controller;
     public PlayerController Controller { get { return _controller; } internal set { _controller = value; } }
     private GameObject closestObject;
-    private Vector3 _fixedPos;
     public void Interact()
     {
         Debug.Log("Attempting to Interact");
@@ -17,16 +18,11 @@ public class PlayerInteractor : MonoBehaviour
             closestObject.GetComponent<Interactable>().OnClick(Controller.gameObject);
         }
     }
-    void Start()
-    {
-        _fixedPos = transform.localPosition;
-    }
 
     // Update is called once per frame
     void Update()
     {
         SetClosestObject();
-        Util.MimicEntityMovement(transform, Controller.transform, _fixedPos);
     }
     private void SetClosestObject()
     {

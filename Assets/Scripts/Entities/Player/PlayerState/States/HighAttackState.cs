@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace DTIS
@@ -8,15 +9,26 @@ namespace DTIS
         : base(name,true){}
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
-            base.Enter(controller,fsm); // we do new to preserve the common inherited function
+            base.Enter(controller,fsm); // Critical!
+            if (HasAnimation)
+            {
+                try
+                {
+                    controller.Animator.Play(Name);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
             // FSM.groundCheck.Grounded = true;
             // if(controller.isPlaying("HighAttack"))
-                Controller.Shoot(); // need to add delay according to frames.
+            Controller.Shoot(); // need to add delay according to frames.
         }
         protected override void TryStateSwitch()
         {
             // Controller.WaitForAnimtaion();
-            SetSubState(ESP.States.Idle);
+            //SetSubState(ESP.States.Idle);
             // else if(ActionMap.Walk.IsPressed())
             // {
                 

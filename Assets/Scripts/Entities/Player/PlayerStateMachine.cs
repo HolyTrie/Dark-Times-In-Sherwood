@@ -85,14 +85,18 @@ namespace DTIS
             SetState(ESP.States.Grounded, ESP.States.Idle);
             Direction = (float)Directions.Right;
             InitChildScripts();
-            InitControls();
             GameManager.SetFSM(this);
+        }
+        protected void Start()
+        {
+            InitControls();
         }
 
         protected void InitControls()
         {
             Controls.ActionMap.All.GoGhost.performed += _ => _controller.Ghost(); // TODO: set this differently!
             Controls.ActionMap.All.Interaction.performed += _ => _interactor.Interact();
+            Controls.ActionMap.All.Dash.performed += _ => _controller.Dash();
         }
         public virtual void SetState(ESP.States state, ESP.States subState)
         {

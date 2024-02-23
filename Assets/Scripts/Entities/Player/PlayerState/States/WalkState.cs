@@ -1,25 +1,43 @@
+using System;
 using UnityEngine;
 
 namespace DTIS
 {
     public class WalkState : PlayerState
     {
-        public WalkState(string name = "Walk")
-        : base(name) { }
+        public WalkState(string name = "walk")
+        : base(name,true) { }
+        public override void Enter(PlayerController controller,PlayerStateMachine fsm)
+        {
+            base.Enter(controller,fsm); // Critical!
+            if (HasAnimation)
+            {
+                try
+                {
+                    controller.Animator.Play(Name);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
+        }
         protected override void TryStateSwitch()
         {
-            if (FSM.Controls.HorizontalMove == 0f)
+            if (Controls.WalkingDirection == 0f && Controls.RunningDirection == 0)
             {
                 SetSubState(ESP.States.Idle);
             }
-            // if(Controller.Velocity.y == 0)
-            // {
-            //     SetStates(ESP.States.Fall)
-            // }
+            if(Controls.RunningDirection != 0)
+            {
+                SetSubState(ESP.States.Run);
+            }
         }
         protected override void PhysicsCalculation()
         {
-            Controller.Move(new Vector2(FSM.Controls.HorizontalMove, 0f));
+            var direction = Controls.ActionMap.All.Walk.ReadValue<float>();
+            var move = new Vector2(direction,0f);
+            Controller.Move(move);
         }
     }
 }

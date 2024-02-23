@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace DTIS
@@ -5,30 +6,51 @@ namespace DTIS
     public class JumpState : PlayerState
     {
         private readonly bool _airControl;
-        public JumpState(bool airControl, string name = "Jump") 
+        public JumpState(bool airControl, string name = "jump") 
         : base(name)
         {
            _airControl = airControl;
         }
-
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
-            base.Enter(controller,fsm); // critical!
-            Controller.StaminaBar.UseStamina(Controller._jumpStaminaCost); // jump co
-            Controller.Jump();
+            base.Enter(controller,fsm); // Critical!
+            if (HasAnimation)
+            {
+                try
+                {
+                    controller.Animator.Play(Name);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
+            if(Controller.StaminaBar!= null)
+                Controller.StaminaBar.UseStamina(Controller._jumpStaminaCost); // jump cost
+            Controller.Jump(); //sets jumping to true!
         }
-        protected override void TryStateSwitch()
+        public override void Exit()
         {
-            if(Controller.Velocity.y < 0)
+            base.Exit();
+            Controller.IsJumping = false;
+        }
+        protected override void TryStateSwitch() //is called in Update
+        {
+            if(Controller.Velocity.y < 0 || ActionMap.Jump.WasReleasedThisFrame())
             {
                 SetSubState(ESP.States.Fall);
             }
+            
         }
-        protected override void PhysicsCalculation()
+        protected override void PhysicsCalculation() // is called in FixedUpdate
         {
+            if(Mathf.Abs(Controller.Velocity.y) < Controller.JumpPeakHangThreshold)
+            {
+                Controller.CurrGravity *= Controller.JumpPeakGravityMult;
+            }
             if(_airControl)
             {
-                Controller.Move(new Vector2(FSM.Controls.HorizontalMove, 0f));
+                Controller.Move(new Vector2(FSM.Controls.ActionMap.All.Walk.ReadValue<float>(), 0f));
             }
         }
     }

@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PlayerMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: d3eafc478438f78468f6715fd4f9287b, type: 3}
-  m_Parent: {fileID: -876546973899608171, guid: d3eafc478438f78468f6715fd4f9287b, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 54699e54578989047972bef5dc464848, type: 3}
+  m_Parent: {fileID: -876546973899608171, guid: 54699e54578989047972bef5dc464848, type: 3}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -27,12 +27,16 @@ Material:
     m_Floats:
     - _Ghost: 0
     - _GhostEffectIsInwards: 1
-    - _GhostEffectSpeed: 2
+    - _GhostEffectSpeed: 1
     - _GhostEffectStrength: 0.005
-    - _OutlineThickness: 1
+    - _OutlineEffectSpeed: 0.25
+    - _OutlineEffectStrength: 0.001
+    - _OutlineThickness: 0.5
     - _QueueControl: 0
     m_Colors:
+    - _EffectColor: {r: 0.4715818, g: 0.12953897, b: 0.6698113, a: 0}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 0}
+    - _OutlineEffectColor: {r: 0.22127905, g: 0.09385012, b: 0.5377358, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5677008280239917600
 MonoBehaviour:

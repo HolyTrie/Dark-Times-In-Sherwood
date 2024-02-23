@@ -53,7 +53,7 @@ public class PunchTrap : MonoBehaviour
     private IEnumerator StartPunch()
     {
         _activeSprite.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.1f);
         _hitbox.offset = _hitStart.localPosition;
         _hitbox.enabled = true;
         yield return new WaitForSeconds(0.75f);

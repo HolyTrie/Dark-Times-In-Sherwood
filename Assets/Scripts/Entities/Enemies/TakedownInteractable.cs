@@ -32,7 +32,7 @@ public class TakedownInteractable : Interactable, IStealthable
             var currPos = playerController.transform.position;
             var targetPos = GO.transform.position;
             var newPos = Vector2.Lerp(currPos, targetPos, 0.5f);
-            playerController.transform.position = newPos;
+            playerController.transform.position = new(newPos.x,newPos.y,playerController.transform.position.z);
             StartCoroutine(Util.DestroyGameObjectCountdown(_goToTakedown, _timeToTakedownSeconds));
         }
     }

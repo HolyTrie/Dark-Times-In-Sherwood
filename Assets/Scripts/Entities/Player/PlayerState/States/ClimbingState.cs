@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace DTIS
@@ -8,7 +9,18 @@ namespace DTIS
         : base(name,false){}
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
-            base.Enter(controller,fsm); // we do new to preserve the common inherited function
+            base.Enter(controller,fsm); // Critical!
+            if (HasAnimation)
+            {
+                try
+                {
+                    controller.Animator.Play(Name);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
         }
         protected override void TryStateSwitch()
         {

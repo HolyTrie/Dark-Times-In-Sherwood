@@ -21,19 +21,21 @@ public class PlayerGhostBehaviour : GhostBehaviour
     protected override void OnGhostSet()
     {
         //related to how the ghosted player looks//
-        Debug.Log("SET");
+        //Debug.Log("SET");
         _renderer.material.SetFloat(_propertyNameInMaterial,_true);
 
-        //sanity depletes//
-        _sanityBar.UseSanity(_sanityCost);
+        //sanity depletes/
+        if(_sanityBar!=null)
+            _sanityBar.UseSanity(_sanityCost);
         
     }
     protected override void OnGhostUnset()
     {
         //related to how the ghosted player looks//
         _renderer.material.SetFloat(_propertyNameInMaterial,_false);
-        Debug.Log("UNSET");
+        //Debug.Log("UNSET");
         //sanity regen//
-        _sanityBar.RegenSanity(_sanityCost);
+        if(_sanityBar!=null)
+            _sanityBar.RegenSanity(_sanityCost);
     }
 }
