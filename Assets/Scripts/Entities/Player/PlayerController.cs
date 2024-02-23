@@ -232,8 +232,6 @@ namespace DTIS
                 }
             }
         }
-        
-
         //this method should check if a certain animation is still playing (like shooting, if so DO NOT SHOOT)
         public bool isPlaying(string stateName)
         {
@@ -243,23 +241,19 @@ namespace DTIS
             else
                 return false;
         }
-
         public void Move(Vector2 move)
         {
             _targetVelocity = move * _walkSpeed;
         }
-
         public void Jump()
         {
             _isJumping = true;
             _velocity.y = _jumpForce;
         }
-
         internal void AccelarateFall()
         {
             _velocity += (_fallGravityMult - 1) * Time.deltaTime * CurrGravity * Vector2.up; //TODO: clamp to some max value.
         }
-
         public void Dash()
         {
             if(_canDash)
@@ -288,7 +282,6 @@ namespace DTIS
             _canDash = true;
             //_velocity.x = 0f;
         }
-
         protected private override void FixedUpdate()
         {
             if(_isDashing)
