@@ -39,6 +39,9 @@ public sealed class GameManager : MonoBehaviour
 		}
 	}
 
+	private static int _money;
+	public static int Money { get { return _money; } set { _money = value; } }
+
 	public static void ResetScene()
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

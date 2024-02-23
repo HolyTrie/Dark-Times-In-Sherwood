@@ -9,8 +9,22 @@ namespace DTIS
         Important reference:
         - https://stackoverflow.com/questions/12662072/what-is-protected-virtual-new
     */
-    public class PlayerController : PhysicsObject2D
+    public class PlayerController : MonoBehaviour
     {
+        private static PlayerController _Instance;
+        public static PlayerController Instance
+        {
+            get
+            {
+                if (!_Instance)
+                {
+                    _Instance.name = _Instance.GetType().ToString(); // name it for easy recognition
+                    DontDestroyOnLoad(_Instance.gameObject); // mark root as DontDestroyOnLoad();
+                }
+                return _Instance;
+            }
+        }
+
         [Header("Player Physics")]
         /*** WALK & RUN ***/
         [SerializeField] private float _walkSpeed;
@@ -85,6 +99,9 @@ namespace DTIS
         private SanityBar _sanityBar;
         public SanityBar SanityBar { get { return _sanityBar; } }
 
+        private HpBarPlayer _hpBar;
+        public HpBarPlayer HpBar { get { return _hpBar; } }
+
         /* *** GHOST MECHANIC *** */
         private PlayerGhostBehaviour _playerGhostBehaviour;
         [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -135,6 +152,7 @@ namespace DTIS
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             _staminabar = GetComponent<StaminaBar>();
             _sanityBar = GetComponent<SanityBar>();
+            _hpBar = GetComponent<HpBarPlayer>();
             _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
         }
         void Start()
