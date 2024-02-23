@@ -32,6 +32,7 @@ namespace DTIS
         public override void Exit()
         {
             Controller.IsFalling = false;
+            IsInPeakHang = false;
         }
         protected override void TryStateSwitch()
         {
@@ -39,9 +40,15 @@ namespace DTIS
         }
         protected override void PhysicsCalculation()
         {
-            if(Mathf.Abs(Controller.Velocity.y) >= Controller.JumpPeakHangThreshold && IsInPeakHang)
+            bool inPeakHangThreshold = Mathf.Abs(Controller.Velocity.y) < Controller.JumpPeakHangThreshold;
+            if(inPeakHangThreshold && !IsInPeakHang) // happens when button is released early.
             {
                 Debug.Log("Fall exits from peak hang mode");
+                IsInPeakHang = true; 
+                Controller.CurrGravity *= Controller.JumpPeakGravityMult; 
+            }
+            if(!inPeakHangThreshold)
+            {
                 IsInPeakHang = false;
                 Controller.CurrGravity = Controller.FallGravity;
             }

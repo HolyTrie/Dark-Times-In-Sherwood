@@ -25,8 +25,9 @@ namespace DTIS
             }
         }
 
-        [Header("Player Physics")]
         /*** WALK & RUN ***/
+
+        [Header("Player Physics")]
         [SerializeField] private float _walkSpeed;
         public float WalkSpeed{get{return _walkSpeed;}}
         [SerializeField] private float _runSpeedMult;
@@ -37,8 +38,11 @@ namespace DTIS
         private bool _wasOnSlopePrevFrame = false;
 
         /*** JUMP & FALL ***/
+
+        [Header("Jump Parameters")]
         [SerializeField] private Transform _JumpHeight;
         [SerializeField] private Transform _JumpHorizontalMove;
+        [SerializeField] private float _maxFallSpeed = 25f;
         [SerializeField, Range(0f,1f)] private float _gravityMultAtPeak = 0.25f;
         [SerializeField] private float _jumpPeakHangThreshold;
         [SerializeField] private float _fallGravityMult = 1.5f;
@@ -327,7 +331,7 @@ namespace DTIS
             
             Movement(moveY, true); // vertical movement
             Movement(moveX, false); // horizontal movement
-
+            _velocity.y = Math.Clamp(_velocity.y,-_maxFallSpeed,float.MaxValue);
             // predict future position using a simplified euler integration (~0.5 pixel error rate, resets when landing so it does not accumulate)
             var futurePos = _velocity * Time.deltaTime + 0.5f * Time.deltaTime * acc; // pos = velocity*deltaTime +0.5*accelaration*(deltaTime^2)
             var futureVel = acc; // vel = accelaration * deltaTime
@@ -398,7 +402,7 @@ namespace DTIS
         {
             Gizmos.color = Color.yellow;
             Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x);
-            Gizmos.DrawRay(transform.position,moveAlongGround);
+            //Gizmos.DrawRay(transform.position,moveAlongGround);
         }
     }
 }
