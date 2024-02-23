@@ -24,7 +24,7 @@ namespace DTIS
         public override NodeState Evaluate()
         {
             Transform target = (Transform)GetData("target");
-            Debug.Log(target.parent.name);
+            // Debug.Log(target.parent.name);
             if (target != _lastTarget)
             {
                 player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();

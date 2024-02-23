@@ -24,8 +24,8 @@ namespace DTIS
         [Header("Entity Attributes")]
         [SerializeField] private int _attackDMG;
         public int AttackDMG { get { return _attackDMG; } set { _attackDMG = value; } }
-        private HpBar _hpBar;
-        public HpBar HpBar { get { return _hpBar; } }
+        private HpBarEntity _hpBar;
+        public HpBarEntity HpBar { get { return _hpBar; } }
 
         [Tooltip("The range that the entity can see and start chasing the player")]
         [SerializeField] private float _FieldOfView;
@@ -51,7 +51,7 @@ namespace DTIS
         {
             _rb2D = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
-            _hpBar = GetComponent<HpBar>();
+            _hpBar = GetComponent<HpBarEntity>();
         }
 
         // Update is called once per frame

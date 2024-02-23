@@ -10,6 +10,20 @@ namespace DTIS
     */
     public class PlayerController : MonoBehaviour
     {
+        private static PlayerController _Instance;
+        public static PlayerController Instance
+        {
+            get
+            {
+                if (!_Instance)
+                {
+                    _Instance.name = _Instance.GetType().ToString(); // name it for easy recognition
+                    DontDestroyOnLoad(_Instance.gameObject); // mark root as DontDestroyOnLoad();
+                }
+                return _Instance;
+            }
+        }
+
         [Header("Player Forces")]
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _walkSpeed;
@@ -55,8 +69,8 @@ namespace DTIS
         private SanityBar _sanityBar;
         public SanityBar SanityBar { get { return _sanityBar; } }
 
-        private HpBar _hpBar;
-        public HpBar HpBar { get { return _hpBar; } }
+        private HpBarPlayer _hpBar;
+        public HpBarPlayer HpBar { get { return _hpBar; } }
 
         //Ghost player//
         private PlayerGhostBehaviour _playerGhostBehaviour;
@@ -80,7 +94,7 @@ namespace DTIS
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _staminabar = GetComponent<StaminaBar>();
             _sanityBar = GetComponent<SanityBar>();
-            _hpBar = GetComponent<HpBar>();
+            _hpBar = GetComponent<HpBarPlayer>();
             _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
         }
 
