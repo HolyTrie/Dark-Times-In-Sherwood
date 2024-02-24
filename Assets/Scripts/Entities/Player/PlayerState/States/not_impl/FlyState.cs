@@ -1,8 +1,10 @@
+using Unity.VisualScripting;
+
 namespace DTIS
 {
     public class FlyState : WalkState {
-        public FlyState(string name = "Fly") 
-        : base(name) 
+        public FlyState(ESP.States state,string name = "Fly") 
+        : base(state,name) 
         {
             
         }

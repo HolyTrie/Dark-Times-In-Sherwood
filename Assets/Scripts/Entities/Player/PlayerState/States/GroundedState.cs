@@ -9,8 +9,8 @@ namespace DTIS
         bool isShooting = false;
         private const float _minYChange = -1.5f;
 
-        public GroundedState(string name = "Grounded")
-        : base(name, false) { }
+        public GroundedState(ESP.States state,string name = "Grounded")
+        : base(state,name, false) { }
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // Critical!

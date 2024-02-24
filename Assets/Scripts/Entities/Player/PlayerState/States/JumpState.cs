@@ -7,8 +7,9 @@ namespace DTIS
     {
         private readonly bool _airControl;
         private bool IsInPeakHang{get{return Controller.IsInPeakHang;}set{Controller.IsInPeakHang=value;}}
-        public JumpState(bool airControl, string name = "jump") 
-        : base(name)
+        private bool WasRunning{get{return Controller.WasRunning;}set{Controller.WasRunning=value;}}
+        public JumpState(ESP.States state,bool airControl, string name = "jump") 
+        : base(state,name)
         {
            _airControl = airControl;
         }
@@ -34,9 +35,9 @@ namespace DTIS
             }
             Controller.Jump(); //sets jumping to true!
         }
-        public override void Exit()
+        public override void Exit(ESP.States State, ESP.States SubState)
         {
-            base.Exit();
+            base.Exit(State, SubState);
             Controller.IsJumping = false;
         }
         protected override void TryStateSwitch() //is called in Update
@@ -59,8 +60,18 @@ namespace DTIS
                 }
             }
             if(_airControl)
-            {
-                Controller.Move(new Vector2(FSM.Controls.ActionMap.All.Walk.ReadValue<float>(), 0f));
+            { 
+                var direction = FSM.Controls.ActionMap.All.Walk.ReadValue<float>();
+                float mult = 1.0f;
+                if(IsInPeakHang)
+                {
+                    mult *= 0.5f;
+                }
+                if(WasRunning)
+                {
+                    mult *= Controller.RunSpeedMult;
+                }
+                Controller.Move(new Vector2(mult*direction, 0f));
             }
         }
     }

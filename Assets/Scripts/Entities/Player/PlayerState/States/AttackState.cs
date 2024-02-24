@@ -6,8 +6,8 @@ namespace DTIS
 {
     public class AttackState : PlayerState
     {
-        public AttackState(string name = "Attack") 
-        : base(name,false) 
+        public AttackState(ESP.States state,string name = "Attack") 
+        : base(state,name,false) 
         {
 
         }
@@ -26,9 +26,9 @@ namespace DTIS
                 }
             }
         }
-        public override void Exit()
+        public override void Exit(ESP.States State, ESP.States SubState)
         {
-            base.Exit();
+            base.Exit(State, SubState);
         }
         protected override void TryStateSwitch()
         {

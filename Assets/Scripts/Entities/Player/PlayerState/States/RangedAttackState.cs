@@ -6,8 +6,8 @@ namespace DTIS
 {
     public class RangedAttackState : PlayerState
     {
-        public RangedAttackState(string name = "RangedAttack")
-        : base(name, true) { }
+        public RangedAttackState(ESP.States state,string name = "RangedAttack")
+        : base(state,name, true) { }
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // Critical!

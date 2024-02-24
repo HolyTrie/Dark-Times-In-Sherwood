@@ -60,7 +60,7 @@ namespace DTIS
             get { return _state; }
             set
             {
-                _state?.Exit();
+                _state?.Exit(_state.Type,_subState.Type);
                 _state = value;
                 _state.Enter(_controller, this); // delegates state and sub-state switch to state implementation!
             }
@@ -70,7 +70,7 @@ namespace DTIS
             get { return _subState; }
             set
             {
-                _subState?.Exit();
+                _subState?.Exit(_state.Type,_subState.Type);
                 _subState = value;
                 _subState.Enter(_controller, this); // delegates state and sub-state switch to state implementation!
             }

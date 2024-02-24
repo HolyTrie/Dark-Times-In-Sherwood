@@ -38,19 +38,27 @@ namespace DTIS
         private bool _wasOnSlopePrevFrame = false;
 
         /*** JUMP & FALL ***/
+        public Vector2 CurrGravity{get{return _currGravity;}set{_currGravity = value;}}
+        public float JumpPeakHangThreshold{get{return _jumpPeakHangThreshold;}}
+        public float JumpPeakGravityMult{get{return _gravityMultAtPeak;}}
+        public Vector2 FallGravity {get{return _fallGravity;} set{_fallGravity = value;}}
+        public bool IsJumping { get{return _isJumping;}set{_isJumping = value;}}
+        public bool IsFalling { get{return _isFalling;}set{_isFalling = value;}}
+        public float JumpForce{get{return _jumpForce;}set{_jumpForce = value;}}
+        public bool IsInPeakHang{get{return _isInPeakHang;}set{_isInPeakHang=value;}}
+        public float CoyoteTime{get{return _coyoteTime;}set{_coyoteTime = value;}}
 
         [Header("Jump Parameters")]
-        [SerializeField] private Transform _jumpHeight;
-        [SerializeField] private Transform _jumpHorizontalMove;
-        [SerializeField] private Transform _strongJumpHeight;
-        [SerializeField] private Transform _strongJumpHorizontalMove;
-        [SerializeField,Range(1,2)] private float _strongJumpHeightMult;
-        [SerializeField,Range(1,2)] private float  _strongJumpHorizontalMoveMult;
+        [SerializeField] private Transform _jumpVerticalPeak;
+        [SerializeField] private Transform _jumpHorizontalPeak;
+        [SerializeField] private Transform _strongJumpVerticalPeak;
+        [SerializeField] private Transform _strongJumpHorizontalPeak;
         [SerializeField] private float _maxFallSpeed = 25f;
         [SerializeField, Range(0f,1f)] private float _gravityMultAtPeak = 0.25f;
         [SerializeField] private float _jumpPeakHangThreshold;
         [SerializeField] private float _fallGravityMult = 1.5f;
         [SerializeField] private float _weakJumpGravityMult = 2f;
+        [SerializeField] private float _coyoteTime = 0.5f;
         private bool _isJumping = false;
         private bool _isFalling = false;
         private float _jumpForce;
@@ -63,15 +71,6 @@ namespace DTIS
         private Vector2 _currGravity;
         private Vector2 _fallGravity;
         private bool _isInPeakHang;
-        public Vector2 CurrGravity{get{return _currGravity;}set{_currGravity = value;}}
-        public float JumpPeakHangThreshold{get{return _jumpPeakHangThreshold;}}
-        public float JumpPeakGravityMult{get{return _gravityMultAtPeak;}}
-        public Vector2 FallGravity {get{return _fallGravity;} set{_fallGravity = value;}}
-        public bool IsJumping { get{return _isJumping;}set{_isJumping = value;}}
-        public bool IsFalling { get{return _isFalling;}set{_isFalling = value;}}
-        public float JumpForce{get{return _jumpForce;}set{_jumpForce = value;}}
-        public bool IsInPeakHang{get{return _isInPeakHang;}set{_isInPeakHang=value;}}
-
         [Header("Animation")]
         [SerializeField][Range(0,1)] private float _playbackSpeed = 1f;
         [Header("Player Attributes")]
@@ -157,7 +156,7 @@ namespace DTIS
         private bool _isRunning;
         public bool IsRunning{get{return _isRunning;}set{_isRunning=value;}}
         private bool _wasRunning;
-        public bool WasRunning{get{return _wasRunning;}}
+        public bool WasRunning{get{return _wasRunning;}set{_wasRunning = value;}}
 
         //[SerializeField] private int _ConsecutiveDashes = 2;
         //[SerializeField] private float _ConsecutiveDashTimeframe = 0.5f;
@@ -195,27 +194,26 @@ namespace DTIS
         {
             _isInPeakHang = false;
             _fallGravity = _baseGravity * _fallGravityMult;
-            var jumpHeight = Vector2.Distance(transform.position,_jumpHeight.position); // h
-            var jumpHorizontalMove = Vector2.Distance(transform.position,_jumpHorizontalMove.position); // X_h
+            var Height = Vector2.Distance(transform.position,_jumpVerticalPeak.position); // h
+            var HorizontalDistToPeak = Vector2.Distance(transform.position,_jumpHorizontalPeak.position); // X_h
             var Vx = _walkSpeed;
-            var Th = jumpHorizontalMove / Vx;
+            var Th = HorizontalDistToPeak / Vx;
             _timeToJumpPeak = Th;
-            _jumpForce = 2*jumpHeight / Th ;
-            _jumpGravity = -2*jumpHeight / Th; // (Th * Th);
+            _jumpForce = 2*Height / Th ;
+            _jumpGravity = -2*Height / Th; // (Th * Th);
             Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
             // strong jump
-            jumpHeight = Vector2.Distance(transform.position,_strongJumpHeight.position); // h
-            jumpHorizontalMove = Vector2.Distance(transform.position,_strongJumpHorizontalMove.position); // X_h
+            Height = Vector2.Distance(transform.position,_strongJumpVerticalPeak.position); // h
+            HorizontalDistToPeak = Vector2.Distance(transform.position,_strongJumpHorizontalPeak.position); // X_h
             Vx = _walkSpeed * _runSpeedMult;
-            Th = jumpHorizontalMove / Vx;
-            _strongJumpForce = 2*jumpHeight / Th;
-            _strongJumpGravity = -2*jumpHeight / Th; // (Th * Th);
+            Th = HorizontalDistToPeak / Vx;
+            _strongJumpForce = 2*Height / Th;
+            _strongJumpGravity = -2*Height / Th; // (Th * Th);
             Debug.Log($"strong jump force = {_strongJumpForce} | strong jump gravity = {_strongJumpGravity}");
         }
         protected private override void Update()
         {
             base.Update();
-            _wasRunning = _isRunning; //TODO; is this correct or should it be in FixedUpdate?
             _playerGhostBehaviour.TrySetGhostStatus();
             Flip();
         }
@@ -301,7 +299,6 @@ namespace DTIS
             var gravity = _jumpGravity;
             if(_wasRunning)
             {
-                _wasRunning = false;
                 jumpForce = _strongJumpForce;
                 gravity = _strongJumpGravity;
             }
@@ -431,7 +428,7 @@ namespace DTIS
                 //Debug.Log($"grounded = {_grounded} | on slope prev frame = {_wasOnSlopePrevFrame} | on slope = {_onSlope} | rb vel = {_rb2d.velocity} | y movement = {yMovement}");
             }
             var direction = _rb2d.velocity.x >= 0f ? Vector2.right : Vector2.left;
-            Debug.DrawRay(transform.position,direction,_color,4f);
+            Debug.DrawRay(transform.position,direction,_color,7f);
         }
 
         private void OnDrawGizmos() 
