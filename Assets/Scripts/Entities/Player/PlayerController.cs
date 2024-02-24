@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DTIS
 {
@@ -122,7 +123,8 @@ namespace DTIS
 
         /* *** SHOOTING */
         private ClickSpawn _clickSpawn; // class to spawn object by click.
-        private bool isShooting = false;
+        private bool _isShooting = false;
+        public bool isShooting {get{return _isShooting;}set{_isShooting=value;}}
 
         /* *** CAMERA*** */
         private Camera _mainCamera;
@@ -228,16 +230,18 @@ namespace DTIS
                 if (FacingRight && movingLeft)
                 {
                     FacingRight = !FacingRight;
-                    _spriteRenderer.flipX = true; // flip to face Left
+                    // _spriteRenderer.flipX = true; // flip to face Left
+                    transform.localScale = new Vector3(-1,1,1);
                 }
                 if (!FacingRight && movingRight)
                 {
                     FacingRight = !FacingRight;
-                    _spriteRenderer.flipX = false; // flip to face Right
+                    // _spriteRenderer.flipX = false; // flip to face Right
+                    transform.localScale = new Vector3(1,1,1);
                 }
             }
         }
-        private void FlipByCursorPos()
+        public void FlipByCursorPos()
         {
             Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
             bool isMouseRightToPlayer = mouseWorldPosition.x > transform.position.x;
@@ -245,43 +249,21 @@ namespace DTIS
             if (FacingRight && isMouseLeftToPlayer)
             {
                 FacingRight = !FacingRight;
-                _spriteRenderer.flipX = true; // flip to face Left
+                // _spriteRenderer.flipX = true; // flip to face Left
+                transform.localScale = new Vector3(-1,1,1);
+                
             }
             if (!FacingRight && isMouseRightToPlayer)
             {
                 FacingRight = !FacingRight;
-                _spriteRenderer.flipX = false; // flip to face Right
+                // _spriteRenderer.flipX = false; // flip to face Right
+                transform.localScale = new Vector3(1,1,1);
             }
         }
 
         public virtual void Ghost()
         {
             GameManager.IsPlayerGhosted = !GameManager.IsPlayerGhosted;
-        }
-        public virtual void Shoot()
-        {
-            if (isShooting) return;
-            {
-                isShooting = true;
-                StartCoroutine(DelayArrow());
-
-                IEnumerator DelayArrow() // delays the user from shooting every 'ShootDelay' seconds.
-                {
-                    //Debug.Log("Arrow is loading...");
-                    yield return new WaitForSeconds(ShootDelaySeconds);
-                    _clickSpawn.spawnObject();
-                    isShooting = false;
-                }
-            }
-        }
-        //this method should check if a certain animation is still playing (like shooting, if so DO NOT SHOOT)
-        public bool isPlaying(string stateName)
-        {
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(stateName) &&
-                    _animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
-                return true;
-            else
-                return false;
         }
         public void Move(Vector2 move)
         {

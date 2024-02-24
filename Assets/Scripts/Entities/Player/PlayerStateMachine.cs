@@ -60,21 +60,31 @@ namespace DTIS
             get { return _state; }
             set
             {
-                _state?.Exit(_state.Type,_subState.Type);
+                _state?.Exit(_state.Type, _subState.Type);
+                _PrevState = _state;
                 _state = value;
                 _state.Enter(_controller, this); // delegates state and sub-state switch to state implementation!
             }
         }
+
         public PlayerState SubState // Property with simple getter and a setter that handles sub-state switch by calling exit and enter appropriately.
         {
             get { return _subState; }
             set
             {
-                _subState?.Exit(_state.Type,_subState.Type);
+                _subState?.Exit(_state.Type, _subState.Type);
+                _PrevSubState = _subState;
                 _subState = value;
                 _subState.Enter(_controller, this); // delegates state and sub-state switch to state implementation!
             }
         }
+
+        //ref to prev states to know how to route the animations,etc..//
+        private PlayerState _PrevState;
+        public PlayerState PrevState { get { return _PrevState; } }
+        private PlayerState _PrevSubState;
+        public PlayerState PrevSubState { get { return _PrevSubState; } }
+
 
         public bool Grounded { get { return _controller.IsGrounded; } }
 

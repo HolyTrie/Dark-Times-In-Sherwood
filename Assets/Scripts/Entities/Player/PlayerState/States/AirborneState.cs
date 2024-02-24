@@ -9,16 +9,18 @@ namespace DTIS
         private readonly int _maxActions = Util.Constants.MaxActionsMidAir;
         private const float _epsilon = 0.001f;
         private int _actionsMidAir = 0;
+        private int _arrowsMidAir = 0;
         private bool _isInCoyoteTime;
-        public AirborneState(ESP.States state,string name = "Airborne") 
-        : base(state,name,false)
+        public AirborneState(ESP.States state, string name = "Airborne")
+        : base(state, name, false)
         {
             _isInCoyoteTime = false;
         }
-        public override void Enter(PlayerController controller,PlayerStateMachine fsm)
+        public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
-            base.Enter(controller,fsm); // Critical!
+            base.Enter(controller, fsm); // Critical!
             _actionsMidAir = 1;
+            _arrowsMidAir = 1;
             if (HasAnimation)
             {
                 try
@@ -39,29 +41,29 @@ namespace DTIS
         private IEnumerator CoyoteTime()
         {
             _isInCoyoteTime = true;
-            yield return new WaitForSeconds(_epsilon+Controller.CoyoteTime); //adding epsilon to account for possible execution lag between Enter() and FixedUpdate().
+            yield return new WaitForSeconds(_epsilon + Controller.CoyoteTime); //adding epsilon to account for possible execution lag between Enter() and FixedUpdate().
             _isInCoyoteTime = false;
         }
 
         protected override void TryStateSwitch()
         {
-            
-            if(Controller.IsGrounded)
+
+            if (Controller.IsGrounded)
             {
-                SetStates(ESP.States.Grounded,ESP.States.Idle);
+                SetStates(ESP.States.Grounded, ESP.States.Idle);
             }
-            else if(_actionsMidAir < _maxActions)
+            else if (_actionsMidAir < _maxActions)
             {
-                
-                if(ActionMap.Jump.WasPressedThisFrame())
+
+                if (ActionMap.Jump.WasPressedThisFrame())
                 {
                     bool canJump = true;
-                    if(Controller.StaminaBar!= null)
-                        if(Controller.StaminaBar.canUseStamina)
+                    if (Controller.StaminaBar != null)
+                        if (Controller.StaminaBar.canUseStamina)
                             canJump = false;
-                    if(canJump)
+                    if (canJump)
                     {
-                        if(!_isInCoyoteTime)
+                        if (!_isInCoyoteTime)
                         {
                             ++_actionsMidAir;
                             SetSubState(ESP.States.Jump2);
@@ -79,15 +81,24 @@ namespace DTIS
                     ++_actionsMidAir;
                     SetSubState(ESP.States.Dash);
                 }
-                */ 
+                */
             }
+            if (_arrowsMidAir < _maxActions)
+            {
+                if (ActionMap.Shoot.WasPressedThisFrame())
+                {
+                    ++_arrowsMidAir;
+                    SetState(ESP.States.Attack);
+                }
+            }
+
             //TODO: add slam (downards jump)
             /*if(ActionMap.DownwardsJump.WasPerformedThisFrame())
             {
                 SetSubState(ESP.States.DownwardsJump);
             }
             */
-        }   
+        }
         protected override void PhysicsCalculation()
         {
 

@@ -6,35 +6,63 @@ namespace DTIS
 {
     public class RangedAttackState : PlayerState
     {
-        public RangedAttackState(ESP.States state,string name = "RangedAttack")
-        : base(state,name, true) { }
-        public override void Enter(PlayerController controller,PlayerStateMachine fsm)
+        private const string RangedAttackAnim = "RangedAttack";
+        private const string AirborneRangedAttackAnim = "AirRangedAttack";
+
+        public RangedAttackState(ESP.States state, string name = "RangedAttack")
+        : base(state, name, true) { }
+        public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
-            base.Enter(controller,fsm); // Critical!
+            base.Enter(controller, fsm); // Critical!
             if (HasAnimation)
             {
                 try
                 {
-                    controller.Animator.Play(Name);
+                    // controller.Animator.Play(Name);
                 }
                 catch (Exception e)
                 {
                     Debug.Log(e);
                 }
             }
-            // FSM.groundCheck.Grounded = true;
-            // if(controller.isPlaying("HighAttack"))
-            Controller.Shoot(); // need to add delay according to frames.
+            if (FSM.PrevState.Type == ESP.States.Airborne)
+            {
+                FSM.StartCoroutine(GravityWaitsForAttack(0.75f));
+                controller.Animator.Play(AirborneRangedAttackAnim);
+            }
+
+            if (FSM.PrevState.Type == ESP.States.Grounded)
+                controller.Animator.Play(RangedAttackAnim);
+
+            controller.FlipByCursorPos();
+
+            FSM.StartCoroutine(AttackCommitment(1f)); // pretty much wait for animation to finish..
         }
         protected override void TryStateSwitch()
         {
-            // Controller.WaitForAnimtaion();
+
+        }
+        IEnumerator AttackCommitment(float seconds)
+        {
+            FSM.Controls.enabled = false;
+            yield return new WaitForSeconds(seconds);
+            FSM.Controls.enabled = true;
+            SetStates(ESP.States.Grounded, ESP.States.Idle);
+        }
+        IEnumerator GravityWaitsForAttack(float seconds)
+        {
+            var prev = Controller.CurrGravity;
+            Controller.CurrGravity *= 0.01f;
+            Controller.Velocity = Vector2.zero;
+            yield return new WaitForSeconds(seconds);
+            Controller.CurrGravity = prev;
         }
 
         protected override void PhysicsCalculation()
         {
             //pass
         }
+
     }
     /*
     public class RangedAttackState : EntityState
