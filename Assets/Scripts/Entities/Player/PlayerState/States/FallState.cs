@@ -47,7 +47,6 @@ namespace DTIS
             bool inPeakHangThreshold = Mathf.Abs(Controller.Velocity.y) < Controller.JumpPeakHangThreshold;
             if (inPeakHangThreshold && !IsInPeakHang) // happens when button is released early.
             {
-                Debug.Log("Fall exits from peak hang mode");
                 IsInPeakHang = true;
                 Controller.CurrGravity *= Controller.JumpPeakGravityMult;
             }
@@ -66,7 +65,6 @@ namespace DTIS
                 }
                 if (WasRunning)
                 {
-                    Debug.Log("was running");
                     mult *= Controller.RunSpeedMult;
                 }
                 Controller.Move(new Vector2(mult * direction, 0f));

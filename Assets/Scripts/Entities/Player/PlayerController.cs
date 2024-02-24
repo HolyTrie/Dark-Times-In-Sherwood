@@ -33,10 +33,6 @@ namespace DTIS
         [SerializeField] private float _runSpeedMult;
         public float RunSpeedMult{get{return _runSpeedMult;}}
         public Vector2 Velocity{get{return _velocity;}set{_velocity = value;}}
-        
-        /*** SLOPES ***/
-        private bool _wasOnSlopePrevFrame = false;
-
         /*** JUMP & FALL ***/
         public Vector2 CurrGravity{get{return _currGravity;}set{_currGravity = value;}}
         public float JumpPeakHangThreshold{get{return _jumpPeakHangThreshold;}}
@@ -101,9 +97,29 @@ namespace DTIS
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
 
-        /* *** GROUND CHECK*** */
+        /* *** CHECKS *** */
         [SerializeField] private GroundCheck _gc;
+        [SerializeField] private SlopeCheck _sc;
+        [SerializeField] private HorizontalCollisionCheck2D _hc;
         public bool IsGrounded { get { return _gc.Grounded(); } }
+
+        /* *** SLOPE *** */
+        public bool SlopeAhead
+        {
+            get
+            {
+                bool ans;
+                if(_facingRight)
+                {
+                    ans = _sc.SlopeAhead(_facingRight,_rb2d.position.y) || _hc.RightCollisionType == HorizontalCollisionCheck2D.CollisionType.PARTIAL;
+                }
+                else
+                {
+                    ans = _sc.SlopeAhead(_facingRight,_rb2d.position.y) || _hc.LeftCollisionType == HorizontalCollisionCheck2D.CollisionType.PARTIAL;
+                }
+                return ans;
+            }
+        }
 
         /* *** STAMINA *** */
         private StaminaBar _staminabar;
@@ -112,7 +128,7 @@ namespace DTIS
         /* *** SANITY *** */
         private SanityBar _sanityBar;
         public SanityBar SanityBar { get { return _sanityBar; } }
-
+        /* *** HP *** */
         private HpBarPlayer _hpBar;
         public HpBarPlayer HpBar { get { return _hpBar; } }
 
@@ -348,8 +364,6 @@ namespace DTIS
                 _gravityModifier = 0f; //re applied by a corutine!
                 _targetVelocity = new(direction * velocity,0f);
             }
-
-            _wasOnSlopePrevFrame = _onSlope;
             _grounded = false;
             _onSlope = false;
             var acc = Time.deltaTime * _gravityModifier * CurrGravity;
@@ -368,7 +382,8 @@ namespace DTIS
             // predict future position using a simplified euler integration (~0.5 pixel error rate, resets when landing so it does not accumulate)
             var futurePos = _velocity * Time.deltaTime + 0.5f * Time.deltaTime * acc; // pos = velocity*deltaTime +0.5*accelaration*(deltaTime^2)
             var futureVel = acc; // vel = accelaration * deltaTime
-            futurePos = (Vector2)transform.position+futurePos; //TODO:
+            futurePos = _rb2d.position+futurePos;
+            
             //Debug.Log($"future position = {futurePos} | future velocity = {futureVel}");
         }
 
@@ -412,7 +427,7 @@ namespace DTIS
                     {
                         //Debug.Log($"vel before = {_velocity} | ymove = {yMovement} | current normal = {currentNormal} || projection = {projection}");
                         _velocity -= projection * currentNormal; // cancel out the velocity that would be lost on impact.
-                        //Debug.Log($"new vel = {_velocity} | ymove = {yMovement} | move projection = {projection * currentNormal}");
+                        //Debug.Log($"new vel = {_velocity} | ymove = {yMovement} | move projection = {projection * currentNormal} | y move = {yMovement}");
                     }
 
                     float modifiedDistance = hit.distance - _shellRadius; 
@@ -428,7 +443,7 @@ namespace DTIS
                 //Debug.Log($"grounded = {_grounded} | on slope prev frame = {_wasOnSlopePrevFrame} | on slope = {_onSlope} | rb vel = {_rb2d.velocity} | y movement = {yMovement}");
             }
             var direction = _rb2d.velocity.x >= 0f ? Vector2.right : Vector2.left;
-            Debug.DrawRay(transform.position,direction,_color,7f);
+            //Debug.DrawRay(transform.position,direction,_color,7f);
         }
 
         private void OnDrawGizmos() 

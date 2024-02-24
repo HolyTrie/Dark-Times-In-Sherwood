@@ -54,7 +54,6 @@ namespace DTIS
             {
                 if (!IsInPeakHang) // enter peak hang mode when in threshold 
                 {
-                    Debug.Log("Jump2 State Entered PeakHang!");
                     IsInPeakHang = true;
                     Controller.CurrGravity *= Controller.JumpPeakGravityMult;
                 }

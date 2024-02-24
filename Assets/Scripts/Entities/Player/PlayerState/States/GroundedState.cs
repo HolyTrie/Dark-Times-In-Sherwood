@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -28,6 +29,7 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
+            //Debug.Log($"Slope Ahead = {Controller.SlopeAhead}");
             if(Controller.Velocity.y < _minYChange && !Controller.IsGrounded) //some cases like stairs will have negative velocity but are still 'ground'
             {
                 SetStates(ESP.States.Airborne, ESP.States.Fall);
@@ -65,9 +67,29 @@ namespace DTIS
                 isShooting = false;
             }
         }
+        private bool _inSlope = false;
+        private bool SlopeAhead { get { return Controller.SlopeAhead; } }
+        private Vector2 _prevGravity;
         protected override void PhysicsCalculation()
         {
-            //pass
+            if(SlopeAhead && !_inSlope)
+            {
+                _inSlope = true;
+                _prevGravity = Controller.CurrGravity;
+                Controller.CurrGravity *= 2f;
+            }
+            if(!SlopeAhead && _inSlope)
+            {
+                
+                FSM.StartCoroutine(LeaveSlope());
+            }
+        }
+
+        private IEnumerator LeaveSlope()
+        {
+            yield return new WaitForSeconds(0.25f);
+            Controller.CurrGravity = _prevGravity;
+            _inSlope = true;
         }
     }
 }
