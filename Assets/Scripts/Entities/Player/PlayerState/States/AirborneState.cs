@@ -20,20 +20,25 @@ namespace DTIS
         public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
             base.Enter(controller, fsm); // Critical!
+            SetAnimations();
             _jumpsMidAir = 1; //this is 1 to account for the jump that initiated this state (or missed jump when falling from platforms)
             _attacksMidAir = 0;
+            Controller.JumpBufferCounter = 0f;
+            fsm.StartCoroutine(CoyoteTime());
+        }
+        private void SetAnimations()
+        {
             if (HasAnimation)
             {
                 try
                 {
-                    controller.Animator.Play(Name);
+                    Controller.Animator.Play(Name);
                 }
                 catch (Exception e)
                 {
                     Debug.Log(e);
                 }
             }
-            fsm.StartCoroutine(CoyoteTime());
         }
         public override void Exit(ESP.States State, ESP.States SubState)
         {
@@ -49,13 +54,18 @@ namespace DTIS
         protected override void TryStateSwitch()
         {
 
+            bool jumpPressedThisFrame = ActionMap.Jump.WasPressedThisFrame();
+            if(jumpPressedThisFrame)
+                Controller.JumpBufferCounter = Controller.JumpBufferTime;
+            else
+                Controller.JumpBufferCounter -= Time.deltaTime;
             if (Controller.IsGrounded)
             {
                 SetStates(ESP.States.Grounded, ESP.States.Idle);
             }
             else if (_jumpsMidAir < _maxJumps)
             {
-                if (ActionMap.Jump.WasPressedThisFrame())
+                if (jumpPressedThisFrame) //this check has to be doubled to separate the buffered jump from jump2.
                 {
                     bool canJump = true;
                     /*
@@ -75,6 +85,7 @@ namespace DTIS
                             SetSubState(ESP.States.Jump);
                             _isInCoyoteTime = false;
                         }
+                        Controller.JumpBufferCounter = 0f;
                     }
                 }
             }
