@@ -353,7 +353,8 @@ MonoBehaviour:
   _movementSmoothing: 0.15
   _attackDMG: 10
   _FieldOfView: 6
-  _AttackRange: 1.75
+  _XAttackRange: 1.75
+  _YAttackRange: 1
   Scale: 1.5
   _ceilingCheck: {fileID: 0}
 --- !u!114 &4689829602341199206

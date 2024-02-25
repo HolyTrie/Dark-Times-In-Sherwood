@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 namespace DTIS
@@ -26,10 +27,12 @@ namespace DTIS
         public int AttackDMG { get { return _attackDMG; } set { _attackDMG = value; } }
         private HpBarEntity _hpBar;
         public HpBarEntity HpBar { get { return _hpBar; } }
+        // [Tooltip("The items that the enemy can drop upon death")]
+        // [SerializeField] ItemDataBase [] Droppable;
 
         [Tooltip("The range that the entity can see and start chasing the player")]
         [SerializeField] private float _FieldOfView;
-        
+
         [Tooltip("The range that the entity will start attacking")]
         [SerializeField] private float _XAttackRange;
 
@@ -108,6 +111,12 @@ namespace DTIS
                 // transform.GetComponent<SpriteRenderer>().flipX = true;
             }
 
+        }
+
+        public void DropItems()
+        {
+            this.transform.GetComponent<ItemDatabase>().SpawnItem(this.transform);
+            Destroy(this.gameObject);
         }
 
         //private void Walk();
