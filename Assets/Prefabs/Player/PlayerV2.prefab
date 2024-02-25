@@ -181,34 +181,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gravityModifier: 1
   _minGroundNormalY: 0.75
-  _contactFilter2d:
-    useTriggers: 0
-    useLayerMask: 1
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 192
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
-  _groundOnlyFilter:
-    useTriggers: 0
-    useLayerMask: 1
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 128
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
+  _groundAndPlatformsMask:
+    serializedVersion: 2
+    m_Bits: 192
+  _groundOnlyMask:
+    serializedVersion: 2
+    m_Bits: 128
   _gc: {fileID: 2792367345918406812}
   _sc: {fileID: 1346959578595874168}
   _hc: {fileID: 3537353147310545361}
@@ -224,6 +202,7 @@ MonoBehaviour:
   _fallGravityMult: 3.5
   _weakJumpGravityMult: 1.25
   _coyoteTime: 0.25
+  _jumpBufferTime: 0.5
   _playbackSpeed: 0.75
   _jumpStaminaCost: 5
   _ghostedSanityCost: 2
@@ -530,7 +509,7 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.35}
   m_Size: {x: 4, y: 2.5}
   m_Direction: 1
 --- !u!114 &2561068516230081918
