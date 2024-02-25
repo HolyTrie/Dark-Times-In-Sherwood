@@ -390,8 +390,6 @@ namespace DTIS
         protected private override void Movement(Vector2 move, bool yMovement)
         {
             float distance = move.magnitude;
-            bool setOnce = false;
-
             if (distance > _minMoveDistance)
             {
                 int count = _rb2d.Cast(move, _contactFilter2d, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
@@ -403,6 +401,7 @@ namespace DTIS
                 foreach(var hit in _hitBufferList)
                 {
                     Vector2 currentNormal = hit.normal;
+                    /*
                     Vector2 slopeNormal = hit.normal;
                     RaycastHit2D slopeHit = Physics2D.Raycast(transform.position, -Vector2.up, 1f, _groundOnlyFilter.layerMask);
 		            if (slopeHit.collider != null && Mathf.Abs(slopeHit.normal.x) > 0.1f) 
@@ -412,25 +411,20 @@ namespace DTIS
                         if(angle < 0 && angle <1)
                             _onSlope = true;
                     }
+                    */
                     if(currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the set value.
                     {
-                        if(!setOnce)
-                        {
-                            _grounded = true;
-                            _onSlope = currentNormal.y > 0 && currentNormal.y < 1;
-                            setOnce = true;
-                        }
+                        _grounded = true;
                         if(yMovement)
                         {
                             _groundNormal = currentNormal;
-                            if(!_onSlope)
-                                currentNormal.x = 0;
+                            currentNormal.x = 0;
                         }
                     }
                     float projection = Vector2.Dot(_velocity,currentNormal);
                     if(projection < 0 ) 
                     {
-                        Debug.Log($"vel = {_velocity} | newVel = {_velocity -= projection * currentNormal} | current normal = {currentNormal} | projection = {projection} |");
+                        //Debug.Log($"vel = {_velocity} | newVel = {_velocity -= projection * currentNormal} | current normal = {currentNormal} | projection = {projection} |");
                         _velocity -= projection * currentNormal; // cancel out the velocity that would be lost on impact.
                     }
 
@@ -439,6 +433,7 @@ namespace DTIS
                 }
             }
             _rb2d.position += move.normalized * distance;
+            //_rb2d.MovePosition(_rb2d.position + move.normalized * distance);
             // DEBUG:
             var _color = Color.white;
             if(!_grounded)
