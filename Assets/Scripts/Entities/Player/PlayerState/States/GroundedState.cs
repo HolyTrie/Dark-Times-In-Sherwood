@@ -28,10 +28,10 @@ namespace DTIS
                     Debug.Log(e);
                 }
             }
+            Controller.CurrGravity = OriginalGravity;
         }
         protected override void TryStateSwitch()
         {
-            //Debug.Log($"Slope Ahead = {Controller.SlopeAhead}");
             if(Controller.Velocity.y < _minYChange && !Controller.IsGrounded) //some cases like stairs will have negative velocity but are still 'ground'
             {
                 SetStates(ESP.States.Airborne, ESP.States.Fall);
@@ -54,46 +54,47 @@ namespace DTIS
         }
         protected override void PhysicsCalculation()
         {
+            HandleSlopes();
+        }
+        private void HandleSlopes()
+        {
             var playerPos = Controller.Position;
             var hit = Physics2D.Raycast(playerPos,-Vector2.up,1f,Controller.GroundOnlyLayerMask);
             bool slopeUpwardsDirectionIsRight = true;
 		    if (hit.collider != null && Mathf.Abs(hit.normal.x) > 0.1f) 
             {
                 Vector2 slopeNormal = hit.normal;
-                if(slopeNormal.x < 0)
+                if(slopeNormal.x > 0)
                     slopeUpwardsDirectionIsRight = false;
-                //var angle = Mathf.Abs(slopeNormal.x);
-                //if(angle < 0 && angle <1)
-                //    _onSlope = true;
+                var angle = Mathf.Abs(slopeNormal.x);
+                if(angle < 0 && angle <1)
+                    _inSlope = true;
             }
-            if(SlopeAhead && !_inSlope)
-            {
-                _inSlope = true;
-                Controller.CurrGravity = SlopeGravity;
-                Debug.Log("increased gravity in anticipation of slope");
-            }
-            else if(!SlopeAhead && _inSlope)
+            bool dirIsRight = slopeUpwardsDirectionIsRight;
+            if(!SlopeAhead && _inSlope)
             {
                 FSM.StartCoroutine(LeaveSlope());
             }
-            else if(_inSlope) // handle
+            else if(_inSlope || (SlopeAhead && !_inSlope)) 
             {
-                if(Controller.FacingRight == slopeUpwardsDirectionIsRight)
-                {
-                    Controller.CurrGravity = OriginalGravity;
-                }
-                else
-                {
-                    Controller.CurrGravity = SlopeGravity;
-                }
+                SetSlopeGravity(dirIsRight);
             }
-
+        }
+        private void SetSlopeGravity(bool slopeUpwardsDirectionIsRight)
+        {
+            if(Controller.FacingRight == slopeUpwardsDirectionIsRight)
+            {
+                Controller.CurrGravity = 2f*OriginalGravity;
+            }
+            else
+            {
+                Controller.CurrGravity = 5f*SlopeGravity;
+            }
         }
         private IEnumerator LeaveSlope()
         {
             yield return new WaitForSeconds(0.25f);
             Controller.CurrGravity = OriginalGravity;
-            _inSlope = false;
         }
     }
 }

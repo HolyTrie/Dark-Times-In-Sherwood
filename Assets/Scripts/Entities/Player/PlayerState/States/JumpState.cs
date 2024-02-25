@@ -15,7 +15,6 @@ namespace DTIS
         }
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
-            Debug.Log("entered jump");
             base.Enter(controller,fsm); // Critical!
             if (HasAnimation)
             {

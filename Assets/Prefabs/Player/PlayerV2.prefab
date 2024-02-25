@@ -227,7 +227,7 @@ MonoBehaviour:
   _playbackSpeed: 0.75
   _jumpStaminaCost: 5
   _ghostedSanityCost: 2
-  _CrouchDisableCollider: {fileID: 0}
+  _CrouchDisableCollider: {fileID: 4032292938062758501}
   ShootDelaySeconds: 2
   ShootReloadSeconds: 2
   _spriteRenderer: {fileID: 2414660133538134565}
@@ -246,7 +246,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68ab498eb9d61124cbf6a0505ebf0b97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debug: 1
   _controller: {fileID: 2438929693715226838}
   _controls: {fileID: 6385233553874919156}
   _interactor: {fileID: 2561068516230081918}
@@ -458,7 +457,7 @@ Transform:
   m_GameObject: {fileID: 1234820028769733770}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7, y: 1, z: 0}
+  m_LocalPosition: {x: 1.25, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -586,37 +585,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transformToFollow: {fileID: 5874589978787638695}
---- !u!1 &1973989825735756000
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2988947366261747721}
-  m_Layer: 0
-  m_Name: OriginLeft
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2988947366261747721
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1973989825735756000}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.7, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1128062130307296819}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2107672663275880592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,7 +1087,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2988947366261747721}
   - {fileID: 7467122997274076808}
   m_Father: {fileID: 1618846393511896271}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1135,13 +1102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362b0216d01109e4686d5bdfb871d8a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rightRayPosRef: {fileID: 7467122997274076808}
   _layerMask:
     serializedVersion: 2
     m_Bits: 128
-  _rightRayPosRef: {fileID: 7467122997274076808}
-  _rightRayCastDistance: 2.5
-  _leftRayPosRef: {fileID: 2988947366261747721}
-  _leftRayCastDistance: 2.5
+  _rayCastDistance: 3.5
 --- !u!1 &6733671897355422606
 GameObject:
   m_ObjectHideFlags: 0
@@ -1357,16 +1322,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ray1Size: {x: 0.2, y: 0.75}
   _ray1OffsetX: -0.35
-  _ray1CastDistance: 0.75
+  _ray1CastDistance: 0.8
   _ray2Size: {x: 0.2, y: 0.75}
   _ray2OffsetX: 0
-  _ray2CastDistance: 0.75
+  _ray2CastDistance: 0.8
   _ray3Size: {x: 0.2, y: 0.75}
   _ray3OffsetX: 0.35
-  _ray3CastDistance: 0.75
+  _ray3CastDistance: 0.8
   _ray4Size: {x: 1, y: 0.1}
   _ray4OffsetX: 0
-  _ray4CastDistance: 0.45
+  _ray4CastDistance: 0.5
   _groundLayer:
     serializedVersion: 2
     m_Bits: 192

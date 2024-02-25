@@ -40,7 +40,7 @@ namespace DTIS
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
         public int GroundOnlyLayerMask { get { return _groundOnlyFilter.layerMask; } }
-        public Vector2 CurrGravity { get { return _currGravity; } set { _currGravity = value;Debug.Log("gravity = "+_currGravity); } }
+        public Vector2 CurrGravity { get { return _currGravity; } set { _currGravity = value; } }
         public Vector2 OriginalGravity { get { return _originalGravity; } private set { _originalGravity = value; } }
         private Vector2 _originalGravity;
         private bool _facingRight = true;                         // A boolean marking the entity's orientation.
@@ -122,15 +122,16 @@ namespace DTIS
                 bool ans;
                 if (_facingRight)
                 {
-                    ans = _sc.SlopeAhead(_facingRight, _rb2d.position.y) || _hc.RightCollisionType == HorizontalCollisionCheck2D.CollisionType.PARTIAL;
+                    ans = _sc.SlopeAhead || _hc.RightCollisionType == HorizontalCollisionCheck2D.CollisionType.PARTIAL;
                 }
                 else
                 {
-                    ans = _sc.SlopeAhead(_facingRight, _rb2d.position.y) || _hc.LeftCollisionType == HorizontalCollisionCheck2D.CollisionType.PARTIAL;
+                    ans = _sc.SlopeAhead || _hc.LeftCollisionType == HorizontalCollisionCheck2D.CollisionType.PARTIAL;
                 }
                 return ans;
             }
         }
+        public bool IsSlopeUpwardsLeftToRight{ get { return _sc.IsSlopeUpwardsLeftToRight; }}
         #endregion
 
         #region JUMP & FALL
@@ -319,9 +320,9 @@ namespace DTIS
         void Start()
         { 
             _baseGravity = Physics2D.gravity; // storing unitys gravity vector if its ever needed
-            _slopeGravity = _currGravity * 2f;
-            _originalGravity = _currGravity; 
-            _currGravity = _baseGravity;
+            _originalGravity = _baseGravity; 
+            _currGravity = _originalGravity;
+            _slopeGravity = _originalGravity * 2f;
             _isRunning = false;
             _wasRunning = false;
             InitJumpParams();
@@ -356,7 +357,11 @@ namespace DTIS
         }
         #endregion
 
-        #region UPDATEs & PHYSICS
+        #region UPDATES & PHYSICS
+        public void AddForce(Vector2 force)
+        {
+            _targetVelocity += force;
+        }
         protected private override void Update()
         {
             base.Update();
@@ -394,7 +399,6 @@ namespace DTIS
             //var futureVel = acc; // vel = accelaration * deltaTime
             //futurePos = (Vector2)transform.position + futurePos;
         }
-
         protected private override void Movement(Vector2 move, bool yMovement)
         {
             float distance = move.magnitude;
@@ -440,7 +444,8 @@ namespace DTIS
                     distance = modifiedDistance < distance ? modifiedDistance : distance;
                 }
             }
-            _rb2d.position += move.normalized * distance;
+            var distanceToMove = move.normalized * distance;
+            _rb2d.position += distanceToMove;
             //_rb2d.MovePosition(_rb2d.position + move.normalized * distance);
             // DEBUG:
             var _color = Color.white;

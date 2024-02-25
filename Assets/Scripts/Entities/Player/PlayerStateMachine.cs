@@ -17,10 +17,6 @@ namespace DTIS
     */
     public class PlayerStateMachine : MonoBehaviour
     {
-
-        [Tooltip("Used for activating and deactivating debug state machine mode")]
-        [SerializeField] bool _debug = false;
-
         [Header("Player Scripts")]
         [SerializeField] private PlayerController _controller;
         [SerializeField] private PlayerControls _controls;
