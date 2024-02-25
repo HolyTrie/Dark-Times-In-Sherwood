@@ -14,7 +14,8 @@ namespace DTIS
     {
         private readonly string _name;
         public virtual string Name { get { return _name; } }
-
+        private ESP.States _state;
+        public ESP.States Type{get{return _state;}}
         private readonly bool _hasAnimation;
         public virtual bool HasAnimation { get { return _hasAnimation; } }
 
@@ -39,8 +40,9 @@ namespace DTIS
         {
             FSM.SubState = ESP.Build(SubState);
         }
-        public PlayerState(string name, bool hasAnimation = true)
+        public PlayerState(ESP.States state,string name, bool hasAnimation = true)
         {
+            _state = state;
             _name = name;
             _hasAnimation = hasAnimation;
         }
@@ -49,7 +51,7 @@ namespace DTIS
             _controller = controller;
             _fsm = fsm;
         }
-        public virtual void Exit()
+        public virtual void Exit(ESP.States State, ESP.States SubState)
         {
             /* 
             This is saved here for potential future improvements, triggers could be used with this 

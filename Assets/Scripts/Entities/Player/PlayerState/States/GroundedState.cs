@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -6,11 +7,13 @@ namespace DTIS
 {
     public class GroundedState : PlayerState
     {
-        bool isShooting = false;
         private const float _minYChange = -1.5f;
-
-        public GroundedState(string name = "Grounded")
-        : base(name, false) { }
+        private Vector2 SlopeGravity{ get { return Controller.SlopeGravity; } }
+        private bool _inSlope = false;
+        private bool SlopeAhead { get { return Controller.SlopeAhead; } }
+        private Vector2 OriginalGravity{ get { return Controller.OriginalGravity; } }
+        public GroundedState(ESP.States state,string name = "Grounded")
+        : base(state,name, false) {}
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // Critical!
@@ -25,6 +28,7 @@ namespace DTIS
                     Debug.Log(e);
                 }
             }
+            Controller.CurrGravity = OriginalGravity;
         }
         protected override void TryStateSwitch()
         {
@@ -43,31 +47,54 @@ namespace DTIS
                     SetStates(ESP.States.Airborne, ESP.States.Jump);
                 }
             }
-            if (ActionMap.Shoot.WasPerformedThisFrame() && !isShooting)
-            {
-                isShooting = true;
-                float offset = 3f;
-                Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - Controller.transform.localPosition;
-                //Debug.Log("Mouse Position: "+ dir + "PlayerPosition: "+ FSM.Controls.transform.localPosition );
-                if (dir.y - offset > Controller.transform.localPosition.y) // aiming above head
-                {
-                    //if (!Controller.isPlaying("HighAttack"))
-                    SetStates(ESP.States.Attack, ESP.States.HighAttackState);
-                }
-                else
-                {
-                    //if (!Controller.isPlaying("RangedAttack"))
-                    SetStates(ESP.States.Attack, ESP.States.RangedAttack);
-                }
-            }
-            else
-            {
-                isShooting = false;
+            if (ActionMap.Shoot.WasPressedThisFrame())
+            {   
+                SetState(ESP.States.Attack);
             }
         }
         protected override void PhysicsCalculation()
         {
-            //pass
+            HandleSlopes();
+        }
+        private void HandleSlopes()
+        {
+            var playerPos = Controller.Position;
+            var hit = Physics2D.Raycast(playerPos,-Vector2.up,1f,Controller.GroundOnlyLayerMask);
+            bool slopeUpwardsDirectionIsRight = true;
+		    if (hit.collider != null && Mathf.Abs(hit.normal.x) > 0.1f) 
+            {
+                Vector2 slopeNormal = hit.normal;
+                if(slopeNormal.x > 0)
+                    slopeUpwardsDirectionIsRight = false;
+                var angle = Mathf.Abs(slopeNormal.x);
+                if(angle < 0 && angle <1)
+                    _inSlope = true;
+            }
+            bool dirIsRight = slopeUpwardsDirectionIsRight;
+            if(!SlopeAhead && _inSlope)
+            {
+                FSM.StartCoroutine(LeaveSlope());
+            }
+            else if(_inSlope || (SlopeAhead && !_inSlope)) 
+            {
+                SetSlopeGravity(dirIsRight);
+            }
+        }
+        private void SetSlopeGravity(bool slopeUpwardsDirectionIsRight)
+        {
+            if(Controller.FacingRight == slopeUpwardsDirectionIsRight)
+            {
+                Controller.CurrGravity = 2f*OriginalGravity;
+            }
+            else
+            {
+                Controller.CurrGravity = 5f*SlopeGravity;
+            }
+        }
+        private IEnumerator LeaveSlope()
+        {
+            yield return new WaitForSeconds(0.25f);
+            Controller.CurrGravity = OriginalGravity;
         }
     }
 }

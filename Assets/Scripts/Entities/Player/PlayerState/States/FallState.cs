@@ -6,14 +6,18 @@ namespace DTIS
     public class FallState : PlayerState
     {
         private readonly bool _airControl;
-        public FallState(bool airControl,string name = "fall")
-        : base(name, true)
+        private bool IsInPeakHang { get { return Controller.IsInPeakHang; } set { Controller.IsInPeakHang = value; } }
+        private bool WasRunning { get { return Controller.WasRunning; } set { Controller.WasRunning = value; } }
+        private bool IsFalling { get { return Controller.IsFalling; } set { Controller.IsFalling = value; } }
+
+        public FallState(ESP.States state,bool airControl, string name = "fall")
+        : base(state, name, true)
         {
             _airControl = airControl;
         }
-        public override void Enter(PlayerController controller,PlayerStateMachine fsm)
+        public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
-            base.Enter(controller,fsm); // Critical!
+            base.Enter(controller, fsm); // Critical!
             if (HasAnimation)
             {
                 try
@@ -25,11 +29,14 @@ namespace DTIS
                     Debug.Log(e);
                 }
             }
-            Controller.IsFalling = true;
+            IsFalling = true;
         }
-        public override void Exit()
+        public override void Exit(ESP.States State, ESP.States SubState)
         {
-            Controller.IsFalling = false;
+            base.Exit(State, SubState);
+            IsFalling = false;
+            IsInPeakHang = false;
+            WasRunning = false;
         }
         protected override void TryStateSwitch()
         {
@@ -37,17 +44,30 @@ namespace DTIS
         }
         protected override void PhysicsCalculation()
         {
-            if(Mathf.Abs(Controller.Velocity.y) < Controller.JumpPeakHangThreshold)
+            bool inPeakHangThreshold = Mathf.Abs(Controller.Velocity.y) < Controller.JumpPeakHangThreshold;
+            if (inPeakHangThreshold && !IsInPeakHang) // happens when button is released early.
             {
+                IsInPeakHang = true;
                 Controller.CurrGravity *= Controller.JumpPeakGravityMult;
             }
-            else
+            if (!inPeakHangThreshold)
             {
-                Controller.AccelarateFall();
+                IsInPeakHang = false;
+                Controller.CurrGravity = Controller.FallGravity;
             }
-            if(_airControl)
+            if (_airControl)
             {
-                Controller.Move(new Vector2(FSM.Controls.ActionMap.All.Walk.ReadValue<float>(), 0f));
+                var direction = FSM.Controls.ActionMap.All.Walk.ReadValue<float>();
+                float mult = 1.0f;
+                if (IsInPeakHang)
+                {
+                    mult *= 0.5f;
+                }
+                if (WasRunning)
+                {
+                    mult *= Controller.RunSpeedMult;
+                }
+                Controller.Move(new Vector2(mult * direction, 0f));
             }
         }
     }

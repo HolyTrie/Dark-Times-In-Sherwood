@@ -5,8 +5,8 @@ namespace DTIS
 {
     public class ClimbingState : PlayerState
     {
-        public ClimbingState(string name = "Climbing") 
-        : base(name,false){}
+        public ClimbingState(ESP.States state,string name = "Climbing") 
+        : base(state,name,true){}
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // Critical!

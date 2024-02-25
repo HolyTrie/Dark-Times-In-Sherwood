@@ -37,23 +37,23 @@ namespace DTIS
         {
             return state switch
             {
-                States.Grounded => new GroundedState(),
-                States.Airborne => new AirborneState(),
-                States.Climbing => new ClimbingState(),
-                //States.Crouch => new CrouchState(),
-                States.Jump => new JumpState(airControl),
-                States.Attack => new AttackState(),
-                States.Idle => new IdleState(),
-                States.Walk => new WalkState(),
-                States.Fly => new FlyState(),
-                States.Run => new RunState(),
-                //States.Dash => new DashState(),
-                States.Fall => new FallState(airControl),
-                States.Jump2 => new Jump2State(airControl),
+                States.Grounded => new GroundedState(States.Grounded),
+                States.Airborne => new AirborneState(States.Airborne),
+                States.Climbing => new ClimbingState(States.Climbing),
+                //States.Crouch => new CrouchState(States.Crouch), //TODO!!!!!!
+                States.Jump => new JumpState(States.Jump,airControl),
+                States.Attack => new AttackState(States.Attack),
+                States.Idle => new IdleState(States.Idle),
+                States.Walk => new WalkState(States.Walk),
+                States.Fly => new FlyState(States.Fly),
+                States.Run => new RunState(States.Run),
+                //States.Dash => new DashState(States.Dash), //TODO!!!!!!!
+                States.Fall => new FallState(States.Fall ,airControl),
+                States.Jump2 => new Jump2State(States.Jump2,airControl),
                 //States.LightAttack => new LightAttackState(),
                 //States.HeavyAttack => new HeavyAttackState(),
-                States.RangedAttack => new RangedAttackState(),
-                States.HighAttackState => new HighAttackState(),
+                States.RangedAttack => new RangedAttackState(States.RangedAttack),
+                States.HighAttackState => new HighAttackState(States.HighAttackState),
                 _ => throw new System.Exception("ESP Factory 'build' method does not support entity of type " + state + "\n\t * please check the States enum in the ESP"),
             };
         }

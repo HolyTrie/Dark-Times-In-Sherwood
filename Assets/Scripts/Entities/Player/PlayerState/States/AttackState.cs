@@ -6,8 +6,9 @@ namespace DTIS
 {
     public class AttackState : PlayerState
     {
-        public AttackState(string name = "Attack") 
-        : base(name,false) 
+        private bool isShooting = false;
+        public AttackState(ESP.States state,string name = "Attack") 
+        : base(state,name,false) 
         {
 
         }
@@ -25,23 +26,20 @@ namespace DTIS
                     Debug.Log(e);
                 }
             }
+            SetSubState(ESP.States.RangedAttack); //for now only this, later we will add diffrenatiaion between attacks
+                
         }
-        public override void Exit()
+        public override void Exit(ESP.States State, ESP.States SubState)
         {
-            base.Exit();
+            base.Exit(State, SubState);
         }
         protected override void TryStateSwitch()
         {
-            FSM.StartCoroutine(AttackCommitment(.5f));
+            //
         }
         protected override void PhysicsCalculation()
         {
            //
-        }
-        IEnumerator AttackCommitment(float seconds)
-        {
-            yield return new WaitForSeconds(seconds);
-            SetStates(ESP.States.Grounded,ESP.States.Idle);
         }
     }
 }

@@ -38,7 +38,6 @@ public class StaminaBar : MonoBehaviour
             _canUseStamina = true;
             currentStamina -= amount;
             staminaBar.value = currentStamina;
-            Debug.Log("Used Stamina");
 
             if (regen != null) //if we're already regenerating stamina, no need to use coroutnie untill its done.
                 StopCoroutine(regen);

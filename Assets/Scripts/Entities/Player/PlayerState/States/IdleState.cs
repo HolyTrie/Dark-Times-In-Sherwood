@@ -4,8 +4,8 @@ using UnityEngine;
 namespace DTIS
 {
     public class IdleState:PlayerState {
-        public IdleState(string name = "idle") 
-        : base(name){}
+        public IdleState(ESP.States state, string name = "idle") 
+        : base(state,name){}
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // Critical!

@@ -5,8 +5,8 @@ namespace DTIS
 {
     public class WalkState : PlayerState
     {
-        public WalkState(string name = "walk")
-        : base(name,true) { }
+        public WalkState(ESP.States state,string name = "walk")
+        : base(state,name,true) { }
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // Critical!

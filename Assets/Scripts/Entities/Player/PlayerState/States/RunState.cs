@@ -4,8 +4,10 @@ using UnityEngine;
 namespace DTIS
 {
     public class RunState:PlayerState {
-        public RunState(string name = "run") 
-        : base(name){}
+        private bool IsRunning{get{return Controller.IsRunning;}set{Controller.IsRunning = value;}}
+        private bool WasRunning{get{return Controller.WasRunning;}set{Controller.WasRunning = value;}}
+        public RunState(ESP.States state,string name = "run") 
+        : base(state,name){}
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // Critical!
@@ -20,6 +22,15 @@ namespace DTIS
                     Debug.Log(e);
                 }
             }
+            IsRunning = true;
+            WasRunning = true;
+        }
+        public override void Exit(ESP.States State, ESP.States SubState)
+        {
+            base.Exit(State, SubState);
+            IsRunning = false;
+            if(State != ESP.States.Airborne)
+                WasRunning = false;
         }
         protected override void TryStateSwitch()
         {

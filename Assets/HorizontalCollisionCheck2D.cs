@@ -40,7 +40,7 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
     [Header("Right side raycasts settings")]
 
     protected private CollisionType _rightCollisionType = CollisionType.NONE;
-    public CollisionType RighttCollisionType{get{return _rightCollisionType;}}
+    public CollisionType RightCollisionType{get{return _rightCollisionType;}}
     protected private List<RaycastHit2D> _rightRayHitBufferList = new(_maxRays);
     [SerializeField] private Transform _rightParentTop;
     [SerializeField] private Transform _rightParentBottom;
@@ -86,7 +86,6 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
     {
         CastLeftRays();
         CastRightRays();
-        //Debug.Log($"Left Collision = {_leftCollisionType} ||| Right Collision = {_rightCollisionType}");
     }
     private void CastLeftRays()
     {
@@ -97,7 +96,7 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
         {
             pos = new(origin.x+_leftRayOffsets[i].x,origin.y+_leftRayOffsets[i].y);
             _leftRayHitBufferList.Add(Physics2D.Raycast(pos,Vector2.left,_leftRaysCastDistance,_layerMask));
-            Debug.DrawRay(pos,Vector2.left,Color.blue);
+            //Debug.DrawRay(pos,Vector2.left,Color.blue);
         }
         int count = 0;
         foreach (var hit in _leftRayHitBufferList)
@@ -127,7 +126,7 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
         {
             pos = new(origin.x+_rightRayOffsets[i].x,origin.y+_rightRayOffsets[i].y);
             _rightRayHitBufferList.Add(Physics2D.Raycast(pos,Vector2.right,_rightRaysCastDistance,_layerMask));
-            Debug.DrawRay(pos,Vector2.right,Color.red);
+            //Debug.DrawRay(pos,Vector2.right,Color.red);
         }
         int count = 0;
         foreach (var hit in _rightRayHitBufferList)
@@ -148,23 +147,4 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
         }
         _rightCollisionType = CollisionType.PARTIAL;
     }
-    /*
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        for(int i =0; i < _leftRayCount; ++i)
-        {
-            if(_leftRayOffsets[i]!=null)
-            {
-                Gizmos.DrawRay(new(_leftParentBottom.position.x+_leftRayOffsets[i].x, _leftParentBottom.position.y+_leftRayOffsets[i].y),Vector2.left);
-            }
-        }
-        Gizmos.color = Color.blue;
-        for(int i =0; i < _rightRayCount; ++i)
-        {
-            if(_leftRayOffsets[i]!=null)
-                Gizmos.DrawRay(new(_rightParentBottom.position.x+_rightRayOffsets[i].x, _rightParentBottom.position.y+_rightRayOffsets[i].y) ,Vector2.right);
-        }
-    }
-    */
 }

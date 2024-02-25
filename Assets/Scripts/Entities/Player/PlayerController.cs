@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DTIS
 {
@@ -11,6 +12,7 @@ namespace DTIS
     */
     public class PlayerController : PhysicsObject2D
     {
+        #region STATIC INSTANCE
         private static PlayerController _Instance;
         public static PlayerController Instance
         {
@@ -24,164 +26,32 @@ namespace DTIS
                 return _Instance;
             }
         }
+        #endregion
 
-        [Header("Player Physics")]
-        /*** WALK & RUN ***/
-        [SerializeField] private float _walkSpeed;
-        public float WalkSpeed{get{return _walkSpeed;}}
-        [SerializeField] private float _runSpeedMult;
-        public float RunSpeedMult{get{return _runSpeedMult;}}
-        public Vector2 Velocity{get{return _velocity;}set{_velocity = value;}}
-        
-        /*** SLOPES ***/
-        private bool _wasOnSlopePrevFrame = false;
+        #region CHECKS
+        public bool IsGrounded { get { return _gc.Grounded(); } }
+        [SerializeField] private GroundCheck _gc;
+        [SerializeField] private SlopeCheck _sc;
+        [SerializeField] private HorizontalCollisionCheck2D _hc;
 
-        /*** JUMP & FALL ***/
-        [SerializeField] private Transform _JumpHeight;
-        [SerializeField] private Transform _JumpHorizontalMove;
-        [SerializeField, Range(0f,1f)] private float _gravityMultAtPeak = 0.25f;
-        [SerializeField] private float _jumpPeakHangThreshold;
-        [SerializeField] private float _fallGravityMult = 2.5f;
-        [SerializeField] private float _weakJumpGravityMult = 2f;
-        private bool _isJumping = false;
-        private bool _isFalling = false;
-        private float _jumpForce;
-        private float _timeToJumpPeak;
-        private float _jumpGravity;
-        private Vector2 _baseGravity;
-        private Vector2 _currGravity;
-        public Vector2 CurrGravity{get{return _currGravity;}set{_currGravity = value;}}
-        public float JumpPeakHangThreshold{get{return _jumpPeakHangThreshold;}}
-        public float JumpPeakGravityMult{get{return _gravityMultAtPeak;}}
-        public bool IsJumping { get{return _isJumping;}set{_isJumping = value;}}
-        public bool IsFalling { get{return _isFalling;}set{_isFalling = value;}}
-        public float JumpForce{get{return _jumpForce;}set{_jumpForce = value;}}
+        #endregion
 
-        [Header("Animation")]
-        [SerializeField][Range(0,1)] private float _playbackSpeed = 1f;
-        [Header("Player Attributes")]
-        public int _jumpStaminaCost;
-        public int _ghostedSanityCost;
-
-        [Header("Environmentals Checkers")]
-        // [SerializeField] private bool _airControl = true;
-        [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider to be disabled on the 'crouch' player action.
-        //[SerializeField] private Transform _ceilingCheck;                           // A position marking where to check for ceilings
-
-        [Header("Shooting")]
-        [SerializeField] private float ShootDelaySeconds;
-        [SerializeField] private float ShootReloadSeconds;
-
-        //Player related vars//
-        private bool _facingRight = true;                         // A boolean marking the entity's orientation.
-        public bool FacingRight { get { return _facingRight; } private set { _facingRight = value; } }
-
-        /* *** ANIMATOR *** */
-        private Animator _animator;
-        public Animator Animator { get { return _animator; } }
-        
-        /* *** PARTICLES *** */
-        private TrailRenderer _tr;
-
-        /* *** FSM *** */
+        #region COMMONS
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
-
-        /* *** GROUND CHECK*** */
-        [SerializeField] private GroundCheck _gc;
-        public bool IsGrounded { get { return _gc.Grounded(); } }
-
-        /* *** STAMINA *** */
-        private StaminaBar _staminabar;
-        public StaminaBar StaminaBar { get { return _staminabar; } }
-
-        /* *** SANITY *** */
-        private SanityBar _sanityBar;
-        public SanityBar SanityBar { get { return _sanityBar; } }
-
-        private HpBarPlayer _hpBar;
-        public HpBarPlayer HpBar { get { return _hpBar; } }
-
-        /* *** GHOST MECHANIC *** */
-        private PlayerGhostBehaviour _playerGhostBehaviour;
-        [SerializeField] private SpriteRenderer _spriteRenderer;
-
-        /* *** SHOOTING */
-        private ClickSpawn _clickSpawn; // class to spawn object by click.
-        private bool isShooting = false;
-
+        public int GroundOnlyLayerMask { get { return _groundOnlyFilter.layerMask; } }
+        public Vector2 CurrGravity { get { return _currGravity; } set { _currGravity = value; } }
+        public Vector2 OriginalGravity { get { return _originalGravity; } private set { _originalGravity = value; } }
+        private Vector2 _originalGravity;
+        private bool _facingRight = true;                         // A boolean marking the entity's orientation.
+        public bool FacingRight { get { return _facingRight; } private set { _facingRight = value; } }
+        
         /* *** CAMERA*** */
         private Camera _mainCamera;
 
-        /* *** PLATFORMS *** */
-        private bool _passingThroughPlatform = false;
-        private LayerMask _initialGroundLayerMask;
-        public bool PassingThroughPlatform{get{return _passingThroughPlatform;}private set{_passingThroughPlatform=value;}}
+        #endregion
 
-        public void SetPassingThroughPlatform(bool value)
-        {
-            if(value)
-            {
-                _contactFilter2d.SetLayerMask(_groundOnlyFilter.layerMask);
-            }
-            else
-            {
-                _contactFilter2d.SetLayerMask(_initialGroundLayerMask);
-            }
-            PassingThroughPlatform = true;
-        }
-
-        /* *** DASH *** */
-        [Header("Dash Settings")]
-        private bool _canDash = true;
-        private bool _isDashing = false;
-        [SerializeField, Range(0.001f, 5)] private float _dashDurationSeconds = 0.2f;
-        [SerializeField] private Transform _dashLengthRef;
-        private float _dashDistance = 5f;
-        [SerializeField] private float _dashCooldown = 1f;
-        //[SerializeField] private int _ConsecutiveDashes = 2;
-        //[SerializeField] private float _ConsecutiveDashTimeframe = 0.5f;
-
-        void Awake()
-        {
-            _animator = GetComponentInChildren<Animator>();
-            _tr = GetComponent<TrailRenderer>();
-            _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic strings
-            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-            _gc = GetComponentInChildren<GroundCheck>();
-            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-            _staminabar = GetComponent<StaminaBar>();
-            _sanityBar = GetComponent<SanityBar>();
-            _hpBar = GetComponent<HpBarPlayer>();
-            _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
-        }
-        void Start()
-        {
-            _baseGravity = Physics2D.gravity;
-            _currGravity = _baseGravity;
-            var jumpHeight = Vector2.Distance(transform.position,_JumpHeight.position); // h
-            var jumpHorizontalMove = Vector2.Distance(transform.position,_JumpHeight.position); // X_h
-            var direction = _facingRight == true ? 1.0f:-1.0f;
-            var Vx = direction * _walkSpeed;
-            var Th = jumpHorizontalMove / Vx;
-            _timeToJumpPeak = Th;
-            _jumpForce = 2*jumpHeight / Th ;
-            _jumpGravity = -2*jumpHeight / (Th * Th);
-            Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
-            _initialGroundLayerMask = _contactFilter2d.layerMask;
-            _animator.speed = _playbackSpeed;
-            if(_dashLengthRef != null) 
-            {
-                _dashDistance = Vector2.Distance(transform.position,_dashLengthRef.transform.position);
-            }
-        }
-        protected private override void Update()
-        {
-            base.Update();
-            _playerGhostBehaviour.TrySetGhostStatus();
-            Flip();
-        }
-
+        #region FLIPS
         /*Flips the chacater according to his velocity*/
         protected virtual void Flip(bool overrideMovement = false)
         {
@@ -192,16 +62,18 @@ namespace DTIS
                 if (FacingRight && movingLeft)
                 {
                     FacingRight = !FacingRight;
-                    _spriteRenderer.flipX = true; // flip to face Left
+                    // _spriteRenderer.flipX = true; // flip to face Left
+                    transform.localScale = new Vector3(-1, 1, 1);
                 }
                 if (!FacingRight && movingRight)
                 {
                     FacingRight = !FacingRight;
-                    _spriteRenderer.flipX = false; // flip to face Right
+                    // _spriteRenderer.flipX = false; // flip to face Right
+                    transform.localScale = new Vector3(1, 1, 1);
                 }
             }
         }
-        private void FlipByCursorPos()
+        public void FlipByCursorPos()
         {
             Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
             bool isMouseRightToPlayer = mouseWorldPosition.x > transform.position.x;
@@ -209,67 +81,197 @@ namespace DTIS
             if (FacingRight && isMouseLeftToPlayer)
             {
                 FacingRight = !FacingRight;
-                _spriteRenderer.flipX = true; // flip to face Left
+                // _spriteRenderer.flipX = true; // flip to face Left
+                transform.localScale = new Vector3(-1, 1, 1);
+
             }
             if (!FacingRight && isMouseRightToPlayer)
             {
                 FacingRight = !FacingRight;
-                _spriteRenderer.flipX = false; // flip to face Right
+                // _spriteRenderer.flipX = false; // flip to face Right
+                transform.localScale = new Vector3(1, 1, 1);
             }
         }
+        #endregion
 
-        public virtual void Ghost()
-        {
-            GameManager.IsPlayerGhosted = !GameManager.IsPlayerGhosted;
-        }
-        public virtual void Shoot()
-        {
-            if (isShooting) return;
-            {
-                isShooting = true;
-                StartCoroutine(DelayArrow());
-
-                IEnumerator DelayArrow() // delays the user from shooting every 'ShootDelay' seconds.
-                {
-                    //Debug.Log("Arrow is loading...");
-                    yield return new WaitForSeconds(ShootDelaySeconds);
-                    _clickSpawn.spawnObject();
-                    isShooting = false;
-                }
-            }
-        }
-        //this method should check if a certain animation is still playing (like shooting, if so DO NOT SHOOT)
-        public bool isPlaying(string stateName)
-        {
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName(stateName) &&
-                    _animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
-                return true;
-            else
-                return false;
-        }
+        #region WALK & RUN
         public void Move(Vector2 move)
         {
             _targetVelocity = move * _walkSpeed;
         }
+        public bool IsRunning { get { return _isRunning; } set { _isRunning = value; } }
+        public float RunSpeedMult { get { return _runSpeedMult; } }
+        public Vector2 Velocity { get { return _velocity; } set { _velocity = value; } }
+        public float WalkSpeed { get { return _walkSpeed; } }
+
+        [Header("Player Physics")]
+        [SerializeField] private float _walkSpeed;
+        [SerializeField] private float _runSpeedMult;
+        private bool _isRunning;
+        private bool _wasRunning;
+        public bool WasRunning { get { return _wasRunning; } set { _wasRunning = value; } }
+        #endregion
+
+        #region SLOPE 
+        public Vector2 SlopeGravity { get { return _slopeGravity; } private set { _slopeGravity = value; } }
+        Vector2 _slopeGravity;
+        public bool SlopeAhead
+        {
+            get
+            {
+                bool ans;
+                if (_facingRight)
+                {
+                    ans = _sc.SlopeAhead || _hc.RightCollisionType == HorizontalCollisionCheck2D.CollisionType.PARTIAL;
+                }
+                else
+                {
+                    ans = _sc.SlopeAhead || _hc.LeftCollisionType == HorizontalCollisionCheck2D.CollisionType.PARTIAL;
+                }
+                return ans;
+            }
+        }
+        public bool IsSlopeUpwardsLeftToRight{ get { return _sc.IsSlopeUpwardsLeftToRight; }}
+        #endregion
+
+        #region JUMP & FALL
+        /// <summary>
+        /// Sets _isJumping=true and gravity to jumping gravity.
+        /// </summary> <summary>
+        /// 
+        /// </summary>
         public void Jump()
         {
             _isJumping = true;
-            CurrGravity = new(0f,_jumpGravity);
-            _velocity.y = _jumpForce;
+            var jumpForce = _jumpForce;
+            var gravity = _jumpGravity;
+            if (_wasRunning)
+            {
+                jumpForce = _strongJumpForce;
+                gravity = _strongJumpGravity;
+            }
+            CurrGravity = new(0f, gravity);
+            _velocity.y = jumpForce;
         }
         internal void AccelarateFall()
         {
-            CurrGravity = new(0f,_jumpGravity*_fallGravityMult);
-            //_velocity += (_fallGravityMult - 1) * Time.deltaTime * CurrGravity * Vector2.up; //TODO: clamp to some max value.
+            CurrGravity = new(0f, _jumpGravity * _fallGravityMult);
         }
+        public float JumpPeakHangThreshold { get { return _jumpPeakHangThreshold; } }
+        public float JumpPeakGravityMult { get { return _gravityMultAtPeak; } }
+        public Vector2 FallGravity { get { return _fallGravity; } set { _fallGravity = value; } }
+        public bool IsJumping { get { return _isJumping; } set { _isJumping = value; } }
+        public bool IsFalling { get { return _isFalling; } set { _isFalling = value; } }
+        public float JumpForce { get { return _jumpForce; } set { _jumpForce = value; } }
+        public bool IsInPeakHang { get { return _isInPeakHang; } set { _isInPeakHang = value; } }
+        public float CoyoteTime { get { return _coyoteTime; } set { _coyoteTime = value; } }
+
+        [Header("Jump Parameters")]
+        [SerializeField] private Transform _jumpVerticalPeak;
+        [SerializeField] private Transform _jumpHorizontalPeak;
+        [SerializeField] private Transform _strongJumpVerticalPeak;
+        [SerializeField] private Transform _strongJumpHorizontalPeak;
+        [SerializeField] private float _maxFallSpeed = 25f;
+        [SerializeField, Range(0f, 1f)] private float _gravityMultAtPeak = 0.25f;
+        [SerializeField] private float _jumpPeakHangThreshold;
+        [SerializeField] private float _fallGravityMult = 1.5f;
+        [SerializeField] private float _weakJumpGravityMult = 2f;
+        [SerializeField] private float _coyoteTime = 0.5f;
+        private bool _isJumping = false;
+        private bool _isFalling = false;
+        private float _jumpForce;
+        private float _timeToJumpPeak;
+        private float _jumpGravity;
+        private float _strongJumpForce;
+        private float _timeToStrongJumpPeak;
+        private float _strongJumpGravity;
+        private Vector2 _baseGravity;
+        private Vector2 _currGravity;
+        private Vector2 _fallGravity;
+        private bool _isInPeakHang;
+        #endregion
+
+        #region ANIMATION
+        [Header("Animation")]
+        [SerializeField][Range(0, 1)] private float _playbackSpeed = 1f;
+        private Animator _animator;
+        public Animator Animator { get { return _animator; } }
+
+        /* *** PARTICLES *** */
+        private TrailRenderer _tr;
+        #endregion
+
+        #region PLAYER ATTRIBUTES
+        [Header("Player Attributes")]
+        public int _jumpStaminaCost;
+        public int _ghostedSanityCost;
+        [Header("Environmentals Checkers")]
+        // [SerializeField] private bool _airControl = true;
+        [SerializeField] private Collider2D _CrouchDisableCollider;    // A collider to be disabled on the 'crouch' player action.
+
+        [Header("Shooting")]
+        [SerializeField] private float ShootDelaySeconds;
+        [SerializeField] private float ShootReloadSeconds;
+        #endregion
+
+        #region STATBARS
+        /* *** STAMINA *** */
+        private StaminaBar _staminabar;
+        public StaminaBar StaminaBar { get { return _staminabar; } }
+
+        /* *** SANITY *** */
+        private SanityBar _sanityBar;
+        public SanityBar SanityBar { get { return _sanityBar; } }
+        /* *** HP *** */
+        private HpBarPlayer _hpBar;
+        public HpBarPlayer HpBar { get { return _hpBar; } }
+        #endregion
+
+        #region GHOST MECHANIC
+        public virtual void Ghost()
+        {
+            GameManager.IsPlayerGhosted = !GameManager.IsPlayerGhosted;
+        }
+        private PlayerGhostBehaviour _playerGhostBehaviour;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
+
+        #endregion
+
+        #region SHOOTING
+        private ClickSpawn _clickSpawn; // class to spawn object by click.
+        private bool _isShooting = false;
+        public bool isShooting { get { return _isShooting; } set { _isShooting = value; } }
+        #endregion
+
+        #region PLATFORMS
+        /* *** PLATFORMS *** */
+        private bool _passingThroughPlatform = false;
+        private LayerMask _initialGroundLayerMask;
+        public bool PassingThroughPlatform { get { return _passingThroughPlatform; } private set { _passingThroughPlatform = value; } }
+
+        public void SetPassingThroughPlatform(bool value)
+        {
+            if (value)
+            {
+                _contactFilter2d.SetLayerMask(_groundOnlyFilter.layerMask);
+            }
+            else
+            {
+                _contactFilter2d.SetLayerMask(_initialGroundLayerMask);
+            }
+            PassingThroughPlatform = true;
+        }
+        #endregion
+
+        #region DASH
         public void Dash()
         {
-            if(_canDash)
+            if (_canDash)
             {
-                var direction = _facingRight == true ? Vector2.right:Vector2.left;
-                var hit = Physics2D.Raycast(transform.position,direction,_dashDistance,_contactFilter2d.layerMask);
-                var distance = Vector2.Distance(transform.position,hit.point);
-                if(distance < _dashDistance)
+                var direction = _facingRight == true ? Vector2.right : Vector2.left;
+                var hit = Physics2D.Raycast(transform.position, direction, _dashDistance, _contactFilter2d.layerMask);
+                var distance = Vector2.Distance(transform.position, hit.point);
+                if (distance < _dashDistance)
                 {
                     Debug.Log($"hit dist = {distance}");
                     _dashDistance = distance;
@@ -288,20 +290,94 @@ namespace DTIS
             _isDashing = false;
             yield return new WaitForSeconds(_dashCooldown);
             _canDash = true;
-            //_velocity.x = 0f;
+        }
+        [Header("Dash Settings")]
+        //[SerializeField] private int _ConsecutiveDashes = 2;
+        //[SerializeField] private float _ConsecutiveDashTimeframe = 0.5f;
+        [SerializeField, Range(0.001f, 5)] private float _dashDurationSeconds = 0.2f;
+        [SerializeField] private Transform _dashLengthRef;
+        [SerializeField] private float _dashCooldown = 1f;
+        private float _dashDistance = 5f;
+        private bool _canDash = true;
+        private bool _isDashing = false;
+        public Vector2 Position { get { return _rb2d.position; } }
+        #endregion
+       
+        #region INITIALIZATION
+        void Awake()
+        {
+            _animator = GetComponentInChildren<Animator>();
+            _tr = GetComponent<TrailRenderer>();
+            _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic strings
+            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+            _gc = GetComponentInChildren<GroundCheck>();
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            _staminabar = GetComponent<StaminaBar>();
+            _sanityBar = GetComponent<SanityBar>();
+            _hpBar = GetComponent<HpBarPlayer>();
+            _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
+        }
+        void Start()
+        { 
+            _baseGravity = Physics2D.gravity; // storing unitys gravity vector if its ever needed
+            _originalGravity = _baseGravity; 
+            _currGravity = _originalGravity;
+            _slopeGravity = _originalGravity * 2f;
+            _isRunning = false;
+            _wasRunning = false;
+            InitJumpParams();
+            _initialGroundLayerMask = _contactFilter2d.layerMask;
+            _animator.speed = _playbackSpeed;
+            if (_dashLengthRef != null)
+            {
+                _dashDistance = Vector2.Distance(transform.position, _dashLengthRef.transform.position);
+            }
+        }
+
+        void InitJumpParams()
+        {
+            _isInPeakHang = false;
+            _fallGravity = _baseGravity * _fallGravityMult;
+            var Height = Vector2.Distance(transform.position, _jumpVerticalPeak.position); // h
+            var HorizontalDistToPeak = Vector2.Distance(transform.position, _jumpHorizontalPeak.position); // X_h
+            var Vx = _walkSpeed;
+            var Th = HorizontalDistToPeak / Vx;
+            _timeToJumpPeak = Th;
+            _jumpForce = 2 * Height / Th;
+            _jumpGravity = -2 * Height / Th; // (Th * Th);
+            Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
+            // strong jump
+            Height = Vector2.Distance(transform.position, _strongJumpVerticalPeak.position); // h
+            HorizontalDistToPeak = Vector2.Distance(transform.position, _strongJumpHorizontalPeak.position); // X_h
+            Vx = _walkSpeed * _runSpeedMult;
+            Th = HorizontalDistToPeak / Vx;
+            _strongJumpForce = 2 * Height / Th;
+            _strongJumpGravity = -2 * Height / Th; // (Th * Th);
+            Debug.Log($"strong jump force = {_strongJumpForce} | strong jump gravity = {_strongJumpGravity}");
+        }
+        #endregion
+
+        #region UPDATES & PHYSICS
+        public void AddForce(Vector2 force)
+        {
+            _targetVelocity += force;
+        }
+        protected private override void Update()
+        {
+            base.Update();
+            _playerGhostBehaviour.TrySetGhostStatus();
+            Flip();
         }
         protected private override void FixedUpdate()
         {
-            if(_isDashing)
+            if (_isDashing)
             {
-                _velocity = new(0f,0f);
+                _velocity = new(0f, 0f);
                 var direction = _facingRight ? 1.0f : -1.0f;
                 var velocity = _dashDistance / _dashDurationSeconds;// S = V * T --> S/T = V
                 _gravityModifier = 0f; //re applied by a corutine!
-                _targetVelocity = new(direction * velocity,0f);
+                _targetVelocity = new(direction * velocity, 0f);
             }
-
-            _wasOnSlopePrevFrame = _onSlope;
             _grounded = false;
             _onSlope = false;
             var acc = Time.deltaTime * _gravityModifier * CurrGravity;
@@ -313,82 +389,84 @@ namespace DTIS
 
             Vector2 moveX = moveAlongGround * deltaPosition;
             Vector2 moveY = Vector2.up * deltaPosition.y;
-            
+
             Movement(moveY, true); // vertical movement
             Movement(moveX, false); // horizontal movement
+            _velocity.y = Math.Clamp(_velocity.y, -_maxFallSpeed, float.MaxValue);
 
-            // predict future position using a simplified euler integration (0.5 pixel error rate, resets when landing so it does not accumulate)
-            var futurePos = _velocity * Time.deltaTime + 0.5f * Time.deltaTime * acc; // pos = velocity*deltaTime +0.5*accelaration*(deltaTime^2)
-            var futureVel = acc; // vel = accelaration * deltaTime
-            futurePos = (Vector2)transform.position+futurePos;
-            Debug.Log($"future position = {futurePos} | future velocity = {futureVel}");
+            // predict future position using a simplified euler integration (~0.5 pixel error rate, resets when landing so it does not accumulate)
+            //var futurePos = _velocity * Time.deltaTime + 0.5f * Time.deltaTime * acc; // pos = velocity*deltaTime +0.5*accelaration*(deltaTime^2)
+            //var futureVel = acc; // vel = accelaration * deltaTime
+            //futurePos = (Vector2)transform.position + futurePos;
         }
-
         protected private override void Movement(Vector2 move, bool yMovement)
         {
             float distance = move.magnitude;
-            bool setOnce = false;
-
             if (distance > _minMoveDistance)
             {
                 int count = _rb2d.Cast(move, _contactFilter2d, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
                 _hitBufferList.Clear();
-                float collisionDist;
-                Vector2 closestCollision;
-                if(count > 0)
+                if (count > 0)
                 {
-                    collisionDist = _hitBuffer[0].distance;
-                    closestCollision = _rb2d.ClosestPoint(_hitBuffer[0].point);
                     _hitBufferList.Add(_hitBuffer[0]);
                 }
-                foreach(var hit in _hitBufferList)
+                foreach (var hit in _hitBufferList)
                 {
                     Vector2 currentNormal = hit.normal;
-                    if(currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the set value.
+                    /*
+                    Vector2 slopeNormal = hit.normal;
+                    RaycastHit2D slopeHit = Physics2D.Raycast(transform.position, -Vector2.up, 1f, _groundOnlyFilter.layerMask);
+		            if (slopeHit.collider != null && Mathf.Abs(slopeHit.normal.x) > 0.1f) 
                     {
-                        if(!setOnce)
-                        {
-                            _grounded = true;
-                            _onSlope = currentNormal.y > 0 && currentNormal.y < 1;
-                            setOnce = true;
-                        }
-                        if(yMovement)
+                        slopeNormal = slopeHit.normal;
+                        var angle = Mathf.Abs(slopeNormal.x);
+                        if(angle < 0 && angle <1)
+                            _onSlope = true;
+                    }
+                    */
+                    if (currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the set value.
+                    {
+                        _grounded = true;
+                        if (yMovement)
                         {
                             _groundNormal = currentNormal;
-                            if(!_onSlope)
-                                currentNormal.x = 0;
+                            currentNormal.x = 0;
                         }
                     }
-                    float projection = Vector2.Dot(_velocity,currentNormal);
-                    if(projection < 0 ) 
+                    float projection = Vector2.Dot(_velocity, currentNormal);
+                    if (projection < 0)
                     {
-                        //Debug.Log($"vel before = {_velocity} | ymove = {yMovement} | current normal = {currentNormal} || projection = {projection}");
+                        //Debug.Log($"vel = {_velocity} | newVel = {_velocity -= projection * currentNormal} | current normal = {currentNormal} | projection = {projection} |");
                         _velocity -= projection * currentNormal; // cancel out the velocity that would be lost on impact.
-                        //Debug.Log($"new vel = {_velocity} | ymove = {yMovement} | move projection = {projection * currentNormal}");
                     }
 
-                    float modifiedDistance = hit.distance - _shellRadius; 
+                    float modifiedDistance = hit.distance - _shellRadius;
                     distance = modifiedDistance < distance ? modifiedDistance : distance;
                 }
             }
-            _rb2d.position += move.normalized * distance;
+            var distanceToMove = move.normalized * distance;
+            _rb2d.position += distanceToMove;
+            //_rb2d.MovePosition(_rb2d.position + move.normalized * distance);
             // DEBUG:
             var _color = Color.white;
-            if(!_grounded)
+            if (!_grounded)
             {
                 _color = Color.magenta;
                 //Debug.Log($"grounded = {_grounded} | on slope prev frame = {_wasOnSlopePrevFrame} | on slope = {_onSlope} | rb vel = {_rb2d.velocity} | y movement = {yMovement}");
             }
             var direction = _rb2d.velocity.x >= 0f ? Vector2.right : Vector2.left;
-            Debug.DrawRay(transform.position,direction,_color,2.5f);
+            //Debug.DrawRay(transform.position,direction,_color,7f);
         }
+        #endregion
 
-        private void OnDrawGizmos() 
+        #region DEBUG
+        private void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
             Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x);
-            Gizmos.DrawRay(transform.position,moveAlongGround);
+            //Gizmos.DrawRay(transform.position,moveAlongGround);
         }
+        #endregion
     }
 }
 

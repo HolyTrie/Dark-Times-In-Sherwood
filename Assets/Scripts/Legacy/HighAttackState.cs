@@ -5,8 +5,8 @@ namespace DTIS
 {
     public class HighAttackState : PlayerState
     {
-        public HighAttackState(string name = "HighAttack") 
-        : base(name,true){}
+        public HighAttackState(ESP.States state, string name = "HighAttack") 
+        : base(state, name,true){}
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // Critical!
@@ -23,7 +23,7 @@ namespace DTIS
             }
             // FSM.groundCheck.Grounded = true;
             // if(controller.isPlaying("HighAttack"))
-            Controller.Shoot(); // need to add delay according to frames.
+            // Controller.Shoot(); // need to add delay according to frames.
         }
         protected override void TryStateSwitch()
         {

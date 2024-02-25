@@ -25,7 +25,6 @@ public class HpBarEntity : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("HP:"+ currentHP);
         currentHP = maxHP;
         hpBar.maxValue = maxHP;
         hpBar.value = currentHP;
@@ -36,7 +35,6 @@ public class HpBarEntity : MonoBehaviour
 
     public void depleteHp(int amount)
     {
-        Debug.Log("HITS PLAYER");
         currentHP -= amount;
         hpBar.value = currentHP;
 

@@ -7,6 +7,11 @@ namespace DTIS
 {
     public static class Util
     {
+        public static PlayerController GetPlayerController()
+        {
+            GameObject.FindGameObjectWithTag("Player").TryGetComponent(out PlayerController _pc);
+            return _pc;
+        }
         public static IEnumerator Wait(float seconds = 1f)
         {
             yield return new WaitForSeconds(seconds);
@@ -16,11 +21,6 @@ namespace DTIS
         {
             yield return new WaitForSeconds(ttl);
             GameObject.Destroy(gameObject);
-        }
-
-        public static class Constants
-        {
-            static public readonly int MaxActionsMidAir = 2;
         }
 
         public static Transform[] NearestNTransforms(IDictionary<int, Transform> transforms, Vector3 refPoint, int N = 1)

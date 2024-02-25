@@ -15,6 +15,7 @@ TagManager:
   - Interactable
   - Pusheable
   - DialogueChoice
+  - Enemy
   layers:
   - Default
   - TransparentFX
