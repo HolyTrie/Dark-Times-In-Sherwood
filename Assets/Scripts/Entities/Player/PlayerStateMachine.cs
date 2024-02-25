@@ -117,40 +117,13 @@ namespace DTIS
         {
             _state?.Update();
             _subState?.Update();
+            Debug.Log($"State = {_state.Name} | SubState = {_subState.Name}");
         }
 
         protected virtual void FixedUpdate()
         {
             _state?.FixedUpdate();
             _subState?.FixedUpdate();
-        }
-
-        // prints the state of the player above his head//
-        private void OnGUI()
-        {
-            if (_debug)
-            {
-                var position = Camera.main.WorldToScreenPoint(_controller.gameObject.transform.position);
-                float x, y, width, height;
-                x = position.x - 50;
-                y = Screen.height - position.y - 215;
-                int textSize = 25;
-                int smallerTextSize = textSize - 5;
-                width = 200f;
-                height = 100f;
-                //Debug.Log(String.Format("x = {0}, y = {1}, width = {2}, height = {3}",x,y,width,height));
-                Rect MainState = new Rect(x, y, width, height);
-                Rect SubState = new Rect(x + 30f, y + 25f, width, height);
-                GUILayout.BeginArea(MainState);
-                string content = _state != null ? _state.Name : "(no current state)";
-                GUILayout.Label($"<color='orange'><size={textSize}>{content}</size></color>");
-                GUILayout.EndArea();
-
-                GUILayout.BeginArea(SubState);
-                content = _subState != null ? _subState.Name : "(no current state)";
-                GUILayout.Label($"<color='red'><size={smallerTextSize}>{content}</size></color>");
-                GUILayout.EndArea();
-            }
         }
     }
 }

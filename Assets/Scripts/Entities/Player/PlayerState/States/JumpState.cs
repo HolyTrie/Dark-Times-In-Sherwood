@@ -15,6 +15,7 @@ namespace DTIS
         }
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
+            Debug.Log("entered jump");
             base.Enter(controller,fsm); // Critical!
             if (HasAnimation)
             {
@@ -54,7 +55,6 @@ namespace DTIS
             {
                 if(!IsInPeakHang) // enter peak hang mode when in threshold 
                 {
-                    Debug.Log("Jump State Entered PeakHang!");
                     IsInPeakHang = true;
                     Controller.CurrGravity *= Controller.JumpPeakGravityMult; 
                 }

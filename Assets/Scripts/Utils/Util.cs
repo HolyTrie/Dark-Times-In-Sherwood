@@ -18,11 +18,6 @@ namespace DTIS
             GameObject.Destroy(gameObject);
         }
 
-        public static class Constants
-        {
-            static public readonly int MaxActionsMidAir = 2;
-        }
-
         public static Transform[] NearestNTransforms(IDictionary<int, Transform> transforms, Vector3 refPoint, int N = 1)
         { //https://forum.unity.com/threads/clean-est-way-to-find-nearest-object-of-many-c.44315/
             return transforms.Values.ToArray()

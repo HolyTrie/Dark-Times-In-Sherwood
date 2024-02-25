@@ -6,10 +6,11 @@ namespace DTIS
 {
     public class AirborneState : PlayerState
     {
-        private readonly int _maxActions = Util.Constants.MaxActionsMidAir;
+        private readonly int _maxJumps = 2;
+        private readonly int _maxAttacks = 1; //bow/slam
         private const float _epsilon = 0.001f;
-        private int _actionsMidAir = 0;
-        private int _arrowsMidAir = 0;
+        private int _jumpsMidAir = 0;
+        private int _attacksMidAir = 0;
         private bool _isInCoyoteTime;
         public AirborneState(ESP.States state, string name = "Airborne")
         : base(state, name, false)
@@ -19,8 +20,8 @@ namespace DTIS
         public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
             base.Enter(controller, fsm); // Critical!
-            _actionsMidAir = 1;
-            _arrowsMidAir = 1;
+            _jumpsMidAir = 1; //this is 1 to account for the jump that initiated this state (or missed jump when falling from platforms)
+            _attacksMidAir = 0;
             if (HasAnimation)
             {
                 try
@@ -52,20 +53,21 @@ namespace DTIS
             {
                 SetStates(ESP.States.Grounded, ESP.States.Idle);
             }
-            else if (_actionsMidAir < _maxActions)
+            else if (_jumpsMidAir < _maxJumps)
             {
-
                 if (ActionMap.Jump.WasPressedThisFrame())
                 {
                     bool canJump = true;
+                    /*
                     if (Controller.StaminaBar != null)
                         if (Controller.StaminaBar.canUseStamina)
                             canJump = false;
+                    */
                     if (canJump)
                     {
                         if (!_isInCoyoteTime)
                         {
-                            ++_actionsMidAir;
+                            ++_jumpsMidAir;
                             SetSubState(ESP.States.Jump2);
                         }
                         else
@@ -75,19 +77,12 @@ namespace DTIS
                         }
                     }
                 }
-                /*TODO: Dash
-                else if(ActionMap.Dash.WasPressedThisFrame())
-                {
-                    ++_actionsMidAir;
-                    SetSubState(ESP.States.Dash);
-                }
-                */
             }
-            if (_arrowsMidAir < _maxActions)
+            if (_attacksMidAir < _maxAttacks)
             {
                 if (ActionMap.Shoot.WasPressedThisFrame())
                 {
-                    ++_arrowsMidAir;
+                    ++_attacksMidAir;
                     SetState(ESP.States.Attack);
                 }
             }

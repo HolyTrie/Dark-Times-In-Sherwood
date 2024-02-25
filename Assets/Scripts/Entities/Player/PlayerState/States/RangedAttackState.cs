@@ -47,12 +47,15 @@ namespace DTIS
             FSM.Controls.enabled = false;
             yield return new WaitForSeconds(seconds);
             FSM.Controls.enabled = true;
-            SetStates(ESP.States.Grounded, ESP.States.Idle);
+            if (FSM.PrevState.Type == ESP.States.Airborne)
+                SetStates(ESP.States.Airborne, ESP.States.Fall);
+            if (FSM.PrevState.Type == ESP.States.Grounded)
+                SetStates(ESP.States.Grounded, ESP.States.Idle);
         }
         IEnumerator GravityWaitsForAttack(float seconds)
         {
             var prev = Controller.CurrGravity;
-            Controller.CurrGravity *= 0.01f;
+            Controller.CurrGravity = new(0f,0f);
             Controller.Velocity = Vector2.zero;
             yield return new WaitForSeconds(seconds);
             Controller.CurrGravity = prev;

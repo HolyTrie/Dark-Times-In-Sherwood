@@ -41,10 +41,5 @@ namespace DTIS
         {
            //
         }
-        IEnumerator AttackCommitment(float seconds)
-        {
-            yield return new WaitForSeconds(seconds);
-            SetStates(ESP.States.Grounded,ESP.States.Idle);
-        }
     }
 }
