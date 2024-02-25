@@ -11,7 +11,7 @@ public class PhysicsObject2D : MonoBehaviour
     protected const float _shellRadius = 0.01f;
     [Header("Base Physics")]
     [SerializeField] protected private float _gravityModifier = 1f;
-    [SerializeField] protected private float _minGroundNormalY = 0.65f;
+    [SerializeField] protected private float _minGroundNormalY = 0.1f;
     [Tooltip("primary ground filter - what's considered 'ground' most of the time'")]
     [SerializeField] protected ContactFilter2D _contactFilter2d;
     [Tooltip("secondary ground filter for when disabling other layers and only a base 'ground' layer is desired")]
@@ -73,10 +73,7 @@ public class PhysicsObject2D : MonoBehaviour
                     if(yMovement)
                     {
                         _groundNormal = currentNormal;
-                        if(!_onSlope)
-                            currentNormal.x = 0;
-                        else
-                            currentNormal = Vector2.down;
+                        currentNormal.x = 0;
                     }
                 }
                 float projection = Vector2.Dot(_velocity, currentNormal); // differnece between velocity and currentNormal to know how much to subtract if the player collides with a wall/ceiling
