@@ -17,17 +17,7 @@ namespace DTIS
         {
             Debug.Log("entered jump2");
             base.Enter(controller, fsm); // Critical!
-            if (HasAnimation)
-            {
-                try
-                {
-                    controller.Animator.Play(Name);
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                }
-            }
+            SetAnimations();
             if (Controller.StaminaBar != null)
                 Controller.StaminaBar.UseStamina(Controller._jumpStaminaCost); // jump co
             if (IsInPeakHang)

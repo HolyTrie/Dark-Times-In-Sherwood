@@ -23,22 +23,7 @@ namespace DTIS
             SetAnimations();
             _jumpsMidAir = 1; //this is 1 to account for the jump that initiated this state (or missed jump when falling from platforms)
             _attacksMidAir = 0;
-            Controller.JumpBufferCounter = 0f;
             fsm.StartCoroutine(CoyoteTime());
-        }
-        private void SetAnimations()
-        {
-            if (HasAnimation)
-            {
-                try
-                {
-                    Controller.Animator.Play(Name);
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                }
-            }
         }
         public override void Exit(ESP.States State, ESP.States SubState)
         {

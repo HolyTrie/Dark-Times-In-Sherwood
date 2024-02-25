@@ -53,6 +53,7 @@ namespace DTIS
         }
         public virtual void Exit(ESP.States State, ESP.States SubState)
         {
+            Controller.Animator.StopPlayback();
             /* 
             This is saved here for potential future improvements, triggers could be used with this 
             fsm but pose more problems with how we flip character - more research later!
@@ -79,6 +80,22 @@ namespace DTIS
         }
         protected abstract void TryStateSwitch();
         protected abstract void PhysicsCalculation();
+        
+        protected private virtual void SetAnimations()
+        {
+            if (HasAnimation)
+            {
+                try
+                {
+                    Controller.Animator.StopPlayback();
+                    Controller.Animator.Play(Name);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
+        }
 
     }
 }

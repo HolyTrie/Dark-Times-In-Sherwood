@@ -17,29 +17,14 @@ namespace DTIS
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // Critical!
+            SetAnimations();
+            Controller.CurrGravity = OriginalGravity;
             if(Controller.JumpBufferCounter > 0)
             {
                 SetStates(ESP.States.Airborne,ESP.States.Jump);
             }
             else
-            {
-                SetAnimations();
-                Controller.CurrGravity = OriginalGravity;
-            }
-        }
-        private void SetAnimations()
-        {
-            if (HasAnimation)
-            {
-                try
-                {
-                    Controller.Animator.Play(Name);
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                }
-            }
+                Controller.JumpBufferCounter = 0f;
         }
         protected override void TryStateSwitch()
         {

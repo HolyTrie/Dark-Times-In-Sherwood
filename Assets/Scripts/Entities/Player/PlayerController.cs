@@ -39,11 +39,11 @@ namespace DTIS
         #region COMMONS
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
-        public int GroundOnlyLayerMask { get { return _groundOnlyFilter.layerMask; } }
+        public int GroundOnlyLayerMask { get { return _groundOnlyMask; } }
         public Vector2 CurrGravity { get { return _currGravity; } set { _currGravity = value; } }
         public Vector2 OriginalGravity { get { return _originalGravity; } private set { _originalGravity = value; } }
         private Vector2 _originalGravity;
-        private bool _facingRight = true;                         // A boolean marking the entity's orientation.
+        private bool _facingRight = true; // A boolean marking the entity's orientation.
         public bool FacingRight { get { return _facingRight; } private set { _facingRight = value; } }
         
         /* *** CAMERA*** */
@@ -259,11 +259,11 @@ namespace DTIS
         {
             if (value)
             {
-                _contactFilter2d.SetLayerMask(_groundOnlyFilter.layerMask);
+                _contactFilter2D.SetLayerMask(_groundOnlyMask);
             }
             else
             {
-                _contactFilter2d.SetLayerMask(_initialGroundLayerMask);
+                _contactFilter2D.SetLayerMask(_initialGroundLayerMask);
             }
             PassingThroughPlatform = true;
         }
@@ -275,7 +275,7 @@ namespace DTIS
             if (_canDash)
             {
                 var direction = _facingRight == true ? Vector2.right : Vector2.left;
-                var hit = Physics2D.Raycast(transform.position, direction, _dashDistance, _contactFilter2d.layerMask);
+                var hit = Physics2D.Raycast(transform.position, direction, _dashDistance, _contactFilter2D.layerMask);
                 var distance = Vector2.Distance(transform.position, hit.point);
                 if (distance < _dashDistance)
                 {
@@ -332,7 +332,7 @@ namespace DTIS
             _isRunning = false;
             _wasRunning = false;
             InitJumpParams();
-            _initialGroundLayerMask = _contactFilter2d.layerMask;
+            _initialGroundLayerMask = _contactFilter2D.layerMask;
             _animator.speed = _playbackSpeed;
             if (_dashLengthRef != null)
             {
@@ -410,7 +410,7 @@ namespace DTIS
             float distance = move.magnitude;
             if (distance > _minMoveDistance)
             {
-                int count = _rb2d.Cast(move, _contactFilter2d, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
+                int count = _rb2d.Cast(move, _contactFilter2D, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
                 _hitBufferList.Clear();
                 if (count > 0)
                 {
