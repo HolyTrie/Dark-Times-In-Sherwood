@@ -128,7 +128,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f306822765d4e934a90567feccd781f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
+  force: 15
+  DMG: 5
+  Ground:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!60 &6375425070069452676
 PolygonCollider2D:
   m_ObjectHideFlags: 0

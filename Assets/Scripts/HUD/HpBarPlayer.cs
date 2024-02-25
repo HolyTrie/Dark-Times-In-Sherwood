@@ -25,7 +25,6 @@ public class HpBarPlayer : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("HP:"+ currentHP);
         hpBar.maxValue = maxHP;
         hpBar.value = currentHP;
         
@@ -35,7 +34,7 @@ public class HpBarPlayer : MonoBehaviour
 
     public void depleteHp(int amount)
     {
-        Debug.Log("HITS PLAYER");
+        // Debug.Log("HITS PLAYER");
         currentHP -= amount;
         hpBar.value = currentHP;
 

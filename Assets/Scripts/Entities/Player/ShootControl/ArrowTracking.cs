@@ -5,7 +5,6 @@ namespace DTIS
     public class ArrowTracking : MonoBehaviour
     {
         private Rigidbody2D _rigidbody2D;
-
         void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -17,7 +16,7 @@ namespace DTIS
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward); // appllying the caluclated angle.
         }
-        private void OnCollisionEnter2D(Collision2D other) 
+        private void OnCollisionEnter2D(Collision2D other)
         {
             enabled = false;
         }

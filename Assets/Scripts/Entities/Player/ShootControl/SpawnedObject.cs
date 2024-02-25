@@ -5,6 +5,8 @@ namespace DTIS
     public class SpawnedObject : MonoBehaviour
     {
         [SerializeField] float force;
+        [SerializeField] int DMG;
+        [SerializeField] LayerMask Ground;
         private Vector3 mouseWorldPosition;
         private Camera _mainCamera;
         private Rigidbody2D _rigidbody2D;
@@ -25,12 +27,13 @@ namespace DTIS
         /*if arrow hits floor it will destroy on impact (maybe do this better, but for now will suffice)*/
         void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.tag == "Floor")
+            if (other.tag == "Enemy") // Damage to enemies //other.gameObject.layer == 1 << 10
             {
-                // Debug.Log("Arrow Destroyed");
+                other.gameObject.GetComponent<HpBarEntity>().depleteHp(DMG);
                 Destroy(this.gameObject);
             }
-
+            if(other.gameObject.layer ==  7) // ground layer
+                Destroy(this.gameObject);
         }
     }
 }

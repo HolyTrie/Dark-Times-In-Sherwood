@@ -19,7 +19,6 @@ namespace DTIS
         public override NodeState Evaluate()
         {
             Transform target = (Transform)GetData("target");
-
             if (target == null || Math.Abs(_AIcontroller.transform.position.x - target.position.x) > _AIcontroller.AttackRange) // player not in range or target is not available.
             {
                 // Debug.Log("Player not in attack range");
