@@ -115,7 +115,7 @@ namespace DTIS
 
         public void DropItems()
         {
-            this.transform.GetComponent<ItemDatabase>().SpawnItem(this.transform);
+            this.transform.GetComponent<ItemDatabase>().HealthPotion.SpawnItem(this.transform);
             Destroy(this.gameObject);
         }
 
