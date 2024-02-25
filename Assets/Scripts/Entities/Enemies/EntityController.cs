@@ -29,11 +29,15 @@ namespace DTIS
 
         [Tooltip("The range that the entity can see and start chasing the player")]
         [SerializeField] private float _FieldOfView;
-
+        
         [Tooltip("The range that the entity will start attacking")]
-        [SerializeField] private float _AttackRange;
+        [SerializeField] private float _XAttackRange;
+
+        [Tooltip("The Y axis that the player can see and chase/attack the player")]
+        [SerializeField] private float _YAttackRange;
         [SerializeField] private float Scale;
-        public float AttackRange { get { return _AttackRange; } set { _AttackRange = value; } }
+        public float YAttackRange { get { return _YAttackRange; } set { _YAttackRange = value; } }
+        public float XAttackRange { get { return _XAttackRange; } set { _XAttackRange = value; } }
         public float FieldOfView { get { return _FieldOfView; } set { _FieldOfView = value; } }
 
         [Header("Environmentals Checkers")]
@@ -95,7 +99,7 @@ namespace DTIS
             {
                 transform.localScale = new Vector3(-Scale, transform.localScale.y, transform.localScale.z);
                 // If target is to the right, flip sprite to face right
-                transform.GetComponent<SpriteRenderer>().flipX = false;
+                // transform.GetComponent<SpriteRenderer>().flipX = false;
             }
             else
             {
