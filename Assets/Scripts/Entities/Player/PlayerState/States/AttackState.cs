@@ -6,6 +6,7 @@ namespace DTIS
 {
     public class AttackState : PlayerState
     {
+        private bool isShooting = false;
         public AttackState(ESP.States state,string name = "Attack") 
         : base(state,name,false) 
         {
@@ -25,6 +26,8 @@ namespace DTIS
                     Debug.Log(e);
                 }
             }
+            SetSubState(ESP.States.RangedAttack); //for now only this, later we will add diffrenatiaion between attacks
+                
         }
         public override void Exit(ESP.States State, ESP.States SubState)
         {
@@ -32,7 +35,7 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            FSM.StartCoroutine(AttackCommitment(.5f));
+            //
         }
         protected override void PhysicsCalculation()
         {

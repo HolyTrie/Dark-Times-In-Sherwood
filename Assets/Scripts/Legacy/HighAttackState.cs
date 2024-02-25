@@ -23,7 +23,7 @@ namespace DTIS
             }
             // FSM.groundCheck.Grounded = true;
             // if(controller.isPlaying("HighAttack"))
-            Controller.Shoot(); // need to add delay according to frames.
+            // Controller.Shoot(); // need to add delay according to frames.
         }
         protected override void TryStateSwitch()
         {

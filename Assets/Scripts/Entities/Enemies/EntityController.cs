@@ -93,18 +93,19 @@ namespace DTIS
         {
             if (targetX > transform.position.x)
             {
-                // transform.localScale = new Vector3(-Scale, transform.localScale.y, transform.localScale.z);
+                transform.localScale = new Vector3(-Scale, transform.localScale.y, transform.localScale.z);
                 // If target is to the right, flip sprite to face right
                 transform.GetComponent<SpriteRenderer>().flipX = false;
             }
             else
             {
-                // transform.localScale = new Vector3(Scale, transform.localScale.y, transform.localScale.z);
+                transform.localScale = new Vector3(Scale, transform.localScale.y, transform.localScale.z);
                 // If target is to the left, flip sprite to face left
-                transform.GetComponent<SpriteRenderer>().flipX = true;
+                // transform.GetComponent<SpriteRenderer>().flipX = true;
             }
 
         }
+
         //private void Walk();
         //private void Jump();
         //private void Run();

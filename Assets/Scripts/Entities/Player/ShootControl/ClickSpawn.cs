@@ -10,6 +10,7 @@ namespace DTIS
     {
         [SerializeField] protected GameObject prefabToSpawn;
         [SerializeField] Transform spawnPosition;
+        [SerializeField] Transform launchPoint; 
         [SerializeField] private float _timeToLiveSeconds = 10f;
         private Vector3 mouseWorldPosition;
         private Camera _mainCamera;
@@ -24,9 +25,9 @@ namespace DTIS
             //Debug.Log("Spawning a new object");
             mouseWorldPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
             //Set positions//
-            Vector3 rotation = mouseWorldPosition - transform.position;
+            Vector3 rotation = mouseWorldPosition - launchPoint.position;
             float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, rotZ);
+            launchPoint.rotation = Quaternion.Euler(0, 0, rotZ);
             var go = Instantiate(prefabToSpawn, spawnPosition.position, Quaternion.identity);
             StartCoroutine(Util.DestroyGameObjectCountdown(go,_timeToLiveSeconds));
         }
