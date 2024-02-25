@@ -117,7 +117,7 @@ namespace DTIS
         {
             _state?.Update();
             _subState?.Update();
-            Debug.Log($"State = {_state.Name} | SubState = {_subState.Name}");
+            //Debug.Log($"State = {_state.Name} | SubState = {_subState.Name}");
         }
 
         protected virtual void FixedUpdate()
