@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: HealthPotion
   m_EditorClassIdentifier: 
   <id>k__BackingField: HealthPotion
-  displayName: HealthPotion
-  SpriteRenderer: {fileID: 0}
-  levelRequirement: 0
-  health: 30
-  gold: 0
-  experienceReward: 0
+  potionName: Hp
+  ItemSprite: {fileID: 21300000, guid: f8f7a46d2f0718e4092d71df6fe2a61b, type: 3}
+  healingAmount: 30
