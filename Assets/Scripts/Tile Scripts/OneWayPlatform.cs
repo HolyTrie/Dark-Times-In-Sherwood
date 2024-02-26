@@ -13,8 +13,7 @@ public class OneWayPlatform : MonoBehaviour
     private Collider2D _collider;
     [SerializeField] private GameObject _player;
     private PlayerController _pc;
-    [Tooltip("optional game object attached ahead of player for detection")]
-    [SerializeField] private GameObject _playerSensor;
+    private PlayerControls _controls;
     private Collider2D[] _playerColliders;
     void Awake() {
         if(_player == null)
@@ -29,6 +28,7 @@ public class OneWayPlatform : MonoBehaviour
         {
             _pc = _player.GetComponent<PlayerController>();
         }
+        _controls = _player.GetComponent<PlayerControls>();
     }
     private void IgnorePlayerCollision(bool value)
     {
@@ -37,14 +37,14 @@ public class OneWayPlatform : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other) 
     {
-        if(other.gameObject != _player && other.gameObject != _playerSensor) 
+        if(other.gameObject != _player && !other.gameObject.CompareTag("PlayerSensor")) 
             return;
         bool allowsGoingDown = Type != OneWayPlatforms.GoingDown;
         bool isPlayerBelow = GetContactAngle(other) < 0; //negative angle --> player is collidng form below
         if(isPlayerBelow && allowsGoingDown)
         {
             IgnorePlayerCollision(true); // ignore player colliders
-            _player.GetComponent<PlayerController>().SetPassingThroughPlatform(true);
+            _pc.SetPassingThroughPlatform(true);
             StartCoroutine(WaitToReapplyCollision(_delay));
         }
     }
@@ -66,10 +66,10 @@ public class OneWayPlatform : MonoBehaviour
     */
     private void OnCollisionStay2D(Collision2D other) 
     {
-        if(other.gameObject != _player && other.gameObject != _playerSensor) 
+        if(other.gameObject != _player && !other.gameObject.CompareTag("PlayerSensor")) 
             return;
         Debug.Log(other.gameObject.name);
-        bool downwardsPressed = _player.GetComponent<PlayerControls>().ActionMap.All.Down.WasPressedThisFrame();
+        bool downwardsPressed = _controls.ActionMap.All.Down.WasPressedThisFrame();
         bool isPlayerAbove = GetContactAngle(other) > 0; //positive angle --> player is collidng form above
         bool allowsGoingDown = Type != OneWayPlatforms.GoingUp;
         if(downwardsPressed && isPlayerAbove && allowsGoingDown)
@@ -82,13 +82,11 @@ public class OneWayPlatform : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if(!other.CompareTag("Player"))
+        if(!other.CompareTag("PlayerSensor"))
             return;
-
-        bool downwardsPressed = _player.GetComponent<PlayerControls>().ActionMap.All.Down.WasPressedThisFrame();
+        bool downwardsPressed = _controls.ActionMap.All.Down.WasPressedThisFrame();
         bool allowsGoingDown = Type != OneWayPlatforms.GoingUp;
         bool isPlayerAbove = false;
-        Debug.Log(_pc);
         var hit = Physics2D.Raycast(_pc.transform.position,-Vector2.up,2f,_pc.WhatIsGround);
         if(hit)
         {
@@ -98,7 +96,6 @@ public class OneWayPlatform : MonoBehaviour
         }
         else
         {
-            Debug.Log("ray missed!");
             return;
         }
         if(downwardsPressed && isPlayerAbove && allowsGoingDown)

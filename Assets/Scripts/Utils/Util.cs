@@ -9,6 +9,7 @@ namespace DTIS
     {
         public static PlayerController GetPlayerController()
         {
+            // TODO: register the player GO in GameManager instead
             GameObject.FindGameObjectWithTag("Player").TryGetComponent(out PlayerController _pc);
             return _pc;
         }

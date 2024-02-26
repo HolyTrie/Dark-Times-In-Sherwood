@@ -48,7 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gui: {fileID: 8573449424943183294}
   _goToTakedown: {fileID: 1671243077676790440}
-  _KillsEntity: 0
   _timeToTakedownSeconds: 0.1
 --- !u!50 &3716054935340496420
 Rigidbody2D:
@@ -129,6 +128,7 @@ GameObject:
   - component: {fileID: 5844368557801567519}
   - component: {fileID: 6638620248492410935}
   - component: {fileID: 4689829602341199206}
+  - component: {fileID: 2519729715641274458}
   m_Layer: 10
   m_Name: Guard
   m_TagString: Enemy
@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37060a17c3d5ee344a9c637a9911654e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyDMG: 10
+  DMG: 10
   HitTransform: {fileID: 4310579395697333201}
 --- !u!114 &6638620248492410935
 MonoBehaviour:
@@ -371,6 +371,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpBar: {fileID: 5924383850299357521}
   maxHP: 100
+--- !u!114 &2519729715641274458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671243077676790440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd4c3cfa456057a42b4154f9e404166a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthPotion: {fileID: 11400000, guid: 8b070c2fb14f42e48929d1f21ad4c577, type: 2}
 --- !u!1 &7780873820609774244
 GameObject:
   m_ObjectHideFlags: 0
