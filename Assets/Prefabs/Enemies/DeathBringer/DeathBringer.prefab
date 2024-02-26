@@ -358,6 +358,37 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &6572889768397572524
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4798924362512971742}
+  m_Layer: 10
+  m_Name: SwordAttackPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4798924362512971742
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6572889768397572524}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.172, y: -0.687, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 919321793450667625}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6761396872840399120
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,9 +610,11 @@ GameObject:
   - component: {fileID: 7293847041240893481}
   - component: {fileID: 5719154217472015953}
   - component: {fileID: 4511225790514312142}
+  - component: {fileID: 6330795515887821664}
+  - component: {fileID: 4615988834492130110}
   - component: {fileID: 7577215937675222013}
+  - component: {fileID: 4804223171876297768}
   - component: {fileID: 4821646227443165576}
-  - component: {fileID: 8404881237004014465}
   - component: {fileID: 7739212311420285611}
   - component: {fileID: 3859345180979102272}
   m_Layer: 10
@@ -606,6 +639,7 @@ Transform:
   m_Children:
   - {fileID: 5108755276360731898}
   - {fileID: 6018019230209240710}
+  - {fileID: 4798924362512971742}
   - {fileID: 1408876225851959377}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -709,6 +743,33 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &6330795515887821664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8840405636641954664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37060a17c3d5ee344a9c637a9911654e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DMG: 15
+  HitTransform: {fileID: 4798924362512971742}
+--- !u!114 &4615988834492130110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8840405636641954664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd4c3cfa456057a42b4154f9e404166a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthPotion: {fileID: 11400000, guid: 8b070c2fb14f42e48929d1f21ad4c577, type: 2}
 --- !u!114 &7577215937675222013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -727,9 +788,24 @@ MonoBehaviour:
   _movementSmoothing: 2
   _attackDMG: 15
   _FieldOfView: 15
-  _AttackRange: 1
+  _XAttackRange: 1.75
+  _YAttackRange: 2
   Scale: 1.5
   _ceilingCheck: {fileID: 0}
+--- !u!114 &4804223171876297768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8840405636641954664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f55b86ea2cd44c04cbd4b2c19aef8525, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpBar: {fileID: 4346113272235996597}
+  maxHP: 250
 --- !u!114 &4821646227443165576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,20 +819,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolTransforms: []
---- !u!114 &8404881237004014465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8840405636641954664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0ab0940da7332040ba5d08efdddd161, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hpBar: {fileID: 4346113272235996597}
-  maxHP: 500
 --- !u!58 &7739212311420285611
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -807,7 +869,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 16191
+    m_Bits: 7999
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

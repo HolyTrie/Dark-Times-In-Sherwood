@@ -9,20 +9,12 @@ namespace DTIS
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // Critical!
-            if (HasAnimation)
-            {
-                try
-                {
-                    controller.Animator.Play(Name);
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                }
-            }
+            if(Controller.JumpBufferCounter == 0)
+                SetAnimations();
         }
         protected override void TryStateSwitch()
         {
+            
             var direction = Controls.ActionMap.All.Walk.ReadValue<float>();
             if(Controls.ActionMap.All.Run.WasPressedThisFrame() || Controls.ActionMap.All.Run.WasPerformedThisFrame())
             {
@@ -32,6 +24,10 @@ namespace DTIS
             {
                 FSM.SubState = ESP.Build(ESP.States.Walk);
             }
+        }
+        public override void Exit(ESP.States State, ESP.States SubState)
+        {
+            base.Exit(State, SubState);
         }
         protected override void PhysicsCalculation()
         {

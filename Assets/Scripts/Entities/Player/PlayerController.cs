@@ -39,11 +39,11 @@ namespace DTIS
         #region COMMONS
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
-        public int GroundOnlyLayerMask { get { return _groundOnlyFilter.layerMask; } }
+        public int GroundOnlyLayerMask { get { return _groundOnlyMask; } }
         public Vector2 CurrGravity { get { return _currGravity; } set { _currGravity = value; } }
         public Vector2 OriginalGravity { get { return _originalGravity; } private set { _originalGravity = value; } }
         private Vector2 _originalGravity;
-        private bool _facingRight = true;                         // A boolean marking the entity's orientation.
+        private bool _facingRight = true; // A boolean marking the entity's orientation.
         public bool FacingRight { get { return _facingRight; } private set { _facingRight = value; } }
         
         /* *** CAMERA*** */
@@ -153,18 +153,20 @@ namespace DTIS
             CurrGravity = new(0f, gravity);
             _velocity.y = jumpForce;
         }
-        internal void AccelarateFall()
+        public void AccelarateFall()
         {
-            CurrGravity = new(0f, _jumpGravity * _fallGravityMult);
+            CurrGravity = new(0f, CurrGravity.y * _fallGravityMult);
         }
-        public float JumpPeakHangThreshold { get { return _jumpPeakHangThreshold; } }
-        public float JumpPeakGravityMult { get { return _gravityMultAtPeak; } }
-        public Vector2 FallGravity { get { return _fallGravity; } set { _fallGravity = value; } }
         public bool IsJumping { get { return _isJumping; } set { _isJumping = value; } }
         public bool IsFalling { get { return _isFalling; } set { _isFalling = value; } }
-        public float JumpForce { get { return _jumpForce; } set { _jumpForce = value; } }
         public bool IsInPeakHang { get { return _isInPeakHang; } set { _isInPeakHang = value; } }
+        public Vector2 FallGravity { get { return _fallGravity; } set { _fallGravity = value; } }
+        public float JumpPeakHangThreshold { get { return _jumpPeakHangThreshold; } }
+        public float JumpPeakGravityMult { get { return _gravityMultAtPeak; } }
+        public float JumpForce { get { return _jumpForce; } set { _jumpForce = value; } }
         public float CoyoteTime { get { return _coyoteTime; } set { _coyoteTime = value; } }
+        public float JumpBufferTime { get { return _jumpBufferTime; } set { _jumpBufferTime = value; } }
+        public float JumpBufferCounter { get { return _jumpBufferCounter; } set { _jumpBufferCounter = value; } }
 
         [Header("Jump Parameters")]
         [SerializeField] private Transform _jumpVerticalPeak;
@@ -176,9 +178,14 @@ namespace DTIS
         [SerializeField] private float _jumpPeakHangThreshold;
         [SerializeField] private float _fallGravityMult = 1.5f;
         [SerializeField] private float _weakJumpGravityMult = 2f;
+        [Tooltip("The time in seconds that the player has to perfrom a free jump mid-air, gives players some grace time to perform their jump even if they werent robot-precise with it")]
         [SerializeField] private float _coyoteTime = 0.5f;
+        [Tooltip("The time in seconds that the game will buffer a jump if it was pressed too soon before landing, gives players who press jump too early more freedom")]
+        [SerializeField] private float _jumpBufferTime = 0.25f;
         private bool _isJumping = false;
         private bool _isFalling = false;
+        private bool _isInPeakHang = false;
+        private float _jumpBufferCounter = 0;
         private float _jumpForce;
         private float _timeToJumpPeak;
         private float _jumpGravity;
@@ -188,7 +195,6 @@ namespace DTIS
         private Vector2 _baseGravity;
         private Vector2 _currGravity;
         private Vector2 _fallGravity;
-        private bool _isInPeakHang;
         #endregion
 
         #region ANIMATION
@@ -253,11 +259,11 @@ namespace DTIS
         {
             if (value)
             {
-                _contactFilter2d.SetLayerMask(_groundOnlyFilter.layerMask);
+                _contactFilter2D.SetLayerMask(_groundOnlyMask);
             }
             else
             {
-                _contactFilter2d.SetLayerMask(_initialGroundLayerMask);
+                _contactFilter2D.SetLayerMask(_initialGroundLayerMask);
             }
             PassingThroughPlatform = true;
         }
@@ -269,7 +275,7 @@ namespace DTIS
             if (_canDash)
             {
                 var direction = _facingRight == true ? Vector2.right : Vector2.left;
-                var hit = Physics2D.Raycast(transform.position, direction, _dashDistance, _contactFilter2d.layerMask);
+                var hit = Physics2D.Raycast(transform.position, direction, _dashDistance, _contactFilter2D.layerMask);
                 var distance = Vector2.Distance(transform.position, hit.point);
                 if (distance < _dashDistance)
                 {
@@ -326,7 +332,7 @@ namespace DTIS
             _isRunning = false;
             _wasRunning = false;
             InitJumpParams();
-            _initialGroundLayerMask = _contactFilter2d.layerMask;
+            _initialGroundLayerMask = _contactFilter2D.layerMask;
             _animator.speed = _playbackSpeed;
             if (_dashLengthRef != null)
             {
@@ -343,7 +349,7 @@ namespace DTIS
             var Vx = _walkSpeed;
             var Th = HorizontalDistToPeak / Vx;
             _timeToJumpPeak = Th;
-            _jumpForce = 2 * Height / Th;
+            _jumpForce = 2 * Height; // / Th;
             _jumpGravity = -2 * Height / Th; // (Th * Th);
             Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
             // strong jump
@@ -351,7 +357,7 @@ namespace DTIS
             HorizontalDistToPeak = Vector2.Distance(transform.position, _strongJumpHorizontalPeak.position); // X_h
             Vx = _walkSpeed * _runSpeedMult;
             Th = HorizontalDistToPeak / Vx;
-            _strongJumpForce = 2 * Height / Th;
+            _strongJumpForce = 2 * Height; // / Th;
             _strongJumpGravity = -2 * Height / Th; // (Th * Th);
             Debug.Log($"strong jump force = {_strongJumpForce} | strong jump gravity = {_strongJumpGravity}");
         }
@@ -404,7 +410,7 @@ namespace DTIS
             float distance = move.magnitude;
             if (distance > _minMoveDistance)
             {
-                int count = _rb2d.Cast(move, _contactFilter2d, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
+                int count = _rb2d.Cast(move, _contactFilter2D, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
                 _hitBufferList.Clear();
                 if (count > 0)
                 {
@@ -413,17 +419,6 @@ namespace DTIS
                 foreach (var hit in _hitBufferList)
                 {
                     Vector2 currentNormal = hit.normal;
-                    /*
-                    Vector2 slopeNormal = hit.normal;
-                    RaycastHit2D slopeHit = Physics2D.Raycast(transform.position, -Vector2.up, 1f, _groundOnlyFilter.layerMask);
-		            if (slopeHit.collider != null && Mathf.Abs(slopeHit.normal.x) > 0.1f) 
-                    {
-                        slopeNormal = slopeHit.normal;
-                        var angle = Mathf.Abs(slopeNormal.x);
-                        if(angle < 0 && angle <1)
-                            _onSlope = true;
-                    }
-                    */
                     if (currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the set value.
                     {
                         _grounded = true;
@@ -436,7 +431,6 @@ namespace DTIS
                     float projection = Vector2.Dot(_velocity, currentNormal);
                     if (projection < 0)
                     {
-                        //Debug.Log($"vel = {_velocity} | newVel = {_velocity -= projection * currentNormal} | current normal = {currentNormal} | projection = {projection} |");
                         _velocity -= projection * currentNormal; // cancel out the velocity that would be lost on impact.
                     }
 
@@ -446,7 +440,6 @@ namespace DTIS
             }
             var distanceToMove = move.normalized * distance;
             _rb2d.position += distanceToMove;
-            //_rb2d.MovePosition(_rb2d.position + move.normalized * distance);
             // DEBUG:
             var _color = Color.white;
             if (!_grounded)

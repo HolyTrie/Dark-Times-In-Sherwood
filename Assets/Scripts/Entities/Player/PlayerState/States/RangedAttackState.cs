@@ -14,17 +14,7 @@ namespace DTIS
         public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
             base.Enter(controller, fsm); // Critical!
-            if (HasAnimation)
-            {
-                try
-                {
-                    // controller.Animator.Play(Name);
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                }
-            }
+            SetAnimations();
             if (FSM.PrevState.Type == ESP.States.Airborne)
             {
                 FSM.StartCoroutine(GravityWaitsForAttack(0.75f));
@@ -44,9 +34,9 @@ namespace DTIS
         }
         IEnumerator AttackCommitment(float seconds)
         {
-            FSM.Controls.enabled = false;
+            // FSM.Controls.enabled = false;
             yield return new WaitForSeconds(seconds);
-            FSM.Controls.enabled = true;
+            // FSM.Controls.enabled = true;
             if (FSM.PrevState.Type == ESP.States.Airborne)
                 SetStates(ESP.States.Airborne, ESP.States.Fall);
             if (FSM.PrevState.Type == ESP.States.Grounded)
@@ -55,7 +45,7 @@ namespace DTIS
         IEnumerator GravityWaitsForAttack(float seconds)
         {
             var prev = Controller.CurrGravity;
-            Controller.CurrGravity = new(0f,0f);
+            Controller.CurrGravity = new(0f, 0f);
             Controller.Velocity = Vector2.zero;
             yield return new WaitForSeconds(seconds);
             Controller.CurrGravity = prev;

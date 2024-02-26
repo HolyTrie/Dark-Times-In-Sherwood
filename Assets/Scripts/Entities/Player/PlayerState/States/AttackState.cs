@@ -1,33 +1,31 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DTIS
 {
     public class AttackState : PlayerState
     {
-        private bool isShooting = false;
-        public AttackState(ESP.States state,string name = "Attack") 
-        : base(state,name,false) 
+        public static int weaponType = 1;
+        public AttackState(ESP.States state, string name = "Attack")
+        : base(state, name, false)
         {
 
         }
-        public override void Enter(PlayerController controller,PlayerStateMachine fsm)
+        public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
-            base.Enter(controller,fsm); // Critical!
-            if (HasAnimation)
+            base.Enter(controller, fsm); // Critical!
+            SetAnimations();
+            if (weaponType == 1) // sword
             {
-                try
-                {
-                    controller.Animator.Play(Name);
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                }
+                SetSubState(ESP.States.LightAttack);
             }
-            SetSubState(ESP.States.RangedAttack); //for now only this, later we will add diffrenatiaion between attacks
-                
+            if (weaponType == 2) // bow
+            {
+                SetSubState(ESP.States.RangedAttack);
+            }
+
         }
         public override void Exit(ESP.States State, ESP.States SubState)
         {
@@ -35,11 +33,11 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            //
+
         }
         protected override void PhysicsCalculation()
         {
-           //
+            //
         }
     }
 }

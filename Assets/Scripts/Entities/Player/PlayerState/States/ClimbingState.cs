@@ -10,17 +10,7 @@ namespace DTIS
         public override void Enter(PlayerController controller,PlayerStateMachine fsm)
         {
             base.Enter(controller,fsm); // Critical!
-            if (HasAnimation)
-            {
-                try
-                {
-                    controller.Animator.Play(Name);
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                }
-            }
+            SetAnimations();
         }
         protected override void TryStateSwitch()
         {

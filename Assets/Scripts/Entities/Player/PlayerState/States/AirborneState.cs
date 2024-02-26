@@ -11,28 +11,15 @@ namespace DTIS
         private const float _epsilon = 0.001f;
         private int _jumpsMidAir = 0;
         private int _attacksMidAir = 0;
-        private bool _isInCoyoteTime;
+        private bool _isInCoyoteTime = false;
         public AirborneState(ESP.States state, string name = "Airborne")
-        : base(state, name, false)
-        {
-            _isInCoyoteTime = false;
-        }
+        : base(state, name, false) {}
         public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
             base.Enter(controller, fsm); // Critical!
+            SetAnimations();
             _jumpsMidAir = 1; //this is 1 to account for the jump that initiated this state (or missed jump when falling from platforms)
             _attacksMidAir = 0;
-            if (HasAnimation)
-            {
-                try
-                {
-                    controller.Animator.Play(Name);
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                }
-            }
             fsm.StartCoroutine(CoyoteTime());
         }
         public override void Exit(ESP.States State, ESP.States SubState)
@@ -48,35 +35,39 @@ namespace DTIS
 
         protected override void TryStateSwitch()
         {
-
+            Debug.Log(Controller.Velocity.y);
+            bool jumpPressedThisFrame = ActionMap.Jump.WasPressedThisFrame();
+            if(jumpPressedThisFrame)
+                Controller.JumpBufferCounter = Controller.JumpBufferTime;
+            else
+                Controller.JumpBufferCounter -= Time.deltaTime;
             if (Controller.IsGrounded)
             {
                 SetStates(ESP.States.Grounded, ESP.States.Idle);
             }
-            else if (_jumpsMidAir < _maxJumps)
+            else if (_jumpsMidAir < _maxJumps && jumpPressedThisFrame)
             {
-                if (ActionMap.Jump.WasPressedThisFrame())
+                bool canJump = true;
+                /*
+                if (Controller.StaminaBar != null)
+                    if (Controller.StaminaBar.canUseStamina)
+                        canJump = false;
+                */
+                if (canJump)
                 {
-                    bool canJump = true;
-                    /*
-                    if (Controller.StaminaBar != null)
-                        if (Controller.StaminaBar.canUseStamina)
-                            canJump = false;
-                    */
-                    if (canJump)
+                    if (!_isInCoyoteTime)
                     {
-                        if (!_isInCoyoteTime)
-                        {
-                            ++_jumpsMidAir;
-                            SetSubState(ESP.States.Jump2);
-                        }
-                        else
-                        {
-                            SetSubState(ESP.States.Jump);
-                            _isInCoyoteTime = false;
-                        }
+                        ++_jumpsMidAir;
+                        SetSubState(ESP.States.Jump);
                     }
+                    else
+                    {
+                        SetSubState(ESP.States.Jump);
+                        _isInCoyoteTime = false;
+                    }
+                    Controller.JumpBufferCounter = 0f;
                 }
+                
             }
             if (_attacksMidAir < _maxAttacks)
             {
