@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace DTIS
 {
@@ -97,7 +96,8 @@ namespace DTIS
         #region WALK & RUN
         public void Move(Vector2 move)
         {
-            _targetVelocity = move * _walkSpeed;
+            var tmp = move* _walkSpeed;
+            _targetVelocity = new (tmp.x,tmp.y);
         }
         public bool IsRunning { get { return _isRunning; } set { _isRunning = value; } }
         public float RunSpeedMult { get { return _runSpeedMult; } }
@@ -279,7 +279,6 @@ namespace DTIS
                 var distance = Vector2.Distance(transform.position, hit.point);
                 if (distance < _dashDistance)
                 {
-                    Debug.Log($"hit dist = {distance}");
                     _dashDistance = distance;
                 }
                 StartCoroutine(StartDash(_gravityModifier));
@@ -370,7 +369,7 @@ namespace DTIS
         }
         protected private override void Update()
         {
-            base.Update();
+            //base.Update();
             _playerGhostBehaviour.TrySetGhostStatus();
             Flip();
         }
@@ -390,16 +389,16 @@ namespace DTIS
 
             _velocity += acc; // apply gravity to the objects velocity
             _velocity.x = _targetVelocity.x;
+            Debug.Log(_targetVelocity);
             Vector2 deltaPosition = _velocity * Time.deltaTime;
             Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x); //helps with slopes  
-
             Vector2 moveX = moveAlongGround * deltaPosition;
             Vector2 moveY = Vector2.up * deltaPosition.y;
 
             Movement(moveY, true); // vertical movement
             Movement(moveX, false); // horizontal movement
             _velocity.y = Math.Clamp(_velocity.y, -_maxFallSpeed, float.MaxValue);
-
+            _targetVelocity = Vector2.zero;
             // predict future position using a simplified euler integration (~0.5 pixel error rate, resets when landing so it does not accumulate)
             //var futurePos = _velocity * Time.deltaTime + 0.5f * Time.deltaTime * acc; // pos = velocity*deltaTime +0.5*accelaration*(deltaTime^2)
             //var futureVel = acc; // vel = accelaration * deltaTime
@@ -440,15 +439,7 @@ namespace DTIS
             }
             var distanceToMove = move.normalized * distance;
             _rb2d.position += distanceToMove;
-            // DEBUG:
-            var _color = Color.white;
-            if (!_grounded)
-            {
-                _color = Color.magenta;
-                //Debug.Log($"grounded = {_grounded} | on slope prev frame = {_wasOnSlopePrevFrame} | on slope = {_onSlope} | rb vel = {_rb2d.velocity} | y movement = {yMovement}");
-            }
-            var direction = _rb2d.velocity.x >= 0f ? Vector2.right : Vector2.left;
-            //Debug.DrawRay(transform.position,direction,_color,7f);
+            _rb2d.MovePosition(_rb2d.position);
         }
         #endregion
 

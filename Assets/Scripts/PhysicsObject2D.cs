@@ -22,8 +22,8 @@ public class PhysicsObject2D : MonoBehaviour
     protected bool _onSlope = false;
     protected Rigidbody2D _rb2d;
     protected Vector2 _velocity;
-    protected Vector2 _targetVelocity;
-    public Vector2 TargetVelocity{get{return _targetVelocity;}set{_targetVelocity = value;}}
+    protected private Vector2 _targetVelocity;
+    //public Vector2 TargetVelocity{get{return _targetVelocity;}private set{_targetVelocity = value;}}
     protected Vector2 _groundNormal;
     protected RaycastHit2D[] _hitBuffer = new RaycastHit2D[16]; // todo - variable length?
     protected List<RaycastHit2D> _hitBufferList = new(16);
@@ -36,7 +36,7 @@ public class PhysicsObject2D : MonoBehaviour
     }
     protected private virtual void Update()
     {
-        _targetVelocity = Vector2.zero; // critical
+        _targetVelocity = Vector2.zero; // critical?
     }
 
     protected private virtual void FixedUpdate()

@@ -17,11 +17,11 @@ namespace DTIS
     */
     public class PlayerStateMachine : MonoBehaviour
     {
+        public PlayerController Controller { get { return _controller; } }
         [Header("Player Scripts")]
         [SerializeField] private PlayerController _controller;
-        [SerializeField] private PlayerControls _controls;
         [SerializeField] private PlayerInteractor _interactor;
-        public PlayerController Controller { get { return _controller; } }
+        [SerializeField] private PlayerControls _controls;
 
         private void InitChildScripts()
         {
@@ -86,8 +86,7 @@ namespace DTIS
 
         protected void Awake()
         {
-            if (_controls == null)
-                _controls = GetComponent<PlayerControls>();
+            _controls = _controls != null ? _controls : PlayerControls.Instance;
             SetState(ESP.States.Grounded, ESP.States.Idle);
             Direction = (float)Directions.Right;
             InitChildScripts();

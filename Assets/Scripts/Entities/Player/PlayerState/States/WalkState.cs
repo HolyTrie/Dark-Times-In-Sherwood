@@ -15,18 +15,18 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            if (Controls.WalkingDirection == 0f && Controls.RunningDirection == 0)
+            if (Controls.WalkingDirection == 0f)
             {
                 SetSubState(ESP.States.Idle);
             }
-            if(Controls.RunningDirection != 0)
+            if(ActionMap.Run.WasPerformedThisFrame())
             {
                 SetSubState(ESP.States.Run);
             }
         }
         protected override void PhysicsCalculation()
         {
-            var direction = Controls.ActionMap.All.Walk.ReadValue<float>();
+            var direction = Controls.WalkingDirection;
             var move = new Vector2(direction,0f);
             Controller.Move(move);
         }

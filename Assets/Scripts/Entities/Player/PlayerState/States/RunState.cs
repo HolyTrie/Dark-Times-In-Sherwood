@@ -25,20 +25,18 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            /*
-            if (FSM.Controls.HorizontalMove == 0f)
+            if (Controls.WalkingDirection == 0f)
             {
                 SetSubState(ESP.States.Idle);
             }
-            */
-            if(Controls.RunningDirection == 0)
+            if(ActionMap.Run.WasPerformedThisFrame())
             {
                 FSM.SubState = ESP.Build(ESP.States.Walk);
             }
         }
         protected override void PhysicsCalculation()
         {
-            var direction = Controls.ActionMap.All.Run.ReadValue<float>(); //using All.Walk is the same btw
+            var direction = Controls.WalkingDirection;
             var move =  Controller.RunSpeedMult * new Vector2(direction, 0f);
             Controller.Move(move);
         }
