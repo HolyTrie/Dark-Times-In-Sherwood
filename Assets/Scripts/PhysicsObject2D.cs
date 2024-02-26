@@ -7,6 +7,7 @@ using UnityEngine;
 public class PhysicsObject2D : MonoBehaviour
 {
     // source - https://www.youtube.com/watch?v=wGI2e3Dzk_w&list=PLX2vGYjWbI0SUWwVPCERK88Qw8hpjEGd8&index=1&ab_channel=Unity
+    public LayerMask WhatIsGround => _contactFilter2D.layerMask;
     protected const float _minMoveDistance = 0.001f;
     protected const float _shellRadius = 0.05f;
     [Header("Base Physics")]

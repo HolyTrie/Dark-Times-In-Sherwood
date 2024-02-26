@@ -349,7 +349,7 @@ namespace DTIS
             var Vx = _walkSpeed;
             var Th = HorizontalDistToPeak / Vx;
             _timeToJumpPeak = Th;
-            _jumpForce = 2 * Height / Th;
+            _jumpForce = 2 * Height; // / Th;
             _jumpGravity = -2 * Height / Th; // (Th * Th);
             Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
             // strong jump
@@ -357,7 +357,7 @@ namespace DTIS
             HorizontalDistToPeak = Vector2.Distance(transform.position, _strongJumpHorizontalPeak.position); // X_h
             Vx = _walkSpeed * _runSpeedMult;
             Th = HorizontalDistToPeak / Vx;
-            _strongJumpForce = 2 * Height / Th;
+            _strongJumpForce = 2 * Height; // / Th;
             _strongJumpGravity = -2 * Height / Th; // (Th * Th);
             Debug.Log($"strong jump force = {_strongJumpForce} | strong jump gravity = {_strongJumpGravity}");
         }
