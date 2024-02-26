@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEditor.EditorTools;
 using UnityEngine;
 
@@ -113,8 +114,17 @@ namespace DTIS
 
         }
 
+
+        //right now enemy drops only HP, TODO: add more drops as game progresses or whatever wishes.
         public void DropItems()
         {
+            float seconds = 0.5f;
+            StartCoroutine(WaitForDeath(seconds));
+        }
+
+        private IEnumerator WaitForDeath(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
             this.transform.GetComponent<ItemDatabase>().HealthPotion.SpawnItem(this.transform);
             Destroy(this.gameObject);
         }

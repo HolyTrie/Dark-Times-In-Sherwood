@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DTIS
@@ -8,15 +7,17 @@ namespace DTIS
     public class GroundedState : PlayerState
     {
         private const float _minYChange = -1.5f;
-        private Vector2 SlopeGravity{ get { return Controller.SlopeGravity; } }
+        private Vector2 SlopeGravity { get { return Controller.SlopeGravity; } }
         private bool _inSlope = false;
         private bool SlopeAhead { get { return Controller.SlopeAhead; } }
-        private Vector2 OriginalGravity{ get { return Controller.OriginalGravity; } }
-        public GroundedState(ESP.States state,string name = "Grounded")
-        : base(state,name, false) {}
-        public override void Enter(PlayerController controller,PlayerStateMachine fsm)
+        private Vector2 OriginalGravity { get { return Controller.OriginalGravity; } }
+
+        private Transform crosshair;
+        public GroundedState(ESP.States state, string name = "Grounded")
+        : base(state, name, false) { }
+        public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
-            base.Enter(controller,fsm); // Critical!
+            base.Enter(controller, fsm); // Critical!
             if (HasAnimation)
             {
                 try
@@ -29,27 +30,50 @@ namespace DTIS
                 }
             }
             Controller.CurrGravity = OriginalGravity;
+
+            crosshair = controller.transform.Find("Crosshair");
         }
         protected override void TryStateSwitch()
         {
-            if(Controller.Velocity.y < _minYChange && !Controller.IsGrounded) //some cases like stairs will have negative velocity but are still 'ground'
+            if (Controller.Velocity.y < _minYChange && !Controller.IsGrounded) //some cases like stairs will have negative velocity but are still 'ground'
             {
                 SetStates(ESP.States.Airborne, ESP.States.Fall);
             }
             if (ActionMap.Jump.WasPressedThisFrame())
             {
                 bool canJump = true;
-                if(Controller.StaminaBar != null)
-                    if(!Controller.StaminaBar.canUseStamina)
+                if (Controller.StaminaBar != null)
+                    if (!Controller.StaminaBar.canUseStamina)
                         canJump = false;
-                if(canJump)
+                if (canJump)
                 {
                     SetStates(ESP.States.Airborne, ESP.States.Jump);
                 }
             }
             if (ActionMap.Shoot.WasPressedThisFrame())
-            {   
+            {
                 SetState(ESP.States.Attack);
+            }
+
+            //swap weapons//
+
+            if (ActionMap.SwapWeapon.WasPressedThisFrame())
+            {
+                Debug.Log("Swapping Weapons");
+                AttackState.weaponType++;
+                if (AttackState.weaponType > 2)
+                    AttackState.weaponType = 1;
+            }
+
+            //handles the view of crosshair//
+
+            if (AttackState.weaponType == 1) // sword
+            {
+                crosshair.gameObject.SetActive(false);
+            }
+            if (AttackState.weaponType == 2) // bow
+            {
+                crosshair.gameObject.SetActive(true);
             }
         }
         protected override void PhysicsCalculation()
@@ -59,36 +83,36 @@ namespace DTIS
         private void HandleSlopes()
         {
             var playerPos = Controller.Position;
-            var hit = Physics2D.Raycast(playerPos,-Vector2.up,1f,Controller.GroundOnlyLayerMask);
+            var hit = Physics2D.Raycast(playerPos, -Vector2.up, 1f, Controller.GroundOnlyLayerMask);
             bool slopeUpwardsDirectionIsRight = true;
-		    if (hit.collider != null && Mathf.Abs(hit.normal.x) > 0.1f) 
+            if (hit.collider != null && Mathf.Abs(hit.normal.x) > 0.1f)
             {
                 Vector2 slopeNormal = hit.normal;
-                if(slopeNormal.x > 0)
+                if (slopeNormal.x > 0)
                     slopeUpwardsDirectionIsRight = false;
                 var angle = Mathf.Abs(slopeNormal.x);
-                if(angle < 0 && angle <1)
+                if (angle < 0 && angle < 1)
                     _inSlope = true;
             }
             bool dirIsRight = slopeUpwardsDirectionIsRight;
-            if(!SlopeAhead && _inSlope)
+            if (!SlopeAhead && _inSlope)
             {
                 FSM.StartCoroutine(LeaveSlope());
             }
-            else if(_inSlope || (SlopeAhead && !_inSlope)) 
+            else if (_inSlope || (SlopeAhead && !_inSlope))
             {
                 SetSlopeGravity(dirIsRight);
             }
         }
         private void SetSlopeGravity(bool slopeUpwardsDirectionIsRight)
         {
-            if(Controller.FacingRight == slopeUpwardsDirectionIsRight)
+            if (Controller.FacingRight == slopeUpwardsDirectionIsRight)
             {
-                Controller.CurrGravity = 2f*OriginalGravity;
+                Controller.CurrGravity = 2f * OriginalGravity;
             }
             else
             {
-                Controller.CurrGravity = 5f*SlopeGravity;
+                Controller.CurrGravity = 5f * SlopeGravity;
             }
         }
         private IEnumerator LeaveSlope()

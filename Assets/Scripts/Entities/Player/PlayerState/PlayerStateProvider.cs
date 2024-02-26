@@ -54,6 +54,7 @@ namespace DTIS
                 //States.HeavyAttack => new HeavyAttackState(),
                 States.RangedAttack => new RangedAttackState(States.RangedAttack),
                 States.HighAttackState => new HighAttackState(States.HighAttackState),
+                States.LightAttack => new LightAttackState(States.LightAttack),
                 _ => throw new System.Exception("ESP Factory 'build' method does not support entity of type " + state + "\n\t * please check the States enum in the ESP"),
             };
         }

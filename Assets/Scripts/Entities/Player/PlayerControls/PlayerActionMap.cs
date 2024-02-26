@@ -107,6 +107,15 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""MultiTap"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwapWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""2d7cab4a-6587-4c57-a3df-29c90abae3b8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -285,6 +294,17 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6e745bad-66ee-420d-a669-7395149a1214"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwapWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -308,6 +328,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         m_All_Down = m_All.FindAction("Down", throwIfNotFound: true);
         m_All_Interaction = m_All.FindAction("Interaction", throwIfNotFound: true);
         m_All_Dash = m_All.FindAction("Dash", throwIfNotFound: true);
+        m_All_SwapWeapon = m_All.FindAction("SwapWeapon", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -378,6 +399,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_All_Down;
     private readonly InputAction m_All_Interaction;
     private readonly InputAction m_All_Dash;
+    private readonly InputAction m_All_SwapWeapon;
     public struct AllActions
     {
         private @PlayerActionMap m_Wrapper;
@@ -391,6 +413,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         public InputAction @Down => m_Wrapper.m_All_Down;
         public InputAction @Interaction => m_Wrapper.m_All_Interaction;
         public InputAction @Dash => m_Wrapper.m_All_Dash;
+        public InputAction @SwapWeapon => m_Wrapper.m_All_SwapWeapon;
         public InputActionMap Get() { return m_Wrapper.m_All; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -427,6 +450,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @SwapWeapon.started += instance.OnSwapWeapon;
+            @SwapWeapon.performed += instance.OnSwapWeapon;
+            @SwapWeapon.canceled += instance.OnSwapWeapon;
         }
 
         private void UnregisterCallbacks(IAllActions instance)
@@ -458,6 +484,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @SwapWeapon.started -= instance.OnSwapWeapon;
+            @SwapWeapon.performed -= instance.OnSwapWeapon;
+            @SwapWeapon.canceled -= instance.OnSwapWeapon;
         }
 
         public void RemoveCallbacks(IAllActions instance)
@@ -495,5 +524,6 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         void OnDown(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnSwapWeapon(InputAction.CallbackContext context);
     }
 }
