@@ -1,3 +1,4 @@
+/*
 using System;
 using UnityEngine;
 
@@ -15,7 +16,6 @@ namespace DTIS
         }
         public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
-            Debug.Log("entered jump2");
             base.Enter(controller, fsm); // Critical!
             SetAnimations();
             if (Controller.StaminaBar != null)
@@ -24,7 +24,7 @@ namespace DTIS
             {
                 IsInPeakHang = false;
             }
-            Controller.Jump(); //sets jumping to true!
+            Controller.Jump();
         }
         public override void Exit(ESP.States State, ESP.States SubState)
         {
@@ -37,17 +37,13 @@ namespace DTIS
             {
                 SetSubState(ESP.States.Fall);
             }
-
         }
         protected override void PhysicsCalculation() // is called in FixedUpdate
         {
             if (Mathf.Abs(Controller.Velocity.y) < Controller.JumpPeakHangThreshold && !IsInPeakHang)
             {
-                if (!IsInPeakHang) // enter peak hang mode when in threshold 
-                {
-                    IsInPeakHang = true;
-                    Controller.CurrGravity *= Controller.JumpPeakGravityMult;
-                }
+                IsInPeakHang = true;
+                Controller.CurrGravity *= Controller.JumpPeakGravityMult;
             }
             if (_airControl)
             {
@@ -59,7 +55,6 @@ namespace DTIS
                 }
                 if(WasRunning)
                 {
-                    Debug.Log("was running");
                     mult *= Controller.RunSpeedMult;
                 }
                 Controller.Move(new Vector2(mult*direction, 0f));
@@ -67,3 +62,4 @@ namespace DTIS
         }
     }
 }
+*/

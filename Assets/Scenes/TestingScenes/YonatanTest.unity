@@ -110973,7 +110973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2438929693715226838, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: _jumpBufferTime
-      value: 0.5
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 2438929693715226838, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: _groundOnlyMask.m_Bits

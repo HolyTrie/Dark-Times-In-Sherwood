@@ -16,7 +16,7 @@ public class PlayerInteractor : MonoBehaviour
     private GameObject closestObject;
     public void Interact()
     {
-        Debug.Log("Attempting to Interact");
+        //Debug.Log("Attempting to Interact");
         if (closestObject != null)
         {
             closestObject.GetComponent<Interactable>().OnClick(Controller.gameObject);

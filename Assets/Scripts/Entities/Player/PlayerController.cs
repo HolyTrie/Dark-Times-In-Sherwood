@@ -155,7 +155,7 @@ namespace DTIS
         }
         public void AccelarateFall()
         {
-            CurrGravity = new(0f, _jumpGravity * _fallGravityMult);
+            CurrGravity = new(0f, CurrGravity.y * _fallGravityMult);
         }
         public bool IsJumping { get { return _isJumping; } set { _isJumping = value; } }
         public bool IsFalling { get { return _isFalling; } set { _isFalling = value; } }

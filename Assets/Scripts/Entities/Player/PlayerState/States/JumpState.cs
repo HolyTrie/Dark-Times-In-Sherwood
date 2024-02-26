@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 namespace DTIS
@@ -27,7 +28,20 @@ namespace DTIS
             fsm.StartCoroutine(WaitForKeyBeforeFalling());
             Controller.Jump(); //sets jumping to true!
         }
-
+        private protected override void SetAnimations()
+        {
+            if (HasAnimation)
+            {
+                try
+                {
+                    Controller.Animator.Play(FSM.PrevState.Type == ESP.States.Jump ? Name : "smrslt");
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
+        }
         private IEnumerator WaitForKeyBeforeFalling()
         {
             yield return new WaitForSeconds(_noKeyInputJumpTime);
@@ -53,11 +67,8 @@ namespace DTIS
         {
             if(Mathf.Abs(Controller.Velocity.y) < Controller.JumpPeakHangThreshold && !IsInPeakHang)
             {
-                if(!IsInPeakHang) // enter peak hang mode when in threshold 
-                {
-                    IsInPeakHang = true;
-                    Controller.CurrGravity *= Controller.JumpPeakGravityMult; 
-                }
+                IsInPeakHang = true;
+                Controller.CurrGravity *= Controller.JumpPeakGravityMult; 
             }
             if(_airControl)
             { 
