@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using DTIS;
-using UnityEditor.EditorTools;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]

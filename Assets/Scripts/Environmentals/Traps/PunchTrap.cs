@@ -8,7 +8,7 @@ public class PunchTrap : MonoBehaviour
     [SerializeField] private Transform _activeSprite;
     [SerializeField] private Transform _hitStart;
     [SerializeField] private Transform _hitEnd;
-    [SerializeField] private float _force = 1000f;
+    [SerializeField] private float _force = 100f;
     //private Vector3 _parentPos;
     //private float _distance;  // Amount to move left and right
 	private float _speed; 

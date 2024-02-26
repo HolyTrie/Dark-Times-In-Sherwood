@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DTIS;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class OneWayPlatform : MonoBehaviour
@@ -11,8 +12,8 @@ public class OneWayPlatform : MonoBehaviour
     [SerializeField] private float _delay = 0.75f;
     private Collider2D _collider;
     [SerializeField] private GameObject _player;
-    [Tooltip("optional game object attached ahead of player for detection")]
-    [SerializeField] private GameObject _playerSensor;
+    private PlayerController _pc;
+    private PlayerControls _controls;
     private Collider2D[] _playerColliders;
     void Awake() {
         if(_player == null)
@@ -22,6 +23,12 @@ public class OneWayPlatform : MonoBehaviour
     {
         _collider = GetComponent<Collider2D>();
         _playerColliders = _player.GetComponents<Collider2D>();
+        _pc = Util.GetPlayerController();
+        if(_pc == null)
+        {
+            _pc = _player.GetComponent<PlayerController>();
+        }
+        _controls = _player.GetComponent<PlayerControls>();
     }
     private void IgnorePlayerCollision(bool value)
     {
@@ -30,17 +37,18 @@ public class OneWayPlatform : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other) 
     {
-        if(other.gameObject != _player && other.gameObject != _playerSensor) 
+        if(other.gameObject != _player && !other.gameObject.CompareTag("PlayerSensor")) 
             return;
         bool allowsGoingDown = Type != OneWayPlatforms.GoingDown;
         bool isPlayerBelow = GetContactAngle(other) < 0; //negative angle --> player is collidng form below
         if(isPlayerBelow && allowsGoingDown)
         {
             IgnorePlayerCollision(true); // ignore player colliders
-            _player.GetComponent<PlayerController>().SetPassingThroughPlatform(true);
+            _pc.SetPassingThroughPlatform(true);
             StartCoroutine(WaitToReapplyCollision(_delay));
         }
     }
+    /*
     private void OnTriggerEnter2D(Collider2D other) 
     {
         if(other.gameObject != _playerSensor) 
@@ -51,21 +59,49 @@ public class OneWayPlatform : MonoBehaviour
         if(isPlayerBelow && allowsGoingDown)
         {
             IgnorePlayerCollision(true); // ignore player colliders
-            _player.GetComponent<PlayerController>().SetPassingThroughPlatform(true);
+            _pc.SetPassingThroughPlatform(true);
             StartCoroutine(WaitToReapplyCollision(_delay));
         }
     }
+    */
     private void OnCollisionStay2D(Collision2D other) 
     {
-        if(other.gameObject != _player && other.gameObject != _playerSensor) 
+        if(other.gameObject != _player && !other.gameObject.CompareTag("PlayerSensor")) 
             return;
-        bool downwardsPressed = _player.GetComponent<PlayerControls>().ActionMap.All.Down.WasPerformedThisFrame();
+        Debug.Log(other.gameObject.name);
+        bool downwardsPressed = _controls.ActionMap.All.Down.WasPressedThisFrame();
         bool isPlayerAbove = GetContactAngle(other) > 0; //positive angle --> player is collidng form above
-        bool allowsGoingUp = Type != OneWayPlatforms.GoingUp;
-        if(downwardsPressed && isPlayerAbove && allowsGoingUp)
+        bool allowsGoingDown = Type != OneWayPlatforms.GoingUp;
+        if(downwardsPressed && isPlayerAbove && allowsGoingDown)
         {
             IgnorePlayerCollision(true); // ignore player colliders
-            _player.GetComponent<PlayerController>().SetPassingThroughPlatform(true);
+            _pc.SetPassingThroughPlatform(true);
+            StartCoroutine(WaitToReapplyCollision(_delay));
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if(!other.CompareTag("PlayerSensor"))
+            return;
+        bool downwardsPressed = _controls.ActionMap.All.Down.WasPressedThisFrame();
+        bool allowsGoingDown = Type != OneWayPlatforms.GoingUp;
+        bool isPlayerAbove = false;
+        var hit = Physics2D.Raycast(_pc.transform.position,-Vector2.up,2f,_pc.WhatIsGround);
+        if(hit)
+        {
+            var angle = Vector2.Angle(hit.point,Vector2.up);
+            if(angle > 0)
+                isPlayerAbove = true;
+        }
+        else
+        {
+            return;
+        }
+        if(downwardsPressed && isPlayerAbove && allowsGoingDown)
+        {
+            IgnorePlayerCollision(true); // ignore player colliders
+            _pc.SetPassingThroughPlatform(true);
             StartCoroutine(WaitToReapplyCollision(_delay));
         }
     }
@@ -83,7 +119,8 @@ public class OneWayPlatform : MonoBehaviour
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         return angle;
     }
-    private float GetContactAngle(Collider2D other)
+    /*
+    private float GetContactAngle(Collider2D other) // does not work as intended at all! 
     {
         ContactPoint2D[] points = new ContactPoint2D[10];
         var contactPoints = other.GetContacts(points);
@@ -96,4 +133,5 @@ public class OneWayPlatform : MonoBehaviour
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         return angle;
     }
+    */
 }

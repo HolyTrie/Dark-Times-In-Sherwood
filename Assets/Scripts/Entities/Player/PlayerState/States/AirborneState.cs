@@ -35,7 +35,6 @@ namespace DTIS
 
         protected override void TryStateSwitch()
         {
-            Debug.Log(Controller.Velocity.y);
             bool jumpPressedThisFrame = ActionMap.Jump.WasPressedThisFrame();
             if(jumpPressedThisFrame)
                 Controller.JumpBufferCounter = Controller.JumpBufferTime;

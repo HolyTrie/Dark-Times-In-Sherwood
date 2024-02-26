@@ -16,6 +16,7 @@ TagManager:
   - Pusheable
   - DialogueChoice
   - Enemy
+  - PlayerSensor
   layers:
   - Default
   - TransparentFX
