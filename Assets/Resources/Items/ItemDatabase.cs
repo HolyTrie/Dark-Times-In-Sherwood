@@ -5,5 +5,5 @@ using UnityEngine;
 public class ItemDatabase : MonoBehaviour
 {
     [SerializeField] public HealthPotionSO HealthPotion;
-
+    
 }
