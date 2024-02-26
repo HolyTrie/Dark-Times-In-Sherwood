@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
 using BehaviorTree;
-using DTIS;
-using UnityEditor;
-using UnityEngine;
 
 namespace DTIS
 {
@@ -20,7 +15,7 @@ namespace DTIS
         public override NodeState Evaluate()
         {
 
-            if (_AIcontroller.HpBar.currentHp() <= 0) // this indicates the player is in range of the enemy, so it can attack him
+            if (_AIcontroller.HpBar.currentHp() <= 0) //enemy is dead
             {
                 _AIcontroller.Animator.SetTrigger("Death");
                 _AIcontroller.DropItems();
