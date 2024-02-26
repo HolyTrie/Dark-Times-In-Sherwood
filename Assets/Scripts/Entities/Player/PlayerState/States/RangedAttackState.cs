@@ -34,9 +34,9 @@ namespace DTIS
         }
         IEnumerator AttackCommitment(float seconds)
         {
-            FSM.Controls.enabled = false;
+            // FSM.Controls.enabled = false;
             yield return new WaitForSeconds(seconds);
-            FSM.Controls.enabled = true;
+            // FSM.Controls.enabled = true;
             if (FSM.PrevState.Type == ESP.States.Airborne)
                 SetStates(ESP.States.Airborne, ESP.States.Fall);
             if (FSM.PrevState.Type == ESP.States.Grounded)
@@ -45,7 +45,7 @@ namespace DTIS
         IEnumerator GravityWaitsForAttack(float seconds)
         {
             var prev = Controller.CurrGravity;
-            Controller.CurrGravity = new(0f,0f);
+            Controller.CurrGravity = new(0f, 0f);
             Controller.Velocity = Vector2.zero;
             yield return new WaitForSeconds(seconds);
             Controller.CurrGravity = prev;

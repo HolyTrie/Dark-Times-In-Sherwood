@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 15
-  DMG: 5
+  DMG: 100
   Ground:
     serializedVersion: 2
     m_Bits: 128

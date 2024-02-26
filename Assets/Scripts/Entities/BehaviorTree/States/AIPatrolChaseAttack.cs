@@ -29,6 +29,10 @@ public class AIPatrolChaseAttack : BTree
                 {
                     new Sequence(new List<Node>
                     {
+                        new TaskDeath(_AIcontroller),
+                    }),
+                    new Sequence(new List<Node>
+                    {
                         new CheckPlayerInAttackRange(_AIcontroller),
                         new TaskAttack(_AIcontroller),
                     }),
@@ -36,6 +40,7 @@ public class AIPatrolChaseAttack : BTree
                     {
                         new CheckPlayerInFOVRange(_AIcontroller),
                         new TaskGoToTarget(_AIcontroller),
+                        
                     }),
                     new TaskPatrol(patrolTransforms,_AIcontroller),
                 });
