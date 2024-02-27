@@ -21,6 +21,10 @@ namespace DTIS
         [Header("Common Parameters")]
         
         [SerializeField] private LayerMask _groundLayer;
+        public void SetLayer(LayerMask layerMask)
+        {
+            _groundLayer = layerMask;
+        }
         private const int _downAngle = 0; //directly down from the origin.
         public bool Grounded()
         {
@@ -29,7 +33,6 @@ namespace DTIS
             Vector3 pos2 = new(transform.position.x + _ray2OffsetX,transform.position.y,transform.position.z);
             var hitOne = Physics2D.BoxCast(pos1,_ray1Size,_downAngle,-(Vector3)Vector2.up,_ray1CastDistance,_groundLayer);
             var hitTwo = Physics2D.BoxCast(pos2,_ray2Size,_downAngle,-(Vector3)Vector2.up,_ray2CastDistance,_groundLayer);
-            //if(hitOne && hitTwo && hitThree && hitFour)
             if(hitOne && hitTwo)
                 ans = true;
             return ans;

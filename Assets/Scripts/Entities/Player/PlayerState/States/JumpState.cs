@@ -39,7 +39,6 @@ namespace DTIS
                     var animName = Name;
                     if(FSM.PrevState.Type == ESP.States.Jump)
                         animName = "smrslt";
-                    Debug.Log($"Playing '{animName}'");
                     Controller.Animator.Play(animName);
                 }
                 catch (Exception e)

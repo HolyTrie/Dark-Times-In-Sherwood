@@ -6,17 +6,14 @@ using UnityEngine;
 public class PhysicsObject2D : MonoBehaviour
 {
     // source - https://www.youtube.com/watch?v=wGI2e3Dzk_w&list=PLX2vGYjWbI0SUWwVPCERK88Qw8hpjEGd8&index=1&ab_channel=Unity
-    public LayerMask WhatIsGround => _contactFilter2D.layerMask;
+    public LayerMask WhatIsGround => _currFilter.layerMask;
     protected const float _minMoveDistance = 0.001f;
     protected const float _shellRadius = 0.05f;
     [Header("Base Physics")]
     [SerializeField] protected private float _gravityModifier = 1f;
     [SerializeField] protected private float _minGroundNormalY = 0.1f;
-    [Tooltip("primary ground filter - what's considered 'ground' most of the time'")]
-    [SerializeField] protected private LayerMask _groundAndPlatformsMask;
-    [Tooltip("secondary ground filter for when disabling other layers and only a base 'ground' layer is desired")]
-    [SerializeField] protected private LayerMask _groundOnlyMask;
-    protected private ContactFilter2D _contactFilter2D;
+    [SerializeField] protected private LayerMask _whatIsGround;
+    protected private ContactFilter2D _currFilter;
 
     protected bool _grounded = false;
     protected bool _onSlope = false;
@@ -28,11 +25,11 @@ public class PhysicsObject2D : MonoBehaviour
     protected RaycastHit2D[] _hitBuffer = new RaycastHit2D[16]; // todo - variable length?
     protected List<RaycastHit2D> _hitBufferList = new(16);
     
-    protected void OnEnable() {
+    protected virtual void OnEnable() {
         _rb2d = GetComponent<Rigidbody2D>();
-        _contactFilter2D.useTriggers = false;
-        _contactFilter2D.SetLayerMask(_groundAndPlatformsMask);
-        _contactFilter2D.useLayerMask = true;
+        _currFilter.useTriggers = false;
+        _currFilter.SetLayerMask(_whatIsGround);
+        _currFilter.useLayerMask = true;
     }
     protected private virtual void Update()
     {
@@ -61,7 +58,7 @@ public class PhysicsObject2D : MonoBehaviour
 
         if (distance > _minMoveDistance)
         {
-            int count = _rb2d.Cast(move, _contactFilter2D, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
+            int count = _rb2d.Cast(move, _currFilter, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
             _hitBufferList.Clear();
             for(int i = 0; i < count; ++i) // DO NOT Refactor this with foreach! it will iterate over empty spaces.
             {

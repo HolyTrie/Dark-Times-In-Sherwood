@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DTIS
@@ -10,7 +11,16 @@ namespace DTIS
         - https://stackoverflow.com/questions/12662072/what-is-protected-virtual-new
     */
     public class PlayerController : PhysicsObject2D
-    {
+    { 
+        #region PLATFORMS
+        [Header("Platforms")]
+        [SerializeField] protected private LayerMask _whatIsPlatform;
+        protected private ContactFilter2D _groundOnlyFilter;
+        protected private ContactFilter2D _groundAndPlatformFilter;
+        private bool _passingThroughPlatform = false;
+        public bool PassingThroughPlatform { get { return _passingThroughPlatform; } set { _passingThroughPlatform = value; } }
+        #endregion
+        
         #region INITIALIZATION
         private static PlayerController _Instance;
         public static PlayerController Instance
@@ -46,13 +56,12 @@ namespace DTIS
             _slopeGravity = _originalGravity * 2f;
             _isRunning = false;
             _wasRunning = false;
-            InitJumpParams();
-            _initialGroundLayerMask = _contactFilter2D.layerMask;
             _animator.speed = _playbackSpeed;
             if (_dashLengthRef != null)
             {
                 _dashDistance = Vector2.Distance(transform.position, _dashLengthRef.transform.position);
             }
+            InitJumpParams();
         }
         void InitJumpParams()
         {
@@ -75,20 +84,33 @@ namespace DTIS
             _strongJumpGravity = -2 * Height / (Th * Th);
             Debug.Log($"strong jump force = {_strongJumpForce} | strong jump gravity = {_strongJumpGravity}");
         }
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            _groundOnlyFilter.useTriggers = false;
+            _groundAndPlatformFilter.useTriggers = false;
+            _groundOnlyFilter.SetLayerMask(_whatIsGround);
+            _groundAndPlatformFilter.SetLayerMask(_whatIsGround + _whatIsPlatform);
+            _groundOnlyFilter.useLayerMask = true;
+            _groundAndPlatformFilter.useLayerMask = true;
+            _currFilter = _groundAndPlatformFilter;
+        }
         #endregion
 
         #region CHECKS
+        //TODO: automatic init instead of serialize field. idea: have a script in the checks object that iterates on children and adds them here.
         public bool IsGrounded { get { return _gc.Grounded(); } }
         [SerializeField] private GroundCheck _gc;
         [SerializeField] private SlopeCheck _sc;
         [SerializeField] private HorizontalCollisionCheck2D _hc;
+        [SerializeField] private PlatformCheck _platformCheck;
 
         #endregion
 
         #region COMMONS
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
-        public int GroundOnlyLayerMask { get { return _groundOnlyMask; } }
+        public int GroundOnlyLayerMask { get { return _whatIsGround; } }
         public Vector2 CurrGravity { get { return _currGravity; } set { _currGravity = value; } }
         public Vector2 OriginalGravity { get { return _originalGravity; } private set { _originalGravity = value; } }
         private Vector2 _originalGravity;
@@ -300,33 +322,13 @@ namespace DTIS
         public bool isShooting { get { return _isShooting; } set { _isShooting = value; } }
         #endregion
 
-        #region PLATFORMS
-        /* *** PLATFORMS *** */
-        private bool _passingThroughPlatform = false;
-        private LayerMask _initialGroundLayerMask;
-        public bool PassingThroughPlatform { get { return _passingThroughPlatform; } private set { _passingThroughPlatform = value; } }
-
-        public void SetPassingThroughPlatform(bool value)
-        {
-            if (value)
-            {
-                _contactFilter2D.SetLayerMask(_groundOnlyMask);
-            }
-            else
-            {
-                _contactFilter2D.SetLayerMask(_initialGroundLayerMask);
-            }
-            PassingThroughPlatform = true;
-        }
-        #endregion
-
         #region DASH
         public void Dash()
         {
             if (_canDash)
             {
                 var direction = _facingRight == true ? Vector2.right : Vector2.left;
-                var hit = Physics2D.Raycast(transform.position, direction, _dashDistance, _contactFilter2D.layerMask);
+                var hit = Physics2D.Raycast(transform.position, direction, _dashDistance, _currFilter.layerMask);
                 var distance = Vector2.Distance(transform.position, hit.point);
                 if (distance < _dashDistance)
                 {
@@ -391,18 +393,20 @@ namespace DTIS
             Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x); //helps with slopes  
             Vector2 moveX = moveAlongGround * deltaPosition;
             Vector2 moveY = Vector2.up * deltaPosition.y;
-
-            Movement(moveY, true); // vertical movement
-            Movement(moveX, false); // horizontal movement
+            List<Collider2D> colliderToIgnore = new(16); // todo: variable size?
+            if(_passingThroughPlatform)
+                colliderToIgnore.Add(_platformCheck.Curr != null ? _platformCheck.Curr.Collider : null);
+            Movement(moveY, true,colliderToIgnore); // vertical movement
+            Movement(moveX, false,colliderToIgnore); // horizontal movement
             _velocity.y = Math.Clamp(_velocity.y, -_maxFallSpeed, float.MaxValue);
             _targetVelocity = Vector2.zero;
         }
-        protected private override void Movement(Vector2 move, bool yMovement)
+        protected private void Movement(Vector2 move, bool yMovement,List<Collider2D> collidersToIgnore)
         {
             float distance = move.magnitude;
             if (distance > _minMoveDistance)
             {
-                int count = _rb2d.Cast(move, _contactFilter2D, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
+                int count = _rb2d.Cast(move, _currFilter, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
                 _hitBufferList.Clear();
                 if (count > 0)
                 {
@@ -410,6 +414,8 @@ namespace DTIS
                 }
                 foreach (var hit in _hitBufferList)
                 {
+                    if(collidersToIgnore.Contains(hit.collider)) // added support to ignore specified colliders, for example platforms
+                        continue;
                     Vector2 currentNormal = hit.normal;
                     if (currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the set value.
                     {
