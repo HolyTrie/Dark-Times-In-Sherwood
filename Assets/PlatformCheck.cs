@@ -10,16 +10,12 @@ public class PlatformCheck : MonoBehaviour
     public OneWayPlatform Curr { get { return _currPlatform; } private set { _currPlatform = value; } }
     
     [SerializeField,Tooltip("how much time in seconds the curr platform will ignore collsion when trying to pass through it")]
-    private float _ignorePlatformDuration = 0.25f;
+    private float _ignorePlatformDuration = 0.5f;
     private PlayerController _pc;
-    private Collider2D[] _playerColliders;
-    //private Collider2D _collider;
 
     void Start()
     {
-        //_collider = GetComponent<Collider2D>();
         _pc = FindObjectsOfType<PlayerController>()[0]; // wont work well with more than 1 player!
-        _playerColliders = _pc.GetComponents<Collider2D>();
     }
 
     // Update is called once per frame
@@ -33,12 +29,13 @@ public class PlatformCheck : MonoBehaviour
         if (!other.gameObject.CompareTag("Platform"))
             return;
         
-        Curr = other.GetComponent<OneWayPlatform>();
-        bool allowsGoingUp = Curr.Type != OneWayPlatform.OneWayPlatforms.GoingDown;
+        var candidate = other.GetComponent<OneWayPlatform>();
+        bool allowsGoingUp = candidate.Type != OneWayPlatform.OneWayPlatforms.GoingDown;
         bool isPlayerBelow = !IsPlayerAbovePlatform(other);
         if(isPlayerBelow && allowsGoingUp)
         {
             _pc.PassingThroughPlatform = true;
+            Curr = candidate;
             StartCoroutine(WaitToReapplyCollision(_ignorePlatformDuration));
         }
     }
@@ -46,17 +43,22 @@ public class PlatformCheck : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Platform"))
             return;
-        Curr = other.GetComponent<OneWayPlatform>();
-        bool allowsGoingDown = Curr.Type != OneWayPlatform.OneWayPlatforms.GoingUp;
+        var candidate = other.GetComponent<OneWayPlatform>();
+        bool allowsGoingDown = candidate.Type != OneWayPlatform.OneWayPlatforms.GoingUp;
         bool isPlayerAbove = IsPlayerAbovePlatform(other);
-        bool jumpPressed = _pc.GetComponent<PlayerControls>().ActionMap.All.Down.WasPerformedThisFrame();
-        Debug.Log($"jump pressed = {jumpPressed} | enter allows up ={allowsGoingDown} and isPlayerAbove = {isPlayerAbove}");
-        if(isPlayerAbove && allowsGoingDown)
+        bool downPressed = _pc.GetComponent<PlayerControls>().ActionMap.All.Down.WasPerformedThisFrame();
+        if(downPressed && isPlayerAbove && allowsGoingDown)
         {
             Debug.Log("stayed and passing through");
             _pc.PassingThroughPlatform = true;
+            Curr = candidate;
             StartCoroutine(WaitToReapplyCollision(_ignorePlatformDuration));
         }
+    }
+    private void OnTriggerExit2D(Collider2D other) {
+        if(Curr != null)
+            if(other == Curr.Collider)
+                Curr = null;
     }
     private bool IsPlayerAbovePlatform(Collider2D other)
     {
@@ -66,7 +68,6 @@ public class PlatformCheck : MonoBehaviour
             return true;
         return false;
     }
-
     private IEnumerator WaitToReapplyCollision(float seconds)
     {
         yield return new WaitForSeconds(seconds);

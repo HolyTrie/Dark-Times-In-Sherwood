@@ -12,8 +12,8 @@ namespace DTIS
         private PlayerActionMap _am;
         public PlayerActionMap ActionMap { get { return _am; } }
         private float _walking = 0f;
-        private float _running = 0f;
         public float WalkingDirection { get { return _walking; } private set { _walking = value; } }
+        public bool Running {get;set;}
 
         private void Awake()
         {
@@ -27,6 +27,7 @@ namespace DTIS
         private void FixedUpdate()
         {
             WalkingDirection = ActionMap.All.Walk.ReadValue<float>();
+            Running = ActionMap.All.Run.WasPerformedThisFrame();
         }
 
         private void OnEnable()
