@@ -11,7 +11,7 @@ namespace DTIS
     */
     public class PlayerController : PhysicsObject2D
     {
-        #region STATIC INSTANCE
+        #region INITIALIZATION
         private static PlayerController _Instance;
         public static PlayerController Instance
         {
@@ -24,6 +24,56 @@ namespace DTIS
                 }
                 return _Instance;
             }
+        }
+        void Awake()
+        {
+            _animator = GetComponentInChildren<Animator>();
+            _tr = GetComponent<TrailRenderer>();
+            _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic strings
+            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+            _gc = GetComponentInChildren<GroundCheck>();
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            _staminabar = GetComponent<StaminaBar>();
+            _sanityBar = GetComponent<SanityBar>();
+            _hpBar = GetComponent<HpBarPlayer>();
+            _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
+        }
+        void Start()
+        { 
+            _baseGravity = Physics2D.gravity; // storing unitys gravity vector if its ever needed
+            _originalGravity = _baseGravity; 
+            _currGravity = _originalGravity;
+            _slopeGravity = _originalGravity * 2f;
+            _isRunning = false;
+            _wasRunning = false;
+            InitJumpParams();
+            _initialGroundLayerMask = _contactFilter2D.layerMask;
+            _animator.speed = _playbackSpeed;
+            if (_dashLengthRef != null)
+            {
+                _dashDistance = Vector2.Distance(transform.position, _dashLengthRef.transform.position);
+            }
+        }
+        void InitJumpParams()
+        {
+            _isInPeakHang = false;
+            _fallGravity = _baseGravity * _fallGravityMult;
+            var Height = Vector2.Distance(transform.position, _jumpVerticalPeak.position); // h
+            var HorizontalDistToPeak = Vector2.Distance(transform.position, _jumpHorizontalPeak.position); // X_h
+            var Vx = _walkSpeed;
+            var Th = HorizontalDistToPeak / Vx;
+            _timeToJumpPeak = Th;
+            _jumpForce = 2 * Height / Th;
+            _jumpGravity = -2 * Height / (Th *Th);
+            Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
+            // strong jump
+            Height = Vector2.Distance(transform.position, _strongJumpVerticalPeak.position); // h
+            HorizontalDistToPeak = Vector2.Distance(transform.position, _strongJumpHorizontalPeak.position); // X_h
+            Vx = _walkSpeed * _runSpeedMult;
+            Th = HorizontalDistToPeak / Vx;
+            _strongJumpForce = 2 * Height / Th;
+            _strongJumpGravity = -2 * Height / (Th * Th);
+            Debug.Log($"strong jump force = {_strongJumpForce} | strong jump gravity = {_strongJumpGravity}");
         }
         #endregion
 
@@ -157,6 +207,7 @@ namespace DTIS
         {
             CurrGravity = new(0f, CurrGravity.y * _fallGravityMult);
         }
+        public bool JumpWasBuffered { get; set; }
         public bool IsJumping { get { return _isJumping; } set { _isJumping = value; } }
         public bool IsFalling { get { return _isFalling; } set { _isFalling = value; } }
         public bool IsInPeakHang { get { return _isInPeakHang; } set { _isInPeakHang = value; } }
@@ -306,60 +357,7 @@ namespace DTIS
         private bool _canDash = true;
         private bool _isDashing = false;
         public Vector2 Position { get { return _rb2d.position; } }
-        #endregion
-       
-        #region INITIALIZATION
-        void Awake()
-        {
-            _animator = GetComponentInChildren<Animator>();
-            _tr = GetComponent<TrailRenderer>();
-            _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic strings
-            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-            _gc = GetComponentInChildren<GroundCheck>();
-            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-            _staminabar = GetComponent<StaminaBar>();
-            _sanityBar = GetComponent<SanityBar>();
-            _hpBar = GetComponent<HpBarPlayer>();
-            _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
-        }
-        void Start()
-        { 
-            _baseGravity = Physics2D.gravity; // storing unitys gravity vector if its ever needed
-            _originalGravity = _baseGravity; 
-            _currGravity = _originalGravity;
-            _slopeGravity = _originalGravity * 2f;
-            _isRunning = false;
-            _wasRunning = false;
-            InitJumpParams();
-            _initialGroundLayerMask = _contactFilter2D.layerMask;
-            _animator.speed = _playbackSpeed;
-            if (_dashLengthRef != null)
-            {
-                _dashDistance = Vector2.Distance(transform.position, _dashLengthRef.transform.position);
-            }
-        }
 
-        void InitJumpParams()
-        {
-            _isInPeakHang = false;
-            _fallGravity = _baseGravity * _fallGravityMult;
-            var Height = Vector2.Distance(transform.position, _jumpVerticalPeak.position); // h
-            var HorizontalDistToPeak = Vector2.Distance(transform.position, _jumpHorizontalPeak.position); // X_h
-            var Vx = _walkSpeed;
-            var Th = HorizontalDistToPeak / Vx;
-            _timeToJumpPeak = Th;
-            _jumpForce = 2 * Height; // / Th;
-            _jumpGravity = -2 * Height / Th; // (Th * Th);
-            Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
-            // strong jump
-            Height = Vector2.Distance(transform.position, _strongJumpVerticalPeak.position); // h
-            HorizontalDistToPeak = Vector2.Distance(transform.position, _strongJumpHorizontalPeak.position); // X_h
-            Vx = _walkSpeed * _runSpeedMult;
-            Th = HorizontalDistToPeak / Vx;
-            _strongJumpForce = 2 * Height; // / Th;
-            _strongJumpGravity = -2 * Height / Th; // (Th * Th);
-            Debug.Log($"strong jump force = {_strongJumpForce} | strong jump gravity = {_strongJumpGravity}");
-        }
         #endregion
 
         #region UPDATES & PHYSICS
@@ -389,7 +387,6 @@ namespace DTIS
 
             _velocity += acc; // apply gravity to the objects velocity
             _velocity.x = _targetVelocity.x;
-            Debug.Log(_targetVelocity);
             Vector2 deltaPosition = _velocity * Time.deltaTime;
             Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x); //helps with slopes  
             Vector2 moveX = moveAlongGround * deltaPosition;
@@ -399,10 +396,6 @@ namespace DTIS
             Movement(moveX, false); // horizontal movement
             _velocity.y = Math.Clamp(_velocity.y, -_maxFallSpeed, float.MaxValue);
             _targetVelocity = Vector2.zero;
-            // predict future position using a simplified euler integration (~0.5 pixel error rate, resets when landing so it does not accumulate)
-            //var futurePos = _velocity * Time.deltaTime + 0.5f * Time.deltaTime * acc; // pos = velocity*deltaTime +0.5*accelaration*(deltaTime^2)
-            //var futureVel = acc; // vel = accelaration * deltaTime
-            //futurePos = (Vector2)transform.position + futurePos;
         }
         protected private override void Movement(Vector2 move, bool yMovement)
         {

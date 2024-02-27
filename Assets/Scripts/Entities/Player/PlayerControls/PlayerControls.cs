@@ -27,7 +27,6 @@ namespace DTIS
         private void FixedUpdate()
         {
             WalkingDirection = ActionMap.All.Walk.ReadValue<float>();
-            Debug.Log("direction = "+WalkingDirection);
         }
 
         private void OnEnable()

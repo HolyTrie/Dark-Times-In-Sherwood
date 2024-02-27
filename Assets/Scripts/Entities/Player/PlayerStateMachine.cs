@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR.Haptics;
+using UnityEditor; //for gizmo labels
 
 namespace DTIS
 {
@@ -112,13 +111,24 @@ namespace DTIS
         {
             _state?.Update();
             _subState?.Update();
-            //Debug.Log($"State = {_state.Name} | SubState = {_subState.Name}");
         }
 
         protected virtual void FixedUpdate()
         {
             _state?.FixedUpdate();
             _subState?.FixedUpdate();
+        }
+        protected virtual void OnDrawGizmos()
+        {
+            GUI.color = Color.black;
+            GUIStyle style = new()
+            {
+                fontSize = 30
+            };
+            var pos = transform.position;
+            pos.y += 3f;
+            pos.x -= 1.25f;
+            Handles.Label(pos,$"|State = {_state}|\n|SubState = {_subState}|",style);
         }
     }
 }

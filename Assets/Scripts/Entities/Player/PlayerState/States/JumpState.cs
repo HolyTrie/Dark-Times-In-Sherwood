@@ -25,7 +25,9 @@ namespace DTIS
             {
                 IsInPeakHang = false;
             }
-            fsm.StartCoroutine(WaitForKeyBeforeFalling());
+            if(Controller.JumpWasBuffered)
+                fsm.StartCoroutine(WaitForKeyBeforeFalling());
+            Controller.JumpWasBuffered = false;
             Controller.Jump(); //sets jumping to true!
         }
         private protected override void SetAnimations()
@@ -34,7 +36,11 @@ namespace DTIS
             {
                 try
                 {
-                    Controller.Animator.Play(FSM.PrevState.Type == ESP.States.Jump ? Name : "smrslt");
+                    var animName = Name;
+                    if(FSM.PrevState.Type == ESP.States.Jump)
+                        animName = "smrslt";
+                    Debug.Log($"Playing '{animName}'");
+                    Controller.Animator.Play(animName);
                 }
                 catch (Exception e)
                 {
@@ -72,7 +78,7 @@ namespace DTIS
             }
             if(_airControl)
             { 
-                var direction = FSM.Controls.ActionMap.All.Walk.ReadValue<float>();
+                var direction = Controls.WalkingDirection;
                 float mult = 1.0f;
                 if(IsInPeakHang)
                 {
