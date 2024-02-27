@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
+public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
 {
     public InputActionAsset asset { get; }
     public @PlayerActionMap()
@@ -112,6 +112,15 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""name"": ""SwapWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""2d7cab4a-6587-4c57-a3df-29c90abae3b8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""f4ad4aba-8a08-4d70-9f22-5b5ff55211c2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -305,6 +314,17 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2c9e011-11b0-4f08-aae7-fef6b4eda7c1"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -329,6 +349,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         m_All_Interaction = m_All.FindAction("Interaction", throwIfNotFound: true);
         m_All_Dash = m_All.FindAction("Dash", throwIfNotFound: true);
         m_All_SwapWeapon = m_All.FindAction("SwapWeapon", throwIfNotFound: true);
+        m_All_PauseMenu = m_All.FindAction("PauseMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -400,6 +421,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_All_Interaction;
     private readonly InputAction m_All_Dash;
     private readonly InputAction m_All_SwapWeapon;
+    private readonly InputAction m_All_PauseMenu;
     public struct AllActions
     {
         private @PlayerActionMap m_Wrapper;
@@ -414,6 +436,7 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         public InputAction @Interaction => m_Wrapper.m_All_Interaction;
         public InputAction @Dash => m_Wrapper.m_All_Dash;
         public InputAction @SwapWeapon => m_Wrapper.m_All_SwapWeapon;
+        public InputAction @PauseMenu => m_Wrapper.m_All_PauseMenu;
         public InputActionMap Get() { return m_Wrapper.m_All; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -453,6 +476,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @SwapWeapon.started += instance.OnSwapWeapon;
             @SwapWeapon.performed += instance.OnSwapWeapon;
             @SwapWeapon.canceled += instance.OnSwapWeapon;
+            @PauseMenu.started += instance.OnPauseMenu;
+            @PauseMenu.performed += instance.OnPauseMenu;
+            @PauseMenu.canceled += instance.OnPauseMenu;
         }
 
         private void UnregisterCallbacks(IAllActions instance)
@@ -487,6 +513,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @SwapWeapon.started -= instance.OnSwapWeapon;
             @SwapWeapon.performed -= instance.OnSwapWeapon;
             @SwapWeapon.canceled -= instance.OnSwapWeapon;
+            @PauseMenu.started -= instance.OnPauseMenu;
+            @PauseMenu.performed -= instance.OnPauseMenu;
+            @PauseMenu.canceled -= instance.OnPauseMenu;
         }
 
         public void RemoveCallbacks(IAllActions instance)
@@ -525,5 +554,6 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         void OnInteraction(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnSwapWeapon(InputAction.CallbackContext context);
+        void OnPauseMenu(InputAction.CallbackContext context);
     }
 }

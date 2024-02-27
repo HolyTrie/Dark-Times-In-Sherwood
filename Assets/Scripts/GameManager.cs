@@ -73,4 +73,16 @@ public sealed class GameManager : MonoBehaviour
 	{
 		fsm = playerStateMachine;
 	}
+
+	public static void PauseGame()
+	{
+		Time.timeScale = 0;
+		fsm.Controls.enabled = false;
+	}
+
+	public static void ResumeGame()
+	{
+		Time.timeScale = 1;
+		fsm.Controls.enabled = true;
+	}
 }
