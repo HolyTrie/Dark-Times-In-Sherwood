@@ -13,6 +13,10 @@ namespace DTIS
             GameObject.FindGameObjectWithTag("Player").TryGetComponent(out PlayerController _pc);
             return _pc;
         }
+        public static Vector2 Vector2DeepCopy(Vector2 vec)
+        {
+            return new Vector2(vec.x,vec.y);
+        }
         public static IEnumerator Wait(float seconds = 1f)
         {
             yield return new WaitForSeconds(seconds);

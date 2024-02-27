@@ -87,7 +87,6 @@ namespace DTIS
             {
                 try
                 {
-                    Controller.Animator.StopPlayback();
                     Controller.Animator.Play(Name);
                 }
                 catch (Exception e)

@@ -11,7 +11,6 @@ namespace DTIS
         private bool _inSlope = false;
         private bool SlopeAhead { get { return Controller.SlopeAhead; } }
         private Vector2 OriginalGravity { get { return Controller.OriginalGravity; } }
-
         private Transform crosshair;
         public GroundedState(ESP.States state, string name = "Grounded")
         : base(state, name, false) { }
@@ -22,6 +21,7 @@ namespace DTIS
             Controller.CurrGravity = OriginalGravity;
             if(Controller.JumpBufferCounter > 0)
             {
+                Controller.JumpWasBuffered = true;
                 SetStates(ESP.States.Airborne,ESP.States.Jump);
             }
             else
@@ -38,9 +38,6 @@ namespace DTIS
             if (ActionMap.Jump.WasPressedThisFrame())
             {
                 bool canJump = true;
-                if (Controller.StaminaBar != null)
-                    if (!Controller.StaminaBar.canUseStamina)
-                        canJump = false;
                 if (canJump)
                 {
                     SetStates(ESP.States.Airborne, ESP.States.Jump);
@@ -55,6 +52,7 @@ namespace DTIS
 
             if (ActionMap.SwapWeapon.WasPressedThisFrame())
             {
+                //TODO: enum instead of nums
                 Debug.Log("Swapping Weapons");
                 AttackState.weaponType++;
                 if (AttackState.weaponType > 2)

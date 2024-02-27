@@ -8,32 +8,37 @@ namespace DTIS
     public class PlayerControls : MonoBehaviour
     {
         // public static event Action A;
-
+        public static PlayerControls Instance {get; private set;}
         private PlayerActionMap _am;
         public PlayerActionMap ActionMap { get { return _am; } }
         private float _walking = 0f;
-        private float _running = 0f;
-        public float RunningDirection {get{return _running;}private set{_running=value;}}
         public float WalkingDirection { get { return _walking; } private set { _walking = value; } }
+        public bool Running {get;set;}
 
         private void Awake()
         {
+            if(Instance == null)
+                Instance = this;
+            else
+                Destroy(gameObject);
             _am = new PlayerActionMap();
         }
+        
         private void FixedUpdate()
         {
-            RunningDirection = ActionMap.All.Run.ReadValue<float>();
             WalkingDirection = ActionMap.All.Walk.ReadValue<float>();
+            Running = ActionMap.All.Run.WasPerformedThisFrame();
         }
 
         private void OnEnable()
         {
-            ActionMap.Enable();
+            _am ??= new PlayerActionMap();
+            _am.Enable();
         }
 
         private void OnDisable()
         {
-            ActionMap.Disable();
+            _am.Disable();
         }
     }
 

@@ -1,9 +1,11 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace DTIS
 {
     public class RunState:PlayerState {
+        private float _prevDirection = 0f;
         private bool IsRunning{get{return Controller.IsRunning;}set{Controller.IsRunning = value;}}
         private bool WasRunning{get{return Controller.WasRunning;}set{Controller.WasRunning = value;}}
         public RunState(ESP.States state,string name = "run") 
@@ -25,20 +27,20 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            /*
-            if (FSM.Controls.HorizontalMove == 0f)
+            var direction = Controls.WalkingDirection;
+            if (direction == 0f && _prevDirection == 0f)
             {
                 SetSubState(ESP.States.Idle);
             }
-            */
-            if(Controls.RunningDirection == 0)
+            if(ActionMap.Run.WasPerformedThisFrame())
             {
                 FSM.SubState = ESP.Build(ESP.States.Walk);
             }
+            _prevDirection = direction;
         }
         protected override void PhysicsCalculation()
         {
-            var direction = Controls.ActionMap.All.Run.ReadValue<float>(); //using All.Walk is the same btw
+            var direction = Controls.WalkingDirection;
             var move =  Controller.RunSpeedMult * new Vector2(direction, 0f);
             Controller.Move(move);
         }

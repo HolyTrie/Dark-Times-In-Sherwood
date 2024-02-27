@@ -40,7 +40,7 @@ namespace DTIS
                 Controller.JumpBufferCounter = Controller.JumpBufferTime;
             else
                 Controller.JumpBufferCounter -= Time.deltaTime;
-            if (Controller.IsGrounded)
+            if (Controller.IsGrounded && FSM.SubState.Type!=ESP.States.Jump)
             {
                 SetStates(ESP.States.Grounded, ESP.States.Idle);
             }
@@ -57,13 +57,12 @@ namespace DTIS
                     if (!_isInCoyoteTime)
                     {
                         ++_jumpsMidAir;
-                        SetSubState(ESP.States.Jump);
                     }
                     else
                     {
-                        SetSubState(ESP.States.Jump);
                         _isInCoyoteTime = false;
                     }
+                    SetSubState(ESP.States.Jump);
                     Controller.JumpBufferCounter = 0f;
                 }
                 

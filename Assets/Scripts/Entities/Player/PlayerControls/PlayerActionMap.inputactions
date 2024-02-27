@@ -28,7 +28,7 @@
                     "type": "Button",
                     "id": "2cef54db-9845-4ab7-88f0-969b12ae0765",
                     "expectedControlType": "Button",
-                    "processors": "",
+                    "processors": "Normalize(min=-1,max=1)",
                     "interactions": "",
                     "initialStateCheck": false
                 },
@@ -110,6 +110,39 @@
                 },
                 {
                     "name": "1D Axis",
+                    "id": "74646be2-70e2-4451-a280-f0ebfbc419a8",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Walk",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "6768a7bb-1625-42c1-a256-86992fb9e97a",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "New control scheme",
+                    "action": "Walk",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "dff2570b-ade3-4aa0-b022-6eda1f533c53",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "New control scheme",
+                    "action": "Walk",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis",
                     "id": "c272d4f7-df76-46a2-844c-6b93f8300799",
                     "path": "1DAxis",
                     "interactions": "",
@@ -122,7 +155,7 @@
                 {
                     "name": "positive",
                     "id": "3eae0d5d-20dd-4218-94ee-493ddfcbb7b8",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -133,55 +166,11 @@
                 {
                     "name": "negative",
                     "id": "96f08e41-beb9-4e7b-9772-def81c755e8f",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Walk",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Axis Modifier",
-                    "id": "1cc4fb8b-0d14-4916-b850-33644a67e57e",
-                    "path": "AxisModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "8f5d226b-eb1e-40c3-8609-2678c8a74b12",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "New control scheme",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "df5596a6-9960-4642-bbd1-d69e3d2a09ab",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "New control scheme",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "negative",
-                    "id": "694787fa-6b3d-422c-a8d7-c8f78f25301b",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "New control scheme",
-                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -281,6 +270,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwapWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6366d892-e608-4ca8-8433-3c306b13eac0",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "New control scheme",
+                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

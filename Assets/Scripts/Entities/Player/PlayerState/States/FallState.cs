@@ -47,7 +47,7 @@ namespace DTIS
             }
             if (_airControl)
             {
-                var direction = FSM.Controls.ActionMap.All.Walk.ReadValue<float>();
+                var direction = Controls.WalkingDirection;
                 float mult = 1.0f;
                 if (IsInPeakHang)
                 {

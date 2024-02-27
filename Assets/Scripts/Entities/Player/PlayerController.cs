@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace DTIS
 {
@@ -11,8 +11,17 @@ namespace DTIS
         - https://stackoverflow.com/questions/12662072/what-is-protected-virtual-new
     */
     public class PlayerController : PhysicsObject2D
-    {
-        #region STATIC INSTANCE
+    { 
+        #region PLATFORMS
+        [Header("Platforms")]
+        [SerializeField] protected private LayerMask _whatIsPlatform;
+        protected private ContactFilter2D _groundOnlyFilter;
+        protected private ContactFilter2D _groundAndPlatformFilter;
+        private bool _passingThroughPlatform = false;
+        public bool PassingThroughPlatform { get { return _passingThroughPlatform; } set { _passingThroughPlatform = value; } }
+        #endregion
+        
+        #region INITIALIZATION
         private static PlayerController _Instance;
         public static PlayerController Instance
         {
@@ -26,20 +35,82 @@ namespace DTIS
                 return _Instance;
             }
         }
+        void Awake()
+        {
+            _animator = GetComponentInChildren<Animator>();
+            _tr = GetComponent<TrailRenderer>();
+            _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic strings
+            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+            _gc = GetComponentInChildren<GroundCheck>();
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            _staminabar = GetComponent<StaminaBar>();
+            _sanityBar = GetComponent<SanityBar>();
+            _hpBar = GetComponent<HpBarPlayer>();
+            _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
+        }
+        void Start()
+        { 
+            _baseGravity = Physics2D.gravity; // storing unitys gravity vector if its ever needed
+            _originalGravity = _baseGravity; 
+            _currGravity = _originalGravity;
+            _slopeGravity = _originalGravity * 2f;
+            _isRunning = false;
+            _wasRunning = false;
+            _animator.speed = _playbackSpeed;
+            if (_dashLengthRef != null)
+            {
+                _dashDistance = Vector2.Distance(transform.position, _dashLengthRef.transform.position);
+            }
+            InitJumpParams();
+        }
+        void InitJumpParams()
+        {
+            _isInPeakHang = false;
+            _fallGravity = _baseGravity * _fallGravityMult;
+            var Height = Vector2.Distance(transform.position, _jumpVerticalPeak.position); // h
+            var HorizontalDistToPeak = Vector2.Distance(transform.position, _jumpHorizontalPeak.position); // X_h
+            var Vx = _walkSpeed;
+            var Th = HorizontalDistToPeak / Vx;
+            _timeToJumpPeak = Th;
+            _jumpForce = 2 * Height / Th;
+            _jumpGravity = -2 * Height / (Th *Th);
+            Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
+            // strong jump
+            Height = Vector2.Distance(transform.position, _strongJumpVerticalPeak.position); // h
+            HorizontalDistToPeak = Vector2.Distance(transform.position, _strongJumpHorizontalPeak.position); // X_h
+            Vx = _walkSpeed * _runSpeedMult;
+            Th = HorizontalDistToPeak / Vx;
+            _strongJumpForce = 2 * Height / Th;
+            _strongJumpGravity = -2 * Height / (Th * Th);
+            Debug.Log($"strong jump force = {_strongJumpForce} | strong jump gravity = {_strongJumpGravity}");
+        }
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            _groundOnlyFilter.useTriggers = false;
+            _groundAndPlatformFilter.useTriggers = false;
+            _groundOnlyFilter.SetLayerMask(_whatIsGround);
+            _groundAndPlatformFilter.SetLayerMask(_whatIsGround + _whatIsPlatform);
+            _groundOnlyFilter.useLayerMask = true;
+            _groundAndPlatformFilter.useLayerMask = true;
+            _currFilter = _groundAndPlatformFilter;
+        }
         #endregion
 
         #region CHECKS
+        //TODO: automatic init instead of serialize field. idea: have a script in the checks object that iterates on children and adds them here.
         public bool IsGrounded { get { return _gc.Grounded(); } }
         [SerializeField] private GroundCheck _gc;
         [SerializeField] private SlopeCheck _sc;
         [SerializeField] private HorizontalCollisionCheck2D _hc;
+        [SerializeField] private PlatformCheck _platformCheck;
 
         #endregion
 
         #region COMMONS
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
-        public int GroundOnlyLayerMask { get { return _groundOnlyMask; } }
+        public int GroundOnlyLayerMask { get { return _whatIsGround; } }
         public Vector2 CurrGravity { get { return _currGravity; } set { _currGravity = value; } }
         public Vector2 OriginalGravity { get { return _originalGravity; } private set { _originalGravity = value; } }
         private Vector2 _originalGravity;
@@ -97,7 +168,8 @@ namespace DTIS
         #region WALK & RUN
         public void Move(Vector2 move)
         {
-            _targetVelocity = move * _walkSpeed;
+            var tmp = move* _walkSpeed;
+            _targetVelocity = new (tmp.x,tmp.y);
         }
         public bool IsRunning { get { return _isRunning; } set { _isRunning = value; } }
         public float RunSpeedMult { get { return _runSpeedMult; } }
@@ -157,6 +229,7 @@ namespace DTIS
         {
             CurrGravity = new(0f, CurrGravity.y * _fallGravityMult);
         }
+        public bool JumpWasBuffered { get; set; }
         public bool IsJumping { get { return _isJumping; } set { _isJumping = value; } }
         public bool IsFalling { get { return _isFalling; } set { _isFalling = value; } }
         public bool IsInPeakHang { get { return _isInPeakHang; } set { _isInPeakHang = value; } }
@@ -249,37 +322,16 @@ namespace DTIS
         public bool isShooting { get { return _isShooting; } set { _isShooting = value; } }
         #endregion
 
-        #region PLATFORMS
-        /* *** PLATFORMS *** */
-        private bool _passingThroughPlatform = false;
-        private LayerMask _initialGroundLayerMask;
-        public bool PassingThroughPlatform { get { return _passingThroughPlatform; } private set { _passingThroughPlatform = value; } }
-
-        public void SetPassingThroughPlatform(bool value)
-        {
-            if (value)
-            {
-                _contactFilter2D.SetLayerMask(_groundOnlyMask);
-            }
-            else
-            {
-                _contactFilter2D.SetLayerMask(_initialGroundLayerMask);
-            }
-            PassingThroughPlatform = true;
-        }
-        #endregion
-
         #region DASH
         public void Dash()
         {
             if (_canDash)
             {
                 var direction = _facingRight == true ? Vector2.right : Vector2.left;
-                var hit = Physics2D.Raycast(transform.position, direction, _dashDistance, _contactFilter2D.layerMask);
+                var hit = Physics2D.Raycast(transform.position, direction, _dashDistance, _currFilter.layerMask);
                 var distance = Vector2.Distance(transform.position, hit.point);
                 if (distance < _dashDistance)
                 {
-                    Debug.Log($"hit dist = {distance}");
                     _dashDistance = distance;
                 }
                 StartCoroutine(StartDash(_gravityModifier));
@@ -307,60 +359,7 @@ namespace DTIS
         private bool _canDash = true;
         private bool _isDashing = false;
         public Vector2 Position { get { return _rb2d.position; } }
-        #endregion
-       
-        #region INITIALIZATION
-        void Awake()
-        {
-            _animator = GetComponentInChildren<Animator>();
-            _tr = GetComponent<TrailRenderer>();
-            _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic strings
-            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-            _gc = GetComponentInChildren<GroundCheck>();
-            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-            _staminabar = GetComponent<StaminaBar>();
-            _sanityBar = GetComponent<SanityBar>();
-            _hpBar = GetComponent<HpBarPlayer>();
-            _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
-        }
-        void Start()
-        { 
-            _baseGravity = Physics2D.gravity; // storing unitys gravity vector if its ever needed
-            _originalGravity = _baseGravity; 
-            _currGravity = _originalGravity;
-            _slopeGravity = _originalGravity * 2f;
-            _isRunning = false;
-            _wasRunning = false;
-            InitJumpParams();
-            _initialGroundLayerMask = _contactFilter2D.layerMask;
-            _animator.speed = _playbackSpeed;
-            if (_dashLengthRef != null)
-            {
-                _dashDistance = Vector2.Distance(transform.position, _dashLengthRef.transform.position);
-            }
-        }
 
-        void InitJumpParams()
-        {
-            _isInPeakHang = false;
-            _fallGravity = _baseGravity * _fallGravityMult;
-            var Height = Vector2.Distance(transform.position, _jumpVerticalPeak.position); // h
-            var HorizontalDistToPeak = Vector2.Distance(transform.position, _jumpHorizontalPeak.position); // X_h
-            var Vx = _walkSpeed;
-            var Th = HorizontalDistToPeak / Vx;
-            _timeToJumpPeak = Th;
-            _jumpForce = 2 * Height; // / Th;
-            _jumpGravity = -2 * Height / Th; // (Th * Th);
-            Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
-            // strong jump
-            Height = Vector2.Distance(transform.position, _strongJumpVerticalPeak.position); // h
-            HorizontalDistToPeak = Vector2.Distance(transform.position, _strongJumpHorizontalPeak.position); // X_h
-            Vx = _walkSpeed * _runSpeedMult;
-            Th = HorizontalDistToPeak / Vx;
-            _strongJumpForce = 2 * Height; // / Th;
-            _strongJumpGravity = -2 * Height / Th; // (Th * Th);
-            Debug.Log($"strong jump force = {_strongJumpForce} | strong jump gravity = {_strongJumpGravity}");
-        }
         #endregion
 
         #region UPDATES & PHYSICS
@@ -370,7 +369,7 @@ namespace DTIS
         }
         protected private override void Update()
         {
-            base.Update();
+            //base.Update();
             _playerGhostBehaviour.TrySetGhostStatus();
             Flip();
         }
@@ -392,25 +391,22 @@ namespace DTIS
             _velocity.x = _targetVelocity.x;
             Vector2 deltaPosition = _velocity * Time.deltaTime;
             Vector2 moveAlongGround = new(_groundNormal.y, -_groundNormal.x); //helps with slopes  
-
             Vector2 moveX = moveAlongGround * deltaPosition;
             Vector2 moveY = Vector2.up * deltaPosition.y;
-
-            Movement(moveY, true); // vertical movement
-            Movement(moveX, false); // horizontal movement
+            List<Collider2D> colliderToIgnore = new(16); // todo: variable size?
+            if(_passingThroughPlatform)
+                colliderToIgnore.Add(_platformCheck.Curr != null ? _platformCheck.Curr.Collider : null);
+            Movement(moveY, true,colliderToIgnore); // vertical movement
+            Movement(moveX, false,colliderToIgnore); // horizontal movement
             _velocity.y = Math.Clamp(_velocity.y, -_maxFallSpeed, float.MaxValue);
-
-            // predict future position using a simplified euler integration (~0.5 pixel error rate, resets when landing so it does not accumulate)
-            //var futurePos = _velocity * Time.deltaTime + 0.5f * Time.deltaTime * acc; // pos = velocity*deltaTime +0.5*accelaration*(deltaTime^2)
-            //var futureVel = acc; // vel = accelaration * deltaTime
-            //futurePos = (Vector2)transform.position + futurePos;
+            _targetVelocity = Vector2.zero;
         }
-        protected private override void Movement(Vector2 move, bool yMovement)
+        protected private void Movement(Vector2 move, bool yMovement,List<Collider2D> collidersToIgnore)
         {
             float distance = move.magnitude;
             if (distance > _minMoveDistance)
             {
-                int count = _rb2d.Cast(move, _contactFilter2D, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
+                int count = _rb2d.Cast(move, _currFilter, _hitBuffer, distance + _shellRadius); // stores results into _hitBuffer and returns its length (can be discarded).
                 _hitBufferList.Clear();
                 if (count > 0)
                 {
@@ -418,6 +414,8 @@ namespace DTIS
                 }
                 foreach (var hit in _hitBufferList)
                 {
+                    if(collidersToIgnore.Contains(hit.collider)) // added support to ignore specified colliders, for example platforms
+                        continue;
                     Vector2 currentNormal = hit.normal;
                     if (currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the set value.
                     {
@@ -440,15 +438,7 @@ namespace DTIS
             }
             var distanceToMove = move.normalized * distance;
             _rb2d.position += distanceToMove;
-            // DEBUG:
-            var _color = Color.white;
-            if (!_grounded)
-            {
-                _color = Color.magenta;
-                //Debug.Log($"grounded = {_grounded} | on slope prev frame = {_wasOnSlopePrevFrame} | on slope = {_onSlope} | rb vel = {_rb2d.velocity} | y movement = {yMovement}");
-            }
-            var direction = _rb2d.velocity.x >= 0f ? Vector2.right : Vector2.left;
-            //Debug.DrawRay(transform.position,direction,_color,7f);
+            _rb2d.MovePosition(_rb2d.position);
         }
         #endregion
 
