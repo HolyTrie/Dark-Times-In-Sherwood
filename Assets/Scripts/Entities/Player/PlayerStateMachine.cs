@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor; //for gizmo labels
+//using UnityEditor; //for gizmo labels
 
 namespace DTIS
 {
@@ -118,6 +118,7 @@ namespace DTIS
             _state?.FixedUpdate();
             _subState?.FixedUpdate();
         }
+        /*
         protected virtual void OnDrawGizmos()
         {
             GUI.color = Color.black;
@@ -130,5 +131,6 @@ namespace DTIS
             pos.x -= 1.25f;
             Handles.Label(pos,$"|State = {_state}|\n|SubState = {_subState}|",style);
         }
+        */
     }
 }

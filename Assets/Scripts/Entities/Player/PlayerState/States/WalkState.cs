@@ -19,7 +19,7 @@ namespace DTIS
             {
                 SetSubState(ESP.States.Idle);
             }
-            if(ActionMap.Run.WasPerformedThisFrame())
+            if(Controls.Running)
             {
                 SetSubState(ESP.States.Run);
             }

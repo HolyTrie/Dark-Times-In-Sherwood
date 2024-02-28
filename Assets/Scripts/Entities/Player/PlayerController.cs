@@ -437,8 +437,9 @@ namespace DTIS
                 }
             }
             var distanceToMove = move.normalized * distance;
-            _rb2d.position += distanceToMove;
-            _rb2d.MovePosition(_rb2d.position);
+            var pos = _rb2d.position + distanceToMove;
+            _rb2d.position = pos;
+            //_rb2d.MovePosition(pos);
         }
         #endregion
 

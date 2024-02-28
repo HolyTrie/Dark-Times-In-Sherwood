@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace DTIS
@@ -28,11 +27,11 @@ namespace DTIS
         protected override void TryStateSwitch()
         {
             var direction = Controls.WalkingDirection;
-            if (direction == 0f && _prevDirection == 0f)
+            if (direction == 0f)// && _prevDirection == 0f)
             {
                 SetSubState(ESP.States.Idle);
             }
-            if(ActionMap.Run.WasPerformedThisFrame())
+            if(!Controls.Running)
             {
                 FSM.SubState = ESP.Build(ESP.States.Walk);
             }

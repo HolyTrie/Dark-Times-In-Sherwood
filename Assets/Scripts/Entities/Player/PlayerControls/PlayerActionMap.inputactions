@@ -25,21 +25,21 @@
                 },
                 {
                     "name": "Walk",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "2cef54db-9845-4ab7-88f0-969b12ae0765",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "Normalize(min=-1,max=1)",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Run",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "bbf5d53b-3720-4ddd-beb0-6feeeca65ddb",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "GoGhost",
@@ -275,9 +275,9 @@
                 },
                 {
                     "name": "",
-                    "id": "6366d892-e608-4ca8-8433-3c306b13eac0",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
+                    "id": "5d384054-502b-416c-b1e4-abc7bf1c1dcd",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "Hold(duration=0.001,pressPoint=0.001)",
                     "processors": "",
                     "groups": "New control scheme",
                     "action": "Run",
