@@ -5,7 +5,7 @@ public class CrosshairCursor : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Cursor.visible = false;
+        // Cursor.visible = false; 
     }
 
     // Update is called once per frame

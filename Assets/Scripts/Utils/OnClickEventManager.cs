@@ -1,14 +1,15 @@
 using UnityEngine;
-
+using DTIS;
 public class OnClickEventManager : MonoBehaviour
 {
     private GameObject PauseMenu;
+    private const int StartScene = 1;
 
     private void Awake()
     {
         PauseMenu = GameObject.Find("PauseMenu");
     }
-    
+
     public void PauseGame()
     {
         GameManager.PauseGame();
@@ -19,5 +20,10 @@ public class OnClickEventManager : MonoBehaviour
     {
         GameManager.ResumeGame();
         PauseMenu.SetActive(false);
+    }
+
+    public void StartGame()
+    {
+        GameManager.LoadScene(StartScene); 
     }
 }

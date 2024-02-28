@@ -769,7 +769,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 821496015}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1408837243}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &821496015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1331,6 +1343,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304126805}
   m_CullTransparentMesh: 1
+--- !u!1 &1408837243 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7358179593658223361, guid: 7fddf0d50032f434b932d10cf0930569, type: 3}
+  m_PrefabInstance: {fileID: 1869175183}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1408837244 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3119589091075833861, guid: 7fddf0d50032f434b932d10cf0930569, type: 3}
