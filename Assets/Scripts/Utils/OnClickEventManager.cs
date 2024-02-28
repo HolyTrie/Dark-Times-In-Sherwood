@@ -3,11 +3,13 @@ using DTIS;
 public class OnClickEventManager : MonoBehaviour
 {
     private GameObject PauseMenu;
+    private GameObject MainMenu;
     private const int StartScene = 1;
 
     private void Awake()
     {
         PauseMenu = GameObject.Find("PauseMenu");
+        MainMenu = GameObject.Find("MainMenu");
     }
 
     public void PauseGame()
