@@ -8,11 +8,7 @@ public class OnClickEventManager : MonoBehaviour
     {
         PauseMenu = GameObject.Find("PauseMenu");
     }
-
-    private void Start()
-    {
-        PauseMenu.SetActive(false);
-    }
+    
     public void PauseGame()
     {
         GameManager.PauseGame();

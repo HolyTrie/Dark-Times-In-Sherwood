@@ -28,6 +28,11 @@ namespace DTIS
             PauseMenu = GameObject.Find("PauseMenu");
         }
 
+        private void Start()
+        {
+            PauseMenu.SetActive(false);
+        }
+
         private void Update()
         {
             if (ActionMap.All.PauseMenu.WasPressedThisFrame())
