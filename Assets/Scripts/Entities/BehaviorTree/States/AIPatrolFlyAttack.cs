@@ -4,7 +4,7 @@ using BehaviorTree;
 using DTIS;
 using UnityEngine;
 
-public class AIPatrolChaseAttack : BTree
+public class AIPatrolFlyAttack : BTree
 {
     [Tooltip("Points that the Entity will walk to")]
     [SerializeField] public Transform[] patrolTransforms;
@@ -39,7 +39,7 @@ public class AIPatrolChaseAttack : BTree
                     new Sequence(new List<Node>
                     {
                         new CheckPlayerInFOVRange(_AIcontroller),
-                        new TaskGoToTarget(_AIcontroller),
+                        new TaskFlyToTarget(_AIcontroller),
                         
                     }),
                     new TaskPatrol(patrolTransforms,_AIcontroller),

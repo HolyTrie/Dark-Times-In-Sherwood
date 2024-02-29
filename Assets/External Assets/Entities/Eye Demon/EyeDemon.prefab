@@ -691,8 +691,8 @@ GameObject:
   - component: {fileID: 771638231714990406}
   - component: {fileID: 5925376492147449410}
   - component: {fileID: 3401771347317102621}
-  - component: {fileID: 5806379068987176609}
   - component: {fileID: 7863517801960115854}
+  - component: {fileID: 4776086187192958698}
   m_Layer: 10
   m_Name: EyeDemon
   m_TagString: Enemy
@@ -808,7 +808,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 1
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -883,19 +883,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpBar: {fileID: 5633811108736996185}
   maxHP: 250
---- !u!114 &5806379068987176609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7736791561133203582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1ae353cfcd69ad489d3d58a7fc80649, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolTransforms: []
 --- !u!58 &7863517801960115854
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -931,3 +918,16 @@ CircleCollider2D:
   m_Offset: {x: 0.13972363, y: -0.08483195}
   serializedVersion: 2
   m_Radius: 0.47245207
+--- !u!114 &4776086187192958698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7736791561133203582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d07f537850b4460b816c1cae47aef17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolTransforms: []
