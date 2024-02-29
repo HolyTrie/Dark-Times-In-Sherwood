@@ -62,6 +62,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(DialogueSection start)
     {
+        GameManager.StopControls();
         canvasGroupDisplaying = true;
         ClearAllOptions();
         currentSection = start;
@@ -114,6 +115,7 @@ public class DialogueManager : MonoBehaviour
     {
         canvasGroupDisplaying = false;
         ClearAllOptions();
+        GameManager.ResumeControls();
     }
 
     //find & destroy 
