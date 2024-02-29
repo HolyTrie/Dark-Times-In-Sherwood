@@ -27,7 +27,15 @@ namespace DTIS
         protected override void PhysicsCalculation()
         {
             var direction = Controls.WalkingDirection;
-            var move = new Vector2(direction,0f);
+            var mult = 1f;
+            if(Controller.IsInStickyFeet)
+            {
+                if((Controller.StickyFeetConsidersDirection == false) || ( direction < 0 && Controller.StickyFeetDirectionIsRight) || (direction > 0 && !Controller.StickyFeetDirectionIsRight) )
+                {
+                    mult *= Controller.StickyFeetFriction;
+                }
+            }
+            var move = new Vector2(mult*direction,0f);
             Controller.Move(move);
         }
     }

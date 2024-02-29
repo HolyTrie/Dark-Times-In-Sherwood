@@ -8,7 +8,7 @@ namespace DTIS
         private readonly bool _airControl;
         private bool IsInPeakHang { get { return Controller.IsInPeakHang; } set { Controller.IsInPeakHang = value; } }
         private bool WasRunning { get { return Controller.WasRunning; } set { Controller.WasRunning = value; } }
-        private bool IsFalling { get { return Controller.IsFalling; } set { Controller.IsFalling = value; } }
+        private bool IsFalling { /*get { return Controller.IsFalling; }*/ set { Controller.IsFalling = value; } }
 
         public FallState(ESP.States state,bool airControl, string name = "fall")
         : base(state, name, true)

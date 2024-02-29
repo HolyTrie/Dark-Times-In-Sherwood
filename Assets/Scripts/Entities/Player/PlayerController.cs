@@ -11,16 +11,20 @@ namespace DTIS
         - https://stackoverflow.com/questions/12662072/what-is-protected-virtual-new
     */
     public class PlayerController : PhysicsObject2D
-    { 
+    {
         #region PLATFORMS
+        public bool PassingThroughPlatform { get { return _passingThroughPlatform; } set { _passingThroughPlatform = value; } }
         [Header("Platforms")]
-        [SerializeField] protected private LayerMask _whatIsPlatform;
+        [SerializeField]
+        protected private LayerMask _whatIsPlatform;
         protected private ContactFilter2D _groundOnlyFilter;
         protected private ContactFilter2D _groundAndPlatformFilter;
         private bool _passingThroughPlatform = false;
-        public bool PassingThroughPlatform { get { return _passingThroughPlatform; } set { _passingThroughPlatform = value; } }
+        private Collider2D _previousPlatformCollider = null;
+        public Collider2D PrevPlatformCollider { get { return _previousPlatformCollider; } set { _previousPlatformCollider = value; } }
+        public int WhatIsPlatform { get { return _whatIsPlatform; } }
         #endregion
-        
+
         #region INITIALIZATION
         private static PlayerController _Instance;
         public static PlayerController Instance
@@ -49,9 +53,9 @@ namespace DTIS
             _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
         }
         void Start()
-        { 
+        {
             _baseGravity = Physics2D.gravity; // storing unitys gravity vector if its ever needed
-            _originalGravity = _baseGravity; 
+            _originalGravity = _baseGravity;
             _currGravity = _originalGravity;
             _slopeGravity = _originalGravity * 2f;
             _isRunning = false;
@@ -73,7 +77,7 @@ namespace DTIS
             var Th = HorizontalDistToPeak / Vx;
             _timeToJumpPeak = Th;
             _jumpForce = 2 * Height / Th;
-            _jumpGravity = -2 * Height / (Th *Th);
+            _jumpGravity = -2 * Height / (Th * Th);
             Debug.Log($"initial jump force = {_jumpForce} | jump gravity = {_jumpGravity}");
             // strong jump
             Height = Vector2.Distance(transform.position, _strongJumpVerticalPeak.position); // h
@@ -107,7 +111,7 @@ namespace DTIS
 
         #endregion
 
-        #region COMMONS
+        #region GENERAL
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
         public int GroundOnlyLayerMask { get { return _whatIsGround; } }
@@ -116,7 +120,8 @@ namespace DTIS
         private Vector2 _originalGravity;
         private bool _facingRight = true; // A boolean marking the entity's orientation.
         public bool FacingRight { get { return _facingRight; } private set { _facingRight = value; } }
-        
+        public Vector2 Position { get { return transform.position; } }
+
         /* *** CAMERA*** */
         private Camera _mainCamera;
 
@@ -168,8 +173,8 @@ namespace DTIS
         #region WALK & RUN
         public void Move(Vector2 move)
         {
-            var tmp = move* _walkSpeed;
-            _targetVelocity = new (tmp.x,tmp.y);
+            var tmp = move * _walkSpeed;
+            _targetVelocity = new(tmp.x, tmp.y);
         }
         public bool IsRunning { get { return _isRunning; } set { _isRunning = value; } }
         public float RunSpeedMult { get { return _runSpeedMult; } }
@@ -203,12 +208,12 @@ namespace DTIS
                 return ans;
             }
         }
-        public bool IsSlopeUpwardsLeftToRight{ get { return _sc.IsSlopeUpwardsLeftToRight; }}
+        public bool IsSlopeUpwardsLeftToRight { get { return _sc.IsSlopeUpwardsLeftToRight; } }
         #endregion
 
-        #region JUMP & FALL
+        #region JUMP & GRAVITY
         /// <summary>
-        /// Sets _isJumping=true and gravity to jumping gravity.
+        /// Sets _isJumping=true and gravity to jumping or strong jumping gravity.
         /// </summary> <summary>
         /// 
         /// </summary>
@@ -240,21 +245,46 @@ namespace DTIS
         public float CoyoteTime { get { return _coyoteTime; } set { _coyoteTime = value; } }
         public float JumpBufferTime { get { return _jumpBufferTime; } set { _jumpBufferTime = value; } }
         public float JumpBufferCounter { get { return _jumpBufferCounter; } set { _jumpBufferCounter = value; } }
+        public float StickyFeetDuration { get { return _stickyFeetDuration; } set { _stickyFeetDuration = value; } }
+        public float StickyFeetFriction { get { return 1f - _stickyFeetFriction; } set { _stickyFeetFriction = value; } }
+        public bool StickyFeetConsidersDirection { get { return _stickyFeetConsidersDirection; } set { _stickyFeetConsidersDirection = value; } }
+        public bool IsInStickyFeet { get; set; }
+        public bool StickyFeetDirectionIsRight { get; set; }
 
         [Header("Jump Parameters")]
-        [SerializeField] private Transform _jumpVerticalPeak;
-        [SerializeField] private Transform _jumpHorizontalPeak;
-        [SerializeField] private Transform _strongJumpVerticalPeak;
-        [SerializeField] private Transform _strongJumpHorizontalPeak;
-        [SerializeField] private float _maxFallSpeed = 25f;
-        [SerializeField, Range(0f, 1f)] private float _gravityMultAtPeak = 0.25f;
-        [SerializeField] private float _jumpPeakHangThreshold;
-        [SerializeField] private float _fallGravityMult = 1.5f;
-        [SerializeField] private float _weakJumpGravityMult = 2f;
+        [SerializeField, Range(0, 1), Tooltip("how much of the body % must touch the top for bumping head correction, 0 = correction happens all the time and 1 = no correction")]
+        private float _headBumpCorrectionThreshold = 0.5f;
+
+        [SerializeField, Tooltip("how much time in seconds is the sticky feet effect active when landing on a new platform")]
+        private float _stickyFeetDuration = 0.25f;
+        [SerializeField, Range(0, 1), Tooltip("how much to slow down the movement, 1 = full stop, 0 = no effect")]
+        private float _stickyFeetFriction = 0.90f;
+        [SerializeField, Tooltip("if set to false sticky feet effect will happen in both direction when landing on a platform, otherwise the effect will work only in the OPPOSITE direction of the jump when landing on a platform")]
+        private bool _stickyFeetConsidersDirection = true;
+        [SerializeField]
+        private Transform _jumpVerticalPeak;
+        [SerializeField]
+        private Transform _jumpHorizontalPeak;
+        [SerializeField]
+        private Transform _strongJumpVerticalPeak;
+        [SerializeField]
+        private Transform _strongJumpHorizontalPeak;
+        [SerializeField]
+        private float _maxFallSpeed = 25f;
+        [SerializeField, Range(0f, 1f)]
+        private float _gravityMultAtPeak = 0.25f;
+        [SerializeField]
+        private float _jumpPeakHangThreshold;
+        [SerializeField]
+        private float _fallGravityMult = 1.5f;
+        [SerializeField]
+        private float _weakJumpGravityMult = 2f;
         [Tooltip("The time in seconds that the player has to perfrom a free jump mid-air, gives players some grace time to perform their jump even if they werent robot-precise with it")]
-        [SerializeField] private float _coyoteTime = 0.5f;
+        [SerializeField]
+        private float _coyoteTime = 0.5f;
         [Tooltip("The time in seconds that the game will buffer a jump if it was pressed too soon before landing, gives players who press jump too early more freedom")]
-        [SerializeField] private float _jumpBufferTime = 0.25f;
+        [SerializeField]
+        private float _jumpBufferTime = 0.25f;
         private bool _isJumping = false;
         private bool _isFalling = false;
         private bool _isInPeakHang = false;
@@ -358,7 +388,6 @@ namespace DTIS
         private float _dashDistance = 5f;
         private bool _canDash = true;
         private bool _isDashing = false;
-        public Vector2 Position { get { return _rb2d.position; } }
 
         #endregion
 
@@ -394,14 +423,14 @@ namespace DTIS
             Vector2 moveX = moveAlongGround * deltaPosition;
             Vector2 moveY = Vector2.up * deltaPosition.y;
             List<Collider2D> colliderToIgnore = new(16); // todo: variable size?
-            if(_passingThroughPlatform)
+            if (_passingThroughPlatform)
                 colliderToIgnore.Add(_platformCheck.Curr != null ? _platformCheck.Curr.Collider : null);
-            Movement(moveY, true,colliderToIgnore); // vertical movement
-            Movement(moveX, false,colliderToIgnore); // horizontal movement
+            Movement(moveY, true, colliderToIgnore); // vertical movement
+            Movement(moveX, false, colliderToIgnore); // horizontal movement
             _velocity.y = Math.Clamp(_velocity.y, -_maxFallSpeed, float.MaxValue);
             _targetVelocity = Vector2.zero;
         }
-        protected private void Movement(Vector2 move, bool yMovement,List<Collider2D> collidersToIgnore)
+        protected private void Movement(Vector2 move, bool yMovement, List<Collider2D> collidersToIgnore)
         {
             float distance = move.magnitude;
             if (distance > _minMoveDistance)
@@ -414,7 +443,7 @@ namespace DTIS
                 }
                 foreach (var hit in _hitBufferList)
                 {
-                    if(collidersToIgnore.Contains(hit.collider)) // added support to ignore specified colliders, for example platforms
+                    if (collidersToIgnore.Contains(hit.collider)) // added support to ignore specified colliders, for example platforms
                         continue;
                     Vector2 currentNormal = hit.normal;
                     if (currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the set value.

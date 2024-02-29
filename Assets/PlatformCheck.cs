@@ -18,12 +18,6 @@ public class PlatformCheck : MonoBehaviour
         _pc = FindObjectsOfType<PlayerController>()[0]; // wont work well with more than 1 player!
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.gameObject.CompareTag("Platform"))

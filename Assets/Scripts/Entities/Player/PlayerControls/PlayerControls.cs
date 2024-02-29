@@ -30,7 +30,6 @@ namespace DTIS
         private void FixedUpdate()
         {
             WalkingDirection = ActionMap.All.Walk.ReadValue<float>();
-            Debug.Log(Running);
         }
 
         private void OnEnable()
@@ -60,7 +59,7 @@ namespace DTIS
                 _am.All.Run.canceled -= Canceled;
                 _am.All.Run.performed -= Performed;
             }
-            void Started(InputAction.CallbackContext ctx) { _runIsPressed = ctx.started; }
+            //void Started(InputAction.CallbackContext ctx) { _runIsPressed = ctx.started; }
             void Canceled(InputAction.CallbackContext ctx) { _runIsPressed = !ctx.canceled; }
             void Performed(InputAction.CallbackContext ctx) {_runIsPressed = ctx.performed; }
         }
