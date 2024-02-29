@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class HorizontalCollisionCheck2D : MonoBehaviour
@@ -60,7 +59,7 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
     {
         if (_rightRayCount == 0) 
             return;
-        float height = Math.Abs(Vector2.Distance(_rightParentBottom.position,_rightParentTop.position));
+        float height = Mathf.Abs(Vector2.Distance(_rightParentBottom.position,_rightParentTop.position));
         float raySpacing = height / _rightRayCount;
         for(int i = 0 ; i<_rightRayCount ; ++i)
         {
@@ -73,12 +72,12 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
     {
         if (_leftRayCount == 0) 
             return;
-        float height = Math.Abs(Vector2.Distance(_leftParentBottom.position,_leftParentTop.position));
+        float height = Mathf.Abs(Vector2.Distance(_leftParentBottom.position,_leftParentTop.position));
         float raySpacing = height / _leftRayCount;
         for(int i = 0 ; i<_leftRayCount ; ++i)
         {
             var _x = _leftRaysOffsetX;
-            float _y = (i+1) * raySpacing;
+            var _y = (i+1) * raySpacing;
             _leftRayOffsets[i] = new Vector2(_x,_y); //replace the previous vector!
         }
     }

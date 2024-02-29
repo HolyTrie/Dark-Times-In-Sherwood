@@ -35,12 +35,10 @@ namespace DTIS
             var hit = Physics2D.Raycast(Controller.Position,-Vector2.up,1f,Controller.WhatIsPlatform);
             if(!hit)
             {
-                Debug.Log("no hit for sticky feet");
                 Controller.PrevPlatformCollider = null;
                 return;
             }
             Collider2D currCollider = hit.collider;
-            Debug.Log("found platform collider");
 
             if(Controller.PrevPlatformCollider != currCollider)
             {

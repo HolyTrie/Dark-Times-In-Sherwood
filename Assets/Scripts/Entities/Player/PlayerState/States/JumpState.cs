@@ -62,7 +62,13 @@ namespace DTIS
         protected override void TryStateSwitch() //is called in Update
         {
             _keyPress = ActionMap.Jump.WasPerformedThisFrame();
-            if(Controller.Velocity.y < 0 || ActionMap.Jump.WasReleasedThisFrame())
+            bool fall = Controller.Velocity.y < 0 || ActionMap.Jump.WasReleasedThisFrame();
+            bool cornerCorrection = Controller.Velocity.y < 0 && true/**/;
+            if(cornerCorrection)
+            {
+                Debug.Log($"left to right collisions = {Controller.TopLeftToRightCollisionCount} | right to left collisions = {Controller.TopRightToLeftCollisionCount}");
+            }
+            else if(fall)
             {
                 SetSubState(ESP.States.Fall);
             }

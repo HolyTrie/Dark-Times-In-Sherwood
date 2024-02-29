@@ -104,11 +104,13 @@ namespace DTIS
         #region CHECKS
         //TODO: automatic init instead of serialize field. idea: have a script in the checks object that iterates on children and adds them here.
         public bool IsGrounded { get { return _gc.Grounded(); } }
+        public int TopLeftToRightCollisionCount { get { return _ceilingCheck.LeftToRightCollisionCount; } }
+        public int TopRightToLeftCollisionCount { get { return _ceilingCheck.RightToLeftCollisionCount; } }
         [SerializeField] private GroundCheck _gc;
         [SerializeField] private SlopeCheck _sc;
         [SerializeField] private HorizontalCollisionCheck2D _hc;
         [SerializeField] private PlatformCheck _platformCheck;
-
+        [SerializeField] private CeilingCheck _ceilingCheck;
         #endregion
 
         #region GENERAL

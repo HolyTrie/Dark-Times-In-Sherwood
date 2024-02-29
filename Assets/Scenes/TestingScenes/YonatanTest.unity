@@ -3523,6 +3523,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73672cf725b736f4e8faa8d80712d549, type: 3}
+--- !u!4 &700671381 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 767893268725443714, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+  m_PrefabInstance: {fileID: 1880077399}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &749381522 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8370753796826830457, guid: 73672cf725b736f4e8faa8d80712d549, type: 3}
@@ -3767,6 +3772,17 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &951812440 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8455045782924100744, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+  m_PrefabInstance: {fileID: 1880077399}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99e427115e4fd1e428340b54a1befb0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &980084008 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8370753796826830457, guid: 73672cf725b736f4e8faa8d80712d549, type: 3}
@@ -113834,6 +113850,11 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!4 &1628777353 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6667468164336036354, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+  m_PrefabInstance: {fileID: 1880077399}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1637951074
 GameObject:
   m_ObjectHideFlags: 0
@@ -114118,6 +114139,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2438929693715226838, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+      propertyPath: _ceilingCheck
+      value: 
+      objectReference: {fileID: 951812440}
+    - target: {fileID: 2438929693715226838, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: _stickyFeetDuration
       value: 0.5
       objectReference: {fileID: 0}
@@ -114218,12 +114243,20 @@ PrefabInstance:
       value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 8455045782924100744, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+      propertyPath: _parentTopLeft
+      value: 
+      objectReference: {fileID: 700671381}
+    - target: {fileID: 8455045782924100744, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+      propertyPath: _parentTopRight
+      value: 
+      objectReference: {fileID: 1628777353}
+    - target: {fileID: 8455045782924100744, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: _boxCastDistance
       value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 8455045782924100744, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: _rayCastDistance
-      value: 1.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8455045782924100744, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: _ceilLayer.m_Bits
