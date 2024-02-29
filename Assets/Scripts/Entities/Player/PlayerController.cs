@@ -201,11 +201,11 @@ namespace DTIS
                 bool ans;
                 if (_facingRight)
                 {
-                    ans = _sc.SlopeAhead || _hc.RightCollisionType == HorizontalCollisionCheck2D.CollisionType.PARTIAL;
+                    ans = _sc.SlopeAhead || _hc.RightCollisionType == HorizontalCollisionCheck2D.CollisionTypes.PARTIAL;
                 }
                 else
                 {
-                    ans = _sc.SlopeAhead || _hc.LeftCollisionType == HorizontalCollisionCheck2D.CollisionType.PARTIAL;
+                    ans = _sc.SlopeAhead || _hc.LeftCollisionType == HorizontalCollisionCheck2D.CollisionTypes.PARTIAL;
                 }
                 return ans;
             }
@@ -445,16 +445,29 @@ namespace DTIS
             var futurePosTop = futurePos;
             futurePosTop.y += _collider.bounds.size.y;
             var hit = Physics2D.Raycast(futurePosTop,Vector2.up,0.01f,WhatIsGround);
-            if(!hit && futureVel.y < 0 && IsJumping)
+            if(!_isNudging && !hit && futureVel.y < 0 && IsJumping && _ceilingCheck.CollisionType != CeilingCheck.CollisionTypes.NONE)
             {
-                Debug.Log($"nudge | curr velocity = {_velocity}");
-                Vector2 pos = new(_rb2d.position.x ,_rb2d.position.y);
-                Vector2 offset = new(_collider.bounds.extents.x+0.001f,0.001f);
-                if(futurePos.x > futurePosTop.x && !FacingRight)
-                    offset.x *= -1f;
-                pos += offset;
-                _rb2d.MovePosition(pos);
+                bool NudgeLeft = futurePos.x > futurePosTop.x;
+                if(_collider.bounds.center.y < futurePosTop.y)
+                    StartCoroutine(JumpNudge(NudgeLeft));
+                //else
+                    //StartCoroutine(GrabLedge(NudgeLeft));
             }
+        }
+        private bool _isNudging = false;
+        private IEnumerator JumpNudge(bool jumpingLeft)
+        {
+            _isNudging = true;
+            Debug.Log($"nudge | curr velocity = {_velocity}");
+            Vector2 pos = new(_rb2d.position.x ,_rb2d.position.y);
+            Vector2 offset = new(_collider.bounds.extents.x+0.001f,0.001f);
+            if(jumpingLeft && !FacingRight)
+                offset.x *= -1f;
+            pos += offset;
+            _rb2d.MovePosition(pos);
+            Jump();
+            yield return new WaitForSeconds(1f);
+            _isNudging = false;
         }
         protected private void Movement(Vector2 move, bool yMovement, List<Collider2D> collidersToIgnore)
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HorizontalCollisionCheck2D : MonoBehaviour
 {
-    public enum CollisionType 
+    public enum CollisionTypes 
     {
         NONE,
         FULL,
@@ -23,8 +23,8 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
     
     [Header("Left side raycasts settings")]
 
-    protected private CollisionType _leftCollisionType = CollisionType.NONE;
-    public CollisionType LeftCollisionType{get{return _leftCollisionType;}}
+    protected private CollisionTypes _leftCollisionType = CollisionTypes.NONE;
+    public CollisionTypes LeftCollisionType{get{return _leftCollisionType;}}
     protected List<RaycastHit2D> _leftRayHitBufferList = new(_maxRays);
     [SerializeField] private Transform _leftParentTop;
     [SerializeField] private Transform _leftParentBottom;
@@ -38,8 +38,8 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
     
     [Header("Right side raycasts settings")]
 
-    protected private CollisionType _rightCollisionType = CollisionType.NONE;
-    public CollisionType RightCollisionType{get{return _rightCollisionType;}}
+    protected private CollisionTypes _rightCollisionType = CollisionTypes.NONE;
+    public CollisionTypes RightCollisionType{get{return _rightCollisionType;}}
     protected private List<RaycastHit2D> _rightRayHitBufferList = new(_maxRays);
     [SerializeField] private Transform _rightParentTop;
     [SerializeField] private Transform _rightParentBottom;
@@ -108,15 +108,15 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
         }
         if(count == 0)
         {
-            _leftCollisionType = CollisionType.NONE;
+            _leftCollisionType = CollisionTypes.NONE;
             return;
         }
         if(count == _leftRayCount)
         {
-            _leftCollisionType = CollisionType.FULL;
+            _leftCollisionType = CollisionTypes.FULL;
             return;
         }
-        _leftCollisionType = CollisionType.PARTIAL;
+        _leftCollisionType = CollisionTypes.PARTIAL;
     }
     private void CastRightRays()
     {
@@ -140,14 +140,14 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
         }
         if(count == 0)
         {
-            _rightCollisionType = CollisionType.NONE;
+            _rightCollisionType = CollisionTypes.NONE;
             return;
         }
         if(count == _rightRayCount)
         {
-            _rightCollisionType = CollisionType.FULL;
+            _rightCollisionType = CollisionTypes.FULL;
             return;
         }
-        _rightCollisionType = CollisionType.PARTIAL;
+        _rightCollisionType = CollisionTypes.PARTIAL;
     }
 }
