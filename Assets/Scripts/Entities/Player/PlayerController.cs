@@ -52,8 +52,9 @@ namespace DTIS
             _hpBar = GetComponent<HpBarPlayer>();
             _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
         }
-        void Start()
+        protected override void Start()
         {
+            base.Start();
             _baseGravity = Physics2D.gravity; // storing unitys gravity vector if its ever needed
             _originalGravity = _baseGravity;
             _currGravity = _originalGravity;
@@ -104,10 +105,7 @@ namespace DTIS
         #region CHECKS
         //TODO: automatic init instead of serialize field. idea: have a script in the checks object that iterates on children and adds them here.
         public bool IsGrounded { get { return _gc.Grounded(); } }
-        public int TopLeftToRightCollisionCount { get { return _ceilingCheck.LeftToRightCollisionCount; } }
-        public int TopRightToLeftCollisionCount { get { return _ceilingCheck.RightToLeftCollisionCount; } }
-        public float TopLeftToRightCollisionPercentage { get { return _ceilingCheck.LeftToRightCollisionCount  / _ceilingCheck.RayCount; } }
-        public float TopRightToLeftCollisionPercentage { get { return _ceilingCheck.RightToLeftCollisionCount  / _ceilingCheck.RayCount; } }
+        public CeilingCheck CeilingCheck { get { return _ceilingCheck; } }
         [SerializeField] private GroundCheck _gc;
         [SerializeField] private SlopeCheck _sc;
         [SerializeField] private HorizontalCollisionCheck2D _hc;
@@ -396,6 +394,14 @@ namespace DTIS
         #endregion
 
         #region UPDATES & PHYSICS
+
+        public void NudgeToPosition(Vector3 position)
+        {
+            // todo: move without tunelling
+            // note : always moving to empty air so???
+            _rb2d.MovePosition(position);
+            Jump();
+        }
         public void AddForce(Vector2 force)
         {
             _targetVelocity += force;
@@ -433,6 +439,22 @@ namespace DTIS
             Movement(moveX, false, colliderToIgnore); // horizontal movement
             _velocity.y = Math.Clamp(_velocity.y, -_maxFallSpeed, float.MaxValue);
             _targetVelocity = Vector2.zero;
+            // predict future position using a simplified euler integration (0.5 pixel error rate, resets when landing so it does not accumulate!)
+            var futurePos = (Vector2)transform.position + _velocity * Time.deltaTime + 0.5f * Time.deltaTime * acc; // pos = velocity*deltaTime +0.5*accelaration*(deltaTime^2)
+            var futureVel = _velocity + acc; // vel = accelaration * deltaTime & acceleration = gravity only rn.
+            var futurePosTop = futurePos;
+            futurePosTop.y += _collider.bounds.size.y;
+            var hit = Physics2D.Raycast(futurePosTop,Vector2.up,0.01f,WhatIsGround);
+            if(!hit && futureVel.y < 0 && IsJumping)
+            {
+                Debug.Log($"nudge | curr velocity = {_velocity}");
+                Vector2 pos = new(_rb2d.position.x ,_rb2d.position.y);
+                Vector2 offset = new(_collider.bounds.extents.x+0.001f,0.001f);
+                if(futurePos.x > futurePosTop.x && !FacingRight)
+                    offset.x *= -1f;
+                pos += offset;
+                _rb2d.MovePosition(pos);
+            }
         }
         protected private void Movement(Vector2 move, bool yMovement, List<Collider2D> collidersToIgnore)
         {

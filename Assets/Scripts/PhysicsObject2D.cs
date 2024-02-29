@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D),typeof(CapsuleCollider2D))]
 public class PhysicsObject2D : MonoBehaviour
 {
     // source - https://www.youtube.com/watch?v=wGI2e3Dzk_w&list=PLX2vGYjWbI0SUWwVPCERK88Qw8hpjEGd8&index=1&ab_channel=Unity
@@ -14,7 +14,7 @@ public class PhysicsObject2D : MonoBehaviour
     [SerializeField] protected private float _minGroundNormalY = 0.1f;
     [SerializeField] protected private LayerMask _whatIsGround;
     protected private ContactFilter2D _currFilter;
-
+    protected Collider2D _collider;
     protected bool _grounded = false;
     protected bool _onSlope = false;
     protected Rigidbody2D _rb2d;
@@ -24,7 +24,10 @@ public class PhysicsObject2D : MonoBehaviour
     protected Vector2 _groundNormal;
     protected RaycastHit2D[] _hitBuffer = new RaycastHit2D[16]; // todo - variable length?
     protected List<RaycastHit2D> _hitBufferList = new(16);
-    
+    protected virtual void Start()
+    {
+        _collider = GetComponent<Collider2D>();
+    }
     protected virtual void OnEnable() {
         _rb2d = GetComponent<Rigidbody2D>();
         _currFilter.useTriggers = false;

@@ -7,6 +7,7 @@ namespace DTIS
 {
     public class JumpState : PlayerState
     {
+        private CeilingCheck CeilingCheck { get { return Controller.CeilingCheck; } }
         private readonly bool _airControl;
         private readonly float _noKeyInputJumpTime = 0.25f;
         private bool _keyPress = false;
@@ -62,21 +63,26 @@ namespace DTIS
         protected override void TryStateSwitch() //is called in Update
         {
             _keyPress = ActionMap.Jump.WasPerformedThisFrame();
-            bool fall = Controller.Velocity.y < 0 || ActionMap.Jump.WasReleasedThisFrame();
-            bool cornerCorrection = Controller.Velocity.y < 0 && true/**/;
-            if(cornerCorrection)
-            {
-                if(Controller.FacingRight && Controller.TopLeftToRightCollisionPercentage >= 0.5f)
+            bool fall = false || ActionMap.Jump.WasReleasedThisFrame();
+            if(Controller.Velocity.y < 0)
+            { 
+                /*
+                Debug.Log($"left to right collisions = {CeilingCheck.LeftToRightCollisionCount} | right to left collisions = {CeilingCheck.RightToLeftCollisionCount}");
+                if(Controller.FacingRight && CeilingCheck.LeftToRightCollisionPercentage >= 0.5f)
                 {
-                    // nudge right
+                    Controller.NudgeToPosition(CeilingCheck.LeftToRightFirstMissOrigin);
                 }
-                if(!Controller.FacingRight && Controller.TopRightToLeftCollisionPercentage >= 0.5f)
+                else if(!Controller.FacingRight && CeilingCheck.RightToLeftCollisionPercentage >= 0.5f)
                 {
-                    // nudge left
+                    Controller.NudgeToPosition(CeilingCheck.RightToLeftFirstMissOrigin);
                 }
-                Debug.Log($"left to right collisions = {Controller.TopLeftToRightCollisionCount} | right to left collisions = {Controller.TopRightToLeftCollisionCount}");
+                else
+                {
+                */
+                    fall = true;
+                //}
             }
-            else if(fall)
+            if(fall)
             {
                 SetSubState(ESP.States.Fall);
             }

@@ -114144,15 +114144,19 @@ PrefabInstance:
       objectReference: {fileID: 951812440}
     - target: {fileID: 2438929693715226838, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: _stickyFeetDuration
-      value: 0.5
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 2438929693715226838, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: _stickyFeetFriction
-      value: 0.75
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 2438929693715226838, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: _CrouchDisableCollider
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2438929693715226838, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+      propertyPath: _headBumpCorrectionThreshold
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2438929693715226838, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: _stickyFeetConsidersDirection

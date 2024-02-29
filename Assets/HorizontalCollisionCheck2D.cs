@@ -88,6 +88,8 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
     }
     private void CastLeftRays()
     {
+        if (_leftRayCount == 0) 
+            return;
         _leftRayHitBufferList.Clear();
         var origin = _leftParentBottom.position;
         Vector2 pos;
@@ -118,6 +120,8 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
     }
     private void CastRightRays()
     {
+        if (_rightRayCount == 0) 
+            return;
         _rightRayHitBufferList.Clear();
         var origin = _rightParentBottom.position;
         Vector2 pos;
