@@ -106,6 +106,8 @@ namespace DTIS
         public bool IsGrounded { get { return _gc.Grounded(); } }
         public int TopLeftToRightCollisionCount { get { return _ceilingCheck.LeftToRightCollisionCount; } }
         public int TopRightToLeftCollisionCount { get { return _ceilingCheck.RightToLeftCollisionCount; } }
+        public float TopLeftToRightCollisionPercentage { get { return _ceilingCheck.LeftToRightCollisionCount  / _ceilingCheck.RayCount; } }
+        public float TopRightToLeftCollisionPercentage { get { return _ceilingCheck.RightToLeftCollisionCount  / _ceilingCheck.RayCount; } }
         [SerializeField] private GroundCheck _gc;
         [SerializeField] private SlopeCheck _sc;
         [SerializeField] private HorizontalCollisionCheck2D _hc;

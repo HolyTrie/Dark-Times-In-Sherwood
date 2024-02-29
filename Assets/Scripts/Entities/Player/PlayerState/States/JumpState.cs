@@ -66,6 +66,14 @@ namespace DTIS
             bool cornerCorrection = Controller.Velocity.y < 0 && true/**/;
             if(cornerCorrection)
             {
+                if(Controller.FacingRight && Controller.TopLeftToRightCollisionPercentage >= 0.5f)
+                {
+                    // nudge right
+                }
+                if(!Controller.FacingRight && Controller.TopRightToLeftCollisionPercentage >= 0.5f)
+                {
+                    // nudge left
+                }
                 Debug.Log($"left to right collisions = {Controller.TopLeftToRightCollisionCount} | right to left collisions = {Controller.TopRightToLeftCollisionCount}");
             }
             else if(fall)

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CeilingCheck : MonoBehaviour
 {
+    public int LeftToRightCollisionCount { get { return _leftToRightCollisionCount; } }
+    public int RightToLeftCollisionCount { get { return _rightToLeftCollisionCount; } }
+    public int RayCount { get { return _rayCount; } }
     private const int _maxRays = 16;
     [Header("Ceiling Checks Details")]
     [SerializeField,Tooltip("Important - Only layers enabled by the layer mask will be checked against.")]
@@ -25,8 +28,6 @@ public class CeilingCheck : MonoBehaviour
     private readonly Vector2[] _rayOffsets = new Vector2[_maxRays];
     private int _leftToRightCollisionCount = 0;
     private int _rightToLeftCollisionCount = 0;
-    public int LeftToRightCollisionCount { get { return _leftToRightCollisionCount; } }
-    public int RightToLeftCollisionCount { get { return _rightToLeftCollisionCount; } }
     private void Awake()
     {
         InitRays();
