@@ -47,7 +47,7 @@ public class CeilingCheck : MonoBehaviour
         {
             var _x = _rayOffsetX + (i+1) * raySpacing;
             var _y = _rayOffsetY;
-            _rayOffsets[i] = new Vector2(_x,_y); //replace the previous vector!
+            _rayOffsets[i] = new Vector2(_x,_y);
         }
     }
     private void FixedUpdate() {
@@ -60,10 +60,13 @@ public class CeilingCheck : MonoBehaviour
             return;
         _rayHitBufferList.Clear();
         var origin = _parentTopLeft.position;
+        var facingRight = GameManager.PlayerIsFacingRight;
         Vector2 pos;
-        for(int i =0; i<_rayCount; ++i) // left to right count
+        for(int i = 0; i<_rayCount; ++i) // left to right 
         {
-            pos = new(origin.x+_rayOffsets[i].x,origin.y+_rayOffsets[i].y);
+            pos = origin;
+            pos.x += facingRight ? _rayOffsets[i].x : -_rayOffsets[i].x;
+            pos.y += _rayOffsets[i].y;
             _rayHitBufferList.Add(Physics2D.Raycast(pos,Vector2.up,_rayCastDistance,_ceilLayer));
             // debug:
             var dest = new Vector2(pos.x,pos.y + _rayCastDistance);

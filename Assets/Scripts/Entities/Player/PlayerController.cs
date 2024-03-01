@@ -54,6 +54,7 @@ namespace DTIS
         }
         protected override void Start()
         {
+            GameManager.SetController(this);
             base.Start();
             _baseGravity = Physics2D.gravity; // storing unitys gravity vector if its ever needed
             _originalGravity = _baseGravity;
