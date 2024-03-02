@@ -2499,7 +2499,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed94c44e94c66b41848c713cd717997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wait: 0.5
 --- !u!251 &116693894
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -8220,7 +8219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed94c44e94c66b41848c713cd717997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wait: 0.5
 --- !u!1001 &456248344
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9372,7 +9370,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed94c44e94c66b41848c713cd717997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wait: 0.5
 --- !u!19719996 &945750119
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -44398,6 +44395,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6259224748537488526, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6259224748537488526, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387671281065815898, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387671281065815898, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8704279911813632997, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -44857,9 +44870,13 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
-      propertyPath: _FieldOfView
-      value: 15
+    - target: {fileID: 5109030043393149378, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 5109030043393149378, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.42
       objectReference: {fileID: 0}
     - target: {fileID: 7736791561133203582, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
       propertyPath: m_Name

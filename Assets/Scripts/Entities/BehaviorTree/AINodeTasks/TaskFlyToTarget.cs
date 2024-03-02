@@ -33,7 +33,7 @@ namespace DTIS
             {
                 Vector3 directionVector = (target.position - _AIcontroller.transform.position).normalized;
                 Debug.Log("DIRECTION VECTOR:" + directionVector);
-                _AIcontroller.Move(new Vector2(directionVector.x, directionVector.y));
+                _AIcontroller.Move(directionVector);
 
                 _AIcontroller.Flip(target.position.x); // flips the entity according the the position x of target.
 
