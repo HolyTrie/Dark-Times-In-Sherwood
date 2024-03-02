@@ -23,7 +23,7 @@ namespace DTIS
         public bool JumpIsPressed { get { return _jumpIsPressed; } }
         public bool DownIsPressed { get { return _downIsPressed; } }
         public bool DownJumpIsPressed { get { return _downIsPressed && _jumpIsPressed; } }
-
+        private GameObject PauseMenu;
         private void Awake()
         {
             if (Instance == null)
@@ -31,6 +31,22 @@ namespace DTIS
             else
                 Destroy(gameObject);
             _am = new PlayerActionMap();
+
+            PauseMenu = GameObject.Find("PauseMenu");
+        }
+
+        private void Start()
+        {
+            PauseMenu.SetActive(false);
+        }
+
+        private void Update()
+        {
+            if (ActionMap.All.PauseMenu.WasPressedThisFrame())
+            {
+                GameManager.PauseGame();
+                PauseMenu.SetActive(true);
+            }
         }
 
         private void FixedUpdate()

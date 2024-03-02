@@ -2,16 +2,30 @@ using UnityEngine;
 
 public class CrosshairCursor : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private Sprite BowSprite;
+    [SerializeField] private Sprite SwordSprite;
+    private SpriteRenderer _cursorSprite;
     void Awake()
     {
+        _cursorSprite = this.GetComponent<SpriteRenderer>();
         Cursor.visible = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector2 mouseCursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = mouseCursorPos;
     }
+
+    public void BowCrosshair()
+    {
+        _cursorSprite.sprite = BowSprite;
+    }
+
+    public void SwordCrosshair()
+    {
+        _cursorSprite.sprite = SwordSprite;
+    }
+
+    
 }

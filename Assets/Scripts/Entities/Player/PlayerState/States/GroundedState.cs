@@ -11,7 +11,7 @@ namespace DTIS
         private bool _inSlope = false;
         private bool SlopeAhead { get { return Controller.SlopeAhead; } }
         private Vector2 OriginalGravity { get { return Controller.OriginalGravity; } }
-        private Transform crosshair;
+        private CrosshairCursor crosshair;
         private bool _initialDirectionWasRight;
         public GroundedState(ESP.States state, string name = "Grounded")
         : base(state, name, false) { }
@@ -27,7 +27,7 @@ namespace DTIS
             }
             SetAnimations();
             Controller.JumpBufferCounter = 0f;
-            crosshair = controller.transform.Find("Crosshair");
+            crosshair = controller.transform.Find("Crosshair").GetComponent<CrosshairCursor>();
             InitStickyFeet();
         }
         private void InitStickyFeet()
@@ -81,11 +81,11 @@ namespace DTIS
 
             if (AttackState.weaponType == 1) // sword
             {
-                crosshair.gameObject.SetActive(false);
+                crosshair.SwordCrosshair();
             }
             if (AttackState.weaponType == 2) // bow
             {
-                crosshair.gameObject.SetActive(true);
+                crosshair.BowCrosshair();
             }
         }
         protected override void PhysicsCalculation()
