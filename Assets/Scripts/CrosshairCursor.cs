@@ -7,7 +7,7 @@ public class CrosshairCursor : MonoBehaviour
     private SpriteRenderer _cursorSprite;
     void Awake()
     {
-        _cursorSprite = this.GetComponent<SpriteRenderer>();
+        _cursorSprite = GetComponent<SpriteRenderer>();
         Cursor.visible = false;
     }
 
