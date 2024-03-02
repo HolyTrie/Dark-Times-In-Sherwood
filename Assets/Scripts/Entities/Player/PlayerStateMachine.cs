@@ -128,7 +128,7 @@ namespace DTIS
             var pos = transform.position;
             pos.y += 3f;
             pos.x -= 1.25f;
-            UnityEditor.Handles.Label(pos,$"|State = {_state}|\n|SubState = {_subState}|",style);
+            //UnityEditor.Handles.Label(pos,$"|State = {_state}|\n|SubState = {_subState}|",style);
         }
     }
 }

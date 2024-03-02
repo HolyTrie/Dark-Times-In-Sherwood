@@ -7,7 +7,7 @@ public class NextSceneInterctable : Interactable
     {
         if (_sceneIndex >= 0)
         {
-            GameManager.LoadScene((int)_sceneIndex);
+            GameManager.LoadScene(_sceneIndex);
         }
         else
             GameManager.NextScene();

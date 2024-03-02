@@ -152,7 +152,7 @@ MonoBehaviour:
   _minGroundNormalY: 0.75
   _whatIsGround:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2176
   _whatIsPlatform:
     serializedVersion: 2
     m_Bits: 64
@@ -1593,7 +1593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4802514368533805899
 Transform:
   m_ObjectHideFlags: 0
@@ -1621,6 +1621,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7e8b3e2d5f8044296b8b62e98d696d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BowSprite: {fileID: 21300000, guid: dad108defcbc24b8a97372eaf58d4291, type: 2}
+  SwordSprite: {fileID: 21300000, guid: 5310e02792f6e41ff86b487236c25f1f, type: 2}
 --- !u!212 &8478670978310358856
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1662,7 +1664,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 554833241381b9244b29933f279d8e5c, type: 2}
+  m_Sprite: {fileID: 21300000, guid: 5310e02792f6e41ff86b487236c25f1f, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
