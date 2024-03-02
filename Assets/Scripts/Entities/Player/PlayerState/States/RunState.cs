@@ -5,6 +5,7 @@ namespace DTIS
 {
     public class RunState : PlayerState
     {
+        //TODO: merge with Walk state!!! they are too similar.
         private bool IsRunning { /*get { return Controller.IsRunning; }*/ set { Controller.IsRunning = value; } }
         private bool WasRunning { /*get { return Controller.WasRunning; }*/ set { Controller.WasRunning = value; } }
         public RunState(ESP.States state, string name = "run")
@@ -39,6 +40,7 @@ namespace DTIS
         protected override void PhysicsCalculation()
         {
             var direction = Controls.WalkingDirection;
+            var playerDirection = Controller.FacingRight ? 1f : -1f;
             var mult = 1f;
             if (Controller.IsInStickyFeet)
             {
@@ -48,6 +50,9 @@ namespace DTIS
                 }
             }
             mult *= Controller.RunSpeedMult;
+            var switchingDirection = (direction > 0 && playerDirection < 0) || ( direction <0 && playerDirection > 0 );
+            if(Controls.DownIsPressed && !Controller.EdgeAhead && !switchingDirection)
+                mult = 0f;
             var move = mult * new Vector2(direction, 0f);
             Controller.Move(move);
         }

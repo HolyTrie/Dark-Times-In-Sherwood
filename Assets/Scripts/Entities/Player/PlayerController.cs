@@ -17,7 +17,7 @@ namespace DTIS
         public bool LeavingLedge { get { return _leavingLedge; } set { _leavingLedge = value; } }
         public Collider2D PrevPlatformCollider { get { return _previousPlatformCollider; } set { _previousPlatformCollider = value; } }
         public int WhatIsPlatform { get { return _whatIsPlatform; } }
-        
+
         [Header("Platforms")]
         [SerializeField]
         protected private LayerMask _whatIsPlatform;
@@ -110,11 +110,13 @@ namespace DTIS
         //TODO: automatic init instead of serialize field. idea: have a script in the checks object that iterates on children and adds them here.
         public bool IsGrounded { get { return _gc.Grounded(); } }
         public CeilingCheck CeilingCheck { get { return _ceilingCheck; } }
+        public bool EdgeAhead { get { return _edgeLocator.Hit; } }
         [SerializeField] private GroundCheck _gc;
         [SerializeField] private SlopeCheck _sc;
         [SerializeField] private HorizontalCollisionCheck2D _hc;
         [SerializeField] private PlatformCheck _platformCheck;
         [SerializeField] private CeilingCheck _ceilingCheck;
+        [SerializeField] private EdgeLocator _edgeLocator;
         #endregion
 
         #region GENERAL
@@ -322,10 +324,7 @@ namespace DTIS
         [Header("Player Attributes")]
         public int _jumpStaminaCost;
         public int _ghostedSanityCost;
-        [Header("Environmentals Checkers")]
-        // [SerializeField] private bool _airControl = true;
-        [SerializeField] private Collider2D _CrouchDisableCollider;    // A collider to be disabled on the 'crouch' player action.
-
+       
         [Header("Shooting")]
         [SerializeField] private float ShootDelaySeconds;
         [SerializeField] private float ShootReloadSeconds;
@@ -400,7 +399,10 @@ namespace DTIS
         #endregion
 
         #region UPDATES & PHYSICS
-
+        public Vector2 FuturePos { get { return _futurePosition; } }
+        public Vector2 FutureVel { get { return _futureVelocity; } }
+        private Vector2 _futurePosition;
+        private Vector2 _futureVelocity;
         public void NudgeToPosition(Vector3 position)
         {
             // todo: move without tunelling
@@ -418,11 +420,6 @@ namespace DTIS
             _playerGhostBehaviour.TrySetGhostStatus();
             Flip();
         }
-        private Vector2 _futurePosition;
-        private Vector2 _futureVelocity;
-        public Vector2 FuturePos { get { return _futurePosition; } }
-        public Vector2 FutureVel { get { return _futureVelocity; } }
-
         protected private override void FixedUpdate()
         {
             if (_isDashing)
