@@ -84,22 +84,22 @@ public sealed class GameManager : MonoBehaviour
 	public static void PauseGame()
 	{
 		Time.timeScale = 0;
-		fsm.Controls.enabled = false;
+		StopControls();
 	}
 
 	public static void ResumeGame()
 	{
 		Time.timeScale = 1;
-		fsm.Controls.enabled = true;
+		ResumeControls();
 	}
 
 	public static void StopControls()
 	{
-		fsm.Controls.enabled = false;
+		_fsm.Controls.enabled = false;
 	}
 
 	public static void ResumeControls()
 	{
-		fsm.Controls.enabled = true;
+		_fsm.Controls.enabled = true;
 	}
 }
