@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DTIS;
 using UnityEngine;
 
-public class SawTrapController : MonoBehaviour
+public class TrapController : MonoBehaviour
 {
     [SerializeField] private Transform _activeSprite;
     private Animator _animatorSaw;
@@ -15,7 +15,7 @@ public class SawTrapController : MonoBehaviour
         _animatorSaw.SetBool("Attack",false);
     }
 
-    public void StartSaw()
+    public void StartTrap()
     {
         _animatorSaw.SetBool("Attack",true); // when he press the pressure plate, start playing the animation
     }

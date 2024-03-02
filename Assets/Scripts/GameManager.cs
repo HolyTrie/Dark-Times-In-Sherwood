@@ -10,7 +10,9 @@ public sealed class GameManager : MonoBehaviour
 	// !!!!!! DO NOT PUT THIS IN ANY SCENE; this code auto-instantiates itself once.
 	private static GameManager _Instance;
 	private static int currSceneIndex;
-	private static PlayerStateMachine fsm;
+	private static PlayerStateMachine _fsm;
+	private static PlayerController _playerController;
+	public static bool PlayerIsFacingRight { get { return _playerController.FacingRight; } }
 	public static GameManager Instance
 	{
 		get
@@ -57,8 +59,8 @@ public sealed class GameManager : MonoBehaviour
 	private static IEnumerator DisableEnableControls()
 	{
 		yield return null; // wait 1 frame.
-		fsm.Controls.enabled = false;
-		fsm.Controls.enabled = true;
+		_fsm.Controls.enabled = false;
+		_fsm.Controls.enabled = true;
 	}
 
 	public static void NextScene(int offset = 0)
@@ -71,6 +73,33 @@ public sealed class GameManager : MonoBehaviour
 
 	internal static void SetFSM(PlayerStateMachine playerStateMachine)
 	{
-		fsm = playerStateMachine;
+		_fsm = playerStateMachine;
+	}
+
+	internal static void SetController(PlayerController playerController)
+	{
+		_playerController = playerController;
+	}
+
+	public static void PauseGame()
+	{
+		Time.timeScale = 0;
+		StopControls();
+	}
+
+	public static void ResumeGame()
+	{
+		Time.timeScale = 1;
+		ResumeControls();
+	}
+
+	public static void StopControls()
+	{
+		_fsm.Controls.enabled = false;
+	}
+
+	public static void ResumeControls()
+	{
+		_fsm.Controls.enabled = true;
 	}
 }

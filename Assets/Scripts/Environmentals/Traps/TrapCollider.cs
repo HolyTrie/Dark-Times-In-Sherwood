@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using DTIS;
 using UnityEngine;
 
-public class SawTrapCollider : MonoBehaviour
+public class TrapCollider : MonoBehaviour
 {
     [SerializeField] private int AttackDMG;
 
@@ -13,7 +13,6 @@ public class SawTrapCollider : MonoBehaviour
         if(other.collider.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerController>().HpBar.depleteHp(AttackDMG);
-
         }
     }
 }

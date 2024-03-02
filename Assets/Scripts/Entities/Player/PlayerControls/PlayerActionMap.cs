@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
+public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
 {
     public InputActionAsset asset { get; }
     public @PlayerActionMap()
@@ -28,40 +28,40 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             ""id"": ""d5f3962d-9a17-47dd-a9f2-88729c3f4c02"",
             ""actions"": [
                 {
+                    ""name"": ""Down"",
+                    ""type"": ""Value"",
+                    ""id"": ""61c8d9a9-e992-4efb-9f39-df633df0e1e9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Jump"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""ec4481d0-d9c7-4c53-9b91-780bd5b18e8d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""DownJump"",
-                    ""type"": ""Button"",
-                    ""id"": ""7ba61c6a-0749-43ea-973a-99a4820aba7b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Walk"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""2cef54db-9845-4ab7-88f0-969b12ae0765"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": ""Normalize(min=-1,max=1)"",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Run"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""bbf5d53b-3720-4ddd-beb0-6feeeca65ddb"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""GoGhost"",
@@ -76,15 +76,6 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""name"": ""Shoot"",
                     ""type"": ""Button"",
                     ""id"": ""b5667f81-c08a-4d2d-9751-b9a73c3c3629"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Down"",
-                    ""type"": ""Button"",
-                    ""id"": ""61c8d9a9-e992-4efb-9f39-df633df0e1e9"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -112,6 +103,15 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""name"": ""SwapWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""2d7cab4a-6587-4c57-a3df-29c90abae3b8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""f4ad4aba-8a08-4d70-9f22-5b5ff55211c2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -220,17 +220,6 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5dfa6efc-85e5-443b-983f-a72e35d6a3d7"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Down"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""114f9ff6-0f18-4c6f-9de6-c6aeec4f205c"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
@@ -239,39 +228,6 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                     ""action"": ""Interaction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""One Modifier"",
-                    ""id"": ""df3c9901-cd98-4155-8fee-b110785bc826"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DownJump"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""5045cad3-a045-4eb2-9efd-4760f1bc7740"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""New control scheme"",
-                    ""action"": ""DownJump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""ea70f07f-33b6-443c-a9f3-02b43bd18678"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""New control scheme"",
-                    ""action"": ""DownJump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -297,12 +253,34 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6366d892-e608-4ca8-8433-3c306b13eac0"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
+                    ""id"": ""5d384054-502b-416c-b1e4-abc7bf1c1dcd"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": ""Hold(duration=0.001,pressPoint=0.001)"",
                     ""processors"": """",
                     ""groups"": ""New control scheme"",
                     ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5dfa6efc-85e5-443b-983f-a72e35d6a3d7"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2c9e011-11b0-4f08-aae7-fef6b4eda7c1"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -319,16 +297,16 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
 }");
         // All
         m_All = asset.FindActionMap("All", throwIfNotFound: true);
+        m_All_Down = m_All.FindAction("Down", throwIfNotFound: true);
         m_All_Jump = m_All.FindAction("Jump", throwIfNotFound: true);
-        m_All_DownJump = m_All.FindAction("DownJump", throwIfNotFound: true);
         m_All_Walk = m_All.FindAction("Walk", throwIfNotFound: true);
         m_All_Run = m_All.FindAction("Run", throwIfNotFound: true);
         m_All_GoGhost = m_All.FindAction("GoGhost", throwIfNotFound: true);
         m_All_Shoot = m_All.FindAction("Shoot", throwIfNotFound: true);
-        m_All_Down = m_All.FindAction("Down", throwIfNotFound: true);
         m_All_Interaction = m_All.FindAction("Interaction", throwIfNotFound: true);
         m_All_Dash = m_All.FindAction("Dash", throwIfNotFound: true);
         m_All_SwapWeapon = m_All.FindAction("SwapWeapon", throwIfNotFound: true);
+        m_All_PauseMenu = m_All.FindAction("PauseMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -390,30 +368,30 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
     // All
     private readonly InputActionMap m_All;
     private List<IAllActions> m_AllActionsCallbackInterfaces = new List<IAllActions>();
+    private readonly InputAction m_All_Down;
     private readonly InputAction m_All_Jump;
-    private readonly InputAction m_All_DownJump;
     private readonly InputAction m_All_Walk;
     private readonly InputAction m_All_Run;
     private readonly InputAction m_All_GoGhost;
     private readonly InputAction m_All_Shoot;
-    private readonly InputAction m_All_Down;
     private readonly InputAction m_All_Interaction;
     private readonly InputAction m_All_Dash;
     private readonly InputAction m_All_SwapWeapon;
+    private readonly InputAction m_All_PauseMenu;
     public struct AllActions
     {
         private @PlayerActionMap m_Wrapper;
         public AllActions(@PlayerActionMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Down => m_Wrapper.m_All_Down;
         public InputAction @Jump => m_Wrapper.m_All_Jump;
-        public InputAction @DownJump => m_Wrapper.m_All_DownJump;
         public InputAction @Walk => m_Wrapper.m_All_Walk;
         public InputAction @Run => m_Wrapper.m_All_Run;
         public InputAction @GoGhost => m_Wrapper.m_All_GoGhost;
         public InputAction @Shoot => m_Wrapper.m_All_Shoot;
-        public InputAction @Down => m_Wrapper.m_All_Down;
         public InputAction @Interaction => m_Wrapper.m_All_Interaction;
         public InputAction @Dash => m_Wrapper.m_All_Dash;
         public InputAction @SwapWeapon => m_Wrapper.m_All_SwapWeapon;
+        public InputAction @PauseMenu => m_Wrapper.m_All_PauseMenu;
         public InputActionMap Get() { return m_Wrapper.m_All; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -423,12 +401,12 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_AllActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_AllActionsCallbackInterfaces.Add(instance);
+            @Down.started += instance.OnDown;
+            @Down.performed += instance.OnDown;
+            @Down.canceled += instance.OnDown;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @DownJump.started += instance.OnDownJump;
-            @DownJump.performed += instance.OnDownJump;
-            @DownJump.canceled += instance.OnDownJump;
             @Walk.started += instance.OnWalk;
             @Walk.performed += instance.OnWalk;
             @Walk.canceled += instance.OnWalk;
@@ -441,9 +419,6 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
-            @Down.started += instance.OnDown;
-            @Down.performed += instance.OnDown;
-            @Down.canceled += instance.OnDown;
             @Interaction.started += instance.OnInteraction;
             @Interaction.performed += instance.OnInteraction;
             @Interaction.canceled += instance.OnInteraction;
@@ -453,16 +428,19 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @SwapWeapon.started += instance.OnSwapWeapon;
             @SwapWeapon.performed += instance.OnSwapWeapon;
             @SwapWeapon.canceled += instance.OnSwapWeapon;
+            @PauseMenu.started += instance.OnPauseMenu;
+            @PauseMenu.performed += instance.OnPauseMenu;
+            @PauseMenu.canceled += instance.OnPauseMenu;
         }
 
         private void UnregisterCallbacks(IAllActions instance)
         {
+            @Down.started -= instance.OnDown;
+            @Down.performed -= instance.OnDown;
+            @Down.canceled -= instance.OnDown;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @DownJump.started -= instance.OnDownJump;
-            @DownJump.performed -= instance.OnDownJump;
-            @DownJump.canceled -= instance.OnDownJump;
             @Walk.started -= instance.OnWalk;
             @Walk.performed -= instance.OnWalk;
             @Walk.canceled -= instance.OnWalk;
@@ -475,9 +453,6 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
-            @Down.started -= instance.OnDown;
-            @Down.performed -= instance.OnDown;
-            @Down.canceled -= instance.OnDown;
             @Interaction.started -= instance.OnInteraction;
             @Interaction.performed -= instance.OnInteraction;
             @Interaction.canceled -= instance.OnInteraction;
@@ -487,6 +462,9 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
             @SwapWeapon.started -= instance.OnSwapWeapon;
             @SwapWeapon.performed -= instance.OnSwapWeapon;
             @SwapWeapon.canceled -= instance.OnSwapWeapon;
+            @PauseMenu.started -= instance.OnPauseMenu;
+            @PauseMenu.performed -= instance.OnPauseMenu;
+            @PauseMenu.canceled -= instance.OnPauseMenu;
         }
 
         public void RemoveCallbacks(IAllActions instance)
@@ -515,15 +493,15 @@ public partial class @PlayerActionMap: IInputActionCollection2, IDisposable
     }
     public interface IAllActions
     {
+        void OnDown(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnDownJump(InputAction.CallbackContext context);
         void OnWalk(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnGoGhost(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
-        void OnDown(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnSwapWeapon(InputAction.CallbackContext context);
+        void OnPauseMenu(InputAction.CallbackContext context);
     }
 }

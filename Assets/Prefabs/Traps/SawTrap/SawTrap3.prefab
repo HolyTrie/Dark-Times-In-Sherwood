@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827fb8d2dcb122749a5a21c6d53639a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SawTrap: {fileID: 7652700904377475755}
+  Trap: {fileID: 7652700904377475755}
 --- !u!1 &6474086945019019015
 GameObject:
   m_ObjectHideFlags: 0

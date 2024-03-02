@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SawPressurePlate : MonoBehaviour
+public class TriggerPressurePlate : MonoBehaviour
 {
-    [SerializeField] SawTrapController SawTrap;
+    [SerializeField] TrapController Trap;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag.Equals("Player"))
-            SawTrap.StartSaw();
+            Trap.StartTrap();
     }
 }

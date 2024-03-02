@@ -45,7 +45,7 @@ namespace DTIS
 
             controller.FlipByCursorPos();
 
-            FSM.StartCoroutine(AttackCommitment(0.75f)); // pretty much wait for animation to finish..
+            FSM.StartCoroutine(AttackCommitment(0.55f)); // pretty much wait for animation to finish..
         }
 
         IEnumerator AttackCommitment(float seconds)

@@ -11,31 +11,49 @@ namespace DTIS
         private bool _inSlope = false;
         private bool SlopeAhead { get { return Controller.SlopeAhead; } }
         private Vector2 OriginalGravity { get { return Controller.OriginalGravity; } }
-        private Transform crosshair;
+        private CrosshairCursor crosshair;
+        private bool _initialDirectionWasRight;
         public GroundedState(ESP.States state, string name = "Grounded")
         : base(state, name, false) { }
         public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
             base.Enter(controller, fsm); // Critical!
-            SetAnimations();
             Controller.CurrGravity = OriginalGravity;
             if(Controller.JumpBufferCounter > 0)
             {
                 Controller.JumpWasBuffered = true;
                 SetStates(ESP.States.Airborne,ESP.States.Jump);
+                return;
             }
-            else
-                Controller.JumpBufferCounter = 0f;
+            SetAnimations();
+            Controller.JumpBufferCounter = 0f;
+            crosshair = controller.transform.Find("Crosshair").GetComponent<CrosshairCursor>();
+            InitStickyFeet();
+        }
+        private void InitStickyFeet()
+        {
+            var hit = Physics2D.Raycast(Controller.Position,-Vector2.up,1f,Controller.WhatIsPlatform);
+            if(!hit)
+            {
+                Controller.PrevPlatformCollider = null;
+                return;
+            }
+            Collider2D currCollider = hit.collider;
 
-            crosshair = controller.transform.Find("Crosshair");
+            if(Controller.PrevPlatformCollider != currCollider)
+            {
+                Controller.PrevPlatformCollider = currCollider;
+                Controller.StickyFeetDirectionIsRight = Controller.FacingRight;
+                FSM.StartCoroutine(ReleaseStickyFeet());
+            }
         }
         protected override void TryStateSwitch()
         {
-            if (Controller.Velocity.y < _minYChange && !Controller.IsGrounded) //some cases like stairs will have negative velocity but are still 'ground'
+            if (Controller.Velocity.y < _minYChange && !Controller.IsGrounded) //some cases like stairs/slopes will have negative velocity but are still 'ground'
             {
                 SetStates(ESP.States.Airborne, ESP.States.Fall);
             }
-            if (ActionMap.Jump.WasPressedThisFrame())
+            if (Controls.JumpIsPressed && !Controls.DownIsPressed)
             {
                 bool canJump = true;
                 if (canJump)
@@ -63,11 +81,11 @@ namespace DTIS
 
             if (AttackState.weaponType == 1) // sword
             {
-                crosshair.gameObject.SetActive(false);
+                crosshair.SwordCrosshair();
             }
             if (AttackState.weaponType == 2) // bow
             {
-                crosshair.gameObject.SetActive(true);
+                crosshair.BowCrosshair();
             }
         }
         protected override void PhysicsCalculation()
@@ -113,6 +131,13 @@ namespace DTIS
         {
             yield return new WaitForSeconds(0.25f);
             Controller.CurrGravity = OriginalGravity;
+        }
+
+        private IEnumerator ReleaseStickyFeet()
+        { 
+            Controller.IsInStickyFeet = true;
+            yield return new WaitForSeconds(Controller.StickyFeetDuration);
+            Controller.IsInStickyFeet = false;
         }
     }
 }

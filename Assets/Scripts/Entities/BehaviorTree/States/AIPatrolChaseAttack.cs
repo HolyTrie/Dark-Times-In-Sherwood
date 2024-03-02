@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class AIPatrolChaseAttack : BTree
 {
-    [Tooltip("Points that the guard will walk to")]
+    [Tooltip("Points that the Entity will walk to")]
     [SerializeField] public Transform[] patrolTransforms;
 
     private EntityController _AIcontroller;

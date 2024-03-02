@@ -7,6 +7,7 @@ namespace DTIS
 {
     public class JumpState : PlayerState
     {
+        private CeilingCheck CeilingCheck { get { return Controller.CeilingCheck; } }
         private readonly bool _airControl;
         private readonly float _noKeyInputJumpTime = 0.25f;
         private bool _keyPress = false;
@@ -62,7 +63,26 @@ namespace DTIS
         protected override void TryStateSwitch() //is called in Update
         {
             _keyPress = ActionMap.Jump.WasPerformedThisFrame();
-            if(Controller.Velocity.y < 0 || ActionMap.Jump.WasReleasedThisFrame())
+            bool fall = false || ActionMap.Jump.WasReleasedThisFrame();
+            if(Controller.Velocity.y < 0)
+            { 
+                /*
+                Debug.Log($"left to right collisions = {CeilingCheck.LeftToRightCollisionCount} | right to left collisions = {CeilingCheck.RightToLeftCollisionCount}");
+                if(Controller.FacingRight && CeilingCheck.LeftToRightCollisionPercentage >= 0.5f)
+                {
+                    Controller.NudgeToPosition(CeilingCheck.LeftToRightFirstMissOrigin);
+                }
+                else if(!Controller.FacingRight && CeilingCheck.RightToLeftCollisionPercentage >= 0.5f)
+                {
+                    Controller.NudgeToPosition(CeilingCheck.RightToLeftFirstMissOrigin);
+                }
+                else
+                {
+                */
+                    fall = true;
+                //}
+            }
+            if(fall)
             {
                 SetSubState(ESP.States.Fall);
             }

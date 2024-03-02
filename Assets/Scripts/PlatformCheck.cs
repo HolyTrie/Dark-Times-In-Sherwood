@@ -18,12 +18,6 @@ public class PlatformCheck : MonoBehaviour
         _pc = FindObjectsOfType<PlayerController>()[0]; // wont work well with more than 1 player!
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.gameObject.CompareTag("Platform"))
@@ -46,10 +40,9 @@ public class PlatformCheck : MonoBehaviour
         var candidate = other.GetComponent<OneWayPlatform>();
         bool allowsGoingDown = candidate.Type != OneWayPlatform.OneWayPlatforms.GoingUp;
         bool isPlayerAbove = IsPlayerAbovePlatform(other);
-        bool downPressed = _pc.GetComponent<PlayerControls>().ActionMap.All.Down.WasPerformedThisFrame();
-        if(downPressed && isPlayerAbove && allowsGoingDown)
+        bool downJumpPressed = _pc.GetComponent<PlayerControls>().DownJumpIsPressed;
+        if(downJumpPressed && isPlayerAbove && allowsGoingDown)
         {
-            Debug.Log("stayed and passing through");
             _pc.PassingThroughPlatform = true;
             Curr = candidate;
             StartCoroutine(WaitToReapplyCollision(_ignorePlatformDuration));
@@ -71,7 +64,6 @@ public class PlatformCheck : MonoBehaviour
     private IEnumerator WaitToReapplyCollision(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        Debug.Log("released passing through");
         _pc.PassingThroughPlatform = false;
         _currPlatform = null;
     }
