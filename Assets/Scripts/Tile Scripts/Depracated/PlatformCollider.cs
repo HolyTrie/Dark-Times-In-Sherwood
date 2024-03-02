@@ -1,8 +1,7 @@
 using System.Collections;
+/*
 using DTIS;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.Universal.Internal;
 
 public class PlatformCollider : MonoBehaviour
 {
@@ -57,3 +56,4 @@ public class PlatformCollider : MonoBehaviour
         _collider2d.enabled = true;
     }
 }
+*/

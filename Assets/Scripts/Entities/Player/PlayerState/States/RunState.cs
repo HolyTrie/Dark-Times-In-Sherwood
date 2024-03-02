@@ -31,7 +31,7 @@ namespace DTIS
             {
                 SetSubState(ESP.States.Idle);
             }
-            if (!Controls.Running)
+            if (!Controls.RunIsPressed)
             {
                 SetSubState(ESP.States.Walk);
             }

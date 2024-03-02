@@ -49,11 +49,11 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            if (Controller.Velocity.y < _minYChange && !Controller.IsGrounded) //some cases like stairs will have negative velocity but are still 'ground'
+            if (Controller.Velocity.y < _minYChange && !Controller.IsGrounded) //some cases like stairs/slopes will have negative velocity but are still 'ground'
             {
                 SetStates(ESP.States.Airborne, ESP.States.Fall);
             }
-            if (ActionMap.Jump.WasPressedThisFrame())
+            if (Controls.JumpIsPressed && !Controls.DownIsPressed)
             {
                 bool canJump = true;
                 if (canJump)

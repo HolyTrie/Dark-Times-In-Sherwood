@@ -6,22 +6,22 @@
             "id": "d5f3962d-9a17-47dd-a9f2-88729c3f4c02",
             "actions": [
                 {
+                    "name": "Down",
+                    "type": "Value",
+                    "id": "61c8d9a9-e992-4efb-9f39-df633df0e1e9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Jump",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "ec4481d0-d9c7-4c53-9b91-780bd5b18e8d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "DownJump",
-                    "type": "Button",
-                    "id": "7ba61c6a-0749-43ea-973a-99a4820aba7b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Walk",
@@ -54,15 +54,6 @@
                     "name": "Shoot",
                     "type": "Button",
                     "id": "b5667f81-c08a-4d2d-9751-b9a73c3c3629",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Down",
-                    "type": "Button",
-                    "id": "61c8d9a9-e992-4efb-9f39-df633df0e1e9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -198,17 +189,6 @@
                 },
                 {
                     "name": "",
-                    "id": "5dfa6efc-85e5-443b-983f-a72e35d6a3d7",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Down",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "114f9ff6-0f18-4c6f-9de6-c6aeec4f205c",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -217,39 +197,6 @@
                     "action": "Interaction",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "One Modifier",
-                    "id": "df3c9901-cd98-4155-8fee-b110785bc826",
-                    "path": "OneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DownJump",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "5045cad3-a045-4eb2-9efd-4760f1bc7740",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "New control scheme",
-                    "action": "DownJump",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "ea70f07f-33b6-443c-a9f3-02b43bd18678",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "New control scheme",
-                    "action": "DownJump",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -281,6 +228,17 @@
                     "processors": "",
                     "groups": "New control scheme",
                     "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5dfa6efc-85e5-443b-983f-a72e35d6a3d7",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
