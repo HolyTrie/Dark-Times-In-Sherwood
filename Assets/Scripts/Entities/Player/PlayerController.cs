@@ -220,7 +220,7 @@ namespace DTIS
         /// </summary> <summary>
         /// 
         /// </summary>
-        public void Jump()
+        public void Jump(bool weakJump = false)
         {
             _isJumping = true;
             var jumpForce = _jumpForce;
@@ -231,7 +231,9 @@ namespace DTIS
                 gravity = _strongJumpGravity;
             }
             CurrGravity = new(0f, gravity);
-            _velocity.y = jumpForce;
+            var velMult = 1f;
+            if(weakJump) velMult*=0.8f;
+            _velocity.y = velMult * jumpForce;
         }
         public void AccelarateFall()
         {
@@ -466,7 +468,7 @@ namespace DTIS
                 offset.x *= -1f;
             pos += offset;
             _rb2d.MovePosition(pos);
-            Jump();
+            Jump(weakJump: true);
             yield return new WaitForSeconds(1f);
             _isNudging = false;
         }

@@ -45,7 +45,7 @@ public class CeilingCheck : MonoBehaviour
         float raySpacing = length / _rayCount;
         for(int i = 0 ; i<_rayCount ; ++i)
         {
-            var _x = _rayOffsetX + (i+1) * raySpacing;
+            var _x = _rayOffsetX + i * raySpacing;
             var _y = _rayOffsetY;
             _rayOffsets[i] = new Vector2(_x,_y);
         }
