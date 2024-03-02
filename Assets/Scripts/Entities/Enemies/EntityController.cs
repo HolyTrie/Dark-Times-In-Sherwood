@@ -27,6 +27,7 @@ namespace DTIS
         public int AttackDMG { get { return _attackDMG; } set { _attackDMG = value; } }
         private HpBarEntity _hpBar;
         public HpBarEntity HpBar { get { return _hpBar; } }
+        [SerializeField] private float DeathDelaySeconds;
         // [Tooltip("The items that the enemy can drop upon death")]
         // [SerializeField] ItemDataBase [] Droppable;
 
@@ -116,8 +117,7 @@ namespace DTIS
         //right now enemy drops only HP, TODO: add more drops as game progresses or whatever wishes.
         public void DropItems()
         {
-            float seconds = 0.5f;
-            StartCoroutine(WaitForDeath(seconds));
+            StartCoroutine(WaitForDeath(DeathDelaySeconds));
         }
 
         private IEnumerator WaitForDeath(float seconds)

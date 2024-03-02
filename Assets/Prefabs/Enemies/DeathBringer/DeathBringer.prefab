@@ -619,7 +619,7 @@ GameObject:
   - component: {fileID: 3859345180979102272}
   m_Layer: 10
   m_Name: DeathBringer
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -787,6 +787,7 @@ MonoBehaviour:
   _runSpeedMult: 1.5
   _movementSmoothing: 2
   _attackDMG: 15
+  DeathDelaySeconds: 1.75
   _FieldOfView: 15
   _XAttackRange: 1.75
   _YAttackRange: 2

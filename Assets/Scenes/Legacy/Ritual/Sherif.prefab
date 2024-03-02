@@ -113,8 +113,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 36.35, y: 0.74, z: -3}
-  m_LocalScale: {x: 4.5, y: 4.5, z: 4.5}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: -4.5, y: 4.5, z: 4.5}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3072270850100809699}
   - {fileID: 573788564475190123}
@@ -214,7 +214,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 8200
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -444,6 +444,10 @@ PrefabInstance:
     - target: {fileID: 3674277528185900094, guid: 7fb4574d62b4c9e4cb95921ac1978c4f, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0.1106
+      objectReference: {fileID: 0}
+    - target: {fileID: 3674277528185900094, guid: 7fb4574d62b4c9e4cb95921ac1978c4f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3674277528185900094, guid: 7fb4574d62b4c9e4cb95921ac1978c4f, type: 3}
       propertyPath: m_LocalPosition.x

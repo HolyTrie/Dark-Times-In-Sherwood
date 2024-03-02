@@ -6,6 +6,8 @@ using UnityEngine;
 using static Dialogue;
 public class SherifController : MonoBehaviour, IDialog
 {
+    private string playerChocie;
+
     public void StartDialog()
     {
         FindObjectOfType<DialogueManager>().StartDialogue(Conversation());
@@ -34,6 +36,16 @@ public class SherifController : MonoBehaviour, IDialog
         Monologue robinOpening = new(playerName, "Sheriff, I have returned to reclaim what is rightfully mine. Your tyrannical rule ends here and now!", sheriffOpening);
 
         return robinOpening;
+    }
+
+    public void Update()
+    {
+        DialogChoices();
+    }
+    private void DialogChoices()
+    {
+        if(GameManager.playerChoices!=null)
+            Debug.Log(GameManager.playerChoices); //testting
     }
 
 }

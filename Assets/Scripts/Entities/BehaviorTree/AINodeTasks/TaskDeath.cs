@@ -19,6 +19,8 @@ namespace DTIS
             {
                 _AIcontroller.Animator.SetTrigger("Death");
                 _AIcontroller.DropItems();
+                _state = NodeState.SUCCESS;
+                return _state;
             }
             _state = NodeState.FAILURE;
             return _state;

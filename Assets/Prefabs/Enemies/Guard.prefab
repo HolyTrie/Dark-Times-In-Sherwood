@@ -352,6 +352,7 @@ MonoBehaviour:
   _runSpeedMult: 1.5
   _movementSmoothing: 0.15
   _attackDMG: 10
+  DeathDelaySeconds: 0.5
   _FieldOfView: 6
   _XAttackRange: 1.75
   _YAttackRange: 1

@@ -32,7 +32,6 @@ namespace DTIS
             if (Vector3.Distance(_AIcontroller.transform.position,target.position) > 0.01f) //player is nearby enemy, so it will chase him
             {
                 Vector3 directionVector = (target.position - _AIcontroller.transform.position).normalized;
-                Debug.Log("DIRECTION VECTOR:" + directionVector);
                 _AIcontroller.Move(directionVector);
 
                 _AIcontroller.Flip(target.position.x); // flips the entity according the the position x of target.
