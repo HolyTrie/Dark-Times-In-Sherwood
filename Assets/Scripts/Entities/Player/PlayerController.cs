@@ -17,6 +17,7 @@ namespace DTIS
         public bool LeavingLedge { get { return _leavingLedge; } set { _leavingLedge = value; } }
         public Collider2D PrevPlatformCollider { get { return _previousPlatformCollider; } set { _previousPlatformCollider = value; } }
         public int WhatIsPlatform { get { return _whatIsPlatform; } }
+        public bool GrabbingLedge  { get { return _grabbingLedge; } set { _grabbingLedge = value;Debug.Log("set grabbing to "+value); } }
 
         [Header("Platforms")]
         [SerializeField]
@@ -26,6 +27,7 @@ namespace DTIS
         private Collider2D _previousPlatformCollider = null;
         private bool _passingThroughPlatform = false;
         private bool _leavingLedge = false;
+        private bool _grabbingLedge = false;
         #endregion
 
         #region INITIALIZATION
@@ -44,11 +46,11 @@ namespace DTIS
         }
         void Awake()
         {
+            GetCheckComponents();
             _animator = GetComponentInChildren<Animator>();
             _tr = GetComponent<TrailRenderer>();
             _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic strings
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-            _gc = GetComponentInChildren<GroundCheck>();
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             _staminabar = GetComponent<StaminaBar>();
             _sanityBar = GetComponent<SanityBar>();
@@ -108,15 +110,25 @@ namespace DTIS
 
         #region CHECKS
         //TODO: automatic init instead of serialize field. idea: have a script in the checks object that iterates on children and adds them here.
-        public bool IsGrounded { get { return _gc.Grounded(); } }
+        public bool IsGrounded { get { return _groundCheck.Grounded(); } }
         public CeilingCheck CeilingCheck { get { return _ceilingCheck; } }
+        public HorizontalCollisionCheck2D HorizontalCheck { get { return _horizontalCheck; } }
         public bool EdgeAhead { get { return _edgeLocator.Hit; } }
-        [SerializeField] private GroundCheck _gc;
-        [SerializeField] private SlopeCheck _sc;
-        [SerializeField] private HorizontalCollisionCheck2D _hc;
+        [SerializeField] private GroundCheck _groundCheck;
+        [SerializeField] private SlopeCheck _slopeCheck;
+        [SerializeField] private HorizontalCollisionCheck2D _horizontalCheck;
         [SerializeField] private PlatformCheck _platformCheck;
         [SerializeField] private CeilingCheck _ceilingCheck;
         [SerializeField] private EdgeLocator _edgeLocator;
+        private void GetCheckComponents()
+        {
+            _groundCheck = GetComponentInChildren<GroundCheck>();
+            _slopeCheck = GetComponentInChildren<SlopeCheck>();
+            _ceilingCheck = GetComponentInChildren<CeilingCheck>();
+            _platformCheck = GetComponentInChildren<PlatformCheck>(); 
+            _horizontalCheck = GetComponentInChildren<HorizontalCollisionCheck2D>();
+            _edgeLocator = GetComponentInChildren<EdgeLocator>();
+        }
         #endregion
 
         #region GENERAL
@@ -204,19 +216,11 @@ namespace DTIS
         {
             get
             {
-                bool ans;
-                if (_facingRight)
-                {
-                    ans = _sc.SlopeAhead || _hc.RightCollisionType == HorizontalCollisionCheck2D.CollisionTypes.PARTIAL;
-                }
-                else
-                {
-                    ans = _sc.SlopeAhead || _hc.LeftCollisionType == HorizontalCollisionCheck2D.CollisionTypes.PARTIAL;
-                }
+                bool ans = _slopeCheck.SlopeAhead || _horizontalCheck.CollisionType == HorizontalCollisionCheck2D.CollisionTypes.PARTIAL;
                 return ans;
             }
         }
-        public bool IsSlopeUpwardsLeftToRight { get { return _sc.IsSlopeUpwardsLeftToRight; } }
+        public bool IsSlopeUpwardsLeftToRight { get { return _slopeCheck.IsSlopeUpwardsLeftToRight; } }
         #endregion
 
         #region JUMP & GRAVITY

@@ -30,7 +30,7 @@ namespace DTIS
         }
         protected override void TryStateSwitch()
         {
-            //pass
+            //
         }
         protected override void PhysicsCalculation()
         {

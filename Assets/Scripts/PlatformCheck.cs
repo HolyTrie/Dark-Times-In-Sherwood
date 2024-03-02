@@ -43,6 +43,7 @@ public class PlatformCheck : MonoBehaviour
         bool downJumpPressed = _pc.GetComponent<PlayerControls>().DownJumpIsPressed;
         if(downJumpPressed && isPlayerAbove && allowsGoingDown)
         {
+            _pc.Animator.Play("crouch");
             _pc.PassingThroughPlatform = true;
             Curr = candidate;
             StartCoroutine(WaitToReapplyCollision(_ignorePlatformDuration));

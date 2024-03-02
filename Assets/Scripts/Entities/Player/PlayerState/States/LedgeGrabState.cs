@@ -7,7 +7,7 @@ namespace DTIS
     public class LedgeGrabState : PlayerState
     {
         private const string GrabLedgeAnimName = "crnr-grb";
-        private const string ClimbLedgeAnimName = "crnr-clmb";
+        private Vector2 _prevGravity;
         private bool LeavingLedge { get { return Controller.LeavingLedge; } set { Controller.LeavingLedge = value; } }
         public LedgeGrabState(ESP.States state, string name = "walk")
         : base(state, name, false) { }
@@ -16,14 +16,29 @@ namespace DTIS
             Debug.Log("entered ledge grab state");
             base.Enter(controller, fsm); // Critical!
             Controller.Animator.Play(GrabLedgeAnimName);
+            Controller.Velocity = Vector2.zero;
+            _prevGravity = Controller.CurrGravity;
+            Controller.CurrGravity = Vector2.zero;
+            Controller.GrabbingLedge = true;
+        }
+        public override void Exit(ESP.States State, ESP.States SubState)
+        {
+            base.Exit(State, SubState);
+            Controller.CurrGravity = _prevGravity;
+            FSM.StartCoroutine(ReleaseGrabParam());
+        }
+        private IEnumerator ReleaseGrabParam()
+        {
+            yield return new WaitForSeconds(.25f);
+            Controller.GrabbingLedge = false;
         }
         protected override void TryStateSwitch() // is called in Update
         {
-            if (Controls.DownJumpIsPressed && LeavingLedge)
+            if (Controls.DownIsPressed && !LeavingLedge)
             {
                 FSM.StartCoroutine(DropFromLedge());
             }
-            else if (Controls.JumpIsPressed && LeavingLedge)
+            else if (Controls.JumpIsPressed && !LeavingLedge)
             {
                 FSM.StartCoroutine(ClimbLedge());
             }
@@ -32,16 +47,15 @@ namespace DTIS
         {
             Debug.Log("Dropping from ledge");
             LeavingLedge = true;
-            // TODO: actually move the character appropriately
-            yield return new WaitForSeconds(0.25f);
+            SetSubState(ESP.States.Fall);
+            yield return new WaitForSeconds(.25f);
             LeavingLedge = false;
         }
         private IEnumerator ClimbLedge()
         {
             Debug.Log("climbing ledge");
             LeavingLedge = true;
-            Controller.Animator.Play(ClimbLedgeAnimName);
-            // TODO: actually move the character appropriately
+            SetSubState(ESP.States.Jump);
             yield return new WaitForSeconds(0.25f);
             LeavingLedge = false;
         }

@@ -49290,6 +49290,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73672cf725b736f4e8faa8d80712d549, type: 3}
+--- !u!4 &1320603454 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3156454665119824906, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+  m_PrefabInstance: {fileID: 1880077399}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1348696809
 GameObject:
   m_ObjectHideFlags: 0
@@ -114164,6 +114169,22 @@ PrefabInstance:
     - target: {fileID: 2438929693715226838, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: _headBumpCorrectionThreshold
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537353147310545361, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+      propertyPath: _rayCount
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537353147310545361, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+      propertyPath: _parentTop
+      value: 
+      objectReference: {fileID: 1628777353}
+    - target: {fileID: 3537353147310545361, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+      propertyPath: _parentBottom
+      value: 
+      objectReference: {fileID: 1320603454}
+    - target: {fileID: 3537353147310545361, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
+      propertyPath: _raysCastDistance
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3694220496909912846, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: BowSprite
