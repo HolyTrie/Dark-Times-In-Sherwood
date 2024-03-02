@@ -14,15 +14,18 @@ namespace DTIS
     {
         #region PLATFORMS
         public bool PassingThroughPlatform { get { return _passingThroughPlatform; } set { _passingThroughPlatform = value; } }
+        public bool LeavingLedge { get { return _leavingLedge; } set { _leavingLedge = value; } }
+        public Collider2D PrevPlatformCollider { get { return _previousPlatformCollider; } set { _previousPlatformCollider = value; } }
+        public int WhatIsPlatform { get { return _whatIsPlatform; } }
+        
         [Header("Platforms")]
         [SerializeField]
         protected private LayerMask _whatIsPlatform;
         protected private ContactFilter2D _groundOnlyFilter;
         protected private ContactFilter2D _groundAndPlatformFilter;
-        private bool _passingThroughPlatform = false;
         private Collider2D _previousPlatformCollider = null;
-        public Collider2D PrevPlatformCollider { get { return _previousPlatformCollider; } set { _previousPlatformCollider = value; } }
-        public int WhatIsPlatform { get { return _whatIsPlatform; } }
+        private bool _passingThroughPlatform = false;
+        private bool _leavingLedge = false;
         #endregion
 
         #region INITIALIZATION
@@ -415,6 +418,11 @@ namespace DTIS
             _playerGhostBehaviour.TrySetGhostStatus();
             Flip();
         }
+        private Vector2 _futurePosition;
+        private Vector2 _futureVelocity;
+        public Vector2 FuturePos { get { return _futurePosition; } }
+        public Vector2 FutureVel { get { return _futureVelocity; } }
+
         protected private override void FixedUpdate()
         {
             if (_isDashing)
@@ -442,19 +450,21 @@ namespace DTIS
             Movement(moveX, false, colliderToIgnore); // horizontal movement
             _velocity.y = Math.Clamp(_velocity.y, -_maxFallSpeed, float.MaxValue);
             _targetVelocity = Vector2.zero;
+
             // predict future position using a simplified euler integration (0.5 pixel error rate, resets when landing so it does not accumulate!)
-            var futurePos = (Vector2)transform.position + _velocity * Time.deltaTime + 0.5f * Time.deltaTime * acc; // pos = velocity*deltaTime +0.5*accelaration*(deltaTime^2)
-            var futureVel = _velocity + acc; // vel = accelaration * deltaTime & acceleration = gravity only rn.
-            var futurePosTop = futurePos;
+            _futurePosition = (Vector2)transform.position + _velocity * Time.deltaTime + 0.5f * Time.deltaTime * acc; // pos = velocity*deltaTime +0.5*accelaration*(deltaTime^2)
+            _futureVelocity = _velocity + acc; // vel = accelaration * deltaTime & acceleration = gravity only rn.
+            
+            // Bumped Head Correction
+            var futurePosTop = _futurePosition;
             futurePosTop.y += _collider.bounds.size.y;
             var hit = Physics2D.Raycast(futurePosTop,Vector2.up,0.01f,WhatIsGround);
-            if(!_isNudging && !hit && futureVel.y < 0 && IsJumping && _ceilingCheck.CollisionType != CeilingCheck.CollisionTypes.NONE)
+            var bumpedHeadCorrection = !_isNudging && !hit && _futureVelocity.y < 0 && IsJumping && _ceilingCheck.CollisionType != CeilingCheck.CollisionTypes.NONE;
+            if(bumpedHeadCorrection)
             {
-                bool NudgeLeft = futurePos.x > futurePosTop.x;
+                bool NudgeLeft = _futurePosition.x > futurePosTop.x;
                 if(_collider.bounds.center.y < futurePosTop.y)
                     StartCoroutine(JumpNudge(NudgeLeft));
-                //else
-                    //StartCoroutine(GrabLedge(NudgeLeft));
             }
         }
         private bool _isNudging = false;

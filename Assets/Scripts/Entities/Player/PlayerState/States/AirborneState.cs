@@ -13,7 +13,7 @@ namespace DTIS
         private int _attacksMidAir = 0;
         private bool _isInCoyoteTime = false;
         public AirborneState(ESP.States state, string name = "Airborne")
-        : base(state, name, false) {}
+        : base(state, name, false) { }
         public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
             base.Enter(controller, fsm); // Critical!
@@ -36,11 +36,11 @@ namespace DTIS
         protected override void TryStateSwitch()
         {
             bool jumpPressedThisFrame = ActionMap.Jump.WasPressedThisFrame();
-            if(jumpPressedThisFrame)
+            if (jumpPressedThisFrame)
                 Controller.JumpBufferCounter = Controller.JumpBufferTime;
             else
                 Controller.JumpBufferCounter -= Time.deltaTime;
-            if (Controller.IsGrounded && FSM.SubState.Type!=ESP.States.Jump)
+            if (Controller.IsGrounded && FSM.SubState.Type != ESP.States.Jump)
             {
                 SetStates(ESP.States.Grounded, ESP.States.Idle);
             }
@@ -65,7 +65,7 @@ namespace DTIS
                     SetSubState(ESP.States.Jump);
                     Controller.JumpBufferCounter = 0f;
                 }
-                
+
             }
             if (_attacksMidAir < _maxAttacks)
             {
