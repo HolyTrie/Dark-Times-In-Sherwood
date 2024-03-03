@@ -23,13 +23,13 @@ namespace DTIS
             Transform target = (Transform)GetData("target");
 
 
-            if (target == null || Vector3.Distance(_AIcontroller.transform.position,target.position) > _AIcontroller.FieldOfView) // this indicates the player ran from the enemy so he stops chasing
+            if (target == null || Vector3.Distance(_AIcontroller.transform.position, target.position) > _AIcontroller.FieldOfView) // this indicates the player ran from the enemy so he stops chasing
             {
                 _state = NodeState.FAILURE;
                 return _state;
             }
 
-            if (Vector3.Distance(_AIcontroller.transform.position,target.position) > 0.01f) //player is nearby enemy, so it will chase him
+            if (Vector3.Distance(_AIcontroller.transform.position, target.position) > 0.01f) //player is nearby enemy, so it will chase him
             {
                 Vector3 directionVector = (target.position - _AIcontroller.transform.position).normalized;
                 _AIcontroller.Move(directionVector);
@@ -38,7 +38,7 @@ namespace DTIS
 
                 _AIcontroller.Animator.SetInteger("AnimState", 2);
 
-                if (Vector3.Distance(_AIcontroller.transform.position,_prevPos) < 0.01f)
+                if (Vector3.Distance(_AIcontroller.transform.position, _prevPos) < 0.01f)
                 {
                     stuckCounter += 1;
                     if (stuckCounter > 2)
