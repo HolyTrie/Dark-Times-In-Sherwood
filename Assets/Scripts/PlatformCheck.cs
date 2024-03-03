@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class PlatformCheck : MonoBehaviour
 {
+    [SerializeField]
+    private LayerMask _whatIsPlatform;
     private OneWayPlatform _currPlatform;
     public OneWayPlatform Curr { get { return _currPlatform; } private set { _currPlatform = value; } }
     
@@ -20,9 +22,8 @@ public class PlatformCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.gameObject.CompareTag("Platform"))
+        if(((1<<other.gameObject.layer) & _whatIsPlatform) == 0)
             return;
-        
         var candidate = other.GetComponent<OneWayPlatform>();
         bool allowsGoingUp = candidate.Type != OneWayPlatform.OneWayPlatforms.GoingDown;
         bool isPlayerBelow = !IsPlayerAbovePlatform(other);
@@ -30,12 +31,12 @@ public class PlatformCheck : MonoBehaviour
         {
             _pc.PassingThroughPlatform = true;
             Curr = candidate;
-            StartCoroutine(WaitToReapplyCollision(_ignorePlatformDuration));
+            StartCoroutine(WaitToReapplyCollision(Curr,_ignorePlatformDuration));
         }
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (!other.gameObject.CompareTag("Platform"))
+        if(((1<<other.gameObject.layer) & _whatIsPlatform) == 0)
             return;
         var candidate = other.GetComponent<OneWayPlatform>();
         bool allowsGoingDown = candidate.Type != OneWayPlatform.OneWayPlatforms.GoingUp;
@@ -46,7 +47,7 @@ public class PlatformCheck : MonoBehaviour
             _pc.Animator.Play("crouch");
             _pc.PassingThroughPlatform = true;
             Curr = candidate;
-            StartCoroutine(WaitToReapplyCollision(_ignorePlatformDuration));
+            StartCoroutine(WaitToReapplyCollision(Curr,_ignorePlatformDuration));
         }
     }
     private void OnTriggerExit2D(Collider2D other) {
@@ -62,7 +63,7 @@ public class PlatformCheck : MonoBehaviour
             return true;
         return false;
     }
-    private IEnumerator WaitToReapplyCollision(float seconds)
+    private IEnumerator WaitToReapplyCollision(OneWayPlatform platform,float seconds)
     {
         yield return new WaitForSeconds(seconds);
         _pc.PassingThroughPlatform = false;

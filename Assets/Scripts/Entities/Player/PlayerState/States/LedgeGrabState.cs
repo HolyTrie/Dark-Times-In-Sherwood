@@ -49,9 +49,9 @@ namespace DTIS
         {
             Debug.Log("Dropping from ledge");
             LeavingLedge = true;
-            var moveY = _collider.bounds.extents.y + 0.1f;;
-            Vector2 newPos = new(Controller.transform.position.x,Controller.transform.position.y - moveY);
-            Controller.transform.position = Vector2.Lerp(Controller.transform.position,newPos,0.85f);
+            var moveY = _collider.bounds.extents.y + 0.1f;
+            Vector3 newPos = new(Controller.transform.position.x, Controller.transform.position.y - moveY, Controller.transform.position.z);
+            Controller.transform.position = Vector2.Lerp(Controller.transform.position, newPos, 0.85f);
             SetSubState(ESP.States.Fall);
             yield return new WaitForSeconds(.25f);
             LeavingLedge = false;
@@ -65,12 +65,12 @@ namespace DTIS
             var moveX = _collider.bounds.extents.x + 0.1f;
             moveX *= direction;
             var moveY = _collider.bounds.size.y + 0.1f;
-            Vector2 newPos = new(Controller.transform.position.x + moveX, Controller.transform.position.y + moveY);
+            Vector3 newPos = new(Controller.transform.position.x + moveX, Controller.transform.position.y + moveY, Controller.transform.position.z);
             Controller.Animator.Play("crnr-clmb");
-            Controller.transform.position = Vector2.Lerp(Controller.transform.position,newPos,0.5f);
+            Controller.transform.position = Vector2.Lerp(Controller.transform.position, newPos, 0.5f);
             yield return new WaitForSeconds(0.25f);
             newPos.x += direction * 0.5f;
-            Controller.transform.position = Vector2.Lerp(Controller.transform.position,newPos,1.1f);
+            Controller.transform.position = Vector2.Lerp(Controller.transform.position, newPos, 1.1f);
             Controls.ReadHorizontalInput = true;
             SetSubState(ESP.States.Fall);
             yield return new WaitForSeconds(0.25f);

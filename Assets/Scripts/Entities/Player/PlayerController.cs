@@ -444,7 +444,12 @@ namespace DTIS
             Vector2 moveY = Vector2.up * deltaPosition.y;
             List<Collider2D> colliderToIgnore = new(16); // todo: variable size?
             if (_passingThroughPlatform)
-                colliderToIgnore.Add(_platformCheck.Curr != null ? _platformCheck.Curr.Collider : null);
+            {
+                //colliderToIgnore.Add(_platformCheck.Curr != null ? _platformCheck.Curr.Collider : null);
+                _currFilter = _groundOnlyFilter;
+            }
+            else
+                _currFilter = _groundAndPlatformFilter;
             Movement(moveY, true, colliderToIgnore); // vertical movement
             Movement(moveX, false, colliderToIgnore); // horizontal movement
             _velocity.y = Math.Clamp(_velocity.y, -_maxFallSpeed, float.MaxValue);
@@ -519,7 +524,8 @@ namespace DTIS
             var distanceToMove = move.normalized * distance;
             var pos = _rb2d.position + distanceToMove;
             _rb2d.position = pos;
-            //_rb2d.MovePosition(pos);
+            //var pos = transform.position + (Vector3)distanceToMove;
+            //transform.position = pos;
         }
         #endregion
 
