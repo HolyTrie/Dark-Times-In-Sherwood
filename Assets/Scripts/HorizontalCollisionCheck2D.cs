@@ -90,7 +90,7 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
             if(i == length)
                 _firstFromTopHit = hit;
         }
-        Debug.Log($"first from top hit = {_firstFromTopHit} | 2nd from top hit = {_secondFromTopHit}");
+        //Debug.Log($"first from top hit = {_firstFromTopHit} | 2nd from top hit = {_secondFromTopHit}");
         if (count == 0)
         {
             _collisionType = CollisionTypes.NONE;

@@ -11,19 +11,25 @@ namespace DTIS
     public class PlayerControls : MonoBehaviour
     {
         public static PlayerControls Instance { get; private set; }
-        private PlayerActionMap _am;
         public PlayerActionMap ActionMap { get { return _am; } }
-        private float _walking = 0f;
-        private bool _runIsPressed = false;
-
-        private bool _jumpIsPressed = false;
-        private bool _downIsPressed = false;
-        public float WalkingDirection { get { return _walking; } private set { _walking = value; } }
+        public float WalkingDirection { get { return _horizontalDirection; } private set { _horizontalDirection = value; } }
+        public float VerticalInput { get { return _verticalDirection; } private set { _verticalDirection = value; } }
         public bool RunIsPressed { get { return _runIsPressed; } }
         public bool JumpIsPressed { get { return _jumpIsPressed; } }
-        public bool DownIsPressed { get { return _downIsPressed; } }
-        public bool DownJumpIsPressed { get { return _downIsPressed && _jumpIsPressed; } }
+        public bool DownIsPressed { get { return VerticalInput == -1f; } }
+        public bool UpIsPressed { get { return VerticalInput == 1f; } }
+        public bool DownJumpIsPressed { get { return DownIsPressed && JumpIsPressed; } }
+
+        public bool ReadHorizontalInput { get { return _readHorizontalInput; } set { _readHorizontalInput = value; } }
+
+        private PlayerActionMap _am;
         private GameObject _pauseMenu;
+        private float _horizontalDirection = 0f;
+        private float _verticalDirection = 0f;
+        private bool _runIsPressed = false;
+        private bool _jumpIsPressed = false;
+        private bool _readHorizontalInput = true;
+
         private void Awake()
         {
             if (Instance == null)
@@ -57,7 +63,10 @@ namespace DTIS
 
         private void FixedUpdate()
         {
-            WalkingDirection = ActionMap.All.Walk.ReadValue<float>();
+            WalkingDirection = ActionMap.All.Horizontal.ReadValue<float>();
+            if(!_readHorizontalInput)
+                WalkingDirection = 0f;
+            VerticalInput = ActionMap.All.Vertical.ReadValue<float>();
         }
 
         private void OnEnable()
@@ -65,7 +74,6 @@ namespace DTIS
             _am ??= new PlayerActionMap();
             SetRun(true);
             SetJump(true);
-            SetDown(true);
             _am.Enable();
         }
 
@@ -73,7 +81,6 @@ namespace DTIS
         {
             SetRun(false);
             SetJump(false);
-            SetDown(false);
             _am.Disable();
         }
 
@@ -112,24 +119,6 @@ namespace DTIS
             void Started(InputAction.CallbackContext ctx) { _jumpIsPressed = ctx.started; }
             void Canceled(InputAction.CallbackContext ctx) { _jumpIsPressed = !ctx.canceled; }
             void Performed(InputAction.CallbackContext ctx) { _jumpIsPressed = ctx.performed; }
-        }
-        private void SetDown(bool value)
-        {
-            if (value)
-            {
-                _am.All.Down.started += Started;
-                _am.All.Down.canceled += Canceled;
-                _am.All.Down.performed += Performed;
-            }
-            else
-            {
-                _am.All.Down.started -= Started;
-                _am.All.Down.canceled -= Canceled;
-                _am.All.Down.performed -= Performed;
-            }
-            void Started(InputAction.CallbackContext ctx) { _downIsPressed = ctx.started; }
-            void Canceled(InputAction.CallbackContext ctx) { _downIsPressed = !ctx.canceled; }
-            void Performed(InputAction.CallbackContext ctx) { _downIsPressed = ctx.performed; }
         }
     }
 

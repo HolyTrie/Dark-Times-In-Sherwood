@@ -8,6 +8,7 @@ namespace DTIS
     {
         private const string GrabLedgeAnimName = "crnr-grb";
         private Vector2 _prevGravity;
+        private Collider2D _collider;
         private bool LeavingLedge { get { return Controller.LeavingLedge; } set { Controller.LeavingLedge = value; } }
         public LedgeGrabState(ESP.States state, string name = "walk")
         : base(state, name, false) { }
@@ -20,6 +21,7 @@ namespace DTIS
             _prevGravity = Controller.CurrGravity;
             Controller.CurrGravity = Vector2.zero;
             Controller.GrabbingLedge = true;
+            _collider = Controller.GetComponent<Collider2D>();
         }
         public override void Exit(ESP.States State, ESP.States SubState)
         {
@@ -38,7 +40,7 @@ namespace DTIS
             {
                 FSM.StartCoroutine(DropFromLedge());
             }
-            else if (Controls.JumpIsPressed && !LeavingLedge)
+            else if (Controls.UpIsPressed && !LeavingLedge)
             {
                 FSM.StartCoroutine(ClimbLedge());
             }
@@ -47,6 +49,9 @@ namespace DTIS
         {
             Debug.Log("Dropping from ledge");
             LeavingLedge = true;
+            var moveY = _collider.bounds.extents.y + 0.1f;;
+            Vector2 newPos = new(Controller.transform.position.x,Controller.transform.position.y - moveY);
+            Controller.transform.position = Vector2.Lerp(Controller.transform.position,newPos,0.85f);
             SetSubState(ESP.States.Fall);
             yield return new WaitForSeconds(.25f);
             LeavingLedge = false;
@@ -54,8 +59,20 @@ namespace DTIS
         private IEnumerator ClimbLedge()
         {
             Debug.Log("climbing ledge");
+            Controls.ReadHorizontalInput = false;
             LeavingLedge = true;
-            SetSubState(ESP.States.Jump);
+            var direction = Controller.FacingRight ? 1f : -1f;
+            var moveX = _collider.bounds.extents.x + 0.1f;
+            moveX *= direction;
+            var moveY = _collider.bounds.size.y + 0.1f;
+            Vector2 newPos = new(Controller.transform.position.x + moveX, Controller.transform.position.y + moveY);
+            Controller.Animator.Play("crnr-clmb");
+            Controller.transform.position = Vector2.Lerp(Controller.transform.position,newPos,0.5f);
+            yield return new WaitForSeconds(0.25f);
+            newPos.x += direction * 0.5f;
+            Controller.transform.position = Vector2.Lerp(Controller.transform.position,newPos,1.1f);
+            Controls.ReadHorizontalInput = true;
+            SetSubState(ESP.States.Fall);
             yield return new WaitForSeconds(0.25f);
             LeavingLedge = false;
         }
