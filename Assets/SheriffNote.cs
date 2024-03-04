@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using static Dialogue;
+using DTIS;
 public class SheriffNote : MonoBehaviour
 {
     void Start()
     {
+        Util.GetPlayerController().Animator.Play("get-up");
         FindObjectOfType<DialogueManager>().StartDialogue(Conversation());
     }
     private DialogueSection Conversation()

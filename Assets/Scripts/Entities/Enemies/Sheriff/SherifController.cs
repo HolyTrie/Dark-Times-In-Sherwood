@@ -1,14 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using DTIS;
 using UnityEngine;
-
 using static Dialogue;
+using UnityEngine.UI;
 public class SherifController : MonoBehaviour, IDialog
 {
     [SerializeField] Transform SummonGuards;
     private string playerChocie;
-
+    private bool dialogChoiceTrigger = true;
+    private void Awake()
+    {
+    }
     public void StartDialog()
     {
         FindObjectOfType<DialogueManager>().StartDialogue(Conversation());
@@ -42,12 +44,18 @@ public class SherifController : MonoBehaviour, IDialog
 
     public void Update()
     {
-        DialogChoices();
+        if(playerChocie != "" && dialogChoiceTrigger)
+        {
+            dialogChoiceTrigger = true;
+            if(dialogChoiceTrigger)
+                DialogChoices();
+        }
     }
     private void DialogChoices()
     {
         if (GameManager.playerChoices != null)
         {
+            dialogChoiceTrigger = false;
             playerChocie = GameManager.playerChoices;
 
             if (playerChocie == "The Sheriff's Proposition")
@@ -58,9 +66,30 @@ public class SherifController : MonoBehaviour, IDialog
             if (playerChocie == "The Sheriff's Ultimatum")
             {
                 //vortex scene occurs and robin loses coincece, wakes up scene Prologue(Vault) with a note - bla bla// 
-                GameManager.LoadScene(3);
+                transform.GetComponent<Animator>().Play("AttackEvilWizard");
+                StartCoroutine(FadeOUT());
+                Util.GetPlayerController().Animator.Play("die");
+
             }
         }
+    }
+    private IEnumerator FadeOUT()
+    {
+        yield return new WaitForSeconds(1f);
+        Image _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
+        _blackScreen.enabled = true;
+        float alpha = 0;
+        while (alpha <= 1.1)
+        {
+            var col = _blackScreen.color;
+            col.a = alpha;
+            _blackScreen.color = col;
+            Debug.Log("Color = " + _blackScreen.color);
+            yield return new WaitForSeconds(0.2f); // Adjust this value for smoother or faster animation
+            alpha += 0.1f; // Adjust this value to control the speed of the fade
+        }
+        yield return new WaitForSeconds(1f);
+        GameManager.LoadScene(3);
     }
 
 }
