@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prologue(Ritual).unity
     guid: 33f904947e225b94b9d1eadd0f08fd52
+  - enabled: 1
+    path: Assets/Scenes/Prologue(Ritual)AfterCollapse.unity
+    guid: 3cadd8fb0338045d59f2a81640dde415
   m_configObjects: {}
