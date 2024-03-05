@@ -26,7 +26,7 @@ public class HpBarPlayer : MonoBehaviour
     {
         hpBar.maxValue = maxHP;
         hpBar.value = currentHP;
-        
+
         TextHP = hpBar.transform.Find("Points").GetComponent<TextMeshProUGUI>();
         TextHP.text = currentHP + "/" + maxHP;
     }
@@ -52,4 +52,21 @@ public class HpBarPlayer : MonoBehaviour
     {
         return currentHP;
     }
+
+    public void HealToFull()
+    {
+        currentHP = maxHP;
+    }
+
+    //this can be updated if the player upgrades 
+    public int MaxHp()
+    {
+        return maxHP;
+    }
+
+    public void UpdateMaxHP(int HPBonus)
+    {
+        maxHP += HPBonus;
+    }
+
 }

@@ -31,8 +31,8 @@ public class SherifController : MonoBehaviour, IDialog
 
         Choices playerChoicetoOpening = new(Entityname, "I can see that your friends left you here, you should consider your next moves carefully..",
                                             ChoiceList(
-                                                Choice("The Sheriff's Proposition", SheriffProposition),
-                                                Choice("The Sheriff's Ultimatum", SheriffUltimatum)));
+                                                Choice("Hear the sheriff's offer", SheriffProposition),
+                                                Choice("Oppose the sheriff", SheriffUltimatum)));
 
         Monologue sheriffOpening = new(Entityname, "Ah, Robin of Locksley. How predictable. It seems the years have not dulled your sense of self-righteousness. But you are mistaken if you think you can waltz back into Sherwood and challenge my authority", playerChoicetoOpening);
 
@@ -58,12 +58,12 @@ public class SherifController : MonoBehaviour, IDialog
             dialogChoiceTrigger = false;
             playerChocie = GameManager.playerChoices;
 
-            if (playerChocie == "The Sheriff's Proposition")
+            if (playerChocie == "Hear the sheriff's offer")
             {
                 //more guards come to fight robin and he loses and wakes up in scene InnerVault with a note from the sheriff//
                 SummonGuards.gameObject.SetActive(true);
             }
-            if (playerChocie == "The Sheriff's Ultimatum")
+            if (playerChocie == "Oppose the sheriff")
             {
                 //vortex scene occurs and robin loses coincece, wakes up scene Prologue(Vault) with a note - bla bla// 
                 transform.GetComponent<Animator>().Play("AttackEvilWizard");

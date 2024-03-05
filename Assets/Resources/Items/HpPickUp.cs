@@ -11,7 +11,14 @@ public class HpPickUp : MonoBehaviour
         if (other.transform.tag == "Player")
         {
             PlayerController pc = Util.GetPlayerController();
-            pc.HpBar.restoreHp(pc.GetComponent<ItemDatabase>().HealthPotion.healingAmount);
+            int healingAmount = pc.GetComponent<ItemDatabase>().HealthPotion.healingAmount;
+            if (pc.HpBar.currentHp() + healingAmount > pc.HpBar.MaxHp()) // incase healing is above the maxHP
+            {
+                pc.HpBar.HealToFull();
+            }
+            else
+                pc.HpBar.restoreHp(healingAmount);
+
             Destroy(this.gameObject);
         }
     }

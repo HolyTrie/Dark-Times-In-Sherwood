@@ -40894,6 +40894,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4793962444553664533, guid: 820b62c36c9c967498c9d16d0c3e2069, type: 3}
+      propertyPath: m_Radius
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5176619856281460640, guid: 820b62c36c9c967498c9d16d0c3e2069, type: 3}
       propertyPath: m_LocalPosition.x
       value: 39.18
@@ -40937,6 +40941,14 @@ PrefabInstance:
     - target: {fileID: 7731523689662916441, guid: 820b62c36c9c967498c9d16d0c3e2069, type: 3}
       propertyPath: m_Name
       value: Sherif
+      objectReference: {fileID: 0}
+    - target: {fileID: 9126557975765804420, guid: 820b62c36c9c967498c9d16d0c3e2069, type: 3}
+      propertyPath: m_margin.w
+      value: 0.5756134
+      objectReference: {fileID: 0}
+    - target: {fileID: 9126557975765804420, guid: 820b62c36c9c967498c9d16d0c3e2069, type: 3}
+      propertyPath: m_margin.z
+      value: 0.1490168
       objectReference: {fileID: 0}
     - target: {fileID: 9126557975765804420, guid: 820b62c36c9c967498c9d16d0c3e2069, type: 3}
       propertyPath: m_isRightToLeft
