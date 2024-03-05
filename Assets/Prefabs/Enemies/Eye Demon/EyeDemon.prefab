@@ -314,7 +314,7 @@ Transform:
   m_GameObject: {fileID: 3779530974792642935}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.51, y: -0.63, z: 0}
+  m_LocalPosition: {x: 0, y: -0.435, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -833,8 +833,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37060a17c3d5ee344a9c637a9911654e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DMG: 15
+  DMG: 5
   HitTransform: {fileID: 5109030043393149378}
+  AttackRadius: 2
 --- !u!114 &771638231714990406
 MonoBehaviour:
   m_ObjectHideFlags: 0

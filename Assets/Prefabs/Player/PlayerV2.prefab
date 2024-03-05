@@ -1117,6 +1117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DMG: 30
   HitTransform: {fileID: 2397990159977299334}
+  AttackRadius: 0.5
 --- !u!1 &3609772096982976641
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,9 +9,11 @@ public class TaskAttackRaycast : MonoBehaviour
     [Tooltip("The Transform of the hitbox of the hit")]
     [SerializeField] private Transform HitTransform;
 
+    [SerializeField] private float AttackRadius = 0.5f; 
+
     public void DamagePlayer()
     {
-        var hit = Physics2D.CircleCast(HitTransform.position, 0.3f, Vector3.forward, 1, 1 << 3); // player layer.
+        var hit = Physics2D.CircleCast(HitTransform.position, AttackRadius, Vector3.forward, 1, 1 << 3); // player layer.
         if (hit)
         {
             hit.transform.gameObject.TryGetComponent(out PlayerController playerC);
@@ -24,7 +26,7 @@ public class TaskAttackRaycast : MonoBehaviour
 
     public void DamageEnemy()
     {
-        var hit = Physics2D.CircleCast(HitTransform.position, 0.3f, Vector3.forward, 1, 1 << 10); // Enemy layer.
+        var hit = Physics2D.CircleCast(HitTransform.position, AttackRadius, Vector3.forward, 1, 1 << 10); // Enemy layer.
         if (hit)
         {
             hit.transform.gameObject.TryGetComponent(out EntityController EntityC);
@@ -37,6 +39,6 @@ public class TaskAttackRaycast : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(HitTransform.position, 1);
+        Gizmos.DrawWireSphere(HitTransform.position, AttackRadius);
     }
 }
