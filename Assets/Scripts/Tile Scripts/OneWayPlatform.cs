@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class OneWayPlatform : MonoBehaviour
 {
-    public enum OneWayPlatforms {GoingUp, GoingDown, Both}
+    public enum OneWayPlatforms { GoingUp, GoingDown, Both }
     public OneWayPlatforms Type => _type;
     public Collider2D Collider => _collider;
     [SerializeField] private OneWayPlatforms _type = OneWayPlatforms.Both;

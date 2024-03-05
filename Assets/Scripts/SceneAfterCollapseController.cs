@@ -4,7 +4,7 @@ using UnityEngine;
 
 using static Dialogue;
 using DTIS;
-public class SheriffNote : MonoBehaviour
+public class SceneAfterCollapseController : MonoBehaviour
 {
     void Start()
     {
