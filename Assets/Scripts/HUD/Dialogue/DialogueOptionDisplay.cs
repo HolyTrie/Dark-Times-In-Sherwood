@@ -32,5 +32,6 @@ public class DialogueOptionDisplay : MonoBehaviour
 
         manager.currentSection = leadsTo;
         manager.DisplayDialogue();
+        manager.playerChocie = contentText.text;
     }
 }

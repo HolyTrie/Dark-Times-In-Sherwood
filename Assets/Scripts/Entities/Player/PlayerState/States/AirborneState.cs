@@ -43,8 +43,16 @@ namespace DTIS
             if (Controller.IsGrounded && FSM.SubState.Type != ESP.States.Jump)
             {
                 SetStates(ESP.States.Grounded, ESP.States.Idle);
+                return;
             }
-            else if (_jumpsMidAir < _maxJumps && jumpPressedThisFrame)
+            var grabLedge = Controller.HorizontalCheck.FirstFromTopHit == false && Controller.HorizontalCheck.SecondFromTopHit == true;
+            grabLedge = grabLedge && Controller.EdgeAhead && !Controller.GrabbingLedge;
+            if(grabLedge)
+            {
+                SetSubState(ESP.States.LedgeGrabState);
+                return;
+            }
+            if (_jumpsMidAir < _maxJumps && jumpPressedThisFrame)
             {
                 bool canJump = true;
                 /*

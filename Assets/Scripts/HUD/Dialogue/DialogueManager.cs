@@ -24,6 +24,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] float canvasGroupFadeTime = 5f;
     private bool canvasGroupDisplaying;
     [SerializeField] CanvasGroup dialogueCanvasGroup;
+    
+    public string playerChocie;
 
 
     private void Start()
@@ -116,6 +118,7 @@ public class DialogueManager : MonoBehaviour
         canvasGroupDisplaying = false;
         ClearAllOptions();
         GameManager.ResumeControls();
+        GameManager.playerChoices = playerChocie;
     }
 
     //find & destroy 

@@ -24,7 +24,7 @@ public class PunchTrap : MonoBehaviour
         _hitbox.enabled = false; // initial state
         //_distance = Math.Abs(_hitEnd.position.x - _hitStart.position.x);
         _direction = _hitEnd.position.x >= _hitStart.position.x ? 1f : -1f;
-        _speed = 1f;
+        _speed = 5f;
         //_parentPos = gameObject.GetComponentInParent<Transform>().position;
         _activeSprite.gameObject.SetActive(false);
         //_rb = GetComponent<Rigidbody2D>();
@@ -57,7 +57,7 @@ public class PunchTrap : MonoBehaviour
     private IEnumerator StartPunch()
     {
         _activeSprite.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
+        // yield return new WaitForSeconds(0.05f);
         _hitbox.offset = _hitStart.localPosition;
         _hitbox.enabled = true;
         yield return new WaitForSeconds(0.75f);

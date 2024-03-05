@@ -319,7 +319,7 @@ MonoBehaviour:
   _activeSprite: {fileID: 4340288515767500534}
   _hitStart: {fileID: 6649554143135015416}
   _hitEnd: {fileID: 3516719728180925846}
-  _force: 1000
+  _force: 500
 --- !u!58 &608981392800928280
 CircleCollider2D:
   m_ObjectHideFlags: 0

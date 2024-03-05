@@ -27,6 +27,7 @@ namespace DTIS
         public int AttackDMG { get { return _attackDMG; } set { _attackDMG = value; } }
         private HpBarEntity _hpBar;
         public HpBarEntity HpBar { get { return _hpBar; } }
+        [SerializeField] private float DeathDelaySeconds;
         // [Tooltip("The items that the enemy can drop upon death")]
         // [SerializeField] ItemDataBase [] Droppable;
 
@@ -72,8 +73,7 @@ namespace DTIS
         }
         public void MoveWithSmoothDamp(Vector2 velocityMult)
         {
-            float speedMultiplier = velocityMult.x;
-            Vector3 targetVelocity = new Vector2(_walkSpeed * speedMultiplier, _rb2D.velocity.y); // Move the character by finding the target velocity
+            Vector3 targetVelocity = new Vector2(_walkSpeed * velocityMult.x, velocityMult.y); // Move the character by finding the target velocity
             _rb2D.velocity = Vector3.SmoothDamp(_rb2D.velocity, targetVelocity, ref _Velocity, _movementSmoothing); // And then smoothing it out and applying it to the character
         }
         public virtual void Move(Vector2 velocityMult)
@@ -117,8 +117,7 @@ namespace DTIS
         //right now enemy drops only HP, TODO: add more drops as game progresses or whatever wishes.
         public void DropItems()
         {
-            float seconds = 0.5f;
-            StartCoroutine(WaitForDeath(seconds));
+            StartCoroutine(WaitForDeath(DeathDelaySeconds));
         }
 
         private IEnumerator WaitForDeath(float seconds)

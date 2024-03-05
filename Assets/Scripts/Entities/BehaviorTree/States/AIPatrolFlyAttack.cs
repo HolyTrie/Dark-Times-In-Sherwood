@@ -40,9 +40,9 @@ public class AIPatrolFlyAttack : BTree
                     {
                         new CheckPlayerInFOVRange(_AIcontroller),
                         new TaskFlyToTarget(_AIcontroller),
-                        
+
                     }),
-                    new TaskPatrol(patrolTransforms,_AIcontroller),
+                    new TaskFlyPatrol(patrolTransforms,_AIcontroller),
                 });
         return root;
     }

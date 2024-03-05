@@ -1,11 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using DTIS;
 using UnityEngine;
-
 using static Dialogue;
+using UnityEngine.UI;
 public class SherifController : MonoBehaviour, IDialog
 {
+    [SerializeField] Transform SummonGuards;
+    private string playerChocie;
+    private bool dialogChoiceTrigger = true;
+    private void Awake()
+    {
+    }
     public void StartDialog()
     {
         FindObjectOfType<DialogueManager>().StartDialogue(Conversation());
@@ -20,7 +25,8 @@ public class SherifController : MonoBehaviour, IDialog
 
 
         // choice A //
-        Monologue robinReplyToProposition = new(playerName, "I will never sell my soul to the likes of you, Sheriff. My allegiance lies with the people of Sherwood, and I will stop at nothing to see justice served.");
+        Monologue SheriffSummonGuards = new(Entityname, "Guards! Lock this bastard away");
+        Monologue robinReplyToProposition = new(playerName, "I will never sell my soul to the likes of you, Sheriff. My allegiance lies with the people of Sherwood, and I will stop at nothing to see justice served.", SheriffSummonGuards);
         Monologue SheriffProposition = new(Entityname, "But perhaps,we can come to an arrangement. You see, I have a proposition for you, Locksley. Join me, pledge your allegiance to my cause, and together we can rule over Sherwood as kings. Imagine the power we could wield, the riches we could amass. It's a tempting offer, wouldn't you agree?", robinReplyToProposition);
 
         Choices playerChoicetoOpening = new(Entityname, "I can see that your friends left you here, you should consider your next moves carefully..",
@@ -34,6 +40,56 @@ public class SherifController : MonoBehaviour, IDialog
         Monologue robinOpening = new(playerName, "Sheriff, I have returned to reclaim what is rightfully mine. Your tyrannical rule ends here and now!", sheriffOpening);
 
         return robinOpening;
+    }
+
+    public void Update()
+    {
+        if(playerChocie != "" && dialogChoiceTrigger)
+        {
+            dialogChoiceTrigger = true;
+            if(dialogChoiceTrigger)
+                DialogChoices();
+        }
+    }
+    private void DialogChoices()
+    {
+        if (GameManager.playerChoices != null)
+        {
+            dialogChoiceTrigger = false;
+            playerChocie = GameManager.playerChoices;
+
+            if (playerChocie == "The Sheriff's Proposition")
+            {
+                //more guards come to fight robin and he loses and wakes up in scene InnerVault with a note from the sheriff//
+                SummonGuards.gameObject.SetActive(true);
+            }
+            if (playerChocie == "The Sheriff's Ultimatum")
+            {
+                //vortex scene occurs and robin loses coincece, wakes up scene Prologue(Vault) with a note - bla bla// 
+                transform.GetComponent<Animator>().Play("AttackEvilWizard");
+                StartCoroutine(FadeOUT());
+                Util.GetPlayerController().Animator.Play("die");
+
+            }
+        }
+    }
+    private IEnumerator FadeOUT()
+    {
+        yield return new WaitForSeconds(1f);
+        Image _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
+        _blackScreen.enabled = true;
+        float alpha = 0;
+        while (alpha <= 1.1)
+        {
+            var col = _blackScreen.color;
+            col.a = alpha;
+            _blackScreen.color = col;
+            Debug.Log("Color = " + _blackScreen.color);
+            yield return new WaitForSeconds(0.2f); // Adjust this value for smoother or faster animation
+            alpha += 0.1f; // Adjust this value to control the speed of the fade
+        }
+        yield return new WaitForSeconds(1f);
+        GameManager.LoadScene(3);
     }
 
 }

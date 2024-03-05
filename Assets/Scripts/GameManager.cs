@@ -13,6 +13,7 @@ public sealed class GameManager : MonoBehaviour
 	private static PlayerStateMachine _fsm;
 	private static PlayerController _playerController;
 	public static bool PlayerIsFacingRight { get { return _playerController.FacingRight; } }
+	public static string playerChoices;
 	public static GameManager Instance
 	{
 		get

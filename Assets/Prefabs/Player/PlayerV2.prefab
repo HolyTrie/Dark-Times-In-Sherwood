@@ -74,7 +74,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!70 &7494970607558946172
 CapsuleCollider2D:
@@ -156,15 +156,14 @@ MonoBehaviour:
   _whatIsPlatform:
     serializedVersion: 2
     m_Bits: 64
-  _gc: {fileID: 2792367345918406812}
-  _sc: {fileID: 1346959578595874168}
-  _hc: {fileID: 3537353147310545361}
+  _groundCheck: {fileID: 0}
+  _slopeCheck: {fileID: 0}
+  _horizontalCheck: {fileID: 0}
   _platformCheck: {fileID: 2777112880789225725}
   _ceilingCheck: {fileID: 8455045782924100744}
   _edgeLocator: {fileID: 1126479957831058321}
   _walkSpeed: 4
   _runSpeedMult: 2
-  _headBumpCorrectionThreshold: 0.4
   _stickyFeetDuration: 0.35
   _stickyFeetFriction: 0.7
   _stickyFeetConsidersDirection: 1
@@ -710,6 +709,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af9c5c29daf4d0d4a87bda20acbbf0da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _whatIsPlatform:
+    serializedVersion: 2
+    m_Bits: 64
   _ignorePlatformDuration: 0.75
 --- !u!58 &2403285873647305586
 CircleCollider2D:
@@ -723,10 +725,10 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 16319
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1255,16 +1257,11 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 192
-  _leftParentTop: {fileID: 767893268725443714}
-  _leftParentBottom: {fileID: 3321221868914134989}
-  _leftRayCount: 9
-  _leftRaysOffsetX: 0
-  _leftRaysCastDistance: 1
-  _rightParentTop: {fileID: 6667468164336036354}
-  _rightParentBottom: {fileID: 3156454665119824906}
-  _rightRayCount: 9
-  _rightRaysOffsetX: 0
-  _rightRaysCastDistance: 1
+  _parentTop: {fileID: 6667468164336036354}
+  _parentBottom: {fileID: 3156454665119824906}
+  _rayCount: 5
+  _raysOffsetX: 0
+  _raysCastDistance: 1
 --- !u!1 &6141333216279033276
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,7 +1600,7 @@ Transform:
   m_GameObject: {fileID: 8704279911813632997}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.9902744, y: 1.4760714, z: 0.053329572}
+  m_LocalPosition: {x: 0.9902744, y: 1.4760714, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1621,8 +1618,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7e8b3e2d5f8044296b8b62e98d696d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BowSprite: {fileID: 21300000, guid: dad108defcbc24b8a97372eaf58d4291, type: 2}
-  SwordSprite: {fileID: 21300000, guid: 5310e02792f6e41ff86b487236c25f1f, type: 2}
+  BowSprite: {fileID: 2800000, guid: d65d95ca16518034fa82669a92d0b6e7, type: 3}
+  SwordSprite: {fileID: 2800000, guid: 2d18e23e3ce249b4489b8bcdd02d3f48, type: 3}
 --- !u!212 &8478670978310358856
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1663,7 +1660,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 5310e02792f6e41ff86b487236c25f1f, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1672,7 +1669,7 @@ SpriteRenderer:
   m_Size: {x: 0.40625, y: 0.40625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &9184662364305532548
