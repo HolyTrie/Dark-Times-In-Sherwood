@@ -9,7 +9,7 @@ public class TaskAttackRaycast : MonoBehaviour
     [Tooltip("The Transform of the hitbox of the hit")]
     [SerializeField] private Transform HitTransform;
 
-    [SerializeField] private float AttackRadius = 0.5f; 
+    [SerializeField] private float AttackRadius = 0.5f;
 
     public void DamagePlayer()
     {

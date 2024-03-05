@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8441415462473059978}
   - component: {fileID: 5407347309280579832}
   - component: {fileID: 2368886771635299704}
-  - component: {fileID: 6155201181995594264}
-  - component: {fileID: 6495918079711184714}
-  m_Layer: 0
+  - component: {fileID: 6384488736483592115}
+  - component: {fileID: 6002067662349202467}
+  m_Layer: 9
   m_Name: WoodChest
   m_TagString: Interactable
   m_Icon: {fileID: 0}
@@ -108,43 +108,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!58 &6155201181995594264
-CircleCollider2D:
+--- !u!114 &6384488736483592115
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181958178594676309}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.1822143, y: 0.1686304}
-  serializedVersion: 2
-  m_Radius: 0.32544816
---- !u!60 &6495918079711184714
-PolygonCollider2D:
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a27fece3163b7a64cad8ac35bae00201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gui: {fileID: 0}
+  BuffText: {fileID: 0}
+  BuffTime: 10
+  JumpForceMultiplier: 2
+  TextTime: 1.5
+--- !u!58 &6002067662349202467
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -175,22 +157,6 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.7857143, y: 0}
-    oldSize: {x: 0.28, y: 0.2}
-    newSize: {x: 0.28, y: 0.2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.21, y: 0.19999999}
-      - {x: -0.22, y: 0.19}
-      - {x: -0.22, y: 0}
-      - {x: 0.06, y: 0}
-      - {x: 0.06, y: 0.19}
-      - {x: 0.049999997, y: 0.19999999}
-  m_UseDelaunayMesh: 0
+  m_Offset: {x: -0.1, y: 0.15}
+  serializedVersion: 2
+  m_Radius: 0.25

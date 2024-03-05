@@ -17,7 +17,7 @@ namespace DTIS
         public bool LeavingLedge { get { return _leavingLedge; } set { _leavingLedge = value; } }
         public Collider2D PrevPlatformCollider { get { return _previousPlatformCollider; } set { _previousPlatformCollider = value; } }
         public int WhatIsPlatform { get { return _whatIsPlatform; } }
-        public bool GrabbingLedge  { get { return _grabbingLedge; } set { _grabbingLedge = value; } }
+        public bool GrabbingLedge { get { return _grabbingLedge; } set { _grabbingLedge = value; } }
 
         [Header("Platforms")]
         [SerializeField]
@@ -125,7 +125,7 @@ namespace DTIS
             _groundCheck = GetComponentInChildren<GroundCheck>();
             _slopeCheck = GetComponentInChildren<SlopeCheck>();
             _ceilingCheck = GetComponentInChildren<CeilingCheck>();
-            _platformCheck = GetComponentInChildren<PlatformCheck>(); 
+            _platformCheck = GetComponentInChildren<PlatformCheck>();
             _horizontalCheck = GetComponentInChildren<HorizontalCollisionCheck2D>();
             _edgeLocator = GetComponentInChildren<EdgeLocator>();
         }
@@ -241,7 +241,7 @@ namespace DTIS
             }
             CurrGravity = new(0f, gravity);
             var velMult = 1f;
-            if(weakJump) velMult*=0.8f;
+            if (weakJump) velMult *= 0.8f;
             _velocity.y = velMult * jumpForce;
         }
         public void AccelarateFall()
@@ -326,7 +326,7 @@ namespace DTIS
         [Header("Player Attributes")]
         public int _jumpStaminaCost;
         public int _ghostedSanityCost;
-       
+
         [Header("Shooting")]
         [SerializeField] private float ShootDelaySeconds;
         [SerializeField] private float ShootReloadSeconds;
@@ -458,16 +458,16 @@ namespace DTIS
             // predict future position using a simplified euler integration (0.5 pixel error rate, resets when landing so it does not accumulate!)
             _futurePosition = (Vector2)transform.position + _velocity * Time.deltaTime + 0.5f * Time.deltaTime * acc; // pos = velocity*deltaTime +0.5*accelaration*(deltaTime^2)
             _futureVelocity = _velocity + acc; // vel = accelaration * deltaTime & acceleration = gravity only rn.
-            
+
             // Bumped Head Correction
             var futurePosTop = _futurePosition;
             futurePosTop.y += _collider.bounds.size.y;
-            var hit = Physics2D.Raycast(futurePosTop,Vector2.up,0.01f,WhatIsGround);
+            var hit = Physics2D.Raycast(futurePosTop, Vector2.up, 0.01f, WhatIsGround);
             var bumpedHeadCorrection = !_isNudging && !hit && _futureVelocity.y < 0 && IsJumping && _ceilingCheck.CollisionType != CeilingCheck.CollisionTypes.NONE;
-            if(bumpedHeadCorrection)
+            if (bumpedHeadCorrection)
             {
                 bool NudgeLeft = _futurePosition.x > futurePosTop.x;
-                if(_collider.bounds.center.y < futurePosTop.y)
+                if (_collider.bounds.center.y < futurePosTop.y)
                     StartCoroutine(JumpNudge(NudgeLeft));
             }
         }
@@ -476,9 +476,9 @@ namespace DTIS
         {
             _isNudging = true;
             Debug.Log($"nudge | curr velocity = {_velocity}");
-            Vector2 pos = new(_rb2d.position.x ,_rb2d.position.y);
-            Vector2 offset = new(_collider.bounds.extents.x+0.001f,0.001f);
-            if(jumpingLeft && !FacingRight)
+            Vector2 pos = new(_rb2d.position.x, _rb2d.position.y);
+            Vector2 offset = new(_collider.bounds.extents.x + 0.001f, 0.001f);
+            if (jumpingLeft && !FacingRight)
                 offset.x *= -1f;
             pos += offset;
             _rb2d.MovePosition(pos);

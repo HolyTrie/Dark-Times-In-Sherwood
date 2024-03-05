@@ -56,6 +56,7 @@ public class HpBarPlayer : MonoBehaviour
     public void HealToFull()
     {
         currentHP = maxHP;
+        hpBar.value = currentHP;
     }
 
     //this can be updated if the player upgrades 
@@ -67,6 +68,7 @@ public class HpBarPlayer : MonoBehaviour
     public void UpdateMaxHP(int HPBonus)
     {
         maxHP += HPBonus;
+        TextHP.text = currentHP + "/" + maxHP;
     }
 
 }
