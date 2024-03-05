@@ -17,6 +17,7 @@ namespace DTIS
         public bool LeavingLedge { get { return _leavingLedge; } set { _leavingLedge = value; } }
         public Collider2D PrevPlatformCollider { get { return _previousPlatformCollider; } set { _previousPlatformCollider = value; } }
         public int WhatIsPlatform { get { return _whatIsPlatform; } }
+        public bool GrabbingLedge  { get { return _grabbingLedge; } set { _grabbingLedge = value; } }
 
         [Header("Platforms")]
         [SerializeField]
@@ -26,6 +27,7 @@ namespace DTIS
         private Collider2D _previousPlatformCollider = null;
         private bool _passingThroughPlatform = false;
         private bool _leavingLedge = false;
+        private bool _grabbingLedge = false;
         #endregion
 
         #region INITIALIZATION
@@ -44,11 +46,11 @@ namespace DTIS
         }
         void Awake()
         {
+            GetCheckComponents();
             _animator = GetComponentInChildren<Animator>();
             _tr = GetComponent<TrailRenderer>();
             _clickSpawn = GameObject.FindGameObjectWithTag("AttackPosRef").GetComponent<ClickSpawn>(); // TODO: fix magic strings
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-            _gc = GetComponentInChildren<GroundCheck>();
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             _staminabar = GetComponent<StaminaBar>();
             _sanityBar = GetComponent<SanityBar>();
@@ -108,15 +110,25 @@ namespace DTIS
 
         #region CHECKS
         //TODO: automatic init instead of serialize field. idea: have a script in the checks object that iterates on children and adds them here.
-        public bool IsGrounded { get { return _gc.Grounded(); } }
+        public bool IsGrounded { get { return _groundCheck.Grounded(); } }
         public CeilingCheck CeilingCheck { get { return _ceilingCheck; } }
+        public HorizontalCollisionCheck2D HorizontalCheck { get { return _horizontalCheck; } }
         public bool EdgeAhead { get { return _edgeLocator.Hit; } }
-        [SerializeField] private GroundCheck _gc;
-        [SerializeField] private SlopeCheck _sc;
-        [SerializeField] private HorizontalCollisionCheck2D _hc;
+        [SerializeField] private GroundCheck _groundCheck;
+        [SerializeField] private SlopeCheck _slopeCheck;
+        [SerializeField] private HorizontalCollisionCheck2D _horizontalCheck;
         [SerializeField] private PlatformCheck _platformCheck;
         [SerializeField] private CeilingCheck _ceilingCheck;
         [SerializeField] private EdgeLocator _edgeLocator;
+        private void GetCheckComponents()
+        {
+            _groundCheck = GetComponentInChildren<GroundCheck>();
+            _slopeCheck = GetComponentInChildren<SlopeCheck>();
+            _ceilingCheck = GetComponentInChildren<CeilingCheck>();
+            _platformCheck = GetComponentInChildren<PlatformCheck>(); 
+            _horizontalCheck = GetComponentInChildren<HorizontalCollisionCheck2D>();
+            _edgeLocator = GetComponentInChildren<EdgeLocator>();
+        }
         #endregion
 
         #region GENERAL
@@ -204,19 +216,11 @@ namespace DTIS
         {
             get
             {
-                bool ans;
-                if (_facingRight)
-                {
-                    ans = _sc.SlopeAhead || _hc.RightCollisionType == HorizontalCollisionCheck2D.CollisionTypes.PARTIAL;
-                }
-                else
-                {
-                    ans = _sc.SlopeAhead || _hc.LeftCollisionType == HorizontalCollisionCheck2D.CollisionTypes.PARTIAL;
-                }
+                bool ans = _slopeCheck.SlopeAhead || _horizontalCheck.CollisionType == HorizontalCollisionCheck2D.CollisionTypes.PARTIAL;
                 return ans;
             }
         }
-        public bool IsSlopeUpwardsLeftToRight { get { return _sc.IsSlopeUpwardsLeftToRight; } }
+        public bool IsSlopeUpwardsLeftToRight { get { return _slopeCheck.IsSlopeUpwardsLeftToRight; } }
         #endregion
 
         #region JUMP & GRAVITY
@@ -262,8 +266,6 @@ namespace DTIS
         public bool StickyFeetDirectionIsRight { get; set; }
 
         [Header("Jump Parameters")]
-        [SerializeField, Range(0, 1), Tooltip("how much of the body % must touch the top for bumping head correction, 0 = correction happens all the time and 1 = no correction")]
-        private float _headBumpCorrectionThreshold = 0.5f;
 
         [SerializeField, Tooltip("how much time in seconds is the sticky feet effect active when landing on a new platform")]
         private float _stickyFeetDuration = 0.25f;
@@ -442,7 +444,12 @@ namespace DTIS
             Vector2 moveY = Vector2.up * deltaPosition.y;
             List<Collider2D> colliderToIgnore = new(16); // todo: variable size?
             if (_passingThroughPlatform)
-                colliderToIgnore.Add(_platformCheck.Curr != null ? _platformCheck.Curr.Collider : null);
+            {
+                //colliderToIgnore.Add(_platformCheck.Curr != null ? _platformCheck.Curr.Collider : null);
+                _currFilter = _groundOnlyFilter;
+            }
+            else
+                _currFilter = _groundAndPlatformFilter;
             Movement(moveY, true, colliderToIgnore); // vertical movement
             Movement(moveX, false, colliderToIgnore); // horizontal movement
             _velocity.y = Math.Clamp(_velocity.y, -_maxFallSpeed, float.MaxValue);
@@ -517,7 +524,8 @@ namespace DTIS
             var distanceToMove = move.normalized * distance;
             var pos = _rb2d.position + distanceToMove;
             _rb2d.position = pos;
-            //_rb2d.MovePosition(pos);
+            //var pos = transform.position + (Vector3)distanceToMove;
+            //transform.position = pos;
         }
         #endregion
 

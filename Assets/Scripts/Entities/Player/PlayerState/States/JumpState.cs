@@ -7,6 +7,7 @@ namespace DTIS
 {
     public class JumpState : PlayerState
     {
+        private const string ClimbLedgeAnimName = "crnr-clmb";
         private CeilingCheck CeilingCheck { get { return Controller.CeilingCheck; } }
         private readonly bool _airControl;
         private readonly float _noKeyInputJumpTime = 0.25f;
@@ -40,6 +41,8 @@ namespace DTIS
                     var animName = Name;
                     if(FSM.PrevState.Type == ESP.States.Jump)
                         animName = "smrslt";
+                    if(FSM.PrevState.Type == ESP.States.LedgeGrabState)
+                        animName = ClimbLedgeAnimName;
                     Controller.Animator.Play(animName);
                 }
                 catch (Exception e)
@@ -66,21 +69,7 @@ namespace DTIS
             bool fall = false || ActionMap.Jump.WasReleasedThisFrame();
             if(Controller.Velocity.y < 0)
             { 
-                /*
-                Debug.Log($"left to right collisions = {CeilingCheck.LeftToRightCollisionCount} | right to left collisions = {CeilingCheck.RightToLeftCollisionCount}");
-                if(Controller.FacingRight && CeilingCheck.LeftToRightCollisionPercentage >= 0.5f)
-                {
-                    Controller.NudgeToPosition(CeilingCheck.LeftToRightFirstMissOrigin);
-                }
-                else if(!Controller.FacingRight && CeilingCheck.RightToLeftCollisionPercentage >= 0.5f)
-                {
-                    Controller.NudgeToPosition(CeilingCheck.RightToLeftFirstMissOrigin);
-                }
-                else
-                {
-                */
-                    fall = true;
-                //}
+                fall = true;
             }
             if(fall)
             {

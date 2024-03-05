@@ -25,12 +25,11 @@ namespace DTIS
             Run,
             Dash,
             Fall,
-            Jump2,
             LightAttack,
             HeavyAttack,
             RangedAttack,
             HighAttackState,
-            Climbing
+            LedgeGrabState
             // step 1: add new state reference here
         }
         public static PlayerState Build(States state, bool airControl = true) // this code is used to build a new instance of a given state
@@ -39,7 +38,7 @@ namespace DTIS
             {
                 States.Grounded => new GroundedState(States.Grounded),
                 States.Airborne => new AirborneState(States.Airborne),
-                States.Climbing => new ClimbingState(States.Climbing),
+                States.LedgeGrabState => new LedgeGrabState(States.LedgeGrabState),
                 //States.Crouch => new CrouchState(States.Crouch), //TODO!!!!!!
                 States.Jump => new JumpState(States.Jump,airControl),
                 States.Attack => new AttackState(States.Attack),
@@ -49,7 +48,6 @@ namespace DTIS
                 States.Run => new RunState(States.Run),
                 //States.Dash => new DashState(States.Dash), //TODO!!!!!!!
                 States.Fall => new FallState(States.Fall ,airControl),
-                //States.LightAttack => new LightAttackState(),
                 //States.HeavyAttack => new HeavyAttackState(),
                 States.RangedAttack => new RangedAttackState(States.RangedAttack),
                 States.HighAttackState => new HighAttackState(States.HighAttackState),
