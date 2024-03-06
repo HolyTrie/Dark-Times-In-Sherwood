@@ -38,7 +38,7 @@ namespace DTIS
                 Destroy(gameObject);
             _am = new PlayerActionMap();
 
-            _pauseMenu = GameObject.Find("PauseMenu");
+            _pauseMenu = GameObject.Find("StarterMenu");
         }
 
         private void Start()
@@ -49,7 +49,9 @@ namespace DTIS
         private void SetPauseMenuActive(bool val)
         {
             if(_pauseMenu != null)
+            {
                 _pauseMenu.SetActive(val);
+            }
         }
 
         private void Update()
