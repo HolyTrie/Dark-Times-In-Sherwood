@@ -1165,6 +1165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpEffect: {fileID: 265766274217486953, guid: d3015b7eea383f64d8b81f965cc466e7, type: 3}
+  DashEffect: {fileID: 6650199810314842004, guid: 3b7f2c753d435d647a80f1f047a113e3, type: 3}
   JumpTransform: {fileID: 2472578021588476020}
 --- !u!1 &3609772096982976641
 GameObject:
