@@ -430,9 +430,9 @@ namespace DTIS
         {
             _canDash = false;
             _isDashing = true;
-            _tr.emitting = true;
+            // _tr.emitting = true;
             yield return new WaitForSeconds(_dashDurationSeconds);
-            _tr.emitting = false;
+            // _tr.emitting = false;
             _gravityModifier = OriginalGravityModifier;
             _isDashing = false;
             yield return new WaitForSeconds(_dashCooldown);
