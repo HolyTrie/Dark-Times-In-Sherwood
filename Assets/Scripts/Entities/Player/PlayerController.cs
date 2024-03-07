@@ -56,10 +56,12 @@ namespace DTIS
             _sanityBar = GetComponent<SanityBar>();
             _hpBar = GetComponent<HpBarPlayer>();
             _playerGhostBehaviour = new PlayerGhostBehaviour(_spriteRenderer, _sanityBar, _ghostedSanityCost);
+            _cameraFollowObject = _cameraFollow.GetComponent<CameraFollowObject>();
         }
         protected override void Start()
         {
             GameManager.SetController(this);
+            _fallSpeedYDampingChangeThreshold = CameraManager.instance._fallSpeedYDampingChangeThreshold;
             base.Start();
             _baseGravity = Physics2D.gravity; // storing unitys gravity vector if its ever needed
             _originalGravity = _baseGravity;
@@ -143,8 +145,29 @@ namespace DTIS
         public Vector2 Position { get { return transform.position; } }
 
         /* *** CAMERA*** */
+        [Header("Camera")]
+        [SerializeField] private GameObject _cameraFollow;
         private Camera _mainCamera;
+        private CameraFollowObject _cameraFollowObject;
 
+        private void CameraLerp()
+        {
+            //handles the camera falls//
+
+            //if we are falling past a certain speed thershold 
+            if (_velocity.y < _fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
+            {
+                CameraManager.instance.LerpYDamping(true);
+            }
+
+            //if we are standing still or moving up
+            if (_velocity.y >= 0 && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
+            {
+                //reset so it can be called again
+                CameraManager.instance.LerpedFromPlayerFalling = false;
+                CameraManager.instance.LerpYDamping(false);
+            }
+        }
         #endregion
 
         #region FLIPS
@@ -157,15 +180,27 @@ namespace DTIS
                 bool movingLeft = _velocity.x < 0;
                 if (FacingRight && movingLeft)
                 {
-                    FacingRight = !FacingRight;
                     // _spriteRenderer.flipX = true; // flip to face Left
-                    transform.localScale = new Vector3(-1, 1, 1);
+                    // transform.localScale = new Vector3(-1, 1, 1); // old 
+
+                    Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+                    transform.rotation = Quaternion.Euler(rotator);
+                    FacingRight = !FacingRight;
+
+                    //turn the camera follow object
+                    _cameraFollowObject.Flip();
                 }
                 if (!FacingRight && movingRight)
                 {
-                    FacingRight = !FacingRight;
                     // _spriteRenderer.flipX = false; // flip to face Right
-                    transform.localScale = new Vector3(1, 1, 1);
+                    // transform.localScale = new Vector3(1, 1, 1); // old
+
+                    Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
+                    transform.rotation = Quaternion.Euler(rotator);
+                    FacingRight = !FacingRight;
+
+                    //turn the camera follow object
+                    _cameraFollowObject.Flip();
                 }
             }
         }
@@ -176,16 +211,22 @@ namespace DTIS
             bool isMouseLeftToPlayer = mouseWorldPosition.x < transform.position.x;
             if (FacingRight && isMouseLeftToPlayer)
             {
-                FacingRight = !FacingRight;
                 // _spriteRenderer.flipX = true; // flip to face Left
-                transform.localScale = new Vector3(-1, 1, 1);
+                // transform.localScale = new Vector3(-1, 1, 1);
+
+                Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+                transform.rotation = Quaternion.Euler(rotator);
+                FacingRight = !FacingRight;
 
             }
             if (!FacingRight && isMouseRightToPlayer)
             {
-                FacingRight = !FacingRight;
                 // _spriteRenderer.flipX = false; // flip to face Right
-                transform.localScale = new Vector3(1, 1, 1);
+                // transform.localScale = new Vector3(1, 1, 1);
+
+                Vector3 rotator = new Vector3(transform.rotation.x, 0, transform.rotation.z);
+                transform.rotation = Quaternion.Euler(rotator);
+                FacingRight = !FacingRight;
             }
         }
         #endregion
@@ -207,6 +248,8 @@ namespace DTIS
         private bool _isRunning;
         private bool _wasRunning;
         public bool WasRunning { get { return _wasRunning; } set { _wasRunning = value; } }
+        private float _fallSpeedYDampingChangeThreshold; // for camera follow when player falls
+
         #endregion
 
         #region SLOPE 
@@ -421,6 +464,7 @@ namespace DTIS
             //base.Update();
             _playerGhostBehaviour.TrySetGhostStatus();
             Flip();
+            CameraLerp();
         }
         protected private override void FixedUpdate()
         {
