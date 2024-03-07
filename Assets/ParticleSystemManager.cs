@@ -11,8 +11,6 @@ public class ParticleSystemManager : MonoBehaviour
     [SerializeField] public ParticleSystem DashEffect;
     [SerializeField] public Transform JumpTransform;
 
-
-
     private void Awake()
     {
         if (instance == null)
