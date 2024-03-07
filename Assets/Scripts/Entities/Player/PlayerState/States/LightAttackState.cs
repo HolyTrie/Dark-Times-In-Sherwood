@@ -45,19 +45,19 @@ namespace DTIS
 
             controller.FlipByCursorPos();
 
-            FSM.StartCoroutine(AttackCommitment(0.55f)); // pretty much wait for animation to finish..
+            // FSM.StartCoroutine(AttackCommitment(0.55f)); // pretty much wait for animation to finish..
         }
 
-        IEnumerator AttackCommitment(float seconds)
-        {
-            // FSM.Controls.enabled = false;
-            yield return new WaitForSeconds(seconds);
-            // FSM.Controls.enabled = true;
-            if (FSM.PrevState.Type == ESP.States.Airborne)
-                SetStates(ESP.States.Airborne, ESP.States.Fall);
-            if (FSM.PrevState.Type == ESP.States.Grounded)
-                SetStates(ESP.States.Grounded, ESP.States.Idle);
-        }
+        // IEnumerator AttackCommitment(float seconds)
+        // {
+        //     // FSM.Controls.enabled = false;
+        //     yield return new WaitForSeconds(seconds);
+        //     // FSM.Controls.enabled = true;
+        //     if (FSM.PrevState.Type == ESP.States.Airborne)
+        //         SetStates(ESP.States.Airborne, ESP.States.Fall);
+        //     if (FSM.PrevState.Type == ESP.States.Grounded)
+        //         SetStates(ESP.States.Grounded, ESP.States.Idle);
+        // }
 
         protected override void PhysicsCalculation()
         {
@@ -67,6 +67,19 @@ namespace DTIS
         protected override void TryStateSwitch()
         {
 
+            // Check conditions for transition
+            if (!IsAttacking()) // Define IsAttacking() based on your game's logic
+            {
+                // Transition to another state when not attacking
+                if (FSM.PrevState.Type == ESP.States.Airborne)
+                    SetStates(ESP.States.Airborne, ESP.States.Fall);
+                if (FSM.PrevState.Type == ESP.States.Grounded)
+                    SetStates(ESP.States.Grounded, ESP.States.Idle);
+            }
+        }
+        private bool IsAttacking()
+        {
+            return Controls.ActionMap.All.Shoot.IsPressed();
         }
     }
 

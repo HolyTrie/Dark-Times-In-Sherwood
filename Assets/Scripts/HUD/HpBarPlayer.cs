@@ -38,6 +38,12 @@ public class HpBarPlayer : MonoBehaviour
         hpBar.value = currentHP;
 
         TextHP.text = currentHP + "/" + maxHP;
+
+        if(currentHP <= 0) // player is dead -> this could be done better i guess
+        {
+            HealToFull();
+            GameManager.ResetScene();
+        }
     }
 
     public void restoreHp(int amount)
@@ -57,6 +63,8 @@ public class HpBarPlayer : MonoBehaviour
     {
         currentHP = maxHP;
         hpBar.value = currentHP;
+
+        TextHP.text = currentHP + "/" + maxHP;
     }
 
     //this can be updated if the player upgrades 
@@ -68,6 +76,7 @@ public class HpBarPlayer : MonoBehaviour
     public void UpdateMaxHP(int HPBonus)
     {
         maxHP += HPBonus;
+        
         TextHP.text = currentHP + "/" + maxHP;
     }
 

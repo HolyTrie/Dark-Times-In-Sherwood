@@ -363,7 +363,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3746132073274163050}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SpawnPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +456,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7467122997274076808}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: OriginRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -609,7 +609,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1386138437447845758}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: JumpHorizontalMax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -640,7 +640,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4544170532394571273}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DashMax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -675,7 +675,7 @@ GameObject:
   - component: {fileID: 2403285873647305586}
   - component: {fileID: 3189473081315997891}
   - component: {fileID: 60408373212947363}
-  m_Layer: 3
+  m_Layer: 1
   m_Name: PlatformCheck
   m_TagString: PlayerSensor
   m_Icon: {fileID: 0}
@@ -797,7 +797,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1618846393511896271}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Checks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -834,7 +834,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 293095687641976480}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: References
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -927,7 +927,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2397990159977299334}
   - component: {fileID: 2925867056923387960}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BowAttack
   m_TagString: AttackPosRef
   m_Icon: {fileID: 0}
@@ -976,7 +976,7 @@ GameObject:
   - component: {fileID: 7529231029275552706}
   - component: {fileID: 236613094906550366}
   - component: {fileID: 6908131502298431182}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1127,7 +1127,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6667468164336036354}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TopRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1158,7 +1158,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8028535371078970165}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CameraFollow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1189,7 +1189,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3156454665119824906}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BottomRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1221,7 +1221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4666077014000288041}
   - component: {fileID: 3537353147310545361}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HorizontalCollisionCheck
   m_TagString: PlayerSensor
   m_Icon: {fileID: 0}
@@ -1272,7 +1272,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2137066604720271907}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: JumpVerticalMax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1304,7 +1304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1128062130307296819}
   - component: {fileID: 1346959578595874168}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SlopeAheadCheck
   m_TagString: PlayerSensor
   m_Icon: {fileID: 0}
@@ -1406,7 +1406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3232837998651436374}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: StrongJumpHorizontalMax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1438,7 +1438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5272718147548935246}
   - component: {fileID: 2792367345918406812}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundCheck
   m_TagString: PlayerSensor
   m_Icon: {fileID: 0}
@@ -1490,7 +1490,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3321221868914134989}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BottomLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1521,7 +1521,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 767893268725443714}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TopLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1552,7 +1552,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3439984810025227915}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: StrongJumpVerticalMax
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1585,7 +1585,7 @@ GameObject:
   - component: {fileID: 4802514368533805899}
   - component: {fileID: 3694220496909912846}
   - component: {fileID: 8478670978310358856}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1685,7 +1685,7 @@ GameObject:
   - component: {fileID: 4034929442001060366}
   - component: {fileID: 7133969247860023446}
   - component: {fileID: 678066791305032822}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: DebrisCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1800,13 +1800,53 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5874589978787638695}
     m_Modifications:
+    - target: {fileID: 772904431622004797, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 886477558753590613, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1233274087504199499, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
     - target: {fileID: 1233274087504199499, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1233274087504199499, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2287036932850836489, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2685225732897324145, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3146951405546740576, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3384071997336696449, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4139155250039527633, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4319624978686014133, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4397460269467480029, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4637397867263835350, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1817,12 +1857,32 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4684779071717511315, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4684779071717511315, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4974637482955678903, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5185652419049246203, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_Name
       value: Staminabar
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185652419049246203, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5201108802997800580, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681997084999029740, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7124868211084850946, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1839,6 +1899,18 @@ PrefabInstance:
     - target: {fileID: 7211410048857418346, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299462325844969007, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7809601394346383416, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8707062693269922804, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8748137096368480907, guid: 9fd58231e2154f949acf96e901cf10c6, type: 3}
       propertyPath: m_Pivot.x
