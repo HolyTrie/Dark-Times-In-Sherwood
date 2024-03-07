@@ -170,6 +170,9 @@ namespace DTIS
         }
         #endregion
 
+        #region PlayerFX
+        #endregion
+
         #region FLIPS
         /*Flips the chacater according to his velocity*/
         protected virtual void Flip(bool overrideMovement = false)
@@ -274,6 +277,8 @@ namespace DTIS
         /// </summary>
         public void Jump(bool weakJump = false)
         {
+            // ParticleSystemManager.instance.playJumpEffect();
+
             _isJumping = true;
             var jumpForce = _jumpForce;
             var gravity = _jumpGravity;
@@ -409,6 +414,8 @@ namespace DTIS
         {
             if (_canDash)
             {
+                ParticleSystemManager.instance.playDashEffect();
+
                 var direction = _facingRight == true ? Vector2.right : Vector2.left;
                 var hit = Physics2D.Raycast(transform.position, direction, _dashDistance, _currFilter.layerMask);
                 var distance = Vector2.Distance(transform.position, hit.point);
