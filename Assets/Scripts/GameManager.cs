@@ -96,11 +96,14 @@ public sealed class GameManager : MonoBehaviour
 
 	public static void StopControls()
 	{
+		_fsm.Controller.Animator.Play("idle");
+		_fsm.Controller.enabled = false;
 		_fsm.Controls.enabled = false;
 	}
 
 	public static void ResumeControls()
 	{
+		_fsm.Controller.enabled = true;
 		_fsm.Controls.enabled = true;
 	}
 }
