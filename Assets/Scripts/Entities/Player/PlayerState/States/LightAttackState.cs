@@ -11,11 +11,12 @@ namespace DTIS
         private const string Attack2 = "attack2";
         private const string Attack3 = "attack3";
         private static int attackSequence = 1;
-        private static bool _isAttackingHold = false;
+        private static bool _attackCommit = false;
         public LightAttackState(ESP.States state, string name = "attack1")
         : base(state, name, true) { }
         public override void Enter(PlayerController controller, PlayerStateMachine fsm)
         {
+            _attackCommit = true;
             base.Enter(controller, fsm); // Critical!
             if (HasAnimation)
             {
@@ -44,7 +45,8 @@ namespace DTIS
             }
 
             controller.FlipByCursorPos();
-
+            
+            
             FSM.StartCoroutine(AttackCommitment(0.55f)); // pretty much wait for animation to finish..
         }
 
@@ -54,19 +56,20 @@ namespace DTIS
 
             if (FSM.PrevState.Type == ESP.States.Airborne)
                 SetStates(ESP.States.Airborne, ESP.States.Fall);
-            else if (FSM.PrevState.Type == ESP.States.Grounded)
+            if (FSM.PrevState.Type == ESP.States.Grounded)
                 SetStates(ESP.States.Grounded, ESP.States.Idle);
 
-            if (_isAttackingHold) // if player holds the attack it wil enter attack sequence.
+            if (IsAttackingWasPressed()) // if attack is pressed once
             {
                 attackSequence++;
                 SetSubState(ESP.States.LightAttack);
             }
-            else if (IsAttackingWasPressed()) // if attack is pressed once
+            else if (IsAttackingHold()) // if player holds the attack it wil enter attack sequence.
             {
                 attackSequence++;
                 SetSubState(ESP.States.LightAttack);
             }
+            _attackCommit = false;
         }
 
         protected override void PhysicsCalculation()
@@ -80,22 +83,18 @@ namespace DTIS
 
         protected override void TryStateSwitch()
         {
-            IsAttackingHold();
-
-            // If the shoot button is released, transition to another state
-            if (!_isAttackingHold && FSM.PrevSubState.Type == ESP.States.LightAttack)
-                SetStates(ESP.States.Grounded, ESP.States.Idle); // Or transition to another state as needed
+            // If the shoot button is released and not wating for attack to finish, transition back to idle
+            if (!IsAttackingHold() && !_attackCommit)
+                SetStates(ESP.States.Grounded, ESP.States.Idle);
         }
-        private void IsAttackingHold()
+        private bool IsAttackingHold()
         {
-            _isAttackingHold = Controls.ActionMap.All.Shoot.IsInProgress();
+            return Controls.ActionMap.All.Shoot.IsPressed();
         }
 
         private bool IsAttackingWasPressed()
         {
             return Controls.ActionMap.All.Shoot.WasPressedThisFrame();
         }
-
     }
-
 }
