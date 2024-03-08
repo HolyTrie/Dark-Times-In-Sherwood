@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prologue(Ritual)AfterCollapse.unity
     guid: 3cadd8fb0338045d59f2a81640dde415
+  - enabled: 1
+    path: Assets/Scenes/InnerVault.unity
+    guid: cf94439868feadd48a8c414f5bf84c14
   m_configObjects: {}
