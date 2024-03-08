@@ -53,18 +53,21 @@ public class SherifController : MonoBehaviour, IDialog
     }
     private void DialogChoices()
     {
+        Debug.Log(GameManager.playerChoices);
         if (GameManager.playerChoices != null)
         {
-            dialogChoiceTrigger = false;
+            Debug.Log(GameManager.playerChoices);
             playerChocie = GameManager.playerChoices;
 
             if (playerChocie == "Hear the sheriff's offer")
             {
+                dialogChoiceTrigger = false;
                 //more guards come to fight robin and he loses and wakes up in scene InnerVault with a note from the sheriff//
                 SummonGuards.gameObject.SetActive(true);
             }
             if (playerChocie == "Oppose the sheriff")
             {
+                dialogChoiceTrigger = false;
                 //vortex scene occurs and robin loses coincece, wakes up scene Prologue(Vault) with a note - bla bla// 
                 transform.GetComponent<Animator>().Play("AttackEvilWizard");
                 StartCoroutine(FadeOUT());

@@ -11101,6 +11101,10 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 595955740}
+    - target: {fileID: 3529220831275157772, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
+      propertyPath: m_Lens.OrthographicSize
+      value: 6.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4133391541799971825, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -11232,6 +11236,10 @@ PrefabInstance:
     - target: {fileID: 7919291704117483494, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[3].Y
       value: -470847488
+      objectReference: {fileID: 0}
+    - target: {fileID: 8995152392431037793, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
+      propertyPath: orthographic size
+      value: 6.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6865878391619497994, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
