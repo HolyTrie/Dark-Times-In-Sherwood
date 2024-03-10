@@ -12,24 +12,6 @@ namespace DTIS
     */
     public class PlayerController : PhysicsObject2D
     {
-        #region PLATFORMS
-        public bool PassingThroughPlatform { get { return _passingThroughPlatform; } set { _passingThroughPlatform = value; } }
-        public bool LeavingLedge { get { return _leavingLedge; } set { _leavingLedge = value; } }
-        public Collider2D PrevPlatformCollider { get { return _previousPlatformCollider; } set { _previousPlatformCollider = value; } }
-        public int WhatIsPlatform { get { return _whatIsPlatform; } }
-        public bool GrabbingLedge { get { return _grabbingLedge; } set { _grabbingLedge = value; } }
-
-        [Header("Platforms")]
-        [SerializeField]
-        protected private LayerMask _whatIsPlatform;
-        protected private ContactFilter2D _groundOnlyFilter;
-        protected private ContactFilter2D _groundAndPlatformFilter;
-        private Collider2D _previousPlatformCollider = null;
-        private bool _passingThroughPlatform = false;
-        private bool _leavingLedge = false;
-        private bool _grabbingLedge = false;
-        #endregion
-
         #region INITIALIZATION
         private static PlayerController _Instance;
         public static PlayerController Instance
@@ -108,6 +90,60 @@ namespace DTIS
             _groundAndPlatformFilter.useLayerMask = true;
             _currFilter = _groundAndPlatformFilter;
         }
+        #endregion
+
+        #region PLATFORMS
+        public bool PassingThroughPlatform { get { return _passingThroughPlatform; } set { _passingThroughPlatform = value; } }
+        public Collider2D PrevPlatformCollider { get { return _previousPlatformCollider; } set { _previousPlatformCollider = value; } }
+        public int WhatIsPlatform { get { return _whatIsPlatform; } }
+
+        [Header("Platforms")]
+        [SerializeField]
+        protected private LayerMask _whatIsPlatform;
+        protected private ContactFilter2D _groundOnlyFilter;
+        protected private ContactFilter2D _groundAndPlatformFilter;
+        private Collider2D _previousPlatformCollider = null;
+        private bool _passingThroughPlatform = false;
+        #endregion
+
+        #region LEDGE GRAB
+        public void GrabLedgeFromBelow(Collider2D collider)
+        {
+            FSM.SetStates(ESP.States.Airborne,ESP.States.LedgeGrabState);
+            var colliderBotY = collider.bounds.min.y;
+            var playerTopY = _collider.bounds.max.y;
+            var distance = Mathf.Abs(colliderBotY - playerTopY);
+            var pos = _rb2d.position;
+            pos.y += distance;
+            _rb2d.position = pos;
+        }
+
+        public void GrabLedgeFromAbove(Collider2D collider)
+        {
+            var colliderBotY = collider.bounds.min.y;
+            var playerTopY = _collider.bounds.max.y;
+            var distance = Mathf.Abs(colliderBotY - playerTopY);
+            StartCoroutine(TransitionBelowLedge(distance));
+        }
+        public IEnumerator TransitionBelowLedge(float distanceY)
+        {
+            float animSteps = 3f; //TODO - fix magic num
+            distanceY /= animSteps;
+            var pos = _rb2d.position;
+            pos.y -= distanceY;
+            _rb2d.position = pos;
+            for(int i = 0; i < animSteps - 1; ++i)
+            {
+                yield return new WaitForSeconds(0.05f);
+                pos.y -= distanceY;
+                _rb2d.position = pos;
+            }
+            FSM.SetStates(ESP.States.Airborne,ESP.States.LedgeGrabState);
+        }
+        public bool GrabbingLedge { get { return _grabbingLedge; } set { _grabbingLedge = value; } }
+        public bool LeavingLedge { get { return _leavingLedge; } set { _leavingLedge = value; } }
+        private bool _leavingLedge = false;
+        private bool _grabbingLedge = false;
         #endregion
 
         #region CHECKS

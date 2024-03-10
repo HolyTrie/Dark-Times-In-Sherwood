@@ -29,7 +29,7 @@ namespace DTIS
         // TODO: ^ this ^ is currently hard coupled to return any 'auto generated' action map named 'All' <-- fix if time.
         protected virtual void SetStates(ESP.States State, ESP.States SubState) // for changing both at once
         {
-            FSM.SetState(State, SubState);
+            FSM.SetStates(State, SubState);
         }
         protected virtual void SetState(ESP.States State) // for changing only state
         {
