@@ -79,19 +79,9 @@ public class SherifController : MonoBehaviour, IDialog
     private IEnumerator FadeOUT()
     {
         yield return new WaitForSeconds(1f);
-        Image _blackScreen = GameObject.Find("BlackScreen").GetComponent<Image>();
-        _blackScreen.enabled = true;
-        float alpha = 0;
-        while (alpha <= 1.1)
-        {
-            var col = _blackScreen.color;
-            col.a = alpha;
-            _blackScreen.color = col;
-            Debug.Log("Color = " + _blackScreen.color);
-            yield return new WaitForSeconds(0.2f); // Adjust this value for smoother or faster animation
-            alpha += 0.1f; // Adjust this value to control the speed of the fade
-        }
-        yield return new WaitForSeconds(1f);
+        Animator _blackScreen = GameObject.Find("BlackScreen").GetComponent<Animator>();
+        _blackScreen.Play("BlackScreenFadeOutAnim");
+        yield return new WaitForSeconds(1.1f);
         GameManager.LoadScene(4);
     }
 
