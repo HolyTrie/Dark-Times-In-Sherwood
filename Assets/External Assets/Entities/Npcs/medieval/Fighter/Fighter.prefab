@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gui: {fileID: 7097973567110765784}
-  dialog: {fileID: 0}
+  dialog: {fileID: 2726837197444154428}
 --- !u!58 &5363677982571326388
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 6003312449098273300}
   - component: {fileID: 3886533057484721560}
   - component: {fileID: 600479342925552043}
+  - component: {fileID: 3503253755982541819}
   m_Layer: 0
   m_Name: Fighter
   m_TagString: Untagged
@@ -300,6 +301,18 @@ CapsuleCollider2D:
   m_Offset: {x: -0.03553009, y: 0.086707234}
   m_Size: {x: 0.25955582, y: 0.76677585}
   m_Direction: 0
+--- !u!114 &3503253755982541819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2726837197444154428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17a2422d847d334db84cc00348644ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3755022355086301941
 GameObject:
   m_ObjectHideFlags: 0
