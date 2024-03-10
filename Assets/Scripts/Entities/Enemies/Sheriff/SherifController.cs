@@ -44,12 +44,12 @@ public class SherifController : MonoBehaviour, IDialog
 
     public void Update()
     {
-        if(playerChocie != "")
-        {
+        // if(playerChocie != "")
+        // {
             // dialogChoiceTrigger = true;
             // if(dialogChoiceTrigger)
                 DialogChoices();
-        }
+        // }
     }
     private void DialogChoices()
     {

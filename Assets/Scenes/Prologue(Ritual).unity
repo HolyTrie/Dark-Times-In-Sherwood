@@ -730,7 +730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2761556850682870215, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0123131275
+      value: 1.6915541
       objectReference: {fileID: 0}
     - target: {fileID: 2761556850682870215, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
       propertyPath: m_LocalPosition.y
@@ -40672,6 +40672,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3003762518539791491, guid: 1e3246cd66e98a44c9a44cb8561d3ed2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003762518539791491, guid: 1e3246cd66e98a44c9a44cb8561d3ed2, type: 3}
       propertyPath: m_VertexColorAlwaysGammaSpace
       value: 1
       objectReference: {fileID: 0}
@@ -42064,11 +42068,11 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1465383742}
   - {fileID: 1373137333}
   - {fileID: 673947255}
   - {fileID: 498401190}
   - {fileID: 1128151331}
-  - {fileID: 1465383742}
   - {fileID: 1704075662}
   - {fileID: 1290653654}
   - {fileID: 1657647648}
