@@ -86,7 +86,7 @@ namespace DTIS
         protected void Awake()
         {
             _controls = _controls != null ? _controls : PlayerControls.Instance;
-            SetState(ESP.States.Grounded, ESP.States.Idle);
+            SetStates(ESP.States.Grounded, ESP.States.Idle);
             Direction = (float)Directions.Right;
             InitChildScripts();
             GameManager.SetFSM(this);
@@ -102,7 +102,7 @@ namespace DTIS
             Controls.ActionMap.All.Interaction.performed += _ => _interactor.Interact();
             Controls.ActionMap.All.Dash.performed += _ => _controller.Dash();
         }
-        public virtual void SetState(ESP.States state, ESP.States subState)
+        public virtual void SetStates(ESP.States state, ESP.States subState)
         {
             State = ESP.Build(state);
             SubState = ESP.Build(subState);
