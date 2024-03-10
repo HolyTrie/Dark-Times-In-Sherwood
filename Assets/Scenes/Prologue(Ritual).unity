@@ -279,9 +279,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 404770426481459644, guid: 2a61646b7f5cc0544ba45e00ac69c000, type: 3}
+      propertyPath: _force
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 839585213943864452, guid: 2a61646b7f5cc0544ba45e00ac69c000, type: 3}
+      propertyPath: _force
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1542046922469981566, guid: 2a61646b7f5cc0544ba45e00ac69c000, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785452344826501974, guid: 2a61646b7f5cc0544ba45e00ac69c000, type: 3}
+      propertyPath: _force
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342513563773759245, guid: 2a61646b7f5cc0544ba45e00ac69c000, type: 3}
+      propertyPath: _force
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2408134808192025247, guid: 2a61646b7f5cc0544ba45e00ac69c000, type: 3}
       propertyPath: m_LocalPosition.x
@@ -330,6 +346,18 @@ PrefabInstance:
     - target: {fileID: 4548753060835790341, guid: 2a61646b7f5cc0544ba45e00ac69c000, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148935488409381589, guid: 2a61646b7f5cc0544ba45e00ac69c000, type: 3}
+      propertyPath: _force
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6158044494643178776, guid: 2a61646b7f5cc0544ba45e00ac69c000, type: 3}
+      propertyPath: _force
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6753634043934682014, guid: 2a61646b7f5cc0544ba45e00ac69c000, type: 3}
+      propertyPath: _force
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -690,7 +718,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2184687335650306109, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 37.71
+      value: -3.6999998
       objectReference: {fileID: 0}
     - target: {fileID: 2184687335650306109, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
       propertyPath: m_LocalPosition.y
@@ -702,11 +730,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2761556850682870215, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 37.71
+      value: 0.0123131275
       objectReference: {fileID: 0}
     - target: {fileID: 2761556850682870215, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.6893806
+      value: -3.689381
       objectReference: {fileID: 0}
     - target: {fileID: 2761556850682870215, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1419,7 +1447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5874589978787638695, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 36.71
+      value: -4.7
       objectReference: {fileID: 0}
     - target: {fileID: 5874589978787638695, guid: b5d847114b5634042b172c4ec276c1a1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -40343,6 +40371,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 2576815152703098302, guid: 1383f641626f7fa42ac56d80cb702b58, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3087717528250832950, guid: 1383f641626f7fa42ac56d80cb702b58, type: 3}
       propertyPath: m_text
       value: Vault Entrance
@@ -41310,7 +41342,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 261144534324355788, guid: 88b27893fdc733a44813637512d97a1c, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4718235537651326083, guid: 88b27893fdc733a44813637512d97a1c, type: 3}
       insertIndex: -1
