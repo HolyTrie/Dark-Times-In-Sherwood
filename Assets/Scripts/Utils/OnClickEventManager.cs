@@ -7,6 +7,7 @@ public class OnClickEventManager : MonoBehaviour
     private GameObject StarterPauseMenu;
     private GameObject KeyBindings;
     private const int StartScene = 1;
+    private const int GameStartScene = 2;
 
     private void Awake()
     {
@@ -41,6 +42,11 @@ public class OnClickEventManager : MonoBehaviour
     public void StartGame()
     {
         GameManager.LoadScene(StartScene);
+    }
+
+    public void SkipCutsecene()
+    {
+        GameManager.LoadScene(GameStartScene);
     }
 
     public void HelpMenu()

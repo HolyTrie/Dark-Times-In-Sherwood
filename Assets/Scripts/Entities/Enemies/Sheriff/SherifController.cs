@@ -44,10 +44,10 @@ public class SherifController : MonoBehaviour, IDialog
 
     public void Update()
     {
-        if(playerChocie != "" && dialogChoiceTrigger)
+        if(playerChocie != "")
         {
-            dialogChoiceTrigger = true;
-            if(dialogChoiceTrigger)
+            // dialogChoiceTrigger = true;
+            // if(dialogChoiceTrigger)
                 DialogChoices();
         }
     }
@@ -92,7 +92,7 @@ public class SherifController : MonoBehaviour, IDialog
             alpha += 0.1f; // Adjust this value to control the speed of the fade
         }
         yield return new WaitForSeconds(1f);
-        GameManager.LoadScene(3);
+        GameManager.LoadScene(4);
     }
 
 }
