@@ -107,25 +107,38 @@ namespace DTIS
         #endregion
 
         #region LEDGE GRAB
-        public float GrabAnimTime { get { return _grabAnimTime; } }
-        [SerializeField]
-        private float _grabAnimTime = 1.0f;
-        public void GrabLedgeFromBelow(OneWayPlatform curr)
+        public void GrabLedgeFromBelow(Collider2D collider)
         {
             FSM.SetStates(ESP.States.Airborne,ESP.States.LedgeGrabState);
-            var colliderBotY = curr.Collider.bounds.min.y;
+            var colliderBotY = collider.bounds.min.y;
             var playerTopY = _collider.bounds.max.y;
             var distance = Mathf.Abs(colliderBotY - playerTopY);
             var pos = _rb2d.position;
             pos.y += distance;
             _rb2d.position = pos;
-            //todo: snap to proper pos
         }
 
-        public void GrabLedgeFromAbove(OneWayPlatform curr)
+        public void GrabLedgeFromAbove(Collider2D collider)
         {
+            var colliderBotY = collider.bounds.min.y;
+            var playerTopY = _collider.bounds.max.y;
+            var distance = Mathf.Abs(colliderBotY - playerTopY);
+            StartCoroutine(TransitionBelowLedge(distance));
+        }
+        public IEnumerator TransitionBelowLedge(float distanceY)
+        {
+            float animSteps = 3f; //TODO - fix magic num
+            distanceY /= animSteps;
+            var pos = _rb2d.position;
+            pos.y -= distanceY;
+            _rb2d.position = pos;
+            for(int i = 0; i < animSteps - 1; ++i)
+            {
+                yield return new WaitForSeconds(0.05f);
+                pos.y -= distanceY;
+                _rb2d.position = pos;
+            }
             FSM.SetStates(ESP.States.Airborne,ESP.States.LedgeGrabState);
-            //todo: snap to proper pos
         }
         public bool GrabbingLedge { get { return _grabbingLedge; } set { _grabbingLedge = value; } }
         public bool LeavingLedge { get { return _leavingLedge; } set { _leavingLedge = value; } }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Security.Cryptography;
 using UnityEngine;
 
 namespace DTIS
@@ -10,6 +11,7 @@ namespace DTIS
         private Vector2 _prevGravity;
         private Collider2D _collider;
         private bool LeavingLedge { get { return Controller.LeavingLedge; } set { Controller.LeavingLedge = value; } }
+        private bool _enteringLedge = true;
         public LedgeGrabState(ESP.States state, string name = "walk")
         : base(state, name, false) { }
         public override void Enter(PlayerController controller, PlayerStateMachine fsm)
@@ -22,6 +24,12 @@ namespace DTIS
             Controller.CurrGravity = Vector2.zero;
             Controller.GrabbingLedge = true;
             _collider = Controller.GetComponent<Collider2D>();
+            FSM.StartCoroutine(BlockPlayerInput(0.25f));
+        }
+        IEnumerator BlockPlayerInput(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            _enteringLedge = false;
         }
         public override void Exit(ESP.States State, ESP.States SubState)
         {
@@ -36,6 +44,8 @@ namespace DTIS
         }
         protected override void TryStateSwitch() // is called in Update
         {
+            if(_enteringLedge)
+                return;
             if (Controls.DownIsPressed && !LeavingLedge)
             {
                 FSM.StartCoroutine(DropFromLedge());

@@ -31,7 +31,7 @@ public class PlatformCheck : MonoBehaviour
         {
             //_pc.PassingThroughPlatform = true;
             Curr = candidate;
-            _pc.GrabLedgeFromBelow(Curr);
+            _pc.GrabLedgeFromBelow(Curr.Collider);
             StartCoroutine(WaitToReapplyCollision(Curr,_ignorePlatformDuration));
         }
     }
@@ -47,8 +47,8 @@ public class PlatformCheck : MonoBehaviour
         {
             _pc.Animator.Play("crouch");
             //_pc.PassingThroughPlatform = true;
-            _pc.GrabLedgeFromAbove(Curr);
             Curr = candidate;
+            _pc.GrabLedgeFromAbove(Curr.Collider);
 
             StartCoroutine(WaitToReapplyCollision(Curr,_ignorePlatformDuration));
         }
