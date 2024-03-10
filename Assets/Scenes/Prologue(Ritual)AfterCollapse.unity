@@ -418,7 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d1cdbe60e86ec84ab98d335637a1435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneIndex: 4
+  _sceneIndex: 5
 --- !u!68 &758363402
 EdgeCollider2D:
   m_ObjectHideFlags: 0
