@@ -60,8 +60,11 @@ public sealed class GameManager : MonoBehaviour
 	private static IEnumerator DisableEnableControls()
 	{
 		yield return null; // wait 1 frame.
-		_fsm.Controls.enabled = false;
-		_fsm.Controls.enabled = true;
+		if (_fsm != null)
+		{
+			_fsm.Controls.enabled = false;
+			_fsm.Controls.enabled = true;
+		}
 	}
 
 	public static void NextScene(int offset = 0)
