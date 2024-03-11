@@ -170,6 +170,10 @@ namespace DTIS
         #endregion
 
         #region GENERAL
+        public float PlayerDirection()
+        {
+            return _facingRight ? 1f : -1f;
+        }
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
         public int GroundOnlyLayerMask { get { return _whatIsGround; } }
@@ -537,8 +541,9 @@ namespace DTIS
             }
             else
                 _currFilter = _groundAndPlatformFilter;
-            Movement(moveY, true, colliderToIgnore); // vertical movement
-            Movement(moveX, false, colliderToIgnore); // horizontal movement
+            var distX = Movement(moveX, false, colliderToIgnore); // horizontal movement
+            var distY = Movement(moveY, true, colliderToIgnore); // vertical movement
+            _rb2d.MovePosition(_rb2d.position+distX+distY);
             _velocity.y = Math.Clamp(_velocity.y, -_maxFallSpeed, float.MaxValue);
             _targetVelocity = Vector2.zero;
 
@@ -557,6 +562,21 @@ namespace DTIS
                 if (_collider.bounds.center.y < futurePosTop.y)
                     StartCoroutine(JumpNudge(NudgeLeft));
             }
+
+            // tunneling detection & Correction
+            //TODO: idea - check whether pos and future pos are both within the colliders bounds,
+            //             then fix according to the direction (again, calculated by diff between pos and future pos)
+            /*
+            var point = hit.point;
+            point.x += _shellRadius * PlayerDirection();
+            point.y += _shellRadius * PlayerDirection();
+            if(hit.collider.bounds.Contains(point))
+            {
+                Debug.Log("tunneling detected");
+                //snap to collider position + _shellRadius
+                // distance = 0f?
+            }
+            */
         }
         private bool _isNudging = false;
         private IEnumerator JumpNudge(bool jumpingLeft)
@@ -573,7 +593,7 @@ namespace DTIS
             yield return new WaitForSeconds(1f);
             _isNudging = false;
         }
-        protected private void Movement(Vector2 move, bool yMovement, List<Collider2D> collidersToIgnore)
+        protected private Vector2 Movement(Vector2 move, bool yMovement, List<Collider2D> collidersToIgnore)
         {
             float distance = move.magnitude;
             if (distance > _minMoveDistance)
@@ -606,19 +626,10 @@ namespace DTIS
 
                     float modifiedDistance = hit.distance - _shellRadius;
                     distance = modifiedDistance < distance ? modifiedDistance : distance;
-                    if(Util.IsPointInCollider(hit.point,hit.collider))
-                    {
-                        Debug.Log("tunneling detected");
-                        //snap to collider position + _shellRadius
-                        // distance = 0f?
-                    }
                 }
             }
             var distanceToMove = move.normalized * distance;
-            var pos = _rb2d.position + distanceToMove;
-            _rb2d.position = pos;
-            //var pos = transform.position + (Vector3)distanceToMove;
-            //transform.position = pos;
+            return distanceToMove;
         }
         #endregion
 

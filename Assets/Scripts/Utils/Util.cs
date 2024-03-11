@@ -41,23 +41,5 @@ namespace DTIS
         {
             Mimic.position = Target.position + FixedRelativePosition;
         }
-
-        public static bool IsPointInCollider(Vector2 point, Collider2D collider)
-        {
-            var center = collider.bounds.center;
-
-            var extentX = collider.bounds.extents.x;
-            var extentY = collider.bounds.extents.y;
-
-            var colLeftX = center.x - extentX;
-            var colRightX = center.x + extentX;
-
-            var colTopY = center.y + extentY;
-            var colBotY = center.y - extentY;
-
-            var inRangeX = colLeftX <= point.x && point.x <= colRightX;
-            var inRangeY = colBotY <= point.y && point.y <= colTopY;
-            return inRangeX && inRangeY;
-        }
     }
 }
