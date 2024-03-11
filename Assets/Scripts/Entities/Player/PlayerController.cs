@@ -115,7 +115,7 @@ namespace DTIS
             var distance = Mathf.Abs(colliderBotY - playerTopY);
             var pos = _rb2d.position;
             pos.y += distance;
-            _rb2d.position = pos;
+             _rb2d.position = pos;
         }
 
         public void GrabLedgeFromAbove(Collider2D collider)
@@ -170,7 +170,7 @@ namespace DTIS
         #endregion
 
         #region GENERAL
-        public float PlayerDirection()
+        public float PlayerHorizontalDirection()
         {
             return _facingRight ? 1f : -1f;
         }
@@ -491,20 +491,21 @@ namespace DTIS
         #endregion
 
         #region UPDATES & PHYSICS
+        public Rigidbody2D RigidBody { get { return _rb2d; } }
         public Vector2 FuturePos { get { return _futurePosition; } }
         public Vector2 FutureVel { get { return _futureVelocity; } }
+
+        public Bounds Bounds { get { return _collider.bounds; } }
+
         private Vector2 _futurePosition;
         private Vector2 _futureVelocity;
-        public void NudgeToPosition(Vector3 position)
-        {
-            // todo: move without tunelling
-            // note : always moving to empty air so???
-            _rb2d.MovePosition(position);
-            Jump();
-        }
         public void AddForce(Vector2 force)
         {
             _targetVelocity += force;
+        }
+        public void MovePosition(Vector2 pos)
+        {
+            _rb2d.MovePosition(pos);
         }
         protected private override void Update()
         {
@@ -541,9 +542,12 @@ namespace DTIS
             }
             else
                 _currFilter = _groundAndPlatformFilter;
+
             var distX = Movement(moveX, false, colliderToIgnore); // horizontal movement
             var distY = Movement(moveY, true, colliderToIgnore); // vertical movement
-            _rb2d.MovePosition(_rb2d.position+distX+distY);
+
+            _rb2d.MovePosition(_rb2d.position+distX+distY); // updates position!
+
             _velocity.y = Math.Clamp(_velocity.y, -_maxFallSpeed, float.MaxValue);
             _targetVelocity = Vector2.zero;
 
@@ -562,21 +566,6 @@ namespace DTIS
                 if (_collider.bounds.center.y < futurePosTop.y)
                     StartCoroutine(JumpNudge(NudgeLeft));
             }
-
-            // tunneling detection & Correction
-            //TODO: idea - check whether pos and future pos are both within the colliders bounds,
-            //             then fix according to the direction (again, calculated by diff between pos and future pos)
-            /*
-            var point = hit.point;
-            point.x += _shellRadius * PlayerDirection();
-            point.y += _shellRadius * PlayerDirection();
-            if(hit.collider.bounds.Contains(point))
-            {
-                Debug.Log("tunneling detected");
-                //snap to collider position + _shellRadius
-                // distance = 0f?
-            }
-            */
         }
         private bool _isNudging = false;
         private IEnumerator JumpNudge(bool jumpingLeft)
