@@ -587,9 +587,9 @@ namespace DTIS
                 foreach (var hit in _hitBufferList)
                 {
                     if (collidersToIgnore.Contains(hit.collider)) // added support to ignore specified colliders, for example platforms
-                        continue;
+                        continue; //TODO: this idea causes tunneling as well
                     Vector2 currentNormal = hit.normal;
-                    if (currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the set value.
+                    if (currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the min' value.
                     {
                         _grounded = true;
                         if (yMovement)
@@ -606,6 +606,12 @@ namespace DTIS
 
                     float modifiedDistance = hit.distance - _shellRadius;
                     distance = modifiedDistance < distance ? modifiedDistance : distance;
+                    if(Util.IsPointInCollider(hit.point,hit.collider))
+                    {
+                        Debug.Log("tunneling detected");
+                        //snap to collider position + _shellRadius
+                        // distance = 0f?
+                    }
                 }
             }
             var distanceToMove = move.normalized * distance;

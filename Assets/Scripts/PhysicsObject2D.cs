@@ -8,7 +8,7 @@ public class PhysicsObject2D : MonoBehaviour
     // source - https://www.youtube.com/watch?v=wGI2e3Dzk_w&list=PLX2vGYjWbI0SUWwVPCERK88Qw8hpjEGd8&index=1&ab_channel=Unity
     public LayerMask WhatIsGround => _currFilter.layerMask;
     protected const float _minMoveDistance = 0.001f;
-    protected const float _shellRadius = 0.01f;
+    protected const float _shellRadius = 0.05f;
     [Header("Base Physics")]
     [SerializeField] protected private float _gravityModifier = 1f;
     [SerializeField] protected private float _minGroundNormalY = 0.1f;
