@@ -44,8 +44,11 @@ public sealed class GameManager : MonoBehaviour
 
 	private static int _money;
 	public static int Money { get { return _money; } set { _money = value; } }
+    public static PlayerControls PlayerControls { get { return _fsm.Controls;}}
+	public static ESP.States PlayerStateType { get { return _fsm.State.Type; } }
+    public static ESP.States PlayerSubStateType { get { return _fsm.SubState.Type; } }
 
-	public static void ResetScene()
+    public static void ResetScene()
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
