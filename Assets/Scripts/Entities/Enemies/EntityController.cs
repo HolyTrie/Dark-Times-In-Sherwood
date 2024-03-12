@@ -115,7 +115,7 @@ namespace DTIS
 
 
         //right now enemy drops only HP, TODO: add more drops as game progresses or whatever wishes.
-        public void DropItems()
+        public virtual void DropItems()
         {
             StartCoroutine(WaitForDeath(DeathDelaySeconds));
         }

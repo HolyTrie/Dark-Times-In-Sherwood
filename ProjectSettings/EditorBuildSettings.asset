@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InnerVault.unity
     guid: cf94439868feadd48a8c414f5bf84c14
+  - enabled: 1
+    path: Assets/Scenes/SherwoodTown.unity
+    guid: 18936c62135dd2d428f493cea68cfbac
   m_configObjects: {}

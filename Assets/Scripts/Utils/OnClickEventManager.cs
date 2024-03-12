@@ -60,4 +60,17 @@ public class OnClickEventManager : MonoBehaviour
         StarterPauseMenu.SetActive(true);
         KeyBindings.SetActive(false);
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void ReturnToMainMenu()
+    {
+        // Application.Quit();
+        // GameManager.LoadScene(0);
+        //TODO
+    }
+
 }
