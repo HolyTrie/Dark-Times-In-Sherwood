@@ -34,6 +34,6 @@ public class EdgeLocator : MonoBehaviour
         var hit = Physics2D.Raycast(_rayOrigin, _rayCastDirection, _rayCastDistance, _whatIsGround);
         _hit = hit;
         //Debug.Log("Edge locator hit =" + (bool)hit);
-        //Debug.DrawLine(_rayOrigin, _rayDestination, Color.cyan);
+        Debug.DrawLine(_rayOrigin, _rayDestination, Color.cyan);
     }
 }

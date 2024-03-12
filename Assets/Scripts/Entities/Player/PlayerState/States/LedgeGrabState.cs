@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 
@@ -71,18 +72,27 @@ namespace DTIS
             Debug.Log("climbing ledge");
             Controls.ReadHorizontalInput = false;
             LeavingLedge = true;
-            var direction = Controller.FacingRight ? 1f : -1f;
-            var moveX = _collider.bounds.extents.x + 0.1f;
-            moveX *= direction;
             var moveY = _collider.bounds.size.y + 0.1f;
-            Vector3 newPos = new(Controller.transform.position.x + moveX, Controller.transform.position.y + moveY, Controller.transform.position.z);
+            Vector3 newPos = new(Controller.transform.position.x, Controller.transform.position.y + moveY, Controller.transform.position.z);
             Controller.Animator.Play("crnr-clmb");
-            Controller.transform.position = Vector2.Lerp(Controller.transform.position, newPos, 0.5f);
+            var pos = Vector2.Lerp(Controller.transform.position, newPos, 0.5f);
+            Controller.transform.position = pos;
             yield return new WaitForSeconds(0.25f);
-            newPos.x += direction * 0.5f;
-            Controller.transform.position = Vector2.Lerp(Controller.transform.position, newPos, 1.1f);
-            Controls.ReadHorizontalInput = true;
+            //pos = Vector2.Lerp(Controller.transform.position, newPos, 1.1f);
+            Controller.transform.position = newPos;
+            var direction = Controller.PlayerHorizontalDirection();
+            var origin = Controller.transform.position;
+            origin.y += Controller.Bounds.extents.y;
+            var hit = Physics2D.Raycast(origin,new Vector2(direction,0f),0.1f,Controller.WhatIsGround);
+            if(hit)
+            {
+                pos = Controller.transform.position;
+                pos.x += (-direction)*Controller.Bounds.extents.x * 0.2f;
+                Controller.transform.position = pos;
+                Debug.Log("nudged ledge up");
+            }
             SetSubState(ESP.States.Fall);
+            Controls.ReadHorizontalInput = true;
             yield return new WaitForSeconds(0.25f);
             LeavingLedge = false;
         }

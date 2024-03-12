@@ -109,17 +109,19 @@ namespace DTIS
         #region LEDGE GRAB
         public void GrabLedgeFromBelow(Collider2D collider)
         {
-            FSM.SetStates(ESP.States.Airborne,ESP.States.LedgeGrabState);
+            Debug.Log("grab ledge from below");
             var colliderBotY = collider.bounds.min.y;
             var playerTopY = _collider.bounds.max.y;
             var distance = Mathf.Abs(colliderBotY - playerTopY);
             var pos = _rb2d.position;
             pos.y += distance;
             _rb2d.position = pos;
+            FSM.SetStates(ESP.States.Airborne,ESP.States.LedgeGrabState);
         }
 
         public void GrabLedgeFromAbove(Collider2D collider)
         {
+            Debug.Log("grab ledge from above");
             var colliderBotY = collider.bounds.min.y;
             var playerTopY = _collider.bounds.max.y;
             var distance = Mathf.Abs(colliderBotY - playerTopY);
@@ -170,6 +172,10 @@ namespace DTIS
         #endregion
 
         #region GENERAL
+        public float PlayerHorizontalDirection()
+        {
+            return _facingRight ? 1f : -1f;
+        }
         private PlayerStateMachine _fsm;
         public PlayerStateMachine FSM { get { return _fsm; } internal set { _fsm = value; } } // TODO: refactor to remove this it makes no sense.
         public int GroundOnlyLayerMask { get { return _whatIsGround; } }
@@ -487,20 +493,21 @@ namespace DTIS
         #endregion
 
         #region UPDATES & PHYSICS
+        public Rigidbody2D RigidBody { get { return _rb2d; } }
         public Vector2 FuturePos { get { return _futurePosition; } }
         public Vector2 FutureVel { get { return _futureVelocity; } }
+
+        public Bounds Bounds { get { return _collider.bounds; } }
+
         private Vector2 _futurePosition;
         private Vector2 _futureVelocity;
-        public void NudgeToPosition(Vector3 position)
-        {
-            // todo: move without tunelling
-            // note : always moving to empty air so???
-            _rb2d.MovePosition(position);
-            Jump();
-        }
         public void AddForce(Vector2 force)
         {
             _targetVelocity += force;
+        }
+        public void MovePosition(Vector2 pos)
+        {
+            _rb2d.MovePosition(pos);
         }
         protected private override void Update()
         {
@@ -537,8 +544,12 @@ namespace DTIS
             }
             else
                 _currFilter = _groundAndPlatformFilter;
-            Movement(moveY, true, colliderToIgnore); // vertical movement
-            Movement(moveX, false, colliderToIgnore); // horizontal movement
+
+            var distX = Movement(moveX, false, colliderToIgnore); // horizontal movement
+            var distY = Movement(moveY, true, colliderToIgnore); // vertical movement
+
+            _rb2d.MovePosition(_rb2d.position+distX+distY); // updates position!
+
             _velocity.y = Math.Clamp(_velocity.y, -_maxFallSpeed, float.MaxValue);
             _targetVelocity = Vector2.zero;
 
@@ -573,7 +584,7 @@ namespace DTIS
             yield return new WaitForSeconds(1f);
             _isNudging = false;
         }
-        protected private void Movement(Vector2 move, bool yMovement, List<Collider2D> collidersToIgnore)
+        protected private Vector2 Movement(Vector2 move, bool yMovement, List<Collider2D> collidersToIgnore)
         {
             float distance = move.magnitude;
             if (distance > _minMoveDistance)
@@ -587,9 +598,9 @@ namespace DTIS
                 foreach (var hit in _hitBufferList)
                 {
                     if (collidersToIgnore.Contains(hit.collider)) // added support to ignore specified colliders, for example platforms
-                        continue;
+                        continue; //TODO: this idea causes tunneling as well
                     Vector2 currentNormal = hit.normal;
-                    if (currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the set value.
+                    if (currentNormal.y > _minGroundNormalY) // if the normal vectors angle is greater then the min' value.
                     {
                         _grounded = true;
                         if (yMovement)
@@ -609,10 +620,7 @@ namespace DTIS
                 }
             }
             var distanceToMove = move.normalized * distance;
-            var pos = _rb2d.position + distanceToMove;
-            _rb2d.position = pos;
-            //var pos = transform.position + (Vector3)distanceToMove;
-            //transform.position = pos;
+            return distanceToMove;
         }
         #endregion
 

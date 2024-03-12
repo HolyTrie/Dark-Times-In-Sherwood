@@ -77,7 +77,7 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
         {
             pos = new(origin.x + _rayOffsets[i].x, origin.y + _rayOffsets[i].y);
             hit = Physics2D.Raycast(pos, direction, _raysCastDistance, _layerMask);
-            Debug.DrawLine(pos,new(pos.x+direction.x,pos.y),Color.blue);
+            Debug.DrawLine(pos,new(pos.x+direction.x*_raysCastDistance,pos.y),Color.blue);
             if(hit)
             {
                 ++count;
@@ -90,7 +90,6 @@ public class HorizontalCollisionCheck2D : MonoBehaviour
             if(i == length)
                 _firstFromTopHit = hit;
         }
-        //Debug.Log($"first from top hit = {_firstFromTopHit} | 2nd from top hit = {_secondFromTopHit}");
         if (count == 0)
         {
             _collisionType = CollisionTypes.NONE;
