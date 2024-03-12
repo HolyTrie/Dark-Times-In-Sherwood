@@ -11,8 +11,8 @@ public class PlatformCheck : MonoBehaviour
     private OneWayPlatform _currPlatform;
     public OneWayPlatform Curr { get { return _currPlatform; } private set { _currPlatform = value; } }
     
-    [SerializeField,Tooltip("how much time in seconds the curr platform will ignore collsion when trying to pass through it")]
-    private float _ignorePlatformDuration = 0.5f;
+    //[SerializeField,Tooltip("how much time in seconds the curr platform will ignore collsion when trying to pass through it")]
+    //private float _ignorePlatformDuration = 0.5f;
     private PlayerController _pc;
 
     void Start()
@@ -22,23 +22,34 @@ public class PlatformCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("trigger enter");
+        Debug.Log(other.gameObject.name);
         if(((1<<other.gameObject.layer) & _whatIsPlatform) == 0)
+        {
             return;
+        }
+        Debug.Log("trigger enter platform detect");
         var candidate = other.GetComponent<OneWayPlatform>();
         bool allowsGoingUp = candidate.Type != OneWayPlatform.OneWayPlatforms.GoingDown;
         bool isPlayerBelow = !IsPlayerAbovePlatform(other);
         if(isPlayerBelow && allowsGoingUp)
         {
             //_pc.PassingThroughPlatform = true;
+            Debug.Log("about to grab ledge from below");
             Curr = candidate;
             _pc.GrabLedgeFromBelow(Curr.Collider);
-            StartCoroutine(WaitToReapplyCollision(Curr,_ignorePlatformDuration));
+            //StartCoroutine(WaitToReapplyCollision(Curr,_ignorePlatformDuration));
         }
     }
     private void OnTriggerStay2D(Collider2D other)
     {
+        Debug.Log("trigger stay");
+        Debug.Log(other.gameObject.name);
         if(((1<<other.gameObject.layer) & _whatIsPlatform) == 0)
+        {
             return;
+        }
+        Debug.Log("trigger stay platform detect");
         var candidate = other.GetComponent<OneWayPlatform>();
         bool allowsGoingDown = candidate.Type != OneWayPlatform.OneWayPlatforms.GoingUp;
         bool isPlayerAbove = IsPlayerAbovePlatform(other);
@@ -47,10 +58,11 @@ public class PlatformCheck : MonoBehaviour
         {
             _pc.Animator.Play("crouch");
             //_pc.PassingThroughPlatform = true;
+            Debug.Log("about to grab ledge from above");
             Curr = candidate;
             _pc.GrabLedgeFromAbove(Curr.Collider);
 
-            StartCoroutine(WaitToReapplyCollision(Curr,_ignorePlatformDuration));
+            //StartCoroutine(WaitToReapplyCollision(Curr,_ignorePlatformDuration));
         }
     }
     private void OnTriggerExit2D(Collider2D other) {

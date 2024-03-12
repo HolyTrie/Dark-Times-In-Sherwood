@@ -22,7 +22,7 @@ public class ParticleSystemManager : MonoBehaviour
     public void playJumpEffect()
     {
         Instantiate(JumpEffect, new(JumpTransform.position.x, JumpTransform.position.y, -15f), JumpTransform.rotation);
-        Debug.Log("ParticleSystems");
+        //Debug.Log("ParticleSystems");
         // JumpEffect.Play();
     }
 

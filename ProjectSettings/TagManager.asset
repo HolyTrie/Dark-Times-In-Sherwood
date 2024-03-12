@@ -17,6 +17,7 @@ TagManager:
   - DialogueChoice
   - Enemy
   - PlayerSensor
+  - IgnoredByPlayer
   layers:
   - Default
   - TransparentFX
