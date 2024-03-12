@@ -45,8 +45,9 @@ namespace DTIS
                 SetStates(ESP.States.Grounded, ESP.States.Idle);
                 return;
             }
-            var grabLedge = Controller.HorizontalCheck.FirstFromTopHit == false && Controller.HorizontalCheck.SecondFromTopHit == true;
-            grabLedge = grabLedge && Controller.EdgeAhead && !Controller.GrabbingLedge;
+            var firstMissSecondHit = Controller.HorizontalCheck.FirstFromTopHit == false && Controller.HorizontalCheck.SecondFromTopHit == true;
+            var grabLedge = firstMissSecondHit && Controller.EdgeAhead && !Controller.GrabbingLedge;
+            Debug.Log($"Grab Ledge = {grabLedge} | First Miss Second Hit = {firstMissSecondHit} | Edge Ahead = {Controller.EdgeAhead}");
             if(grabLedge)
             {
                 SetSubState(ESP.States.LedgeGrabState);

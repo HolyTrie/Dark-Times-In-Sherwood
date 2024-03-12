@@ -109,13 +109,13 @@ namespace DTIS
         #region LEDGE GRAB
         public void GrabLedgeFromBelow(Collider2D collider)
         {
-            FSM.SetStates(ESP.States.Airborne,ESP.States.LedgeGrabState);
             var colliderBotY = collider.bounds.min.y;
             var playerTopY = _collider.bounds.max.y;
             var distance = Mathf.Abs(colliderBotY - playerTopY);
             var pos = _rb2d.position;
             pos.y += distance;
-             _rb2d.position = pos;
+            _rb2d.position = pos;
+            //FSM.SetStates(ESP.States.Airborne,ESP.States.LedgeGrabState);
         }
 
         public void GrabLedgeFromAbove(Collider2D collider)
