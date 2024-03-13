@@ -689,7 +689,7 @@ GameObject:
   - component: {fileID: 2384138651820878958}
   - component: {fileID: 2205783961877663532}
   - component: {fileID: 771638231714990406}
-  - component: {fileID: 5925376492147449410}
+  - component: {fileID: 2543099211266683993}
   - component: {fileID: 3401771347317102621}
   - component: {fileID: 7863517801960115854}
   - component: {fileID: 4776086187192958698}
@@ -849,7 +849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthPotion: {fileID: 11400000, guid: 8b070c2fb14f42e48929d1f21ad4c577, type: 2}
---- !u!114 &5925376492147449410
+--- !u!114 &2543099211266683993
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -858,7 +858,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7736791561133203582}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c83e5bf942b6984293ce56ac7cc61a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 18e02f9b6d7580847942a9a44ccb4c91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpSpeed: 5

@@ -25,7 +25,8 @@ public class SherifController : MonoBehaviour, IDialog
 
 
         // choice A //
-        Monologue SheriffSummonGuards = new(Entityname, "Guards! Lock this bastard away");
+        // Monologue SheriffSummonGuards = new(Entityname, "Guards! Lock this bastard away");
+        Monologue SheriffSummonGuards = new(Entityname, "Not surprsing i must say, now you will see what happens to people who refuse to me!");
         Monologue robinReplyToProposition = new(playerName, "I will never sell my soul to the likes of you, Sheriff. My allegiance lies with the people of Sherwood, and I will stop at nothing to see justice served.", SheriffSummonGuards);
         Monologue SheriffProposition = new(Entityname, "But perhaps,we can come to an arrangement. You see, I have a proposition for you, Locksley. Join me, pledge your allegiance to my cause, and together we can rule over Sherwood as kings. Imagine the power we could wield, the riches we could amass. It's a tempting offer, wouldn't you agree?", robinReplyToProposition);
 
@@ -63,7 +64,10 @@ public class SherifController : MonoBehaviour, IDialog
             {
                 dialogChoiceTrigger = false;
                 //more guards come to fight robin and he loses and wakes up in scene InnerVault with a note from the sheriff//
-                SummonGuards.gameObject.SetActive(true);
+                // SummonGuards.gameObject.SetActive(true);
+                transform.GetComponent<Animator>().Play("AttackEvilWizard");
+                StartCoroutine(FadeOUT());
+                Util.GetPlayerController().Animator.Play("die");
             }
             if (playerChocie == "Oppose the sheriff")
             {
