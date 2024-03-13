@@ -745,6 +745,11 @@ MonoBehaviour:
   _whatIsPlatform:
     serializedVersion: 2
     m_Bits: 64
+  _topRight: {fileID: 6667468164336036354}
+  _topRightRadius: 0.5
+  _bottomRight: {fileID: 3156454665119824906}
+  _bottomLeft: {fileID: 3321221868914134989}
+  _bottomBoxHeight: 0.5
 --- !u!50 &3189473081315997891
 Rigidbody2D:
   serializedVersion: 4
