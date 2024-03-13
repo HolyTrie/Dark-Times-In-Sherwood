@@ -2887,18 +2887,6 @@ PrefabInstance:
       propertyPath: patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _walkSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _FieldOfView
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: DeathDelaySeconds
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 7594645011869285536, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.68
@@ -8222,6 +8210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 479024986}
   - component: {fileID: 479024985}
+  - component: {fileID: 479024987}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -8256,6 +8245,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &479024987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479024984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7068df9e0630544b947ad38cd385c97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &540860999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36491,18 +36492,6 @@ PrefabInstance:
       propertyPath: patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _walkSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _FieldOfView
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: DeathDelaySeconds
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 7594645011869285536, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.39
@@ -44668,14 +44657,6 @@ PrefabInstance:
       propertyPath: patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _FieldOfView
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: DeathDelaySeconds
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 7594645011869285536, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.82
@@ -45095,18 +45076,6 @@ PrefabInstance:
     - target: {fileID: 4776086187192958698, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
       propertyPath: patrolTransforms.Array.data[2]
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _walkSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _FieldOfView
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: DeathDelaySeconds
-      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7594645011869285536, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -45553,18 +45522,6 @@ PrefabInstance:
     - target: {fileID: 4776086187192958698, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
       propertyPath: patrolTransforms.Array.data[2]
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _walkSpeed
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _FieldOfView
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: DeathDelaySeconds
-      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7594645011869285536, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
       propertyPath: m_LocalPosition.x
