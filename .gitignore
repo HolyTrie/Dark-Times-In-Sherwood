@@ -13,6 +13,9 @@
 [Mm]emoryCaptures/
 [Uu]ser[Ss]ettings/
 
+#folder to ignore
+Audio/
+
 # Never ignore Asset meta data
 ![Aa]ssets/**/*.meta
 
