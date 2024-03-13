@@ -54,7 +54,7 @@ public class SherifController : MonoBehaviour, IDialog
     }
     private void DialogChoices()
     {
-        Debug.Log(GameManager.playerChoices);
+        //Debug.Log(GameManager.playerChoices);
         if (GameManager.playerChoices != null)
         {
             Debug.Log(GameManager.playerChoices);
