@@ -2887,15 +2887,15 @@ PrefabInstance:
       propertyPath: patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: _walkSpeed
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: _FieldOfView
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: DeathDelaySeconds
       value: 0.25
       objectReference: {fileID: 0}
@@ -36491,15 +36491,15 @@ PrefabInstance:
       propertyPath: patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: _walkSpeed
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: _FieldOfView
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: DeathDelaySeconds
       value: 0.25
       objectReference: {fileID: 0}
@@ -44668,11 +44668,11 @@ PrefabInstance:
       propertyPath: patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: _FieldOfView
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: DeathDelaySeconds
       value: 0.25
       objectReference: {fileID: 0}
@@ -45096,15 +45096,15 @@ PrefabInstance:
       propertyPath: patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: _walkSpeed
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: _FieldOfView
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: DeathDelaySeconds
       value: 0.25
       objectReference: {fileID: 0}
@@ -45554,15 +45554,15 @@ PrefabInstance:
       propertyPath: patrolTransforms.Array.data[2]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: _walkSpeed
       value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: _FieldOfView
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 5925376492147449410, guid: a4bcec662994843a2b19ab52b22b613a, type: 3}
+    - target: {fileID: 0}
       propertyPath: DeathDelaySeconds
       value: 0.25
       objectReference: {fileID: 0}
