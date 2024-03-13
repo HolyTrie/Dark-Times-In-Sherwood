@@ -14,6 +14,7 @@ public sealed class GameManager : MonoBehaviour
 	private static PlayerController _playerController;
 	public static bool PlayerIsFacingRight { get { return _playerController.FacingRight; } }
 	public static string playerChoices;
+	private static bool _canGhost;
 	public static GameManager Instance
 	{
 		get
@@ -37,7 +38,10 @@ public sealed class GameManager : MonoBehaviour
 		}
 		set
 		{
-			_isPlayerGhosted = value;
+			if(_canGhost)
+			{
+				_isPlayerGhosted = value;
+			}
 			//Debug.Log(string.Format("player ghosted = {0}",_isPlayerGhosted));
 		}
 	}
@@ -69,12 +73,20 @@ public sealed class GameManager : MonoBehaviour
 			_fsm.Controls.enabled = true;
 		}
 	}
-
+    public static void BlockGhost()
+    {
+        _canGhost = false;
+    }
+	public static void UnblockGhost()
+    {
+        _canGhost = true;
+    }
 	public static void NextScene(int offset = 0)
 	{
 		//Debug.Log(String.Format("Curr Index = {0}, SceneManager.sceneCount = {1}",currSceneIndex,SceneManager.sceneCountInBuildSettings));
 		currSceneIndex = (currSceneIndex + 1 + offset) % SceneManager.sceneCountInBuildSettings;
 		//Debug.Log(String.Format("Curr Index = {0}, SceneManager.sceneCount = {1}",currSceneIndex,SceneManager.sceneCountInBuildSettings));
+		UnblockGhost(); // reset ghost controls on scene exit just in case
 		LoadScene(currSceneIndex);
 	}
 

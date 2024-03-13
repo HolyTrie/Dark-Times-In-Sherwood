@@ -1300,11 +1300,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2761556850682870215, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.1518879
+      value: -8.962486
       objectReference: {fileID: 0}
     - target: {fileID: 2761556850682870215, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.581431
+      value: -3.5814211
       objectReference: {fileID: 0}
     - target: {fileID: 2761556850682870215, guid: ea2c79d628f0ea74db3ee7e4f5703601, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1535,6 +1535,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2586313324848282774, guid: d0a7ea212994ec04c83e52a427f10855, type: 3}
   m_PrefabInstance: {fileID: 526209869}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &549334857
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 549334859}
+  - component: {fileID: 549334858}
+  m_Layer: 0
+  m_Name: SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &549334858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549334857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76048941a724d4e438fdcc94dd0f01b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &549334859
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549334857}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -21.723427, y: 1.1690835, z: -4.9390206}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &571362713 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8657280276057563493, guid: dfbe929c802fffd45a5416eff64558b5, type: 3}
@@ -43694,6 +43738,7 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 549334859}
   - {fileID: 1465383742}
   - {fileID: 1373137333}
   - {fileID: 673947255}

@@ -92,7 +92,7 @@ public class PlatformCheck : MonoBehaviour
         size.y = 0.5f*_bottomBoxHeight;
         Gizmos.DrawWireCube(center,size);
     }
-
+    /*
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(((1<<other.gameObject.layer) & _whatIsPlatform) == 0)
@@ -112,10 +112,10 @@ public class PlatformCheck : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log(other.gameObject.name);
+        //Debug.Log(other.gameObject.name);
         if(((1<<other.gameObject.layer) & _whatIsPlatform) == 0)
         {
-            Debug.Log(other.gameObject.name);
+            //Debug.Log(other.gameObject.name);
             return;
         }
         Debug.Log("standing on platform");
@@ -151,4 +151,5 @@ public class PlatformCheck : MonoBehaviour
         _pc.PassingThroughPlatform = false;
         //_currPlatform = null;
     }
+    */
 }
