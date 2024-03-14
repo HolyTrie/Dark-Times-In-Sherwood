@@ -1,3 +1,4 @@
+using UnityEditor.UIElements;
 using UnityEngine;
 namespace DTIS
 {
@@ -32,7 +33,8 @@ namespace DTIS
                 other.gameObject.GetComponent<HpBarEntity>().depleteHp(DMG);
                 Destroy(this.gameObject);
             }
-            if(other.gameObject.layer ==  7) // ground layer
+
+            if (other.gameObject.layer == 7) // ground layer
                 Destroy(this.gameObject);
         }
     }
