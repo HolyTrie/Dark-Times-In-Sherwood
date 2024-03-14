@@ -291,9 +291,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'In the bleak year of 1311, England was plagued by the absence of its virtuous
-    men, who had departed for the King''s crusade, leaving their kin at the mercy
-    of corrupt lords. '
+  m_text: In the year 1189 of our lord, The third crusade has begun and Richard the
+    Lionheart has left England with his armies to lead the campaign, leaving behind
+    their kin at the mercy of the weak and cowardly lords that stayed behind
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -489,9 +489,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\rAs the crusade dragged on and English lords grew greedier and crueler,
-    Sherwood's impoverished cried for help. But with no hero in sight, Nottingham's
-    oppressive Sheriff tightened his hold, taking control of Sherwood."
+  m_text: "\rAs the crusade dragged on and the English lords grew ever greedier,
+    the suffering of its people only grew, worse was the doing of a particularly
+    evil lord - John Thorold, the so called Sheriff of Nottingham\r\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1285,9 +1285,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Robin discovers his estate in Sherwood ravaged and his people enslaved
-    by the Sheriff. He then resolves to reclaim his land and seek vengeance for his
-    people. '
+  m_text: 'Robin has lost his father in the war and is now heir to the Sherwood estate,
+    Home is a good place as any to start on the Kings mission - or so he thought...
+
+    As
+    he arrived to sherwood he saw the damage done to the people and his esates, with
+    only one man to blame - the Sheriff of Nottingham.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1566,8 +1569,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Meanwhile, Robin of Locksley, a seasoned warrior, returned from the crusade
-    burdened by the loss of his father. Entrusted with a mission by his king.
+  m_text: Towards the end of the Crusade in the year 1192 of our Lord, Robin of Locksley,
+    no longer a boy but a seasoned warrior, returns To England with a secret mission
+    from his King, to secure the financial state of England in preparations for the
+    armies return.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1723,9 +1728,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Robin rallies allies against the Sheriff, forming the infamous Sherwood
-    gang. But before they can act, they must secure funds for rebellion, initiating
-    their quest for both money and justice.\r"
+  m_text: 'Robin must now free and rally his people against the Sheriff and his forces,
+    Secure large amounts of Money, and clear the lands of its dark ''guests''.
+
+    Will
+    Robin be able to keep his Soul intact, or will it truly be A Dark Time in Sherwood?'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2273,10 +2280,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\rConsumed by hunger for power, the Sheriff sought forbidden knowledge,
-    delving into ancient tomes and dark magics. His reckless pursuit led him to the
-    Fae, unleashing mindless horrors that haunted the land, making travel perilous
-    for all."
+  m_text: "\rConsumed by his hunger for power, the Sheriff sought Oberon the king
+    of the Fae in an effort to learn accursed magics, A secret deal has been made
+    between them granting him the power he sought, And with this knowledge he unleashed
+    dark abberations on the lands of England"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
