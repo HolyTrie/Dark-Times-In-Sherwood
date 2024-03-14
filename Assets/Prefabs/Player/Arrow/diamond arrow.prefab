@@ -133,6 +133,7 @@ MonoBehaviour:
   Ground:
     serializedVersion: 2
     m_Bits: 128
+  AttackTag: Enemy
 --- !u!60 &6375425070069452676
 PolygonCollider2D:
   m_ObjectHideFlags: 0
