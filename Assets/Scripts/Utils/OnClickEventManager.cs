@@ -1,6 +1,5 @@
 using UnityEngine;
 using DTIS;
-using UnityEditor.Animations;
 public class OnClickEventManager : MonoBehaviour
 {
     private GameObject PauseMenu;

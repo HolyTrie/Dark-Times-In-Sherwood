@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 namespace DTIS
@@ -436,9 +437,11 @@ namespace DTIS
         #endregion
 
         #region GHOST MECHANIC
+        private bool _canGhost = true;
         public virtual void Ghost()
         {
-            GameManager.IsPlayerGhosted = !GameManager.IsPlayerGhosted;
+            if(_canGhost)
+                GameManager.IsPlayerGhosted = !GameManager.IsPlayerGhosted;
         }
         private PlayerGhostBehaviour _playerGhostBehaviour;
         [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -496,9 +499,7 @@ namespace DTIS
         public Rigidbody2D RigidBody { get { return _rb2d; } }
         public Vector2 FuturePos { get { return _futurePosition; } }
         public Vector2 FutureVel { get { return _futureVelocity; } }
-
         public Bounds Bounds { get { return _collider.bounds; } }
-
         private Vector2 _futurePosition;
         private Vector2 _futureVelocity;
         public void AddForce(Vector2 force)
@@ -621,6 +622,20 @@ namespace DTIS
             }
             var distanceToMove = move.normalized * distance;
             return distanceToMove;
+        }
+        protected private void OnTriggerEnter2D(Collider2D other) 
+        {
+            if(other.CompareTag("GhostTile"))
+            {
+                _canGhost = false;
+            }
+        }
+        protected private void OnTriggerExit2D(Collider2D other) 
+        {
+            if(other.CompareTag("GhostTile"))
+            {
+                _canGhost = true;
+            }
         }
         #endregion
 
