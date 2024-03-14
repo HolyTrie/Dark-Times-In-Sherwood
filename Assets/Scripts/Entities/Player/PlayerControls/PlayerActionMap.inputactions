@@ -74,7 +74,7 @@
                     "id": "dc5d494b-c821-4862-93d7-43ca20133692",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "MultiTap",
+                    "interactions": "MultiTap(tapCount=1)",
                     "initialStateCheck": false
                 },
                 {
@@ -144,7 +144,7 @@
                 {
                     "name": "",
                     "id": "44754426-0bcb-4218-9b78-83cd52ebcc10",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "New control scheme",

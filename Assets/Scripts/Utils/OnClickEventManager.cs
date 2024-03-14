@@ -1,20 +1,22 @@
 using UnityEngine;
 using DTIS;
+using UnityEditor.Animations;
 public class OnClickEventManager : MonoBehaviour
 {
     private GameObject PauseMenu;
     private GameObject MainMenu;
     private GameObject StarterPauseMenu;
     private GameObject KeyBindings;
+    private GameObject OptionsPanel;
     private const int StartScene = 1;
     private const int GameStartScene = 2;
 
     private void Awake()
     {
-        PauseMenu = GameObject.Find("PauseMenu");
         MainMenu = GameObject.Find("MainMenu");
         StarterPauseMenu = GameObject.Find("StarterMenu");
         KeyBindings = GameObject.Find("KeyBindings");
+        OptionsPanel = GameObject.Find("OptionsPanel");
     }
 
     private void Start()
@@ -23,20 +25,22 @@ public class OnClickEventManager : MonoBehaviour
             StarterPauseMenu.SetActive(false);
         if (KeyBindings != null)
             KeyBindings.SetActive(false);
+        if (OptionsPanel != null)
+            OptionsPanel.SetActive(false);
     }
 
     public void PauseGame()
     {
         GameManager.PauseGame();
-        PauseMenu.gameObject.SetActive(true);
         StarterPauseMenu.SetActive(true);
     }
 
     public void ResumeGame()
     {
         GameManager.ResumeGame();
-        PauseMenu.gameObject.SetActive(false);
         StarterPauseMenu.SetActive(false);
+        OptionsPanel.SetActive(false);
+        KeyBindings.SetActive(false);
     }
 
     public void StartGame()
@@ -52,6 +56,7 @@ public class OnClickEventManager : MonoBehaviour
     public void HelpMenu()
     {
         StarterPauseMenu.SetActive(false);
+        OptionsPanel.SetActive(false);
         KeyBindings.SetActive(true);
     }
 
@@ -70,7 +75,18 @@ public class OnClickEventManager : MonoBehaviour
     {
         // Application.Quit();
         // GameManager.LoadScene(0);
+        // foreach(Destroy)
         //TODO
+    }
+
+    public void OpenVolumeSettings()
+    {
+        OptionsPanel.SetActive(true);
+    }
+
+    public void HideOptionsSettings()
+    {
+        OptionsPanel.SetActive(false);
     }
 
 }
