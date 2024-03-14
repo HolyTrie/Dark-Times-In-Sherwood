@@ -49,9 +49,9 @@ MonoBehaviour:
   MusicSource: {fileID: 4953472171840065266}
   ButtonSFX: {fileID: 6151000220579126590}
   background: {fileID: 8300000, guid: 22e8d80f1af28e44fb0c6139fe5c6c42, type: 3}
-  BackgroundVolume: 0.3
+  BackgroundVolume: 0.05
   buttonSFX: {fileID: 8300000, guid: b6b5de0b46d0de447a84b74d992ad3d4, type: 3}
-  SFXVolume: 0.7
+  SFXVolume: 0.25
 --- !u!1 &683572479510826998
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +98,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

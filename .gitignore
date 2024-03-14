@@ -15,6 +15,7 @@
 
 #folder to ignore
 Audio/
+Assets/Audio.meta
 
 # Never ignore Asset meta data
 ![Aa]ssets/**/*.meta
