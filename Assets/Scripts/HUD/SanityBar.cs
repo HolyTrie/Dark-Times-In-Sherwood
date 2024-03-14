@@ -1,4 +1,5 @@
 using System.Collections;
+using DTIS;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,9 +47,10 @@ public class SanityBar : MonoBehaviour
             Debug.Log("Used Sanity");
             yield return sanityUseTimer;
 
-            if (currentSanity - amount < 0 && GameManager.IsPlayerGhosted) //if sanity is below 0, player shoud die or something
+            if (currentSanity - amount <= 0 && GameManager.IsPlayerGhosted) //if sanity is below 0, player shoud die or something
             {
                 _canUseSanity = false;
+                GameManager.ResetScene();
                 Debug.Log("Not Enough Sanity... YOU ARE DEAD.");
             }
             if (!GameManager.IsPlayerGhosted)

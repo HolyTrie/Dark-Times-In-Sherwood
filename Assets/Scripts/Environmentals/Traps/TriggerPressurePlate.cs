@@ -11,4 +11,5 @@ public class TriggerPressurePlate : MonoBehaviour
         if(other.tag.Equals("Player"))
             Trap.StartTrap();
     }
+    
 }
