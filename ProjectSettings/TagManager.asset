@@ -18,6 +18,7 @@ TagManager:
   - Enemy
   - PlayerSensor
   - IgnoredByPlayer
+  - GhostTile
   layers:
   - Default
   - TransparentFX
