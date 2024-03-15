@@ -139,6 +139,10 @@ PrefabInstance:
       propertyPath: background
       value: 
       objectReference: {fileID: 8300000, guid: ab906dc1ac409154a8d499ba66c8e8e3, type: 3}
+    - target: {fileID: 924136967838182826, guid: db08082cb9841b648a32b27fc617da60, type: 3}
+      propertyPath: BackgroundVolume
+      value: 0.025
+      objectReference: {fileID: 0}
     - target: {fileID: 1810221497345530877, guid: db08082cb9841b648a32b27fc617da60, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.38328004
