@@ -51,6 +51,7 @@ public class SanityBar : MonoBehaviour
             {
                 _canUseSanity = false;
                 GameManager.ResetScene();
+                GameManager.IsPlayerGhosted = !GameManager.IsPlayerGhosted; // update ghost
                 Debug.Log("Not Enough Sanity... YOU ARE DEAD.");
             }
             if (!GameManager.IsPlayerGhosted)

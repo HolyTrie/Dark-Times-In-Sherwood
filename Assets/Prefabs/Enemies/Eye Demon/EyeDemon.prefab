@@ -833,7 +833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37060a17c3d5ee344a9c637a9911654e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DMG: 5
+  DMG: 15
   HitTransform: {fileID: 5109030043393149378}
   AttackRadius: 2
 --- !u!114 &771638231714990406
@@ -862,7 +862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpSpeed: 5
-  _walkSpeed: 10
+  _walkSpeed: 20
   _runSpeedMult: 1.5
   _movementSmoothing: 2
   _attackDMG: 15
@@ -885,7 +885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBar: {fileID: 5633811108736996185}
-  maxHP: 250
+  maxHP: 150
 --- !u!58 &7863517801960115854
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -784,7 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpSpeed: 5
-  _walkSpeed: 15
+  _walkSpeed: 25
   _runSpeedMult: 1.5
   _movementSmoothing: 2
   _attackDMG: 15
@@ -794,6 +794,7 @@ MonoBehaviour:
   _YAttackRange: 2
   Scale: 1.5
   _ceilingCheck: {fileID: 0}
+  DialogUponDeath: {fileID: 0}
 --- !u!114 &4804223171876297768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -807,7 +808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBar: {fileID: 4346113272235996597}
-  maxHP: 250
+  maxHP: 400
 --- !u!114 &4821646227443165576
 MonoBehaviour:
   m_ObjectHideFlags: 0

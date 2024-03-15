@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBar: {fileID: 5924383850299357521}
-  maxHP: 100
+  maxHP: 120
 --- !u!114 &2519729715641274458
 MonoBehaviour:
   m_ObjectHideFlags: 0
