@@ -27,6 +27,7 @@ public class BuffChestController : Interactable
     private PlayerStateMachine _playerFSM;
     private PlayerController _playerController;
     private Animator ChestAnimator;
+    private int OneTimeBuff = 0;
     void Awake()
     {
         ChestAnimator = GetComponent<Animator>();
@@ -48,7 +49,7 @@ public class BuffChestController : Interactable
         BuffText.enabled = true;
         prevForce = _playerController.JumpForce;
         _playerController.JumpForce *= JumpForceMultiplier;
-        yield return new WaitForSeconds(TextTime); 
+        yield return new WaitForSeconds(TextTime);
         BuffText.enabled = false;
         yield return new WaitForSeconds(BuffTime);
         _playerController.JumpForce = prevForce;
@@ -61,7 +62,7 @@ public class BuffChestController : Interactable
         BuffText.enabled = true;
         int increaseHp = 5;
         _playerController.HpBar.UpdateMaxHP(increaseHp);
-        yield return new WaitForSeconds(TextTime); 
+        yield return new WaitForSeconds(TextTime);
         BuffText.enabled = false;
     }
     private IEnumerator HealHP() // just heals the player
@@ -101,7 +102,11 @@ public class BuffChestController : Interactable
     public override void OnClick(GameObject clickingEntity)
     {
         guard = true;
-        ChestAnimator.Play("OpenChest");
-        BuffRandomizer();
+        if (OneTimeBuff == 0)
+        {
+            ChestAnimator.Play("OpenChest");
+            BuffRandomizer();
+            ++OneTimeBuff;
+        }
     }
 }
