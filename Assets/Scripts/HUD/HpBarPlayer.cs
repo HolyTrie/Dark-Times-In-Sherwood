@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class HpBarPlayer : MonoBehaviour
 {
     [SerializeField] public Slider hpBar;
-    [SerializeField] private static int maxHP = 100;
+    [SerializeField] private static int maxHP = 120;
     private TextMeshProUGUI TextHP;
     private static int currentHP = maxHP; // starters
     private WaitForSeconds regenTimer = new WaitForSeconds(0.1f);

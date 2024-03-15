@@ -3257,6 +3257,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ControlsScheme
       objectReference: {fileID: 0}
+    - target: {fileID: 3951374238957255546, guid: 8cefa804cd8dc7c468b244bbd70c0c15, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4727002655094710402, guid: 8cefa804cd8dc7c468b244bbd70c0c15, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1

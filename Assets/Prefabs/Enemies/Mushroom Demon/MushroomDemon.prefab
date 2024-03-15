@@ -157,9 +157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37060a17c3d5ee344a9c637a9911654e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DMG: 10
+  DMG: 8
   HitTransform: {fileID: 3160324529979840254}
-  AttackRadius: 1
+  AttackRadius: 0.7
 --- !u!114 &4115709630303938972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBar: {fileID: 5839423741301201774}
-  maxHP: 150
+  maxHP: 200
 --- !u!114 &-1323824008243968897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpSpeed: 5
-  _walkSpeed: 18
+  _walkSpeed: 25
   _runSpeedMult: 3
   _movementSmoothing: 2
   _attackDMG: 15
