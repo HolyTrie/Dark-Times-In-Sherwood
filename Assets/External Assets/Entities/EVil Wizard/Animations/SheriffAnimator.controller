@@ -6,7 +6,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Idle_0
+  m_Name: SheriffAnimator
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
@@ -42,7 +42,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 93b412f150e43644a8a7b806f7ebad3e, type: 2}
+  m_Motion: {fileID: 7400000, guid: 77a8bf88126f8b947b06274d9f33859a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -68,7 +68,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: e3e2310bda037624d952c76316a2349c, type: 2}
+  m_Motion: {fileID: 7400000, guid: bd287b106b39d8d4a97c975343a64615, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

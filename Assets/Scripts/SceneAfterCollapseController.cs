@@ -14,8 +14,8 @@ public class SceneAfterCollapseController : MonoBehaviour
     private DialogueSection Conversation()
     {
         string Entityname = "Sheriff";
-
-        Monologue SherifNote = new(Entityname, "Ah poor robin, your bad choices keep coming in waves, now that i have enslaved you, i won't set you free unless you return all the artifact i lost. you might feel like your body is chaning due to the explosion ");
+        string text = "Poor stupid Robin, as recompense for your meddling I have taken a part of your very being... \nA fragment of your soul is now mine to do with as I please, and to your detriment you will find that you can now interact with the realm of spirits. \n(pressing G activates a ghost state that drains sanity until death) ";
+        Monologue SherifNote = new(Entityname, text);
         return SherifNote;
     }
 }
