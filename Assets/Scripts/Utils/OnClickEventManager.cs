@@ -72,10 +72,7 @@ public class OnClickEventManager : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
-        // Application.Quit();
-        // GameManager.LoadScene(0);
-        // foreach(Destroy)
-        //TODO
+        GameManager.LoadScene(0);
     }
 
     public void OpenVolumeSettings()
