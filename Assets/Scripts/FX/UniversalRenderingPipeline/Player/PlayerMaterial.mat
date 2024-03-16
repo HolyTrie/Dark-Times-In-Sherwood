@@ -34,9 +34,9 @@ Material:
     - _OutlineThickness: 0.5
     - _QueueControl: 0
     m_Colors:
-    - _EffectColor: {r: 0.4715818, g: 0.12953897, b: 0.6698113, a: 0}
+    - _EffectColor: {r: 0.11863652, g: 0.5849056, b: 0.5849056, a: 0}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 0}
-    - _OutlineEffectColor: {r: 0.22127905, g: 0.09385012, b: 0.5377358, a: 0}
+    - _OutlineEffectColor: {r: 0, g: 1, b: 0.92549014, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5677008280239917600
 MonoBehaviour:
