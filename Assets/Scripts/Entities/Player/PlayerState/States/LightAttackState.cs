@@ -61,14 +61,14 @@ namespace DTIS
 
             if (IsAttackingWasPressed()) // if attack is pressed once
             {
-                attackSequence++;
                 SetSubState(ESP.States.LightAttack);
             }
-            else if (IsAttackingHold()) // if player holds the attack it wil enter attack sequence.
-            {
-                attackSequence++;
-                SetSubState(ESP.States.LightAttack);
-            }
+            attackSequence++;
+            // else if (IsAttackingHold()) // if player holds the attack it wil enter attack sequence.
+            // {
+            //     attackSequence++;
+            //     SetSubState(ESP.States.LightAttack);
+            // }
             _attackCommit = false;
         }
 
