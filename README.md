@@ -1,11 +1,10 @@
 # Dark-Times-In-Sherwood
 
-Robin hood and his gang of thieves have been caught by the evil sheriff of Notthingham and are forced to brave the darkness of Sherwood as he forces them to delve into peril to retreive dangerous artifcats. </br>
-In their adventures they will have to face off againts horrid monsters, devious traps and complex puzzles all while looking for an opportunity to escape the clutches of the evil sherrif or DIE trying. </br>
-Endless Misery Awaits! </br>
+The evil Sheriff of Nottingham has enslaved Sherwood and unleashed dark horrors upon its lands, it is up to Robin of Locksley to brave the danger and free his people from tyranny and terror.
+In this endeavor Robin will face off against monsters, traps, and complex contraptions in search of treasures and artifacts to fund his resistance against the tides of monsters, can Robin save his people or will it truly be a dark time in Sherwood? 
+ </br>
 
 You can see an early PoC at [holytrie.itch.io](https://holytrie.itch.io/dark-times-in-sherwood) </br>
-* Note - we used the classroom code for reference only, mostly relying on tutorials.
 
 The game will be developed for PC players. </br>
 
