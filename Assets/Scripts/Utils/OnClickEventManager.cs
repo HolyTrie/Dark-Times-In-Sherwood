@@ -8,6 +8,7 @@ public class OnClickEventManager : MonoBehaviour
     private GameObject KeyBindings;
     private GameObject OptionsPanel;
     private GameObject SceneSelection;
+    private GameObject CreditsPanel;
     private const int StartScene = 1;
     private const int GameStartScene = 2;
 
@@ -18,6 +19,7 @@ public class OnClickEventManager : MonoBehaviour
         KeyBindings = GameObject.Find("KeyBindings");
         OptionsPanel = GameObject.Find("OptionsPanel");
         SceneSelection = GameObject.Find("SceneSelection");
+        CreditsPanel = GameObject.Find("CreditsPanel");
     }
 
     private void Start()
@@ -30,6 +32,8 @@ public class OnClickEventManager : MonoBehaviour
             OptionsPanel.SetActive(false);
         if(SceneSelection != null)
             SceneSelection.SetActive(false);
+        if(CreditsPanel != null)
+            CreditsPanel.SetActive(false);
     }
 
     public void PauseGame()
@@ -55,7 +59,15 @@ public class OnClickEventManager : MonoBehaviour
     {
         GameManager.LoadScene(GameStartScene);
     }
-
+    private void ResetAllPanels()
+    {
+        if (OptionsPanel != null)
+            OptionsPanel.SetActive(false);
+        if(SceneSelection != null)
+            SceneSelection.SetActive(false);
+        if(CreditsPanel != null)
+            CreditsPanel.SetActive(false);
+    }
     public void HelpMenu()
     {
         StarterPauseMenu.SetActive(false);
@@ -84,26 +96,28 @@ public class OnClickEventManager : MonoBehaviour
 
     public void OpenVolumeSettings()
     {
-        if(SceneSelection!=null)
-            CloseSceneSelectionMenu();
-
-        OptionsPanel.SetActive(true);
+        ResetAllPanels();
+        if(OptionsPanel != null)
+            OptionsPanel.SetActive(true);
     }
 
     public void HideOptionsSettings()
     {
-        OptionsPanel.SetActive(false);
+        if(OptionsPanel != null)
+            OptionsPanel.SetActive(false);
     }
 
     public void OpenSceneSelectionMenu()
     {
-        HideOptionsSettings();
-        SceneSelection.SetActive(true);
+        ResetAllPanels();
+        if(SceneSelection != null)
+            SceneSelection.SetActive(true);
     }
 
     public void CloseSceneSelectionMenu()
     {
-        SceneSelection.SetActive(false);
+        if(SceneSelection != null)
+            SceneSelection.SetActive(false);
     }
 
     public void LoadScene(int Scene)
@@ -111,5 +125,16 @@ public class OnClickEventManager : MonoBehaviour
         GameManager.LoadScene(Scene);
     }
 
+    public void ShowCredits()
+    {
+        ResetAllPanels();
+        if(CreditsPanel != null)
+            CreditsPanel.SetActive(true);
+    }
+    public void HideCredits()
+    {
+        if(CreditsPanel != null)
+            CreditsPanel.SetActive(false);
+    }
 
 }

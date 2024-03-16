@@ -56,6 +56,7 @@ public sealed class GameManager : MonoBehaviour
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		Time.timeScale = 1f;
+		_playerController.HpBar.ResetToMax();
 	}
 
 	public static void LoadScene(int index)
