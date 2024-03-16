@@ -2236,6 +2236,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 583084995}
     m_Modifications:
+    - target: {fileID: 869376963264991087, guid: b97e0713937c92a449b01b8eac1fd64c, type: 3}
+      propertyPath: m_text
+      value: Mansion
+      objectReference: {fileID: 0}
     - target: {fileID: 914051738934382743, guid: b97e0713937c92a449b01b8eac1fd64c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2376,6 +2380,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 4469000450478361323}
+    - target: {fileID: 3382924866435626318, guid: b97e0713937c92a449b01b8eac1fd64c, type: 3}
+      propertyPath: m_text
+      value: After Ritual
+      objectReference: {fileID: 0}
     - target: {fileID: 3661832120960055610, guid: b97e0713937c92a449b01b8eac1fd64c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2407,6 +2415,10 @@ PrefabInstance:
     - target: {fileID: 6524257201276872231, guid: b97e0713937c92a449b01b8eac1fd64c, type: 3}
       propertyPath: m_Color.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7442856901754781368, guid: b97e0713937c92a449b01b8eac1fd64c, type: 3}
+      propertyPath: m_text
+      value: Vault
       objectReference: {fileID: 0}
     - target: {fileID: 7616050707554647545, guid: b97e0713937c92a449b01b8eac1fd64c, type: 3}
       propertyPath: m_Colors.m_FadeDuration
