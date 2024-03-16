@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -80,4 +81,8 @@ public class HpBarPlayer : MonoBehaviour
         TextHP.text = currentHP + "/" + maxHP;
     }
 
+    public void ResetToMax()
+    {
+        currentHP = maxHP;
+    }
 }

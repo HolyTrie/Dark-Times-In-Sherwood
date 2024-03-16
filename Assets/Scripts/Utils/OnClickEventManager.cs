@@ -79,6 +79,7 @@ public class OnClickEventManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         GameManager.LoadScene(0);
+        GameManager.ResetPlayer();
     }
 
     public void OpenVolumeSettings()

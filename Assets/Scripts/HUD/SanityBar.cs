@@ -32,6 +32,10 @@ public class SanityBar : MonoBehaviour
         sanityBar.value = maxSanity;
         _canUseSanity = true;
     }
+    public void ResetToMax()
+    {
+        currentSanity = maxSanity;
+    }
 
     public void UseSanity(int amount)
     {

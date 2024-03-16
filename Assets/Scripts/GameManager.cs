@@ -60,7 +60,7 @@ public sealed class GameManager : MonoBehaviour
 
 	public static void LoadScene(int index)
 	{
-		IsPlayerGhosted = false; // reset ghost, todo much later - get this info from scene object
+		IsPlayerGhosted = false; // resets ghost
 		SceneManager.LoadScene(index);
 		Instance.StartCoroutine(DisableEnableControls());
 		Time.timeScale = 1f;
@@ -126,4 +126,13 @@ public sealed class GameManager : MonoBehaviour
 		_fsm.Controller.enabled = true;
 		_fsm.Controls.enabled = true;
 	}
+
+    internal static void ResetPlayer()
+    {
+        if(_playerController != null)
+		{
+			_playerController.SanityBar.ResetToMax();
+			_playerController.HpBar.ResetToMax();
+		}
+    }
 }
