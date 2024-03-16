@@ -55,6 +55,7 @@ public sealed class GameManager : MonoBehaviour
     public static void ResetScene()
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		Time.timeScale = 1f;
 	}
 
 	public static void LoadScene(int index)
@@ -62,6 +63,7 @@ public sealed class GameManager : MonoBehaviour
 		IsPlayerGhosted = false; // reset ghost, todo much later - get this info from scene object
 		SceneManager.LoadScene(index);
 		Instance.StartCoroutine(DisableEnableControls());
+		Time.timeScale = 1f;
 	}
 
 	private static IEnumerator DisableEnableControls()

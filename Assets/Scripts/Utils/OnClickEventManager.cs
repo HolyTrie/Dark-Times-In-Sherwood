@@ -7,6 +7,7 @@ public class OnClickEventManager : MonoBehaviour
     private GameObject StarterPauseMenu;
     private GameObject KeyBindings;
     private GameObject OptionsPanel;
+    private GameObject SceneSelection;
     private const int StartScene = 1;
     private const int GameStartScene = 2;
 
@@ -16,6 +17,7 @@ public class OnClickEventManager : MonoBehaviour
         StarterPauseMenu = GameObject.Find("StarterMenu");
         KeyBindings = GameObject.Find("KeyBindings");
         OptionsPanel = GameObject.Find("OptionsPanel");
+        SceneSelection = GameObject.Find("SceneSelection");
     }
 
     private void Start()
@@ -26,6 +28,8 @@ public class OnClickEventManager : MonoBehaviour
             KeyBindings.SetActive(false);
         if (OptionsPanel != null)
             OptionsPanel.SetActive(false);
+        if(SceneSelection != null)
+            SceneSelection.SetActive(false);
     }
 
     public void PauseGame()
@@ -55,7 +59,9 @@ public class OnClickEventManager : MonoBehaviour
     public void HelpMenu()
     {
         StarterPauseMenu.SetActive(false);
-        OptionsPanel.SetActive(false);
+        if(OptionsPanel!=null)
+            OptionsPanel.SetActive(false);
+            
         KeyBindings.SetActive(true);
     }
 
@@ -72,14 +78,14 @@ public class OnClickEventManager : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
-        // Application.Quit();
-        // GameManager.LoadScene(0);
-        // foreach(Destroy)
-        //TODO
+        GameManager.LoadScene(0);
     }
 
     public void OpenVolumeSettings()
     {
+        if(SceneSelection!=null)
+            CloseSceneSelectionMenu();
+
         OptionsPanel.SetActive(true);
     }
 
@@ -87,5 +93,22 @@ public class OnClickEventManager : MonoBehaviour
     {
         OptionsPanel.SetActive(false);
     }
+
+    public void OpenSceneSelectionMenu()
+    {
+        HideOptionsSettings();
+        SceneSelection.SetActive(true);
+    }
+
+    public void CloseSceneSelectionMenu()
+    {
+        SceneSelection.SetActive(false);
+    }
+
+    public void LoadScene(int Scene)
+    {
+        GameManager.LoadScene(Scene);
+    }
+
 
 }
