@@ -59,7 +59,9 @@ public class OnClickEventManager : MonoBehaviour
     public void HelpMenu()
     {
         StarterPauseMenu.SetActive(false);
-        OptionsPanel.SetActive(false);
+        if(OptionsPanel!=null)
+            OptionsPanel.SetActive(false);
+            
         KeyBindings.SetActive(true);
     }
 
@@ -81,7 +83,9 @@ public class OnClickEventManager : MonoBehaviour
 
     public void OpenVolumeSettings()
     {
-        CloseSceneSelectionMenu();
+        if(SceneSelection!=null)
+            CloseSceneSelectionMenu();
+
         OptionsPanel.SetActive(true);
     }
 
