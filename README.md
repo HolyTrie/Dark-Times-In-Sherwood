@@ -5,6 +5,7 @@ In this endeavor Robin will face off against monsters, traps, and complex contra
  </br>
 
 You can see an early PoC at [holytrie.itch.io](https://holytrie.itch.io/dark-times-in-sherwood) </br>
+As well as a [Gameplay teaser](https://youtu.be/s14phXWLMUM) and a [Story Trailer](https://studio.youtube.com/video/VwS9y6LZlw0/edit)
 
 The game will be developed for PC players. </br>
 
